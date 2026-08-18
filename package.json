@@ -1,0 +1,17 @@
+```json
+{
+  "name": "kitmarket",
+  "version": "2.0.0",
+  "description": "Football-Shirt-Market",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "sqlite3": "^5.1.7"
+  }
+}
+```
