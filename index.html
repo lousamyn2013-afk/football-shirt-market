@@ -103,28 +103,57 @@ nav a::after{
 }
 nav a:hover::after{transform:scaleX(1)}
 
-/* LANGUAGE SELECTOR */
+/* LUXURY LANGUAGE SELECTOR */
+.lang-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
 .lang-select {
-  background: rgba(12,31,23,.85);
+  appearance: none;
+  -webkit-appearance: none;
+  background: linear-gradient(135deg, rgba(12, 31, 23, 0.95), rgba(8, 19, 15, 0.95));
   color: var(--gold-hi, #f2cf70);
-  border: 1px solid rgba(239,210,143,.25);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border: 1px solid rgba(239, 210, 143, 0.3);
+  border-radius: 12px;
+  padding: 10px 36px 10px 14px;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
   outline: none;
-  transition: .2s;
-  flex-shrink: 0;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 .lang-select:hover {
-  border-color: rgba(239,210,143,.65);
-  background: #08130f;
-  box-shadow:0 5px 15px rgba(0,0,0,.25),0 0 15px rgba(239,210,143,.08);
+  border-color: rgba(239, 210, 143, 0.7);
+  background: linear-gradient(135deg, rgba(18, 42, 31, 0.98), rgba(10, 24, 18, 0.98));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(239, 210, 143, 0.15);
+}
+.lang-select:focus {
+  border-color: var(--emerald-hi);
+  box-shadow: 0 0 0 3px rgba(53, 214, 154, 0.25);
+}
+.lang-select-wrapper::after {
+  content: '▾';
+  position: absolute;
+  right: 14px;
+  pointer-events: none;
+  color: var(--gold-hi);
+  font-size: 11px;
+  transition: transform 0.2s ease;
+}
+.lang-select optgroup {
+  background: #050b08;
+  color: var(--gold-hi);
+  font-weight: 900;
+  font-style: normal;
 }
 .lang-select option {
-  background: #07120d;
-  color: #fff;
+  background: #08130f;
+  color: #f4f7f3;
+  padding: 8px 12px;
+  font-weight: 600;
 }
 
 .account-btn{
@@ -363,7 +392,7 @@ footer .gold{color:var(--gold-hi)!important;font-weight:800}
   nav{order:3;width:100%;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
   nav::-webkit-scrollbar{display:none}
   nav a{white-space:nowrap;font-size:12px;padding:8px 10px}
-  .lang-select { padding: 6px 8px; font-size: 12px; }
+  .lang-select { padding: 6px 28px 6px 8px; font-size: 12px; }
   .account-btn{margin-left:auto}
   #app{min-height:calc(100vh - 105px)}
   .page{padding:17px 11px 55px}
@@ -405,28 +434,11 @@ footer .gold{color:var(--gold-hi)!important;font-weight:800}
       <a href="#/profile" data-i18n="nav_profile">Profiel</a>
     </nav>
 
-    <select id="langSwitcher" class="lang-select">
-      <option value="nl">🇳🇱 NL</option>
-      <option value="en">🇬🇧 EN</option>
-      <option value="fr">🇫🇷 FR</option>
-      <option value="de">🇩🇪 DE</option>
-      <option value="es">🇪🇸 ES</option>
-      <option value="it">🇮🇹 IT</option>
-      <option value="pt">🇵🇹 PT</option>
-      <option value="tr">🇹🇷 TR</option>
-      <option value="pl">🇵🇱 PL</option>
-      <option value="ar">🇸🇦 AR</option>
-      <option value="ja">🇯🇵 JA</option>
-      <option value="zh">🇨🇳 ZH</option>
-      <option value="ko">🇰🇷 KO</option>
-      <option value="ru">🇷🇺 RU</option>
-      <option value="sv">🇸🇪 SV</option>
-      <option value="no">🇳🇴 NO</option>
-      <option value="da">🇩🇰 DA</option>
-      <option value="fi">🇫🇮 FI</option>
-      <option value="el">🇬🇷 EL</option>
-      <option value="hi">🇮🇳 HI</option>
-    </select>
+    <div class="lang-select-wrapper">
+      <select id="langSwitcher" class="lang-select" aria-label="Select Language">
+        <!-- Dynamisch gevuld via JavaScript -->
+      </select>
+    </div>
 
     <button id="account" class="account-btn" type="button" data-i18n="login">
       Inloggen
@@ -447,6 +459,57 @@ footer .gold{color:var(--gold-hi)!important;font-weight:800}
 <div id="modal" class="hidden"></div>
 
 <script>
+/* =====================================================
+   LANGUAGES INDEX DATA
+===================================================== */
+const languages = [
+  // Volledig ondersteund
+  { code: 'nl', name: 'Nederlands', nativeName: 'Nederlands', flag: '🇳🇱', status: 'full' },
+  { code: 'en', name: 'Engels', nativeName: 'English', flag: '🇬🇧', status: 'full' },
+  { code: 'fr', name: 'Frans', nativeName: 'Français', flag: '🇫🇷', status: 'full' },
+  { code: 'de', name: 'Duits', nativeName: 'Deutsch', flag: '🇩🇪', status: 'full' },
+  { code: 'es', name: 'Spaans', nativeName: 'Español', flag: '🇪🇸', status: 'full' },
+
+  // Menutalen
+  { code: 'it', name: 'Italiaans', nativeName: 'Italiano', flag: '🇮🇹', status: 'menu' },
+  { code: 'pt', name: 'Portugees', nativeName: 'Português', flag: '🇵🇹', status: 'menu' },
+  { code: 'tr', name: 'Turks', nativeName: 'Türkçe', flag: '🇹🇷', status: 'menu' },
+  { code: 'pl', name: 'Pools', nativeName: 'Polski', flag: '🇵🇱', status: 'menu' },
+  { code: 'ar', name: 'Arabisch', nativeName: 'العربية', flag: '🇸🇦', status: 'menu', dir: 'rtl' },
+  { code: 'ja', name: 'Japans', nativeName: '日本語', flag: '🇯🇵', status: 'menu' },
+  { code: 'zh', name: 'Chinees', nativeName: '中文', flag: '🇨🇳', status: 'menu' },
+  { code: 'ko', name: 'Koreaans', nativeName: '한국어', flag: '🇰🇷', status: 'menu' },
+  { code: 'ru', name: 'Russisch', nativeName: 'Русский', flag: '🇷🇺', status: 'menu' },
+  { code: 'sv', name: 'Zweeds', nativeName: 'Svenska', flag: '🇸🇪', status: 'menu' },
+  { code: 'no', name: 'Noors', nativeName: 'Norsk', flag: '🇳🇴', status: 'menu' },
+  { code: 'da', name: 'Deens', nativeName: 'Dansk', flag: '🇩🇰', status: 'menu' },
+  { code: 'fi', name: 'Fins', nativeName: 'Suomi', flag: '🇫🇮', status: 'menu' },
+  { code: 'el', name: 'Grieks', nativeName: 'Ελληνικά', flag: '🇬🇷', status: 'menu' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳', status: 'menu' },
+
+  // Extra uitbreidingen
+  { code: 'uk', name: 'Oekraïens', nativeName: 'Українська', flag: '🇺🇦', status: 'extension' },
+  { code: 'cs', name: 'Tsjechisch', nativeName: 'Čeština', flag: '🇨🇿', status: 'extension' },
+  { code: 'hu', name: 'Hongaars', nativeName: 'Magyar', flag: '🇭🇺', status: 'extension' },
+  { code: 'ro', name: 'Roemeens', nativeName: 'Română', flag: '🇷🇴', status: 'extension' },
+  { code: 'bg', name: 'Bulgaars', nativeName: 'Български', flag: '🇧🇬', status: 'extension' },
+  { code: 'hr', name: 'Kroatisch', nativeName: 'Hrvatski', flag: '🇭🇷', status: 'extension' },
+  { code: 'sk', name: 'Slowaaks', nativeName: 'Slovenčina', flag: '🇸🇰', status: 'extension' },
+  { code: 'sl', name: 'Sloveens', nativeName: 'Slovenščina', flag: '🇸🇮', status: 'extension' },
+  { code: 'et', name: 'Estisch', nativeName: 'Eesti', flag: '🇪🇪', status: 'extension' },
+  { code: 'lv', name: 'Lets', nativeName: 'Latviešu', flag: '🇱🇻', status: 'extension' },
+  { code: 'lt', name: 'Litouws', nativeName: 'Lietuvių', flag: '🇱🇹', status: 'extension' },
+  { code: 'id', name: 'Indonesisch', nativeName: 'Bahasa Indonesia', flag: '🇮🇩', status: 'extension' },
+  { code: 'ms', name: 'Maleis', nativeName: 'Bahasa Melayu', flag: '🇲🇾', status: 'extension' },
+  { code: 'vi', name: 'Vietnamees', nativeName: 'Tiếng Việt', flag: '🇻🇳', status: 'extension' },
+  { code: 'th', name: 'Thai', nativeName: 'ไทย', flag: '🇹🇭', status: 'extension' },
+  { code: 'he', name: 'Hebreeuws', nativeName: 'עברית', flag: '🇮🇱', status: 'extension', dir: 'rtl' },
+  { code: 'fa', name: 'Perzisch', nativeName: 'فارسی', flag: '🇮🇷', status: 'extension', dir: 'rtl' },
+  { code: 'bn', name: 'Bengaals', nativeName: 'বাংলা', flag: '🇧🇩', status: 'extension' },
+  { code: 'sw', name: 'Swahili', nativeName: 'Kiswahili', flag: '🇰🇪', status: 'extension' },
+  { code: 'fil', name: 'Tagalog', nativeName: 'Filipino', flag: '🇵🇭', status: 'extension' }
+];
+
 /* =====================================================
    i18n TRANSLATIONS DICTIONARY
 ===================================================== */
@@ -554,11 +617,38 @@ const dict = {
 };
 
 let currentLang = localStorage.getItem("fsm_lang") || "nl";
-document.getElementById("langSwitcher").value = currentLang;
+
+function populateLanguageDropdown() {
+  const select = document.getElementById("langSwitcher");
+  if(!select) return;
+  select.innerHTML = "";
+
+  const groups = {
+    full: document.createElement("optgroup"),
+    menu: document.createElement("optgroup"),
+    extension: document.createElement("optgroup")
+  };
+
+  groups.full.label = "── Volledig ──";
+  groups.menu.label = "── Menutalen ──";
+  groups.extension.label = "── Uitbreidingen ──";
+
+  languages.forEach(lang => {
+    const opt = document.createElement("option");
+    opt.value = lang.code;
+    opt.textContent = `${lang.flag} ${lang.code.toUpperCase()} · ${lang.nativeName}`;
+    if (lang.code === currentLang) opt.selected = true;
+    if (groups[lang.status]) groups[lang.status].appendChild(opt);
+  });
+
+  Object.values(groups).forEach(grp => {
+    if (grp.children.length > 0) select.appendChild(grp);
+  });
+}
 
 function t(key) {
   const langDict = dict[currentLang] || dict['en'];
-  if(langDict[key]) return langDict[key];
+  if(langDict && langDict[key]) return langDict[key];
   if(dict['en'][key]) return dict['en'][key];
   return key;
 }
@@ -572,8 +662,12 @@ function translateDOM() {
       el.textContent = t(key);
     }
   });
+
+  const activeLangObj = languages.find(l => l.code === currentLang);
+  document.documentElement.dir = (activeLangObj && activeLangObj.dir) ? activeLangObj.dir : "ltr";
+
   updateAccountButton();
-  route(); // Re-render main page
+  route();
 }
 
 document.getElementById("langSwitcher").addEventListener("change", function(e) {
@@ -607,7 +701,8 @@ async function api(url,opt={}){
 
 async function init(){
   if(!location.hash || location.hash === "#"){ location.hash = "#/"; }
-  translateDOM(); // apply initial translations
+  populateLanguageDropdown();
+  translateDOM();
   try{ me = await api("/api/me"); }catch{ me = null; }
   updateAccountButton();
 }
