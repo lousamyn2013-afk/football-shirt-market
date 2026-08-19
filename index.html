@@ -129,21 +129,13 @@ nav a:hover{
 }
 
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
-.card,.box{
+.box{
   position:relative;
   background:linear-gradient(145deg,#10271d,#0a1712 55%,#060c0a)!important;
   border:1px solid rgba(255,255,255,.075)!important;border-radius:18px;overflow:hidden;
   padding:20px;
 }
-.shirt{
-  height:220px;display:flex;align-items:center;justify-content:center;position:relative;
-  background:linear-gradient(145deg,#122c21,#07100d)!important;
-  font-size:78px;border-radius:12px;margin-bottom:15px;
-}
-.body h3{margin:7px 0 8px;font-size:17px;font-weight:900;}
 .muted{color:var(--muted);font-size:12px}
-.price{font-size:22px;color:var(--gold-hi)!important;}
-.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
 
 .toolbar{
   display:grid;grid-template-columns:2fr 1.15fr .8fr;gap:12px;margin:22px 0 28px;
@@ -151,17 +143,10 @@ nav a:hover{
   background:linear-gradient(135deg,rgba(12,31,23,.85),rgba(5,12,9,.8));
   border-radius:16px;
 }
-input,select,textarea{
+input,select{
   width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.10)!important;border-radius:12px;
   background:#09150f!important;color:#f1eee5!important;outline:none;
 }
-.type-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-.type-option span{
-  display:block;padding:12px 13px;border:1px solid rgba(255,255,255,.08)!important;border-radius:11px;
-  background:#0a1712!important;color:#bfcac5!important;cursor:pointer;font-size:13px;
-}
-.modal-bg{position:fixed;inset:0;z-index:2000;background:rgba(0,5,3,.82)!important;display:flex;align-items:center;justify-content:center;padding:20px;}
-.modal-box{width:min(510px,100%);background:#12271d;color:#f4f7f3;border:1px solid rgba(239,210,143,.22);border-radius:22px;padding:30px;}
 
 footer{text-align:center;padding:42px 20px;background:#020504;border-top:1px solid rgba(239,210,143,.18);}
 .gold{color:var(--gold-hi)!important}
@@ -205,8 +190,6 @@ footer{text-align:center;padding:42px 20px;background:#020504;border-top:1px sol
   <span><span data-i18n="footer_tag">De marketplace voor voetbalshirts</span> · <span class="gold" data-i18n="footer_since">Since 2026</span></span>
 </footer>
 
-<div id="modal" class="hidden"></div>
-
 <script>
 const languages = [
   { code: 'nl', name: 'Nederlands', nativeName: 'Nederlands', flag: '🇳🇱' },
@@ -216,61 +199,66 @@ const languages = [
   { code: 'es', name: 'Spaans', nativeName: 'Español', flag: '🇪🇸' }
 ];
 
+// --- VERTALINGEN TEKST ---
 const dict = {
   nl: {
     brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen", nav_inbox: "Inbox", nav_profile: "Profiel",
-    login: "Inloggen", logout: "Uitloggen", footer_tag: "De marketplace voor voetbalshirts", footer_since: "Since 2026",
-    home_feat: "Uitgelichte shirts", home_no: "Nog geen shirts beschikbaar", home_first: "Word de eerste verkoper op Football-Shirt-Market.",
-    home_sell: "Verkoop een shirt", home_wel: "Welkom bij Football-Shirt-Market", home_desc: "Ontdek voetbalshirts of verkoop jouw eigen shirt.", home_exp: "Ontdek shirts",
-    exp_col: "COLLECTIE", exp_title: "Ontdek voetbalshirts", exp_sub: "Zoek · Filter · Vind", exp_search: "Zoek speler, club, seizoen...",
-    cond_title: "Conditie", cond_new: "Nieuw", cond_exc: "Uitstekende staat", cond_good: "Goede staat", cond_used: "Gebruikt",
-    sort_rec: "Aanbevolen", sort_new: "Nieuwste", sort_low: "Prijs laag", sort_high: "Prijs hoog",
-    type_title: "Type", type_club: "Club", type_retro: "Retro", type_nat: "Nationale ploeg", type_worn: "Match-worn", type_sign: "Gesigneerd", type_rep: "Replica/Remake",
-    card_size: "Maat", card_buy: "Nu kopen", card_offer: "Bod", seller_you: "Jij"
+    login: "Inloggen", footer_tag: "De marketplace voor voetbalshirts", footer_since: "Since 2026",
+    home_feat: "Uitgelichte shirts", home_wel: "Welkom bij Football-Shirt-Market", home_desc: "Ontdek voetbalshirts of verkoop jouw eigen shirt.", home_exp: "Ontdek shirts",
+    exp_col: "COLLECTIE", exp_title: "Ontdek voetbalshirts", exp_search: "Zoek speler, club, seizoen...",
+    cond_new: "Nieuw", cond_exc: "Uitstekende staat", cond_good: "Goede staat",
+    sort_rec: "Aanbevolen", sort_new: "Nieuwste"
   },
   en: {
     brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell", nav_inbox: "Inbox", nav_profile: "Profile",
-    login: "Log in", logout: "Log out", footer_tag: "The marketplace for football shirts", footer_since: "Since 2026",
-    home_feat: "Featured shirts", home_no: "No shirts available yet", home_first: "Be the first seller on Football-Shirt-Market.",
-    home_sell: "Sell a shirt", home_wel: "Welcome to Football-Shirt-Market", home_desc: "Discover football shirts or sell your own.", home_exp: "Explore shirts",
-    exp_col: "COLLECTION", exp_title: "Explore football shirts", exp_sub: "Search · Filter · Find", exp_search: "Search player, club, season...",
-    cond_title: "Condition", cond_new: "New", cond_exc: "Excellent", cond_good: "Good", cond_used: "Used",
-    sort_rec: "Recommended", sort_new: "Newest", sort_low: "Price: Low to High", sort_high: "Price: High to Low",
-    type_title: "Type", type_club: "Club", type_retro: "Retro", type_nat: "National team", type_worn: "Match-worn", type_sign: "Signed", type_rep: "Replica",
-    card_size: "Size", card_buy: "Buy now", card_offer: "Offer", seller_you: "You"
+    login: "Log in", footer_tag: "The marketplace for football shirts", footer_since: "Since 2026",
+    home_feat: "Featured shirts", home_wel: "Welcome to Football-Shirt-Market", home_desc: "Discover football shirts or sell your own.", home_exp: "Explore shirts",
+    exp_col: "COLLECTION", exp_title: "Explore football shirts", exp_search: "Search player, club, season...",
+    cond_new: "New", cond_exc: "Excellent", cond_good: "Good",
+    sort_rec: "Recommended", sort_new: "Newest"
   },
   fr: {
     brand_since: "DEPUIS 2026", nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre", nav_inbox: "Boîte", nav_profile: "Profil",
-    login: "Connexion", logout: "Déconnexion", footer_tag: "La place de marché pour les maillots", footer_since: "Depuis 2026",
-    home_feat: "Maillots en vedette", home_no: "Aucun maillot", home_first: "Soyez le premier vendeur.",
-    home_sell: "Vendre", home_wel: "Bienvenue", home_desc: "Découvrez des maillots de foot.", home_exp: "Explorer",
-    exp_col: "COLLECTION", exp_title: "Explorer", exp_sub: "Chercher · Filtrer", exp_search: "Joueur, club, saison...",
-    cond_title: "État", cond_new: "Neuf", cond_exc: "Excellent", cond_good: "Bon", cond_used: "Utilisé",
-    sort_rec: "Recommandé", sort_new: "Plus récent", sort_low: "Prix croissant", sort_high: "Prix décroissant",
-    type_title: "Type", type_club: "Club", type_retro: "Rétro", type_nat: "Équipe nationale", type_worn: "Porté", type_sign: "Signé", type_rep: "Réplique",
-    card_size: "Taille", card_buy: "Acheter", card_offer: "Offre", seller_you: "Vous"
+    login: "Connexion", footer_tag: "La place de marché pour les maillots", footer_since: "Depuis 2026",
+    home_feat: "Maillots en vedette", home_wel: "Bienvenue sur Football-Shirt-Market", home_desc: "Découvrez des maillots de foot ou vendez le vôtre.", home_exp: "Explorer",
+    exp_col: "COLLECTION", exp_title: "Explorer les maillots", exp_search: "Joueur, club, saison...",
+    cond_new: "Neuf", cond_exc: "Excellent", cond_good: "Bon",
+    sort_rec: "Recommandé", sort_new: "Plus récent"
   },
   de: {
     brand_since: "SEIT 2026", nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen", nav_inbox: "Posteingang", nav_profile: "Profil",
-    login: "Anmelden", logout: "Abmelden", footer_tag: "Der Marktplatz für Trikots", footer_since: "Seit 2026",
-    home_feat: "Vorgestellte Trikots", home_no: "Keine Trikots", home_first: "Werde der erste Verkäufer.",
-    home_sell: "Verkaufen", home_wel: "Willkommen", home_desc: "Entdecke Trikots.", home_exp: "Entdecken",
-    exp_col: "KOLLEKTION", exp_title: "Entdecken", exp_sub: "Suchen · Filtern", exp_search: "Spieler, Club, Saison...",
-    cond_title: "Zustand", cond_new: "Neu", cond_exc: "Ausgezeichnet", cond_good: "Gut", cond_used: "Gebraucht",
-    sort_rec: "Empfohlen", sort_new: "Neueste", sort_low: "Preis aufsteigend", sort_high: "Preis absteigend",
-    type_title: "Typ", type_club: "Club", type_retro: "Retro", type_nat: "Nationalmannschaft", type_worn: "Match-worn", type_sign: "Signiert", type_rep: "Replika",
-    card_size: "Größe", card_buy: "Kaufen", card_offer: "Angebot", seller_you: "Du"
+    login: "Anmelden", footer_tag: "Der Marktplatz für Trikots", footer_since: "Seit 2026",
+    home_feat: "Vorgestellte Trikots", home_wel: "Willkommen bei Football-Shirt-Market", home_desc: "Entdecke Trikots oder verkaufe dein eigenes.", home_exp: "Entdecken",
+    exp_col: "KOLLEKTION", exp_title: "Trikots entdecken", exp_search: "Spieler, Club, Saison...",
+    cond_new: "Neu", cond_exc: "Ausgezeichnet", cond_good: "Gut",
+    sort_rec: "Empfohlen", sort_new: "Neueste"
   },
   es: {
     brand_since: "DESDE 2026", nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender", nav_inbox: "Bandeja", nav_profile: "Perfil",
-    login: "Iniciar sesión", logout: "Cerrar sesión", footer_tag: "El mercado de camisetas", footer_since: "Desde 2026",
-    home_feat: "Destacadas", home_no: "Aún no hay camisetas", home_first: "Sé el primer vendedor.",
-    home_sell: "Vender", home_wel: "Bienvenido", home_desc: "Descubre camisetas.", home_exp: "Explorar",
-    exp_col: "COLECCIÓN", exp_title: "Explorar", exp_sub: "Buscar · Filtrar", exp_search: "Jugador, club, temporada...",
-    cond_title: "Condición", cond_new: "Nuevo", cond_exc: "Excelente", cond_good: "Bueno", cond_used: "Usado",
-    sort_rec: "Recomendado", sort_new: "Más reciente", sort_low: "Precio menor", sort_high: "Precio mayor",
-    type_title: "Tipo", type_club: "Club", type_retro: "Retro", type_nat: "Selección nacional", type_worn: "Match-worn", type_sign: "Firmado", type_rep: "Réplica",
-    card_size: "Talla", card_buy: "Comprar", card_offer: "Oferta", seller_you: "Tú"
+    login: "Iniciar sesión", footer_tag: "El mercado de camisetas", footer_since: "Desde 2026",
+    home_feat: "Destacadas", home_wel: "Bienvenido a Football-Shirt-Market", home_desc: "Descubre camisetas o vende la tuya.", home_exp: "Explorar",
+    exp_col: "COLECCIÓN", exp_title: "Explorar camisetas", exp_search: "Jugador, club, temporada...",
+    cond_new: "Nuevo", cond_exc: "Excelente", cond_good: "Bueno",
+    sort_rec: "Recomendado", sort_new: "Más reciente"
+  }
+};
+
+// --- AFBEELDINGEN ---
+// Jouw originele afbeeldingen worden nu voor elke taal ingeladen, zodat ze niet verdwijnen!
+const imgDict = {
+  hero: {
+    nl: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    en: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    fr: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    de: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    es: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png"
+  },
+  explore: {
+    nl: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    en: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    fr: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    de: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    es: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png"
   }
 };
 
@@ -310,10 +298,12 @@ document.getElementById("langSwitcher").addEventListener("change", function(e) {
 });
 
 function home(){
+  const heroSrc = imgDict.hero[currentLang] || imgDict.hero.nl;
+
   app.innerHTML = `
     <div class="page">
       <section class="hero">
-        <img class="hero-image" src="https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png" alt="Hero" onerror="this.src='https://via.placeholder.com/1200x400/0b2418/f2cf70?text=Football+Shirt+Market'">
+        <img class="hero-image" src="${heroSrc}" alt="Hero" onerror="this.src='https://via.placeholder.com/1200x400/0b2418/f2cf70?text=Hero'">
         <a class="hero-hotspot hero-hotspot-explore" href="#/explore"></a>
         <a class="hero-hotspot hero-hotspot-sell" href="#/sell"></a>
       </section>
@@ -330,10 +320,12 @@ function home(){
 }
 
 function explore(){
+  const exploreSrc = imgDict.explore[currentLang] || imgDict.explore.nl;
+
   app.innerHTML = `
     <div class="page">
       <section class="explore-hero">
-        <img class="explore-hero-image" src="https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png" alt="Explore" onerror="this.src='https://via.placeholder.com/1200x250/0b2418/35d69a?text=Explore+Shirts'">
+        <img class="explore-hero-image" src="${exploreSrc}" alt="Explore" onerror="this.src='https://via.placeholder.com/1200x250/0b2418/35d69a?text=Explore'">
       </section>
       <div style="margin:20px 0">
         <small class="gold">${t('exp_col')}</small>
