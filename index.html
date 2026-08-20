@@ -84,7 +84,7 @@ nav a:hover { color: #fff; }
   filter: drop-shadow(0 2px 10px rgba(0,0,0,0.8));
 }
 
-/* KNOPPEN */
+/* KNOPPEN & INPUT OVERLAYS */
 .banner-btn-green {
   background: linear-gradient(135deg, #18b875, #118252);
   color: #fff; padding: 0.8vw 1.6vw; border-radius: 8px; 
@@ -105,6 +105,24 @@ nav a:hover { color: #fff; }
 .banner-btn-white:hover {
   transform: translateY(-2px);
   background: #f0f0f0;
+}
+
+.banner-search-input {
+  position: absolute;
+  top: 76%;
+  left: 11.5%;
+  width: 30%;
+  height: 9%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 1.1vw;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.banner-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 footer { text-align: center; padding: 42px 20px; background: #020504; border-top: 1px solid rgba(239, 210, 143, .18); }
@@ -163,7 +181,7 @@ const dict = {
     title_explore: "ONTDEKKEN",
     sub_find: "VIND JOUW", sub_next: "VOLGENDE SHIRT",
     desc_explore: "Van iconische klassiekers tot de nieuwste releases. Ontdek, verzamel en draag jouw passie.",
-    search_cta: "ZOEK. VIND. VERZAMEL.", search_sub: "JOUW COLLECTIE BEGINT HIER"
+    search_placeholder: "Zoek op club, speler of jaar..."
   },
   en: {
     brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell",
@@ -177,7 +195,7 @@ const dict = {
     title_explore: "EXPLORE",
     sub_find: "FIND YOUR", sub_next: "NEXT SHIRT",
     desc_explore: "From iconic classics to the newest releases. Discover, collect, and wear your passion.",
-    search_cta: "SEARCH. FIND. COLLECT.", search_sub: "YOUR COLLECTION STARTS HERE"
+    search_placeholder: "Search club, player or year..."
   },
   fr: {
     brand_since: "DEPUIS 2026", nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre",
@@ -191,7 +209,7 @@ const dict = {
     title_explore: "EXPLORER",
     sub_find: "TROUVEZ VOTRE", sub_next: "PROCHAIN MAILLOT",
     desc_explore: "Des classiques iconiques aux dernières nouveautés. Découvrez, collectionnez et portez votre passion.",
-    search_cta: "CHERCHEZ. TROUVEZ. COLLECTIONNEZ.", search_sub: "VOTRE COLLECTION COMMENCE ICI"
+    search_placeholder: "Chercher un club, joueur..."
   },
   de: {
     brand_since: "SEIT 2026", nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen",
@@ -205,7 +223,7 @@ const dict = {
     title_explore: "ENTDECKEN",
     sub_find: "FINDE DEIN", sub_next: "NÄCHSTES TRIKOT",
     desc_explore: "Von kultigen Klassikern bis zu den neuesten Releases. Entdecke, sammle und trage deine Leidenschaft.",
-    search_cta: "SUCHEN. FINDEN. SAMMELN.", search_sub: "DEINE KOLLEKTION STARTET HIER"
+    search_placeholder: "Suche nach Verein, Spieler..."
   },
   es: {
     brand_since: "DESDE 2026", nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender",
@@ -219,7 +237,7 @@ const dict = {
     title_explore: "EXPLORAR",
     sub_find: "ENCUENTRA TU", sub_next: "PRÓXIMA CAMISETA",
     desc_explore: "Desde clásicos icónicos hasta los últimos lanzamientos. Descubre, colecciona y viste tu pasión.",
-    search_cta: "BUSCA. ENCUENTRA. COLECCIONA.", search_sub: "TU COLECCIÓN EMPIEZA AQUÍ"
+    search_placeholder: "Buscar club, jugador o año..."
   }
 };
 
@@ -260,24 +278,21 @@ function renderExplore() {
       <div class="banner-container">
         <img src="ontdekken.png" alt="Explore Banner">
         
-        <div style="position: absolute; top: 11%; left: 14%; color: #d6aa45; font-size: 1.1vw; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+        <div style="position: absolute; top: 10%; left: 5%; color: #d6aa45; font-size: 1vw; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
           FOOTBALL SHIRT MARKET — ${t('tagline')}
         </div>
-        <div class="banner-heading gold-gradient-text" style="position: absolute; top: 28%; left: 4%; font-size: 5vw; font-weight: 900; line-height: 1;">
+        <div class="banner-heading gold-gradient-text" style="position: absolute; top: 18%; left: 5%; font-size: 4.8vw; font-weight: 900; line-height: 1;">
           ${t('title_explore')}
         </div>
-        <div class="banner-heading" style="position: absolute; top: 44%; left: 4%; color: #ffffff; font-size: 1.8vw; font-weight: 800;">
+        <div class="banner-heading" style="position: absolute; top: 35%; left: 5%; color: #ffffff; font-size: 1.6vw; font-weight: 800;">
           ${t('sub_find')} <span style="color: #2bd58c;">${t('sub_next')}</span>
         </div>
-        <div style="position: absolute; top: 54%; left: 4%; max-width: 35%; color: #d0d7d3; font-size: 1vw; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">
+        <div style="position: absolute; top: 46%; left: 5%; max-width: 36%; color: #d0d7d3; font-size: 0.95vw; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">
           ${t('desc_explore')}
         </div>
-        <div class="banner-heading" style="position: absolute; top: 76%; left: 11%; color: #ffffff; font-size: 1.3vw; font-weight: 800;">
-          ${t('search_cta')}
-        </div>
-        <div style="position: absolute; top: 82%; left: 11%; color: #2bd58c; font-size: 0.9vw; font-weight: 700;">
-          ${t('search_sub')}
-        </div>
+
+        <!-- WERKENDE INPUT VELD EXACAT OVER DE GOUDEN ZOEKBALK -->
+        <input type="text" class="banner-search-input" placeholder="${t('search_placeholder')}">
       </div>
     </div>
   `;
