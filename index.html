@@ -6,13 +6,14 @@
 <title>Football-Shirt-Market</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --gold-hi: #efd28f;
+  --gold-mid: #d6aa45;
   --cream: #f5f1e7;
-  --green: #18b875;
+  --green: #2bd58c;
 }
 * { box-sizing: border-box; }
 html, body {
@@ -65,64 +66,51 @@ nav a:hover { color: #fff; }
   width: 100%;
   display: block;
   height: auto;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.banner-container:hover img {
-  transform: scale(1.015);
 }
 
-/* TYPOGRAFIE VOOR BANNER TEKSTEN */
+/* TYPOGRAFIE & EFFECTEN */
 .banner-heading {
   font-family: 'Montserrat', sans-serif;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.9);
+  text-transform: uppercase;
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #fff3a8 0%, #d6aa45 50%, #9e7526 100%);
+/* 3D GOUD EFFECT EXTACT ZOALS IN DE AFBEELDING */
+.gold-gradient-3d {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffe380 25%, #d6a133 50%, #8a5e12 78%, #fceabb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 10px rgba(0,0,0,0.8));
+  filter: drop-shadow(0px 4px 0px #3a2202) drop-shadow(0px 8px 15px rgba(0,0,0,0.9));
 }
 
-/* KNOPPEN & INPUT OVERLAYS */
+.banner-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-mid);
+  font-size: 0.8vw;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.banner-divider::before, .banner-divider::after {
+  content: "";
+  height: 1px;
+  width: 2.5vw;
+  background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
+}
+
+/* KNOPPEN */
 .banner-btn-green {
   background: linear-gradient(135deg, #18b875, #118252);
   color: #fff; padding: 0.8vw 1.6vw; border-radius: 8px; 
   font-weight: 800; font-size: 1.1vw; text-decoration: none; display: inline-block;
   box-shadow: 0 0 20px rgba(24, 184, 117, 0.4);
-  transition: all 0.2s ease;
-}
-.banner-btn-green:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(24, 184, 117, 0.7);
 }
 
 .banner-btn-white {
   background: #ffffff; color: #000; padding: 0.8vw 1.6vw; border-radius: 8px; 
   font-weight: 800; font-size: 1.1vw; text-decoration: none; display: inline-block;
-  transition: all 0.2s ease;
-}
-.banner-btn-white:hover {
-  transform: translateY(-2px);
-  background: #f0f0f0;
-}
-
-.banner-search-input {
-  position: absolute;
-  top: 76%;
-  left: 11.5%;
-  width: 30%;
-  height: 9%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  font-size: 1.1vw;
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-}
-.banner-search-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
 }
 
 footer { text-align: center; padding: 42px 20px; background: #020504; border-top: 1px solid rgba(239, 210, 143, .18); }
@@ -171,17 +159,19 @@ const dict = {
     brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen",
     footer_tag: "De marketplace voor voetbalshirts", footer_since: "Since 2026",
     
-    // HELD.PNG TEKSTEN
     hero_title: "Koop. Verkoop.<br>Verzamel.",
     hero_desc: "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.",
     btn_explore: "Ontdek shirts", btn_sell: "Verkoop een shirt",
     
-    // ONTDEKKEN.PNG TEKSTEN
+    // EXACTE ONTDEKKEN TEKSTEN
+    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
     tagline: "VOOR ÉCHTE VOETBALFANS",
     title_explore: "ONTDEKKEN",
-    sub_find: "VIND JOUW", sub_next: "VOLGENDE SHIRT",
-    desc_explore: "Van iconische klassiekers tot de nieuwste releases. Ontdek, verzamel en draag jouw passie.",
-    search_placeholder: "Zoek op club, speler of jaar..."
+    sub_find: "VIND JOUW", sub_next: "VOLGENDE", sub_shirt: "SHIRT",
+    desc_line1: "Van iconische klassiekers tot de nieuwste releases.",
+    desc_line2: "Ontdek, verzamel en draag jouw passie.",
+    search_cta: "ZOEK. VIND. VERZAMEL.",
+    search_sub: "JOUW COLLECTIE BEGINT HIER"
   },
   en: {
     brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell",
@@ -191,11 +181,14 @@ const dict = {
     hero_desc: "The marketplace for football shirts, collectors, and true football fans.",
     btn_explore: "Explore shirts", btn_sell: "Sell a shirt",
     
+    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
     tagline: "FOR TRUE FOOTBALL FANS",
     title_explore: "EXPLORE",
-    sub_find: "FIND YOUR", sub_next: "NEXT SHIRT",
-    desc_explore: "From iconic classics to the newest releases. Discover, collect, and wear your passion.",
-    search_placeholder: "Search club, player or year..."
+    sub_find: "FIND YOUR", sub_next: "NEXT", sub_shirt: "SHIRT",
+    desc_line1: "From iconic classics to the newest releases.",
+    desc_line2: "Discover, collect, and wear your passion.",
+    search_cta: "SEARCH. FIND. COLLECT.",
+    search_sub: "YOUR COLLECTION STARTS HERE"
   },
   fr: {
     brand_since: "DEPUIS 2026", nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre",
@@ -205,11 +198,14 @@ const dict = {
     hero_desc: "La place de marché pour les maillots de football, les collectionneurs et les passionnés.",
     btn_explore: "Explorer les maillots", btn_sell: "Vendre un maillot",
     
+    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
     tagline: "POUR LES VRAIS PASSIONNÉS",
     title_explore: "EXPLORER",
-    sub_find: "TROUVEZ VOTRE", sub_next: "PROCHAIN MAILLOT",
-    desc_explore: "Des classiques iconiques aux dernières nouveautés. Découvrez, collectionnez et portez votre passion.",
-    search_placeholder: "Chercher un club, joueur..."
+    sub_find: "TROUVEZ VOTRE", sub_next: "PROCHAIN", sub_shirt: "MAILLOT",
+    desc_line1: "Des classiques iconiques aux dernières nouveautés.",
+    desc_line2: "Découvrez, collectionnez et portez votre passion.",
+    search_cta: "CHERCHEZ. TROUVEZ. COLLECTIONNEZ.",
+    search_sub: "VOTRE COLLECTION COMMENCE ICI"
   },
   de: {
     brand_since: "SEIT 2026", nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen",
@@ -219,11 +215,14 @@ const dict = {
     hero_desc: "Der Marktplatz für Fußballtrikots, Sammler und echte Fußballfans.",
     btn_explore: "Trikots entdecken", btn_sell: "Trikot verkaufen",
     
+    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
     tagline: "FÜR ECHTE FUSSBALLFANS",
     title_explore: "ENTDECKEN",
-    sub_find: "FINDE DEIN", sub_next: "NÄCHSTES TRIKOT",
-    desc_explore: "Von kultigen Klassikern bis zu den neuesten Releases. Entdecke, sammle und trage deine Leidenschaft.",
-    search_placeholder: "Suche nach Verein, Spieler..."
+    sub_find: "FINDE DEIN", sub_next: "NÄCHSTES", sub_shirt: "TRIKOT",
+    desc_line1: "Von kultigen Klassikern bis zu den neuesten Releases.",
+    desc_line2: "Entdecke, sammle und trage deine Leidenschaft.",
+    search_cta: "SUCHEN. FINDEN. SAMMELN.",
+    search_sub: "DEINE KOLLEKTION STARTET HIER"
   },
   es: {
     brand_since: "DESDE 2026", nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender",
@@ -233,11 +232,14 @@ const dict = {
     hero_desc: "El mercado de camisetas de fútbol, coleccionistas y auténticos aficionados.",
     btn_explore: "Explorar camisetas", btn_sell: "Vender una camiseta",
     
+    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
     tagline: "PARA AUTÉNTICOS AFICIONADOS",
     title_explore: "EXPLORAR",
-    sub_find: "ENCUENTRA TU", sub_next: "PRÓXIMA CAMISETA",
-    desc_explore: "Desde clásicos icónicos hasta los últimos lanzamientos. Descubre, colecciona y viste tu pasión.",
-    search_placeholder: "Buscar club, jugador o año..."
+    sub_find: "ENCUENTRA TU", sub_next: "PRÓXIMA", sub_shirt: "CAMISETA",
+    desc_line1: "Desde clásicos icónicos hasta los últimos lanzamientos.",
+    desc_line2: "Descubre, colecciona y viste tu pasión.",
+    search_cta: "BUSCA. ENCUENTRA. COLECCIONA.",
+    search_sub: "TU COLECCIÓN EMPIEZA AQUÍ"
   }
 };
 
@@ -278,21 +280,53 @@ function renderExplore() {
       <div class="banner-container">
         <img src="ontdekken.png" alt="Explore Banner">
         
-        <div style="position: absolute; top: 10%; left: 5%; color: #d6aa45; font-size: 1vw; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
-          FOOTBALL SHIRT MARKET — ${t('tagline')}
+        <!-- LOGO LINKSBOVEN OP BANNER -->
+        <img src="logo.png" style="position: absolute; top: 5.5%; left: 3.5%; width: 4.8vw; height: auto;" alt="Logo">
+        
+        <!-- MERKNAAM & SUB-TAGLINE LINKSBOVEN -->
+        <div class="banner-heading" style="position: absolute; top: 6.5%; left: 9.2%; color: #ffffff; font-size: 1.3vw; font-weight: 900; letter-spacing: 1px;">
+          ${t('brand_title')}
         </div>
-        <div class="banner-heading gold-gradient-text" style="position: absolute; top: 18%; left: 5%; font-size: 4.8vw; font-weight: 900; line-height: 1;">
-          ${t('title_explore')}
-        </div>
-        <div class="banner-heading" style="position: absolute; top: 35%; left: 5%; color: #ffffff; font-size: 1.6vw; font-weight: 800;">
-          ${t('sub_find')} <span style="color: #2bd58c;">${t('sub_next')}</span>
-        </div>
-        <div style="position: absolute; top: 46%; left: 5%; max-width: 36%; color: #d0d7d3; font-size: 0.95vw; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.9);">
-          ${t('desc_explore')}
+        <div class="banner-divider" style="position: absolute; top: 12.5%; left: 9.2%;">
+          ${t('tagline')}
         </div>
 
-        <!-- WERKENDE INPUT VELD EXACAT OVER DE GOUDEN ZOEKBALK -->
-        <input type="text" class="banner-search-input" placeholder="${t('search_placeholder')}">
+        <!-- GROTE HOOFDTITEL "ONTDEKKEN" -->
+        <div class="gold-gradient-3d" style="position: absolute; top: 21%; left: 3.5%; font-size: 5.4vw; line-height: 1; letter-spacing: 1px;">
+          ${t('title_explore')}
+        </div>
+
+        <!-- KROON ICOON & SUBTITLE "VIND JOUW VOLGENDE SHIRT" -->
+        <div style="position: absolute; top: 38%; left: 3.5%; width: 33vw; text-align: center;">
+          <div style="color: var(--gold-mid); font-size: 1.1vw; margin-bottom: 0.2vw;">👑</div>
+          <div class="banner-heading" style="color: #ffffff; font-size: 1.4vw; font-weight: 900; letter-spacing: 1.5px; display: flex; align-items: center; justify-content: center; gap: 0.8vw;">
+            <span style="height: 1px; width: 3vw; background: linear-gradient(90deg, transparent, var(--gold-mid));"></span>
+            ${t('sub_find')} <span style="color: var(--green);">${t('sub_next')}</span> ${t('sub_shirt')}
+            <span style="height: 1px; width: 3vw; background: linear-gradient(90deg, var(--gold-mid), transparent);"></span>
+          </div>
+          <div style="margin-top: 0.4vw; display: flex; align-items: center; justify-content: center; gap: 0.4vw;">
+            <span style="height: 2px; width: 2px; background: var(--gold-mid); border-radius: 50%;"></span>
+            <span style="height: 1px; width: 4vw; background: var(--gold-mid);"></span>
+            <span style="height: 2px; width: 2px; background: var(--gold-mid); border-radius: 50%;"></span>
+          </div>
+        </div>
+
+        <!-- OMSCHRIJVING TEKST -->
+        <div style="position: absolute; top: 51%; left: 3.5%; width: 33vw; text-align: center; color: #d0d7d3; font-size: 0.85vw; line-height: 1.5; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.9);">
+          <div>${t('desc_line1')}</div>
+          <div>${t('desc_line2')}</div>
+        </div>
+
+        <!-- TEKST OVERLAY OP DE GOUDEN ZOEKBALK (LINKSONDER) -->
+        <div style="position: absolute; top: 76.5%; left: 11.2%; pointer-events: none;">
+          <div class="banner-heading" style="color: #ffffff; font-size: 1.15vw; font-weight: 900; letter-spacing: 1px; line-height: 1.1;">
+            ${t('search_cta')}
+          </div>
+          <div style="color: var(--green); font-size: 0.75vw; font-weight: 800; letter-spacing: 1px; margin-top: 0.2vw;">
+            ${t('search_sub')}
+          </div>
+        </div>
+
       </div>
     </div>
   `;
