@@ -14,11 +14,13 @@
   --gold-mid: #d6aa45;
   --cream: #f5f1e7;
   --green: #2bd58c;
+  --dark-bg: #020504;
+  --card-bg: #08130f;
 }
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
-  background: #020504;
+  background: var(--dark-bg);
   color: var(--cream);
   font-family: 'Inter', system-ui, sans-serif;
 }
@@ -46,12 +48,58 @@ nav { flex: 1; display: flex; align-items: center; gap: 5px; }
 nav a { color: #b8c9be; padding: 11px 14px; border-radius: 11px; font-size: 13px; font-weight: 800; transition: .28s; }
 nav a:hover { color: #fff; }
 
-.lang-select {
-  background: #08130f; color: var(--gold-hi); 
+/* SEARCHABLE LANGUAGE SELECTOR BUTTON */
+.lang-btn {
+  background: var(--card-bg); color: var(--gold-hi); 
   border: 1px solid rgba(239, 210, 143, 0.3);
-  border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 800;
-  cursor: pointer; outline: none;
+  border-radius: 12px; padding: 10px 16px; font-size: 13px; font-weight: 800;
+  cursor: pointer; outline: none; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s ease;
 }
+.lang-btn:hover { border-color: var(--gold-hi); background: #0e2019; }
+
+/* LANGUAGE PICKER MODAL / DROPDOWN */
+.lang-modal-backdrop {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
+  z-index: 2000; display: none; align-items: center; justify-content: center;
+}
+.lang-modal-backdrop.open { display: flex; }
+
+.lang-modal {
+  background: #0b1a14; border: 1px solid rgba(239, 210, 143, 0.3);
+  border-radius: 20px; width: min(520px, 90vw); max-height: 80vh;
+  display: flex; flex-direction: column; padding: 24px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+}
+.lang-modal-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+}
+.lang-modal-title { font-size: 18px; font-weight: 800; color: var(--gold-hi); }
+.lang-close-btn { background: none; border: none; color: #8a9e92; font-size: 24px; cursor: pointer; }
+.lang-close-btn:hover { color: #fff; }
+
+.lang-search-box {
+  width: 100%; background: #040a08; border: 1px solid rgba(239, 210, 143, 0.25);
+  border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 14px;
+  outline: none; margin-bottom: 16px; font-family: inherit;
+}
+.lang-search-box:focus { border-color: var(--gold-hi); }
+
+.lang-list {
+  overflow-y: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  max-height: 50vh; padding-right: 6px;
+}
+.lang-list::-webkit-scrollbar { width: 6px; }
+.lang-list::-webkit-scrollbar-thumb { background: rgba(239, 210, 143, 0.3); border-radius: 3px; }
+
+.lang-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border-radius: 10px; background: rgba(255,255,255,0.03); cursor: pointer;
+  font-size: 13px; font-weight: 600; transition: background 0.2s;
+}
+.lang-item:hover { background: rgba(239, 210, 143, 0.15); color: #fff; }
+.lang-item.active { background: var(--gold-mid); color: #000; font-weight: 800; }
 
 .page { width: min(1320px, 100%); margin: auto; padding: 34px 22px 80px; }
 
@@ -119,9 +167,25 @@ footer { text-align: center; padding: 42px 20px; background: #020504; border-top
       <a href="#/sell" data-i18n="nav_sell">Verkopen</a>
     </nav>
 
-    <select id="langSwitcher" class="lang-select"></select>
+    <button id="langPickerBtn" class="lang-btn">
+      <span id="currentFlag">🇳🇱</span>
+      <span id="currentLangCode">NL</span>
+      <span style="font-size: 10px; opacity: 0.7;">▼</span>
+    </button>
   </div>
 </header>
+
+<!-- SEARCHABLE LANGUAGE MODAL -->
+<div id="langModal" class="lang-modal-backdrop">
+  <div class="lang-modal">
+    <div class="lang-modal-header">
+      <div class="lang-modal-title" data-i18n="select_language">Kies een taal / Select Language</div>
+      <button class="lang-close-btn" id="closeLangModal">&times;</button>
+    </div>
+    <input type="text" id="langSearchInput" class="lang-search-box" placeholder="Zoek taal / Search language...">
+    <div id="langList" class="lang-list"></div>
+  </div>
+</div>
 
 <main id="app"></main>
 
@@ -131,6 +195,7 @@ footer { text-align: center; padding: 42px 20px; background: #020504; border-top
 </footer>
 
 <script>
+// 100+ TALEN LIJST
 const languages = [
   { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -140,12 +205,106 @@ const languages = [
   { code: 'it', name: 'Italiano', flag: '🇮🇹' },
   { code: 'pt', name: 'Português', flag: '🇵🇹' },
   { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
-  { code: 'pl', name: 'Polski', flag: '🇵🇱' }
+  { code: 'pl', name: 'Polski', flag: '🇵🇱' },
+  { code: 'ar', name: 'العربية (Arabic)', flag: '🇸🇦' },
+  { code: 'zh', name: '中文 (Chinese)', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ko', name: '한국어 (Korean)', flag: '🇰🇷' },
+  { code: 'ru', name: 'Русский (Russian)', flag: '🇷🇺' },
+  { code: 'uk', name: 'Українська (Ukrainian)', flag: '🇺🇦' },
+  { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
+  { code: 'no', name: 'Norsk', flag: '🇳🇴' },
+  { code: 'da', name: 'Dansk', flag: '🇩🇰' },
+  { code: 'fi', name: 'Suomi', flag: '🇫🇮' },
+  { code: 'el', name: 'Ελληνικά (Greek)', flag: '🇬🇷' },
+  { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
+  { code: 'hu', name: 'Magyar', flag: '🇭🇺' },
+  { code: 'ro', name: 'Română', flag: '🇷🇴' },
+  { code: 'bg', name: 'Български (Bulgarian)', flag: '🇧🇬' },
+  { code: 'hr', name: 'Hrvatski', flag: '🇭🇷' },
+  { code: 'sr', name: 'Српски (Serbian)', flag: '🇷🇸' },
+  { code: 'sk', name: 'Slovenčina', flag: '🇸🇰' },
+  { code: 'sl', name: 'Slovenščina', flag: '🇸🇮' },
+  { code: 'et', name: 'Eesti', flag: '🇪🇪' },
+  { code: 'lv', name: 'Latviešu', flag: '🇱🇻' },
+  { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
+  { code: 'th', name: 'ไทย (Thai)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'bn', name: 'বাংলা (Bengali)', flag: '🇧🇩' },
+  { code: 'ur', name: 'اردو (Urdu)', flag: '🇵🇰' },
+  { code: 'fa', name: 'فارسی (Persian)', flag: '🇮🇷' },
+  { code: 'he', name: 'עברית (Hebrew)', flag: '🇮🇱' },
+  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
+  { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
+  { code: 'sq', name: 'Shqip', flag: '🇦🇱' },
+  { code: 'am', name: 'አማርኛ (Amharic)', flag: '🇪🇹' },
+  { code: 'hy', name: 'Հայերեն (Armenian)', flag: '🇦🇲' },
+  { code: 'az', name: 'Azərbaycan', flag: '🇦🇿' },
+  { code: 'eu', name: 'Euskara', flag: '🇪🇸' },
+  { code: 'be', name: 'Беларуская (Belarusian)', flag: '🇧🇾' },
+  { code: 'bs', name: 'Bosanski', flag: '🇧🇦' },
+  { code: 'ca', name: 'Català', flag: '🇪🇸' },
+  { code: 'cy', name: 'Cymraeg', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿' },
+  { code: 'eo', name: 'Esperanto', flag: '🌍' },
+  { code: 'fo', name: 'Føroyskt', flag: '🇫🇴' },
+  { code: 'fy', name: 'Frysk', flag: '🇳🇱' },
+  { code: 'gl', name: 'Galego', flag: '🇪🇸' },
+  { code: 'ka', name: 'ქართული (Georgian)', flag: '🇬🇪' },
+  { code: 'gu', name: 'ગુજરાતી (Gujarati)', flag: '🇮🇳' },
+  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+  { code: 'is', name: 'Íslenska', flag: '🇮🇸' },
+  { code: 'ga', name: 'Gaeilge', flag: '🇮🇪' },
+  { code: 'jv', name: 'Basa Jawa', flag: '🇮🇩' },
+  { code: 'kn', name: 'ಕನ್ನಡ (Kannada)', flag: '🇮🇳' },
+  { code: 'kk', name: 'Қазақ тілі (Kazakh)', flag: '🇰🇿' },
+  { code: 'km', name: 'ភាសាខ្មែរ (Khmer)', flag: '🇰🇭' },
+  { code: 'ky', name: 'Кыргызча (Kyrgyz)', flag: '🇰🇬' },
+  { code: 'la', name: 'Latina', flag: '🇻🇦' },
+  { code: 'lb', name: 'Lëtzebuergesch', flag: '🇱🇺' },
+  { code: 'mk', name: 'Makedonski', flag: '🇲🇰' },
+  { code: 'mg', name: 'Malagasy', flag: '🇲🇬' },
+  { code: 'ml', name: 'മലയാളം (Malayalam)', flag: '🇮🇳' },
+  { code: 'mt', name: 'Malti', flag: '🇲🇹' },
+  { code: 'mi', name: 'Te Reo Māori', flag: '🇳🇿' },
+  { code: 'mr', name: 'मराठी (Marathi)', flag: '🇮🇳' },
+  { code: 'mn', name: 'Монгол (Mongolian)', flag: '🇲🇳' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'ps', name: 'پښتو (Pashto)', flag: '🇦🇫' },
+  { code: 'pa', name: 'ਪੰਜਾਬੀ (Punjabi)', flag: '🇮🇳' },
+  { code: 'gd', name: 'Gàidhlig', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
+  { code: 'si', name: 'සිංහල (Sinhala)', flag: '🇱🇰' },
+  { code: 'so', name: 'Soomaali', flag: '🇸🇴' },
+  { code: 'su', name: 'Basa Sunda', flag: '🇮🇩' },
+  { code: 'tg', name: 'Тоҷикӣ (Tajik)', flag: '🇹🇯' },
+  { code: 'ta', name: 'தமிழ் (Tamil)', flag: '🇮🇳' },
+  { code: 'te', name: 'తెలుగు (Telugu)', flag: '🇮🇳' },
+  { code: 'uz', name: 'Oʻzbekcha', flag: '🇺🇿' },
+  { code: 'xh', name: 'isiXhosa', flag: '🇿🇦' },
+  { code: 'yi', name: 'ייִדיש (Yiddish)', flag: '🇮🇱' },
+  { code: 'yo', name: 'Yorùbá', flag: '🇳🇬' },
+  { code: 'zu', name: 'isiZulu', flag: '🇿🇦' },
+  { code: 'fil', name: 'Filipino', flag: '🇵🇭' },
+  { code: 'ht', name: 'Kreyòl Ayisyen', flag: '🇭🇹' },
+  { code: 'ku', name: 'Kurdî', flag: '🇮🇶' },
+  { code: 'lo', name: 'ພາສາລາວ (Lao)', flag: '🇱🇦' },
+  { code: 'my', name: 'မြန်မာဘာသာ (Burmese)', flag: '🇲🇲' },
+  { code: 'or', name: 'ଓଡ଼ିଆ (Odia)', flag: '🇮🇳' },
+  { code: 'rw', name: 'Ikinyarwanda', flag: '🇷🇼' },
+  { code: 'sm', name: 'Gagana Samoa', flag: '🇼🇸' },
+  { code: 'sn', name: 'chiShona', flag: '🇿🇼' },
+  { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
+  { code: 'tk', name: 'Türkmençe', flag: '🇹🇲' },
+  { code: 'ug', name: 'ئۇيغۇرچە (Uyghur)', flag: '🇨🇳' },
+  { code: 'wo', name: 'Wolof', flag: '🇸🇳' }
 ];
 
 const dict = {
   nl: {
     nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen",
+    select_language: "Kies een taal",
     footer_tag: "De marketplace voor voetbalshirts",
     hero_title: "Koop. Verkoop.<br>Verzamel.",
     hero_desc: "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.",
@@ -159,6 +318,7 @@ const dict = {
   },
   en: {
     nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell",
+    select_language: "Select Language",
     footer_tag: "The marketplace for football shirts",
     hero_title: "Buy. Sell.<br>Collect.",
     hero_desc: "The marketplace for football shirts, collectors, and true football fans.",
@@ -172,6 +332,7 @@ const dict = {
   },
   fr: {
     nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre",
+    select_language: "Choisir la langue",
     footer_tag: "La place de marché pour les maillots de football",
     hero_title: "Achetez. Vendez.<br>Collectionnez.",
     hero_desc: "La place de marché pour les maillots de football, les collectionneurs et les passionnés.",
@@ -185,6 +346,7 @@ const dict = {
   },
   de: {
     nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen",
+    select_language: "Sprache wählen",
     footer_tag: "Der Marktplatz für Trikots",
     hero_title: "Kaufen. Verkaufen.<br>Sammeln.",
     hero_desc: "Der Marktplatz für Fußballtrikots, Sammler und echte Fußballfans.",
@@ -198,6 +360,7 @@ const dict = {
   },
   es: {
     nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender",
+    select_language: "Seleccionar idioma",
     footer_tag: "El mercado de camisetas de fútbol",
     hero_title: "Compra. Vende.<br>Colecciona.",
     hero_desc: "El mercado de camisetas de fútbol, coleccionistas y auténticos aficionados.",
@@ -208,65 +371,13 @@ const dict = {
     desc_line2: "Descubre, colecciona y viste tu pasión.",
     search_cta: "BUSCA. ENCUENTRA. COLECCIONA.",
     search_sub: "TU COLECCIÓN EMPIEZA AQUÍ"
-  },
-  it: {
-    nav_home: "Home", nav_explore: "Esplora", nav_sell: "Vendi",
-    footer_tag: "Il marketplace per maglie da calcio",
-    hero_title: "Compra. Vendi.<br>Colleziona.",
-    hero_desc: "Il marketplace per maglie da calcio, collezionisti e veri tifosi.",
-    btn_explore: "Esplora maglie", btn_sell: "Vendi una maglia",
-    title_explore: "ESPLORA",
-    sub_find: "TROVA LA TUA", sub_next: "PROSSIMA", sub_shirt: "MAGLIA",
-    desc_line1: "Dai classici iconici alle ultime novità.",
-    desc_line2: "Scopri, colleziona e indossa la tua passione.",
-    search_cta: "CERCA. TROVA. COLLEZIONA.",
-    search_sub: "LA TUA COLLEZIONE INIZIA QUI"
-  },
-  pt: {
-    nav_home: "Início", nav_explore: "Explorar", nav_sell: "Vender",
-    footer_tag: "O mercado para camisas de futebol",
-    hero_title: "Compre. Venda.<br>Colecione.",
-    hero_desc: "O mercado de camisas de futebol, colecionadores e verdadeiros fãs.",
-    btn_explore: "Explorar camisas", btn_sell: "Vender uma camisa",
-    title_explore: "EXPLORAR",
-    sub_find: "ENCONTRE A SUA", sub_next: "PRÓXIMA", sub_shirt: "CAMISA",
-    desc_line1: "Dos clássicos icônicos aos lançamentos mais recentes.",
-    desc_line2: "Descubra, colecione e vista sua paixão.",
-    search_cta: "PROCURE. ENCONTRE. COLECIONE.",
-    search_sub: "SUA COLEÇÃO COMEÇA AQUI"
-  },
-  tr: {
-    nav_home: "Ana Sayfa", nav_explore: "Keşfet", nav_sell: "Sat",
-    footer_tag: "Futbol formaları pazar yeri",
-    hero_title: "Satın Al. Sat.<br>Koleksiyon Yap.",
-    hero_desc: "Futbol formaları, koleksiyoncular ve gerçek taraftarlar için pazar yeri.",
-    btn_explore: "Formaları Keşfet", btn_sell: "Forma Sat",
-    title_explore: "KEŞFET",
-    sub_find: "YENİ", sub_next: "FORMANI", sub_shirt: "BUL",
-    desc_line1: "Efsanevi klasiklerden en yeni çıkanlara kadar.",
-    desc_line2: "Keşfet, koleksiyon yap ve tutkunu üzerinde taşı.",
-    search_cta: "ARA. BUL. KOLEKSİYON YAP.",
-    search_sub: "KOLEKSİYONUN BURADA BAŞLIYOR"
-  },
-  pl: {
-    nav_home: "Strona Główna", nav_explore: "Odkrywaj", nav_sell: "Sprzedaj",
-    footer_tag: "Rynek koszulek piłkarskich",
-    hero_title: "Kupuj. Sprzedawaj.<br>Kolekcjonuj.",
-    hero_desc: "Rynek koszulek piłkarskich, dla kolekcjonerów i prawdziwych kibiców.",
-    btn_explore: "Odkryj koszulki", btn_sell: "Sprzedaj koszulkę",
-    title_explore: "ODKRYWAJ",
-    sub_find: "ZNAJDŹ SWOJĄ", sub_next: "NASTĘPNĄ", sub_shirt: "KOSZULKĘ",
-    desc_line1: "Od kultowych klasyków po najnowsze wydania.",
-    desc_line2: "Odkrywaj, kolekcjonuj i noś swoją pasję.",
-    search_cta: "SZUKAJ. ZNAJDŹ. KOLEKCJONUJ.",
-    search_sub: "TWOJA KOLEKCJA ZACZYNA SIĘ TUTAJ"
   }
 };
 
 let currentLang = localStorage.getItem("fsm_lang") || "nl";
 
 function t(key) {
-  const langDict = dict[currentLang] || dict['nl'];
+  const langDict = dict[currentLang] || dict['en'] || dict['nl'];
   return langDict[key] || dict['nl'][key] || key;
 }
 
@@ -297,12 +408,10 @@ function renderExplore() {
       <div class="banner-container">
         <img src="ontdekken.png" alt="Explore Banner">
 
-        <!-- GROTE HOOFDTITEL (COMPACT AANGEPAST VOOR ELKE TAAL) -->
         <div class="gold-gradient-3d" style="position: absolute; top: 18%; left: 3.2%; font-size: 4.2vw; line-height: 1; letter-spacing: 0.5px; max-width: 38vw; white-space: nowrap;">
           ${t('title_explore')}
         </div>
 
-        <!-- KROON ICOON & SUBTITLE -->
         <div style="position: absolute; top: 35%; left: 3.2%; width: 33vw; text-align: center;">
           <div style="color: var(--gold-mid); font-size: 1vw; margin-bottom: 0.1vw;">👑</div>
           <div class="banner-heading" style="color: #ffffff; font-size: 1.25vw; font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 0.6vw;">
@@ -317,13 +426,11 @@ function renderExplore() {
           </div>
         </div>
 
-        <!-- OMSCHRIJVING TEKST -->
         <div style="position: absolute; top: 48%; left: 3.2%; width: 33vw; text-align: center; color: #d0d7d3; font-size: 0.8vw; line-height: 1.4; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.9);">
           <div>${t('desc_line1')}</div>
           <div>${t('desc_line2')}</div>
         </div>
 
-        <!-- TEKST OVERLAY OP DE GOUDEN ZOEKBALK (LINKSONDER) -->
         <div style="position: absolute; top: 76.5%; left: 11.2%; pointer-events: none;">
           <div class="banner-heading" style="color: #ffffff; font-size: 1.05vw; font-weight: 900; letter-spacing: 0.5px; line-height: 1.1;">
             ${t('search_cta')}
@@ -346,28 +453,52 @@ function route() {
   document.querySelectorAll("[data-i18n]").forEach(el => {
     el.innerHTML = t(el.getAttribute("data-i18n"));
   });
+
+  const activeLangObj = languages.find(l => l.code === currentLang) || languages[0];
+  document.getElementById("currentFlag").textContent = activeLangObj.flag;
+  document.getElementById("currentLangCode").textContent = activeLangObj.code.toUpperCase();
 }
 
-function initLangSwitcher() {
-  const select = document.getElementById("langSwitcher");
-  select.innerHTML = "";
-  languages.forEach(lang => {
-    const opt = document.createElement("option");
-    opt.value = lang.code;
-    opt.textContent = `${lang.flag} ${lang.name}`;
-    if (lang.code === currentLang) opt.selected = true;
-    select.appendChild(opt);
-  });
+/* SEARCHABLE LANGUAGE SELECTOR LOGIC */
+function renderLanguageList(filterText = "") {
+  const langList = document.getElementById("langList");
+  langList.innerHTML = "";
   
-  select.addEventListener("change", (e) => {
-    currentLang = e.target.value;
-    localStorage.setItem("fsm_lang", currentLang);
-    route();
+  const filtered = languages.filter(l => 
+    l.name.toLowerCase().includes(filterText.toLowerCase()) || 
+    l.code.toLowerCase().includes(filterText.toLowerCase())
+  );
+
+  filtered.forEach(lang => {
+    const item = document.createElement("div");
+    item.className = `lang-item ${lang.code === currentLang ? 'active' : ''}`;
+    item.innerHTML = `<span>${lang.flag}</span> <span>${lang.name}</span>`;
+    item.onclick = () => {
+      currentLang = lang.code;
+      localStorage.setItem("fsm_lang", currentLang);
+      document.getElementById("langModal").classList.remove("open");
+      route();
+    };
+    langList.appendChild(item);
   });
 }
+
+document.getElementById("langPickerBtn").onclick = () => {
+  document.getElementById("langModal").classList.add("open");
+  document.getElementById("langSearchInput").value = "";
+  renderLanguageList();
+  document.getElementById("langSearchInput").focus();
+};
+
+document.getElementById("closeLangModal").onclick = () => {
+  document.getElementById("langModal").classList.remove("open");
+};
+
+document.getElementById("langSearchInput").oninput = (e) => {
+  renderLanguageList(e.target.value);
+};
 
 window.addEventListener("hashchange", route);
-initLangSwitcher();
 route();
 </script>
 </body>
