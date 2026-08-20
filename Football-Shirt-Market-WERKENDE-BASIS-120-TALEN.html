@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football-Shirt-Market</title>
+
+<style>
+:root{
+  --ink:#06100c;
+  --ink-2:#0a1711;
+  --ink-3:#10241a;
+  --forest:#0b2418;
+  --forest-2:#123321;
+  --forest-3:#17422a;
+  --green:#18b875;
+  --green-bright:#2bd58c;
+  --gold:#d6aa45;
+  --gold-bright:#f2cf70;
+  --white:#fff;
+  --panel:#0c1e14;
+  --panel-2:#10271a;
+  --muted:#9caea3;
+  --shadow:0 18px 55px rgba(0,0,0,.28);
+  --gold-hi:#efd28f;
+  --emerald-hi:#35d69a;
+  --cream:#f5f1e7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;min-height:100%}
+
+html,body{
+  background:
+    radial-gradient(900px 500px at 7% -5%,rgba(24,168,115,.15),transparent 60%),
+    radial-gradient(700px 450px at 93% 6%,rgba(239,210,143,.10),transparent 62%),
+    radial-gradient(1000px 600px at 50% 110%,rgba(6,70,48,.16),transparent 65%),
+    linear-gradient(135deg,#020504,#07120d 45%,#030605) !important;
+  color:var(--cream)!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  letter-spacing:-.01em;
+}
+button,input,select,textarea{font:inherit}
+a{text-decoration:none;color:inherit}
+.hidden{display:none!important}
+
+/* HEADER */
+.site-header{
+  position:sticky;top:0;z-index:1000;width:100%;
+  background:linear-gradient(100deg,rgba(2,7,5,.96),rgba(5,25,18,.94),rgba(2,7,5,.97))!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  color:#fff;
+  border-bottom:1px solid rgba(239,210,143,.20)!important;
+  box-shadow:0 14px 40px rgba(0,0,0,.38)!important;
+}
+.header-inner{
+  width:min(1320px,100%);min-height:84px;margin:auto;padding:10px 22px;
+  display:flex;align-items:center;gap:28px;
+}
+.logo-link{display:flex;align-items:center;gap:13px;flex-shrink:0;color:#fff}
+.header-logo{width:56px;height:56px;object-fit:contain;display:block;filter:drop-shadow(0 0 12px rgba(239,210,143,.15))}
+.brand-name strong{display:block;font-size:16px;font-weight:950;letter-spacing:-.025em}
+.brand-name span{
+  display:block;color:var(--gold-hi)!important;font-size:8px;letter-spacing:3px;
+  margin-top:6px;font-weight:900;
+}
+nav{flex:1;display:flex;align-items:center;gap:5px}
+nav a{
+  position:relative;color:#b8c9be;padding:11px 14px;border-radius:11px;
+  font-size:13px;font-weight:800;transition:all .28s ease;
+  border:1px solid transparent;
+}
+nav a:hover{
+  background:rgba(24,168,115,.075)!important;
+  border-color:rgba(24,168,115,.12);
+  color:#fff;
+}
+
+.lang-select-wrapper { position: relative; display: inline-flex; align-items: center; flex-shrink: 0; }
+.lang-select {
+  appearance: none; -webkit-appearance: none;
+  background: linear-gradient(135deg, rgba(12, 31, 23, 0.95), rgba(8, 19, 15, 0.95));
+  color: var(--gold-hi); border: 1px solid rgba(239, 210, 143, 0.3);
+  border-radius: 12px; padding: 10px 36px 10px 14px; font-size: 13px; font-weight: 800;
+  cursor: pointer; outline: none; transition: all 0.25s ease;
+}
+.lang-select-wrapper::after {
+  content: '▾'; position: absolute; right: 14px; pointer-events: none; color: var(--gold-hi); font-size: 11px;
+}
+.lang-select optgroup { background: #050b08; color: var(--gold-hi); font-weight: 900; }
+.lang-select option { background: #08130f; color: #f4f7f3; padding: 8px 12px; }
+
+.account-btn{
+  border:1px solid rgba(239,210,143,.22)!important;
+  background:linear-gradient(135deg,#12291f,#08130f)!important;
+  color:#fff;border-radius:12px;padding:11px 17px;cursor:pointer;
+  font-weight:850;flex-shrink:0;transition:.2s;
+}
+
+#app{min-height:calc(100vh - 84px)}
+.page{width:min(1320px,100%);margin:auto;padding:34px 22px 80px}
+.page h1,.page h2,.page h3{letter-spacing:-.035em; color:#f6f1e7!important;}
+.page h1{font-size:clamp(30px,4vw,46px);margin:0 0 8px;font-weight:950;}
+.page h2{font-size:28px;margin:0 0 16px;font-weight:900;}
+
+/* HERO */
+.hero,.explore-hero{
+  position:relative;width:100%;overflow:hidden;border-radius:26px!important;
+  background:#050908!important;border:1px solid rgba(239,210,143,.24)!important;
+  box-shadow:0 35px 100px rgba(0,0,0,.48)!important;
+}
+.hero-image, .explore-hero-image{display:block;width:100%;height:auto;max-width:100%;object-fit:cover;}
+.hero-hotspot{position:absolute;z-index:5;display:block;cursor:pointer;border-radius:12px;}
+.hero-hotspot-explore{left:4.6%;top:65.1%;width:16.8%;height:8%}
+.hero-hotspot-sell{left:22.6%;top:65.1%;width:19.5%;height:8%}
+
+/* BUTTONS & CARDS */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  border:0;border-radius:12px;padding:12px 18px;cursor:pointer;
+  font-weight:900;transition:.2s ease;min-height:46px; font-size:13px;
+}
+.primary{
+  background:linear-gradient(135deg,#efd18d,#bd944d 58%,#96713a)!important;
+  color:#171106!important;
+}
+.secondary{
+  background:linear-gradient(135deg,#12382a,#0a2118)!important;
+  color:#eef6f1!important;border:1px solid rgba(53,214,154,.25)!important;
+}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.box{
+  position:relative;
+  background:linear-gradient(145deg,#10271d,#0a1712 55%,#060c0a)!important;
+  border:1px solid rgba(255,255,255,.075)!important;border-radius:18px;overflow:hidden;
+  padding:20px;
+}
+.muted{color:var(--muted);font-size:12px}
+
+.toolbar{
+  display:grid;grid-template-columns:2fr 1.15fr .8fr;gap:12px;margin:22px 0 28px;
+  padding:10px;border:1px solid rgba(255,255,255,.07);
+  background:linear-gradient(135deg,rgba(12,31,23,.85),rgba(5,12,9,.8));
+  border-radius:16px;
+}
+input,select{
+  width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.10)!important;border-radius:12px;
+  background:#09150f!important;color:#f1eee5!important;outline:none;
+}
+
+footer{text-align:center;padding:42px 20px;background:#020504;border-top:1px solid rgba(239,210,143,.18);}
+.gold{color:var(--gold-hi)!important}
+
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+
+/* Searchable language selector */
+.lang-select-wrapper{position:relative;z-index:5000}
+.lang-select{min-width:210px}
+.lang-searchbox{position:absolute;right:0;top:calc(100% + 8px);width:min(360px,92vw);background:#08130f;border:1px solid rgba(239,210,143,.28);border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.6);padding:10px;display:none;z-index:99999}
+.lang-searchbox.open{display:block}
+.lang-searchbox input{margin:0 0 8px}
+.lang-results{max-height:390px;overflow:auto}
+.lang-result{width:100%;display:flex;align-items:center;gap:10px;background:transparent;border:0;color:#fff;border-radius:10px;padding:10px;text-align:left;cursor:pointer}
+.lang-result:hover,.lang-result.active{background:rgba(239,210,143,.10)}
+.lang-result .flag{font-size:20px;width:26px}
+.lang-result .names{display:flex;flex-direction:column}
+.lang-result .native{font-size:11px;color:#8e9a94}
+.lang-result .check{margin-left:auto;color:#efd28f;font-weight:900}
+@media(max-width:700px){
+  .header-inner{flex-wrap:wrap;gap:10px}
+  nav{order:4;flex-basis:100%;overflow-x:auto;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{white-space:nowrap}
+  .lang-select-wrapper{margin-left:auto}
+  .lang-select{min-width:0;width:52px;padding:10px 8px;font-size:0}
+  .lang-select-wrapper::after{right:11px}
+  .lang-searchbox{position:fixed;left:10px;right:10px;top:74px;width:auto;max-height:75vh}
+  .lang-results{max-height:calc(75vh - 62px)}
+  .hero,.explore-hero{border-radius:16px!important}
+  .hero-image,.explore-hero-image{width:100%;height:auto}
+  .page{padding:18px 14px 55px}
+  .toolbar{grid-template-columns:1fr!important}
+}
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#/" class="logo-link">
+      <img class="header-logo" src="https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/56?text=FSM'">
+      <div class="brand-name">
+        <strong>Football-Shirt-Market</strong>
+        <span><span data-i18n="brand_since">SINCE 2026</span></span>
+      </div>
+    </a>
+
+    <nav>
+      <a href="#/" data-i18n="nav_home">Home</a>
+      <a href="#/explore" data-i18n="nav_explore">Ontdekken</a>
+      <a href="#/sell" data-i18n="nav_sell">Verkopen</a>
+      <a href="#/inbox" data-i18n="nav_inbox">Inbox</a>
+      <a href="#/profile" data-i18n="nav_profile">Profiel</a>
+    </nav>
+
+    <div class="lang-select-wrapper">
+      <select id="langSwitcher" class="lang-select"></select>
+    </div>
+
+    <button id="account" class="account-btn" type="button" data-i18n="login">Inloggen</button>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <strong>⚽ Football-Shirt-Market</strong><br>
+  <span><span data-i18n="footer_tag">De marketplace voor voetbalshirts</span> · <span class="gold" data-i18n="footer_since">Since 2026</span></span>
+</footer>
+
+<script>
+// TALENLIJST MET 2 NIEUWE TALEN TOEGEVOEGD
+const languages = [{"code": "nl", "name": "Nederlands", "nativeName": "Nederlands", "flag": "🇳🇱"}, {"code": "en", "name": "Engels", "nativeName": "English", "flag": "🇬🇧"}, {"code": "fr", "name": "Frans", "nativeName": "Français", "flag": "🇫🇷"}, {"code": "de", "name": "Duits", "nativeName": "Deutsch", "flag": "🇩🇪"}, {"code": "es", "name": "Spaans", "nativeName": "Español", "flag": "🇪🇸"}, {"code": "it", "name": "Italiaans", "nativeName": "Italiano", "flag": "🇮🇹"}, {"code": "pt", "name": "Portugees", "nativeName": "Português", "flag": "🇵🇹"}, {"code": "pl", "name": "Pools", "nativeName": "Polski", "flag": "🇵🇱"}, {"code": "cs", "name": "Tsjechisch", "nativeName": "Čeština", "flag": "🇨🇿"}, {"code": "sk", "name": "Slowaaks", "nativeName": "Slovenčina", "flag": "🇸🇰"}, {"code": "sl", "name": "Sloveens", "nativeName": "Slovenščina", "flag": "🇸🇮"}, {"code": "hr", "name": "Kroatisch", "nativeName": "Hrvatski", "flag": "🇭🇷"}, {"code": "sr", "name": "Servisch", "nativeName": "Српски", "flag": "🇷🇸"}, {"code": "bs", "name": "Bosnisch", "nativeName": "Bosanski", "flag": "🇧🇦"}, {"code": "ro", "name": "Roemeens", "nativeName": "Română", "flag": "🇷🇴"}, {"code": "hu", "name": "Hongaars", "nativeName": "Magyar", "flag": "🇭🇺"}, {"code": "bg", "name": "Bulgaars", "nativeName": "Български", "flag": "🇧🇬"}, {"code": "el", "name": "Grieks", "nativeName": "Ελληνικά", "flag": "🇬🇷"}, {"code": "tr", "name": "Turks", "nativeName": "Türkçe", "flag": "🇹🇷"}, {"code": "uk", "name": "Oekraïens", "nativeName": "Українська", "flag": "🇺🇦"}, {"code": "ru", "name": "Russisch", "nativeName": "Русский", "flag": "🇷🇺"}, {"code": "ar", "name": "Arabisch", "nativeName": "العربية", "flag": "🇸🇦"}, {"code": "he", "name": "Hebreeuws", "nativeName": "עברית", "flag": "🇮🇱"}, {"code": "fa", "name": "Perzisch", "nativeName": "فارسی", "flag": "🇮🇷"}, {"code": "hi", "name": "Hindi", "nativeName": "हिन्दी", "flag": "🇮🇳"}, {"code": "bn", "name": "Bengaals", "nativeName": "বাংলা", "flag": "🇧🇩"}, {"code": "ur", "name": "Urdu", "nativeName": "اردو", "flag": "🇵🇰"}, {"code": "zh", "name": "Chinees (vereenvoudigd)", "nativeName": "简体中文", "flag": "🇨🇳"}, {"code": "zh-TW", "name": "Chinees (traditioneel)", "nativeName": "繁體中文", "flag": "🇹🇼"}, {"code": "ja", "name": "Japans", "nativeName": "日本語", "flag": "🇯🇵"}, {"code": "ko", "name": "Koreaans", "nativeName": "한국어", "flag": "🇰🇷"}, {"code": "vi", "name": "Vietnamees", "nativeName": "Tiếng Việt", "flag": "🇻🇳"}, {"code": "th", "name": "Thai", "nativeName": "ไทย", "flag": "🇹🇭"}, {"code": "id", "name": "Indonesisch", "nativeName": "Bahasa Indonesia", "flag": "🇮🇩"}, {"code": "ms", "name": "Maleis", "nativeName": "Bahasa Melayu", "flag": "🇲🇾"}, {"code": "tl", "name": "Filipino", "nativeName": "Filipino", "flag": "🇵🇭"}, {"code": "sw", "name": "Swahili", "nativeName": "Kiswahili", "flag": "🇰🇪"}, {"code": "af", "name": "Afrikaans", "nativeName": "Afrikaans", "flag": "🇿🇦"}, {"code": "ca", "name": "Catalaans", "nativeName": "Català", "flag": "🇦🇩"}, {"code": "eu", "name": "Baskisch", "nativeName": "Euskara", "flag": "🇪🇺"}, {"code": "gl", "name": "Galicisch", "nativeName": "Galego", "flag": "🇪🇸"}, {"code": "is", "name": "IJslands", "nativeName": "Íslenska", "flag": "🇮🇸"}, {"code": "ga", "name": "Iers", "nativeName": "Gaeilge", "flag": "🇮🇪"}, {"code": "et", "name": "Ests", "nativeName": "Eesti", "flag": "🇪🇪"}, {"code": "lv", "name": "Lets", "nativeName": "Latviešu", "flag": "🇱🇻"}, {"code": "lt", "name": "Litouws", "nativeName": "Lietuvių", "flag": "🇱🇹"}, {"code": "fi", "name": "Fins", "nativeName": "Suomi", "flag": "🇫🇮"}, {"code": "sv", "name": "Zweeds", "nativeName": "Svenska", "flag": "🇸🇪"}, {"code": "no", "name": "Noors", "nativeName": "Norsk", "flag": "🇳🇴"}, {"code": "da", "name": "Deens", "nativeName": "Dansk", "flag": "🇩🇰"}, {"code": "eo", "name": "Esperanto", "nativeName": "Esperanto", "flag": "🌐"}, {"code": "sq", "name": "Albanees", "nativeName": "Shqip", "flag": "🇦🇱"}, {"code": "mk", "name": "Macedonisch", "nativeName": "Македонски", "flag": "🇲🇰"}, {"code": "mt", "name": "Maltees", "nativeName": "Malti", "flag": "🇲🇹"}, {"code": "cy", "name": "Welsh", "nativeName": "Cymraeg", "flag": "🏴"}, {"code": "lb", "name": "Luxemburgs", "nativeName": "Lëtzebuergesch", "flag": "🇱🇺"}, {"code": "fy", "name": "Fries", "nativeName": "Frysk", "flag": "🇳🇱"}, {"code": "gd", "name": "Schots-Gaelisch", "nativeName": "Gàidhlig", "flag": "🏴"}, {"code": "fo", "name": "Faeröers", "nativeName": "Føroyskt", "flag": "🇫🇴"}, {"code": "yi", "name": "Jiddisch", "nativeName": "ייִדיש", "flag": "🕎"}, {"code": "hy", "name": "Armeens", "nativeName": "Հայերեն", "flag": "🇦🇲"}, {"code": "ka", "name": "Georgisch", "nativeName": "ქართული", "flag": "🇬🇪"}, {"code": "az", "name": "Azerbeidzjaans", "nativeName": "Azərbaycanca", "flag": "🇦🇿"}, {"code": "kk", "name": "Kazachs", "nativeName": "Қазақша", "flag": "🇰🇿"}, {"code": "ky", "name": "Kirgizisch", "nativeName": "Кыргызча", "flag": "🇰🇬"}, {"code": "uz", "name": "Oezbeeks", "nativeName": "O‘zbekcha", "flag": "🇺🇿"}, {"code": "tk", "name": "Turkmeens", "nativeName": "Türkmençe", "flag": "🇹🇲"}, {"code": "tg", "name": "Tadzjieks", "nativeName": "Тоҷикӣ", "flag": "🇹🇯"}, {"code": "mn", "name": "Mongools", "nativeName": "Монгол", "flag": "🇲🇳"}, {"code": "ne", "name": "Nepalees", "nativeName": "नेपाली", "flag": "🇳🇵"}, {"code": "si", "name": "Singalees", "nativeName": "සිංහල", "flag": "🇱🇰"}, {"code": "ta", "name": "Tamil", "nativeName": "தமிழ்", "flag": "🇮🇳"}, {"code": "te", "name": "Telugu", "nativeName": "తెలుగు", "flag": "🇮🇳"}, {"code": "kn", "name": "Kannada", "nativeName": "ಕನ್ನಡ", "flag": "🇮🇳"}, {"code": "ml", "name": "Malayalam", "nativeName": "മലയാളം", "flag": "🇮🇳"}, {"code": "mr", "name": "Marathi", "nativeName": "मराठी", "flag": "🇮🇳"}, {"code": "gu", "name": "Gujarati", "nativeName": "ગુજરાતી", "flag": "🇮🇳"}, {"code": "pa", "name": "Punjabi", "nativeName": "ਪੰਜਾਬੀ", "flag": "🇮🇳"}, {"code": "or", "name": "Odia", "nativeName": "ଓଡ଼ିଆ", "flag": "🇮🇳"}, {"code": "as", "name": "Assamees", "nativeName": "অসমীয়া", "flag": "🇮🇳"}, {"code": "my", "name": "Birmaans", "nativeName": "မြန်မာ", "flag": "🇲🇲"}, {"code": "km", "name": "Khmer", "nativeName": "ខ្មែរ", "flag": "🇰🇭"}, {"code": "lo", "name": "Laotiaans", "nativeName": "ລາວ", "flag": "🇱🇦"}, {"code": "am", "name": "Amhaars", "nativeName": "አማርኛ", "flag": "🇪🇹"}, {"code": "zu", "name": "Zoeloe", "nativeName": "isiZulu", "flag": "🇿🇦"}, {"code": "xh", "name": "Xhosa", "nativeName": "isiXhosa", "flag": "🇿🇦"}, {"code": "so", "name": "Somalisch", "nativeName": "Soomaali", "flag": "🇸🇴"}, {"code": "ha", "name": "Hausa", "nativeName": "Hausa", "flag": "🇳🇬"}, {"code": "yo", "name": "Yoruba", "nativeName": "Yorùbá", "flag": "🇳🇬"}, {"code": "ig", "name": "Igbo", "nativeName": "Igbo", "flag": "🇳🇬"}, {"code": "rw", "name": "Kinyarwanda", "nativeName": "Kinyarwanda", "flag": "🇷🇼"}, {"code": "mg", "name": "Malagassisch", "nativeName": "Malagasy", "flag": "🇲🇬"}, {"code": "ny", "name": "Chichewa", "nativeName": "Chichewa", "flag": "🇲🇼"}, {"code": "sn", "name": "Shona", "nativeName": "Shona", "flag": "🇿🇼"}, {"code": "st", "name": "Zuid-Sotho", "nativeName": "Sesotho", "flag": "🇱🇸"}, {"code": "tn", "name": "Tswana", "nativeName": "Setswana", "flag": "🇧🇼"}, {"code": "ts", "name": "Tsonga", "nativeName": "Xitsonga", "flag": "🇿🇦"}, {"code": "ve", "name": "Venda", "nativeName": "Tshivenda", "flag": "🇿🇦"}, {"code": "jv", "name": "Javaans", "nativeName": "Basa Jawa", "flag": "🇮🇩"}, {"code": "su", "name": "Soendanees", "nativeName": "Basa Sunda", "flag": "🇮🇩"}, {"code": "ceb", "name": "Cebuano", "nativeName": "Cebuano", "flag": "🇵🇭"}, {"code": "hmn", "name": "Hmong", "nativeName": "Hmong", "flag": "🌏"}, {"code": "la", "name": "Latijn", "nativeName": "Latina", "flag": "🏛️"}, {"code": "co", "name": "Corsicaans", "nativeName": "Corsu", "flag": "🇫🇷"}, {"code": "br", "name": "Bretons", "nativeName": "Brezhoneg", "flag": "🇫🇷"}, {"code": "oc", "name": "Occitaans", "nativeName": "Occitan", "flag": "🇫🇷"}, {"code": "rm", "name": "Reto-Romaans", "nativeName": "Rumantsch", "flag": "🇨🇭"}, {"code": "ku", "name": "Koerdisch", "nativeName": "Kurdî", "flag": "🌍"}, {"code": "ps", "name": "Pasjtoe", "nativeName": "پښتو", "flag": "🇦🇫"}, {"code": "sd", "name": "Sindhi", "nativeName": "سنڌي", "flag": "🇵🇰"}, {"code": "ug", "name": "Oeigoers", "nativeName": "ئۇيغۇرچە", "flag": "🇨🇳"}, {"code": "bo", "name": "Tibetaans", "nativeName": "བོད་ཡིག", "flag": "🇨🇳"}, {"code": "dz", "name": "Dzongkha", "nativeName": "རྫོང་ཁ", "flag": "🇧🇹"}, {"code": "mo", "name": "Moldavisch", "nativeName": "Moldovenească", "flag": "🇲🇩"}, {"code": "fil", "name": "Filipijns", "nativeName": "Filipino", "flag": "🇵🇭"}, {"code": "jv2", "name": "Javaans", "nativeName": "Basa Jawa", "flag": "🇮🇩"}];
+
+// --- VERTALINGEN TEKST ---
+const dict = {
+  nl: {
+    brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen", nav_inbox: "Inbox", nav_profile: "Profiel",
+    login: "Inloggen", footer_tag: "De marketplace voor voetbalshirts", footer_since: "Since 2026",
+    home_feat: "Uitgelichte shirts", home_wel: "Welkom bij Football-Shirt-Market", home_desc: "Ontdek voetbalshirts of verkoop jouw eigen shirt.", home_exp: "Ontdek shirts",
+    exp_col: "COLLECTIE", exp_title: "Ontdek voetbalshirts", exp_search: "Zoek speler, club, seizoen...",
+    cond_new: "Nieuw", cond_exc: "Uitstekende staat", cond_good: "Goede staat",
+    sort_rec: "Aanbevolen", sort_new: "Nieuwste"
+  },
+  en: {
+    brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell", nav_inbox: "Inbox", nav_profile: "Profile",
+    login: "Log in", footer_tag: "The marketplace for football shirts", footer_since: "Since 2026",
+    home_feat: "Featured shirts", home_wel: "Welcome to Football-Shirt-Market", home_desc: "Discover football shirts or sell your own.", home_exp: "Explore shirts",
+    exp_col: "COLLECTION", exp_title: "Explore football shirts", exp_search: "Search player, club, season...",
+    cond_new: "New", cond_exc: "Excellent", cond_good: "Good",
+    sort_rec: "Recommended", sort_new: "Newest"
+  },
+  fr: {
+    brand_since: "DEPUIS 2026", nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre", nav_inbox: "Boîte", nav_profile: "Profil",
+    login: "Connexion", footer_tag: "La place de marché pour les maillots", footer_since: "Depuis 2026",
+    home_feat: "Maillots en vedette", home_wel: "Bienvenue sur Football-Shirt-Market", home_desc: "Découvrez des maillots de foot ou vendez le vôtre.", home_exp: "Explorer",
+    exp_col: "COLLECTION", exp_title: "Explorer les maillots", exp_search: "Joueur, club, saison...",
+    cond_new: "Neuf", cond_exc: "Excellent", cond_good: "Bon",
+    sort_rec: "Recommandé", sort_new: "Plus récent"
+  },
+  de: {
+    brand_since: "SEIT 2026", nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen", nav_inbox: "Posteingang", nav_profile: "Profil",
+    login: "Anmelden", footer_tag: "Der Marktplatz für Trikots", footer_since: "Seit 2026",
+    home_feat: "Vorgestellte Trikots", home_wel: "Willkommen bei Football-Shirt-Market", home_desc: "Entdecke Trikots oder verkaufe dein eigenes.", home_exp: "Entdecken",
+    exp_col: "KOLLEKTION", exp_title: "Trikots entdecken", exp_search: "Spieler, Club, Saison...",
+    cond_new: "Neu", cond_exc: "Ausgezeichnet", cond_good: "Gut",
+    sort_rec: "Empfohlen", sort_new: "Neueste"
+  },
+  es: {
+    brand_since: "DESDE 2026", nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender", nav_inbox: "Bandeja", nav_profile: "Perfil",
+    login: "Iniciar sesión", footer_tag: "El mercado de camisetas", footer_since: "Desde 2026",
+    home_feat: "Destacadas", home_wel: "Bienvenido a Football-Shirt-Market", home_desc: "Descubre camisetas o vende la tuya.", home_exp: "Explorar",
+    exp_col: "COLECCIÓN", exp_title: "Explorar camisetas", exp_search: "Jugador, club, temporada...",
+    cond_new: "Nuevo", cond_exc: "Excelente", cond_good: "Bueno",
+    sort_rec: "Recomendado", sort_new: "Más reciente"
+  },
+  it: {
+    brand_since: "DAL 2026", nav_home: "Home", nav_explore: "Esplora", nav_sell: "Vendi", nav_inbox: "Inbox", nav_profile: "Profilo",
+    login: "Accedi", footer_tag: "Il marketplace per maglie da calcio", footer_since: "Dal 2026",
+    home_feat: "Maglie in primo piano", home_wel: "Benvenuto su Football-Shirt-Market", home_desc: "Scopri maglie da calcio o vendi la tua.", home_exp: "Esplora",
+    exp_col: "COLLEZIONE", exp_title: "Esplora maglie", exp_search: "Cerca giocatore, club...",
+    cond_new: "Nuovo", cond_exc: "Eccellente", cond_good: "Buono",
+    sort_rec: "Consigliato", sort_new: "Più recente"
+  },
+  pt: {
+    brand_since: "DESDE 2026", nav_home: "Início", nav_explore: "Explorar", nav_sell: "Vender", nav_inbox: "Inbox", nav_profile: "Perfil",
+    login: "Entrar", footer_tag: "O mercado de camisas de futebol", footer_since: "Desde 2026",
+    home_feat: "Camisas em destaque", home_wel: "Bem-vindo ao Football-Shirt-Market", home_desc: "Descubra camisas de futebol ou venda a sua.", home_exp: "Explorar",
+    exp_col: "COLEÇÃO", exp_title: "Explorar camisas", exp_search: "Buscar jogador, clube...",
+    cond_new: "Novo", cond_exc: "Excelente", cond_good: "Bom",
+    sort_rec: "Recomendado", sort_new: "Mais recente"
+  }
+};
+
+// --- AFBEELDINGEN ---
+// LET OP: Om de afbeelding per taal te veranderen, moet je hieronder JOUW NIEUWE GITHUB LINKS plakken!
+// Nu staat overal dezelfde link in, omdat je mij maar 1 link hebt gegeven.
+const imgDict = {
+  hero: {
+    nl: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    en: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png", // Vervang door: "link_naar_engelse_afbeelding.png"
+    fr: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png", // Vervang door: "link_naar_franse_afbeelding.png"
+    de: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png", // Vervang door: "link_naar_duitse_afbeelding.png"
+    es: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png", // Vervang door: "link_naar_spaanse_afbeelding.png"
+    it: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png", // Vervang door: "link_naar_italiaanse_afbeelding.png"
+    pt: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png"  // Vervang door: "link_naar_portugese_afbeelding.png"
+  },
+  explore: {
+    nl: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    en: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png", // Zelfde geldt hier!
+    fr: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    de: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    es: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    it: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    pt: "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png"
+  }
+};
+
+let currentLang = localStorage.getItem("fsm_lang") || "nl";
+const app = document.getElementById("app");
+
+function populateLanguageDropdown() {
+  const wrapper=document.querySelector(".lang-select-wrapper");
+  const select=document.getElementById("langSwitcher");
+  if(!select || !wrapper) return;
+
+  select.innerHTML="";
+  languages.forEach(lang=>{
+    const opt=document.createElement("option");
+    opt.value=lang.code;
+    opt.textContent=`${lang.flag} ${lang.code.toUpperCase()} · ${lang.nativeName}`;
+    if(lang.code===currentLang) opt.selected=true;
+    select.appendChild(opt);
+  });
+
+  let box=wrapper.querySelector(".lang-searchbox");
+  if(!box){
+    box=document.createElement("div");
+    box.className="lang-searchbox";
+    box.innerHTML=`<input type="search" placeholder="Zoek taal..." aria-label="Zoek taal"><div class="lang-results"></div>`;
+    wrapper.appendChild(box);
+  }
+  const search=box.querySelector("input"), results=box.querySelector(".lang-results");
+
+  function draw(q=""){
+    q=q.toLocaleLowerCase().trim();
+    const list=languages.filter(x=>
+      !q || x.code.toLocaleLowerCase().includes(q) ||
+      x.name.toLocaleLowerCase().includes(q) ||
+      x.nativeName.toLocaleLowerCase().includes(q)
+    );
+    results.innerHTML=list.length?list.map(x=>`
+      <button type="button" class="lang-result ${x.code===currentLang?"active":""}" data-code="${x.code}">
+        <span class="flag">${x.flag}</span>
+        <span class="names"><strong>${x.name}</strong><span class="native">${x.nativeName} · ${x.code}</span></span>
+        ${x.code===currentLang?'<span class="check">✓</span>':''}
+      </button>`).join(""):`<div style="padding:18px;text-align:center;color:#9caea3">Geen taal gevonden</div>`;
+  }
+
+  select.addEventListener("mousedown",()=>{
+    // Native select remains usable on desktop/mobile.
+    box.classList.toggle("open");
+    draw("");
+    setTimeout(()=>search.focus(),40);
+  },{passive:true});
+
+  select.addEventListener("change",e=>{
+    currentLang=e.target.value;
+    localStorage.setItem("fsm_lang",currentLang);
+    document.documentElement.lang=currentLang;
+    applyLanguageDirection();
+    box.classList.remove("open");
+    translateDOM();
+  });
+
+  search.addEventListener("input",e=>draw(e.target.value));
+  results.addEventListener("click",e=>{
+    const btn=e.target.closest("[data-code]");
+    if(!btn)return;
+    currentLang=btn.dataset.code;
+    localStorage.setItem("fsm_lang",currentLang);
+    select.value=currentLang;
+    document.documentElement.lang=currentLang;
+    applyLanguageDirection();
+    box.classList.remove("open");
+    translateDOM();
+  });
+
+  document.addEventListener("click",e=>{
+    if(!wrapper.contains(e.target)) box.classList.remove("open");
+  });
+
+  draw("");
+}
+
+function applyLanguageDirection(){
+  const rtl=['ar','he','fa','ur','ps','sd','ug'].includes(currentLang);
+  document.documentElement.dir=rtl?'rtl':'ltr';
+}
+function t(key) {
+  const langDict = dict[currentLang] || dict['nl'];
+  return langDict[key] || dict['nl'][key] || key;
+}
+
+function translateDOM() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    el.textContent = t(key);
+  });
+  route();
+}
+
+document.getElementById("langSwitcher").addEventListener("change", function(e) {
+  currentLang = e.target.value;
+  localStorage.setItem("fsm_lang", currentLang);
+  translateDOM();
+});
+
+function home(){
+  const heroSrc = imgDict.hero[currentLang] || imgDict.hero.nl || "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png";
+
+  app.innerHTML = `
+    <div class="page">
+      <section class="hero">
+        <img class="hero-image" src="${heroSrc}" alt="Hero" onerror="this.src='https://via.placeholder.com/1200x400/0b2418/f2cf70?text=Hero'">
+        <a class="hero-hotspot hero-hotspot-explore" href="#/explore"></a>
+        <a class="hero-hotspot hero-hotspot-sell" href="#/sell"></a>
+      </section>
+      <section style="margin-top:30px">
+        <h2>${t('home_feat')}</h2>
+        <div class="box">
+          <h3>${t('home_wel')}</h3>
+          <p class="muted">${t('home_desc')}</p>
+          <a class="btn primary" href="#/explore">${t('home_exp')}</a>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function explore(){
+  const exploreSrc = imgDict.explore[currentLang] || imgDict.explore.nl || "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png";
+
+  app.innerHTML = `
+    <div class="page">
+      <section class="explore-hero">
+        <img class="explore-hero-image" src="${exploreSrc}" alt="Explore" onerror="this.src='https://via.placeholder.com/1200x250/0b2418/35d69a?text=Explore'">
+      </section>
+      <div style="margin:20px 0">
+        <small class="gold">${t('exp_col')}</small>
+        <h1>${t('exp_title')}</h1>
+      </div>
+
+      <div class="toolbar">
+        <input placeholder="${t('exp_search')}">
+        <select>
+          <option>${t('cond_new')}</option>
+          <option>${t('cond_exc')}</option>
+          <option>${t('cond_good')}</option>
+        </select>
+        <select>
+          <option>${t('sort_rec')}</option>
+          <option>${t('sort_new')}</option>
+        </select>
+      </div>
+    </div>
+  `;
+}
+
+function route(){
+  const hash = location.hash || "#/";
+  const path = hash.replace("#/","");
+  if(path === "explore") explore();
+  else home();
+}
+
+window.addEventListener("hashchange", route);
+document.documentElement.lang=currentLang;
+applyLanguageDirection();
+populateLanguageDropdown();
+translateDOM();
+</script>
+</body>
+</html>
