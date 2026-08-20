@@ -221,6 +221,42 @@ footer{text-align:center;padding:42px 20px;background:#020504;border-top:1px sol
   input,select,textarea,button{font-size:16px} /* prevents iOS zoom */
 }
 
+
+/* === FIXED LANGUAGE PICKER === */
+.lang-picker{position:relative;min-width:210px;z-index:10000}
+.lang-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border:1px solid rgba(239,210,143,.20);border-radius:13px;background:#0b1812;color:#fff;cursor:pointer;font-weight:800}
+.lang-chevron{color:#efd28f}
+.lang-menu{position:absolute;right:0;top:calc(100% + 8px);width:min(360px,92vw);max-height:min(520px,72vh);overflow:hidden;background:#09150f;border:1px solid rgba(239,210,143,.25);border-radius:16px;box-shadow:0 25px 80px rgba(0,0,0,.65);z-index:99999;display:none}
+.lang-menu.open{display:block}
+.lang-search{padding:12px;background:#09150f;border-bottom:1px solid rgba(255,255,255,.08)}
+.lang-search input{box-sizing:border-box;width:100%;padding:12px 14px;border-radius:11px;border:1px solid rgba(255,255,255,.12)!important;background:#111f18!important;color:#fff!important}
+.lang-list{max-height:410px;overflow-y:auto;padding:7px}
+.lang-option{width:100%;display:flex;align-items:center;gap:10px;padding:11px;border:0;border-radius:10px;background:transparent;color:#fff;text-align:left;cursor:pointer}
+.lang-option:hover,.lang-option.active{background:rgba(239,210,143,.10)}
+.lang-option .flag{font-size:20px;width:27px;text-align:center;flex:none}
+.lang-names{display:flex;flex-direction:column;min-width:0;flex:1}
+.lang-name{font-size:13px;font-weight:850}
+.lang-native{font-size:11px;color:#8d9b94;margin-top:2px}
+.lang-check{color:#efd28f;font-weight:900}
+.lang-empty{text-align:center;padding:22px;color:#8d9993}
+@media(max-width:700px){
+  .site-header{position:sticky;top:0;z-index:9000}
+  .header-inner{padding:10px 14px!important;gap:10px!important}
+  .logo-link{max-width:calc(100% - 60px)}
+  .brand-name strong{font-size:13px}
+  .brand-name span{font-size:9px}
+  nav{order:4;width:100%;overflow-x:auto;display:flex!important;gap:4px!important;padding-bottom:2px;scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav a{white-space:nowrap;padding:9px 10px!important}
+  .lang-picker{min-width:0;width:48px;margin-left:auto}
+  .lang-trigger{width:48px;height:44px;padding:0;justify-content:center;font-size:0}
+  .lang-trigger .lang-current{font-size:20px;max-width:28px;overflow:hidden;white-space:nowrap}
+  .lang-chevron{display:none}
+  .lang-menu{position:fixed;left:10px;right:10px;top:74px;width:auto;max-height:76vh}
+  .lang-list{max-height:calc(76vh - 70px)}
+  .account-btn{font-size:0;width:44px;height:44px;padding:0}
+}
+
 </style>
 </head>
 <body>
@@ -332,14 +368,19 @@ Object.keys(broadTranslations).forEach(code=>{const x=broadTranslations[code];if
 
 const broadTranslations = {"nl": ["SINDS 2026", "Koop. Verkoop.<br>Verzamel.", "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.", "Ontdek shirts", "Verkoop een shirt"], "en": ["SINCE 2026", "Buy. Sell.<br>Collect.", "The marketplace for football shirts, collectors and true football fans.", "Explore shirts", "Sell a shirt"], "fr": ["DEPUIS 2026", "Achetez. Vendez.<br>Collectionnez.", "La marketplace des maillots de football pour collectionneurs et passionnés.", "Découvrir les maillots", "Vendre un maillot"], "de": ["SEIT 2026", "Kaufen. Verkaufen.<br>Sammeln.", "Der Marktplatz für Fußballtrikots, Sammler und echte Fußballfans.", "Trikots entdecken", "Trikot verkaufen"], "es": ["DESDE 2026", "Compra. Vende.<br>Colecciona.", "El mercado de camisetas de fútbol para coleccionistas y verdaderos aficionados.", "Descubrir camisetas", "Vender una camiseta"], "it": ["DAL 2026", "Compra. Vendi.<br>Colleziona.", "Il marketplace per maglie da calcio, collezionisti e veri appassionati.", "Scopri le maglie", "Vendi una maglia"], "pt": ["DESDE 2026", "Compra. Vende.<br>Coleciona.", "O marketplace para camisolas de futebol, colecionadores e verdadeiros fãs.", "Descobrir camisolas", "Vender uma camisola"], "pl": ["OD 2026", "Kupuj. Sprzedawaj.<br>Kolekcjonuj.", "Marketplace koszulek piłkarskich dla kolekcjonerów i prawdziwych kibiców.", "Odkryj koszulki", "Sprzedaj koszulkę"], "cs": ["OD 2026", "Nakupuj. Prodávej.<br>Sbírej.", "Marketplace fotbalových dresů pro sběratele a skutečné fanoušky.", "Prozkoumat dresy", "Prodat dres"], "sk": ["OD 2026", "Nakupuj. Predávaj.<br>Zbieraj.", "Trhovisko futbalových dresov pre zberateľov a skutočných fanúšikov.", "Objaviť dresy", "Predať dres"], "sl": ["OD 2026", "Kupi. Prodaj.<br>Zbiraj.", "Tržnica nogometnih dresov za zbiratelje in prave navijače.", "Odkrij drese", "Prodaj dres"], "hr": ["OD 2026", "Kupi. Prodaj.<br>Skupljaj.", "Tržnica nogometnih dresova za kolekcionare i prave navijače.", "Otkrij dresove", "Prodaj dres"], "sr": ["OD 2026", "Kupi. Prodaj.<br>Sakupljaj.", "Tržište fudbalskih dresova za kolekcionare i prave navijače.", "Otkrij dresove", "Prodaj dres"], "bs": ["OD 2026", "Kupi. Prodaj.<br>Sakupljaj.", "Tržište fudbalskih dresova za kolekcionare i prave navijače.", "Otkrij dresove", "Prodaj dres"], "ro": ["DIN 2026", "Cumpără. Vinde.<br>Colecționează.", "Marketplace-ul de tricouri de fotbal pentru colecționari și fani adevărați.", "Descoperă tricouri", "Vinde un tricou"], "hu": ["2026 ÓTA", "Vásárolj. Adj el.<br>Gyűjts.", "Futballmezek piactere gyűjtőknek és igazi szurkolóknak.", "Mezek felfedezése", "Mez eladása"], "bg": ["ОТ 2026", "Купувай. Продавай.<br>Колекционирай.", "Пазар за футболни фланелки за колекционери и истински фенове.", "Разгледай фланелки", "Продай фланелка"], "el": ["ΑΠΟ ΤΟ 2026", "Αγόρασε. Πούλησε.<br>Συλλέξτε.", "Marketplace για ποδοσφαιρικές φανέλες, συλλέκτες και αληθινούς φιλάθλους.", "Εξερεύνηση φανελών", "Πώληση φανέλας"], "tr": ["2026'DAN BERİ", "Satın al. Sat.<br>Koleksiyon yap.", "Futbol formaları, koleksiyoncular ve gerçek taraftarlar için pazar yeri.", "Formaları keşfet", "Forma sat"], "uk": ["З 2026 РОКУ", "Купуй. Продавай.<br>Колекціонуй.", "Маркетплейс футбольних футболок для колекціонерів та справжніх уболівальників.", "Переглянути футболки", "Продати футболку"], "ru": ["С 2026 ГОДА", "Покупай. Продавай.<br>Собирай.", "Маркетплейс футбольных футболок для коллекционеров и настоящих болельщиков.", "Смотреть футболки", "Продать футболку"], "ar": ["منذ 2026", "اشترِ. بِع.<br>اجمع.", "سوق قمصان كرة القدم لهواة الجمع والمشجعين الحقيقيين.", "اكتشف القمصان", "بع قميصًا"], "he": ["מאז 2026", "קנה. מכור.<br>אסוף.", "שוק חולצות כדורגל לאספנים ולאוהדים אמיתיים.", "גלה חולצות", "מכור חולצה"], "fa": ["از ۲۰۲۶", "بخر. بفروش.<br>جمع کن.", "بازار پیراهن‌های فوتبال برای کلکسیونرها و هواداران واقعی.", "پیراهن‌ها را ببین", "فروش پیراهن"], "hi": ["2026 से", "खरीदें। बेचें।<br>संग्रह करें।", "फुटबॉल शर्ट, कलेक्टर और असली प्रशंसकों के लिए मार्केटप्लेस।", "शर्ट देखें", "शर्ट बेचें"], "bn": ["২০২৬ থেকে", "কিনুন। বিক্রি করুন।<br>সংগ্রহ করুন।", "ফুটবল শার্টের সংগ্রাহক ও সত্যিকারের ভক্তদের মার্কেটপ্লেস।", "শার্ট দেখুন", "শার্ট বিক্রি করুন"], "ur": ["2026 سے", "خریدیں۔ بیچیں۔<br>جمع کریں۔", "فٹبال شرٹس، کلیکٹرز اور حقیقی مداحوں کے لیے مارکیٹ پلیس۔", "شرٹس دریافت کریں", "شرٹ فروخت کریں"], "zh": ["始于 2026", "购买。出售。<br>收藏。", "为足球球衣收藏家和真正球迷打造的交易平台。", "探索球衣", "出售球衣"], "zh-TW": ["始於 2026", "購買。出售。<br>收藏。", "為足球球衣收藏家和真正球迷打造的交易平台。", "探索球衣", "出售球衣"], "ja": ["2026年から", "買う。売る。<br>集める。", "サッカーユニフォームのコレクターと本物のファンのためのマーケットプレイス。", "ユニフォームを見る", "ユニフォームを売る"], "ko": ["2026년부터", "사고. 팔고.<br>수집하세요.", "축구 유니폼 컬렉터와 진정한 팬을 위한 마켓플레이스.", "유니폼 둘러보기", "유니폼 판매"], "vi": ["TỪ 2026", "Mua. Bán.<br>Sưu tầm.", "Sàn giao dịch áo bóng đá dành cho nhà sưu tầm và người hâm mộ thực thụ.", "Khám phá áo", "Bán áo"], "th": ["ตั้งแต่ปี 2026", "ซื้อ ขาย<br>สะสม", "ตลาดเสื้อฟุตบอลสำหรับนักสะสมและแฟนบอลตัวจริง", "ค้นหาเสื้อ", "ขายเสื้อ"], "id": ["SEJAK 2026", "Beli. Jual.<br>Koleksi.", "Marketplace jersey sepak bola untuk kolektor dan penggemar sejati.", "Jelajahi jersey", "Jual jersey"], "ms": ["SEJAK 2026", "Beli. Jual.<br>Kumpul.", "Pasaran jersi bola sepak untuk pengumpul dan peminat sebenar.", "Terokai jersi", "Jual jersi"], "tl": ["MULA 2026", "Bumili. Magbenta.<br>Mangolekta.", "Marketplace ng football shirts para sa collectors at tunay na fans.", "Tuklasin ang mga shirt", "Magbenta ng shirt"], "sw": ["TANGU 2026", "Nunua. Uza.<br>Jikusanye.", "Soko la jezi za mpira kwa wakusanyaji na mashabiki wa kweli.", "Gundua jezi", "Uza jezi"], "af": ["SEDERT 2026", "Koop. Verkoop.<br>Versamel.", "Die markplek vir sokkertruie, versamelaars en ware ondersteuners.", "Ontdek truie", "Verkoop 'n trui"], "ca": ["DES DE 2026", "Compra. Ven.<br>Col·lecciona.", "El mercat de samarretes de futbol per a col·leccionistes i aficionats.", "Descobreix samarretes", "Ven una samarreta"], "eu": ["2026TIK", "Erosi. Saldu.<br>Bildu.", "Futbol elastikoen merkatua bildumazale eta zaleentzat.", "Ezagutu elastikoak", "Saldu elastikoa"], "gl": ["DENDE 2026", "Compra. Vende.<br>Colecciona.", "O mercado de camisetas de fútbol para coleccionistas e verdadeiros afeccionados.", "Descubrir camisetas", "Vender unha camiseta"], "is": ["SÍÐAN 2026", "Kauptu. Seldu.<br>Safnaðu.", "Markaðstorg fyrir fótboltatreyjur, safnara og sanna aðdáendur.", "Skoða treyjur", "Selja treyju"], "ga": ["Ó 2026", "Ceanna. Díol.<br>Bailigh.", "Margadh geansaithe peile do bhailitheoirí agus fíor-lucht leanúna.", "Faigh amach geansaithe", "Díol geansaí"], "et": ["ALATES 2026", "Osta. Müü.<br>Kogu.", "Jalgpallisärkide turg kollektsionääridele ja tõelistele fännidele.", "Avasta särke", "Müü särk"], "lv": ["KOPŠ 2026", "Pērc. Pārdod.<br>Krāj.", "Futbola kreklu tirgus kolekcionāriem un īstiem faniem.", "Apskati kreklus", "Pārdod kreklu"], "lt": ["NUO 2026", "Pirk. Parduok.<br>Kolekcionuok.", "Futbolo marškinėlių prekyvietė kolekcionieriams ir tikriems sirgaliams.", "Atrask marškinėlius", "Parduok marškinėlius"], "fi": ["VUODESTA 2026", "Osta. Myy.<br>Kerää.", "Jalkapallopaitojen markkinapaikka keräilijöille ja oikeille faneille.", "Tutustu paitoihin", "Myy paita"], "sv": ["SEDAN 2026", "Köp. Sälj.<br>Samla.", "Marknadsplatsen för fotbollströjor, samlare och riktiga fans.", "Utforska tröjor", "Sälj en tröja"], "no": ["SIDEN 2026", "Kjøp. Selg.<br>Samle.", "Markedsplassen for fotballdrakter, samlere og ekte fans.", "Utforsk drakter", "Selg en drakt"], "da": ["SIDEN 2026", "Køb. Sælg.<br>Saml.", "Markedspladsen for fodboldtrøjer, samlere og ægte fans.", "Udforsk trøjer", "Sælg en trøje"], "eo": ["EKDE 2026", "Aĉetu. Vendu.<br>Kolektu.", "Retejo por futbalaj ĉemizoj, kolektantoj kaj veraj ŝatantoj.", "Malkovru ĉemizojn", "Vendu ĉemizon"]};
 const imgDict = {
-  /* Language-specific artwork can be added later. The translated HTML overlay
-     guarantees that the visible text changes for every supported language. */
-
-  hero:{
-    nl:"hero-nl.png",en:"hero-en.png",fr:"hero-fr.png",de:"hero-de.png",es:"hero-es.png",it:"hero-it.png",pt:"hero-pt.png"
+  hero: {
+    nl:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    en:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    fr:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    de:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png",
+    es:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png"
   },
-  explore:{
-    nl:"explore-nl.png",en:"explore-en.png",fr:"explore-fr.png",de:"explore-de.png",es:"explore-es.png",it:"explore-it.png",pt:"explore-pt.png"
+  explore: {
+    nl:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    en:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    fr:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    de:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png",
+    es:"https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png"
   }
 };
 
@@ -347,50 +388,89 @@ let currentLang = localStorage.getItem("fsm_lang") || "nl";
 const app = document.getElementById("app");
 
 function populateLanguageDropdown(){
-  const host=document.querySelector('#languageDropdown,.language-dropdown,[data-language-picker]');
+  const host=document.querySelector('.lang-select-wrapper');
   if(!host) return;
+
   host.classList.add('lang-picker');
   host.innerHTML=`
     <button type="button" class="lang-trigger" aria-expanded="false">
-      <span class="lang-current"></span><span>⌄</span>
+      <span class="lang-current">🌐 Nederlands</span><span class="lang-chevron">⌄</span>
     </button>
     <div class="lang-menu" role="dialog" aria-label="Language selector">
-      <div class="lang-search"><input type="search" autocomplete="off" placeholder="Search language / Zoek taal..." aria-label="Search language"></div>
+      <div class="lang-search">
+        <input type="search" autocomplete="off" placeholder="Zoek een taal / Search language..." aria-label="Search language">
+      </div>
       <div class="lang-list"></div>
     </div>`;
-  const trigger=host.querySelector('.lang-trigger'), menu=host.querySelector('.lang-menu');
-  const search=host.querySelector('.lang-search input'), list=host.querySelector('.lang-list');
+
+  const trigger=host.querySelector('.lang-trigger');
+  const menu=host.querySelector('.lang-menu');
+  const search=host.querySelector('.lang-search input');
+  const list=host.querySelector('.lang-list');
+
   const current=()=>languages.find(x=>x.code===currentLang)||languages[0];
 
   function draw(filter=''){
-    const q=filter.trim().toLocaleLowerCase();
-    const rows=languages.filter(x=>
-      !q || [x.code,x.name,x.nativeName].some(v=>v.toLocaleLowerCase().includes(q))
+    const q=String(filter).trim().toLocaleLowerCase();
+    const rows=languages.filter(x =>
+      !q ||
+      String(x.code).toLocaleLowerCase().includes(q) ||
+      String(x.name).toLocaleLowerCase().includes(q) ||
+      String(x.nativeName).toLocaleLowerCase().includes(q)
     );
+
     list.innerHTML=rows.length ? rows.map(x=>`
       <button type="button" class="lang-option ${x.code===currentLang?'active':''}" data-code="${x.code}">
         <span class="flag">${x.flag}</span>
-        <span class="lang-names"><span class="lang-name">${x.name}</span><span class="lang-native">${x.nativeName} · ${x.code}</span></span>
-      </button>`).join('') : '<div class="lang-empty">Geen taal gevonden / No language found</div>';
+        <span class="lang-names">
+          <span class="lang-name">${x.name}</span>
+          <span class="lang-native">${x.nativeName} · ${x.code}</span>
+        </span>
+        ${x.code===currentLang?'<span class="lang-check">✓</span>':''}
+      </button>`).join('') :
+      '<div class="lang-empty">Geen taal gevonden<br><small>No language found</small></div>';
   }
+
   function updateCurrent(){
-    const x=current(); host.querySelector('.lang-current').textContent=`${x.flag} ${x.nativeName}`;
+    const x=current();
+    host.querySelector('.lang-current').textContent=`${x.flag} ${x.nativeName}`;
+    draw(search.value);
   }
-  trigger.addEventListener('click',()=>{
-    const open=menu.classList.toggle('open'); trigger.setAttribute('aria-expanded',open);
-    if(open){search.value='';draw();setTimeout(()=>search.focus(),30)}
+
+  trigger.addEventListener('click',e=>{
+    e.stopPropagation();
+    const open=menu.classList.toggle('open');
+    trigger.setAttribute('aria-expanded',String(open));
+    if(open){
+      search.value='';
+      draw('');
+      setTimeout(()=>search.focus(),50);
+    }
   });
+
   search.addEventListener('input',e=>draw(e.target.value));
+
   list.addEventListener('click',e=>{
-    const b=e.target.closest('[data-code]'); if(!b)return;
-    currentLang=b.dataset.code; localStorage.setItem('fsm_lang',currentLang);
-    document.documentElement.lang=currentLang; applyLanguageDirection();
-    menu.classList.remove('open'); trigger.setAttribute('aria-expanded','false');
+    const option=e.target.closest('.lang-option');
+    if(!option) return;
+    currentLang=option.dataset.code;
+    localStorage.setItem('fsm_lang',currentLang);
+    document.documentElement.lang=currentLang;
+    if(typeof applyLanguageDirection==='function') applyLanguageDirection();
+    menu.classList.remove('open');
+    trigger.setAttribute('aria-expanded','false');
     route();
     updateCurrent();
   });
-  document.addEventListener('click',e=>{if(!host.contains(e.target)){menu.classList.remove('open');trigger.setAttribute('aria-expanded','false')}});
-  updateCurrent(); draw();
+
+  document.addEventListener('click',e=>{
+    if(!host.contains(e.target)){
+      menu.classList.remove('open');
+      trigger.setAttribute('aria-expanded','false');
+    }
+  });
+
+  updateCurrent();
 }
 
 
@@ -413,16 +493,10 @@ function translateDOM() {
   route();
 }
 
-document.getElementById("langSwitcher").addEventListener("change", function(e) {
-  currentLang = e.target.value;
-  localStorage.setItem("fsm_lang", currentLang);
-  document.documentElement.lang = currentLang;
-  applyLanguageDirection();
-  route();
-});
+
 
 function home(){
-  const heroSrc = imgDict.hero[currentLang] || imgDict.hero.nl;
+  const heroSrc = imgDict.hero[currentLang] || imgDict.hero.nl || "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/hero.png";
 
   app.innerHTML = `
     <div class="page">
@@ -452,7 +526,7 @@ function home(){
 }
 
 function explore(){
-  const exploreSrc = imgDict.explore[currentLang] || imgDict.explore.nl;
+  const exploreSrc = imgDict.explore[currentLang] || imgDict.explore.nl || "https://raw.githubusercontent.com/lousamyn2013-afk/football-shirt-market/main/307fcfb7-6807-421a-b27a-b6e663726f73.png";
 
   app.innerHTML = `
     <div class="page">
