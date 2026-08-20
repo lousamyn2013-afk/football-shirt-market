@@ -35,10 +35,8 @@ a { text-decoration: none; color: inherit; }
   width: min(1320px, 100%); min-height: 84px; margin: auto; padding: 10px 22px;
   display: flex; align-items: center; gap: 28px;
 }
-.logo-link { display: flex; align-items: center; gap: 13px; }
-.header-logo { width: 56px; height: 56px; object-fit: contain; }
-.brand-name strong { display: block; font-size: 16px; font-weight: 950; }
-.brand-name span { display: block; color: var(--gold-hi); font-size: 8px; letter-spacing: 3px; margin-top: 6px; font-weight: 900; }
+.logo-link { display: flex; align-items: center; }
+.header-logo { height: 56px; width: auto; object-fit: contain; }
 
 nav { flex: 1; display: flex; align-items: center; gap: 5px; }
 nav a { color: #b8c9be; padding: 11px 14px; border-radius: 11px; font-size: 13px; font-weight: 800; transition: .28s; }
@@ -74,7 +72,6 @@ nav a:hover { color: #fff; }
   text-transform: uppercase;
 }
 
-/* 3D GOUD EFFECT EXTACT ZOALS IN DE AFBEELDING */
 .gold-gradient-3d {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
@@ -82,22 +79,6 @@ nav a:hover { color: #fff; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0px 4px 0px #3a2202) drop-shadow(0px 8px 15px rgba(0,0,0,0.9));
-}
-
-.banner-divider {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--gold-mid);
-  font-size: 0.8vw;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-.banner-divider::before, .banner-divider::after {
-  content: "";
-  height: 1px;
-  width: 2.5vw;
-  background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
 }
 
 /* KNOPPEN */
@@ -122,10 +103,6 @@ footer { text-align: center; padding: 42px 20px; background: #020504; border-top
   <div class="header-inner">
     <a href="#/" class="logo-link">
       <img class="header-logo" src="logo.png" alt="Logo">
-      <div class="brand-name">
-        <strong>Football-Shirt-Market</strong>
-        <span><span data-i18n="brand_since">SINCE 2026</span></span>
-      </div>
     </a>
 
     <nav>
@@ -156,16 +133,13 @@ const languages = [
 
 const dict = {
   nl: {
-    brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen",
+    nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen",
     footer_tag: "De marketplace voor voetbalshirts", footer_since: "Since 2026",
     
     hero_title: "Koop. Verkoop.<br>Verzamel.",
     hero_desc: "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.",
     btn_explore: "Ontdek shirts", btn_sell: "Verkoop een shirt",
     
-    // EXACTE ONTDEKKEN TEKSTEN
-    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
-    tagline: "VOOR ÉCHTE VOETBALFANS",
     title_explore: "ONTDEKKEN",
     sub_find: "VIND JOUW", sub_next: "VOLGENDE", sub_shirt: "SHIRT",
     desc_line1: "Van iconische klassiekers tot de nieuwste releases.",
@@ -174,15 +148,13 @@ const dict = {
     search_sub: "JOUW COLLECTIE BEGINT HIER"
   },
   en: {
-    brand_since: "SINCE 2026", nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell",
+    nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell",
     footer_tag: "The marketplace for football shirts", footer_since: "Since 2026",
     
     hero_title: "Buy. Sell.<br>Collect.",
     hero_desc: "The marketplace for football shirts, collectors, and true football fans.",
     btn_explore: "Explore shirts", btn_sell: "Sell a shirt",
     
-    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
-    tagline: "FOR TRUE FOOTBALL FANS",
     title_explore: "EXPLORE",
     sub_find: "FIND YOUR", sub_next: "NEXT", sub_shirt: "SHIRT",
     desc_line1: "From iconic classics to the newest releases.",
@@ -191,15 +163,13 @@ const dict = {
     search_sub: "YOUR COLLECTION STARTS HERE"
   },
   fr: {
-    brand_since: "DEPUIS 2026", nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre",
+    nav_home: "Accueil", nav_explore: "Explorer", nav_sell: "Vendre",
     footer_tag: "La place de marché pour les maillots de football", footer_since: "Depuis 2026",
     
     hero_title: "Achetez. Vendez.<br>Collectionnez.",
     hero_desc: "La place de marché pour les maillots de football, les collectionneurs et les passionnés.",
     btn_explore: "Explorer les maillots", btn_sell: "Vendre un maillot",
     
-    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
-    tagline: "POUR LES VRAIS PASSIONNÉS",
     title_explore: "EXPLORER",
     sub_find: "TROUVEZ VOTRE", sub_next: "PROCHAIN", sub_shirt: "MAILLOT",
     desc_line1: "Des classiques iconiques aux dernières nouveautés.",
@@ -208,15 +178,13 @@ const dict = {
     search_sub: "VOTRE COLLECTION COMMENCE ICI"
   },
   de: {
-    brand_since: "SEIT 2026", nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen",
+    nav_home: "Startseite", nav_explore: "Entdecken", nav_sell: "Verkaufen",
     footer_tag: "Der Marktplatz für Trikots", footer_since: "Seit 2026",
     
     hero_title: "Kaufen. Verkaufen.<br>Sammeln.",
     hero_desc: "Der Marktplatz für Fußballtrikots, Sammler und echte Fußballfans.",
     btn_explore: "Trikots entdecken", btn_sell: "Trikot verkaufen",
     
-    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
-    tagline: "FÜR ECHTE FUSSBALLFANS",
     title_explore: "ENTDECKEN",
     sub_find: "FINDE DEIN", sub_next: "NÄCHSTES", sub_shirt: "TRIKOT",
     desc_line1: "Von kultigen Klassikern bis zu den neuesten Releases.",
@@ -225,15 +193,13 @@ const dict = {
     search_sub: "DEINE KOLLEKTION STARTET HIER"
   },
   es: {
-    brand_since: "DESDE 2026", nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender",
+    nav_home: "Inicio", nav_explore: "Explorar", nav_sell: "Vender",
     footer_tag: "El mercado de camisetas de fútbol", footer_since: "Desde 2026",
     
     hero_title: "Compra. Vende.<br>Colecciona.",
     hero_desc: "El mercado de camisetas de fútbol, coleccionistas y auténticos aficionados.",
     btn_explore: "Explorar camisetas", btn_sell: "Vender una camiseta",
     
-    brand_title: "FOOTBALL SHIRT <span style='color:var(--gold-mid)'>MARKET</span>",
-    tagline: "PARA AUTÉNTICOS AFICIONADOS",
     title_explore: "EXPLORAR",
     sub_find: "ENCUENTRA TU", sub_next: "PRÓXIMA", sub_shirt: "CAMISETA",
     desc_line1: "Desde clásicos icónicos hasta los últimos lanzamientos.",
@@ -254,11 +220,8 @@ function renderHome() {
   document.getElementById("app").innerHTML = `
     <div class="page">
       <div class="banner-container">
-        <img src="held.png" alt="Hero Banner">
+        <img src="hero.png" alt="Hero Banner">
         
-        <div style="position: absolute; top: 22%; left: 5%; color: #f2cf70; font-size: 1.1vw; font-weight: 800; letter-spacing: 1px;">
-          FOOTBALL-SHIRT-MARKET • ${t('brand_since')}
-        </div>
         <div class="banner-heading" style="position: absolute; top: 29%; left: 5%; color: #ffffff; font-size: 4.2vw; font-weight: 900; line-height: 1.1; max-width: 45%;">
           ${t('hero_title')}
         </div>
@@ -279,17 +242,6 @@ function renderExplore() {
     <div class="page">
       <div class="banner-container">
         <img src="ontdekken.png" alt="Explore Banner">
-        
-        <!-- LOGO LINKSBOVEN OP BANNER -->
-        <img src="logo.png" style="position: absolute; top: 5.5%; left: 3.5%; width: 4.8vw; height: auto;" alt="Logo">
-        
-        <!-- MERKNAAM & SUB-TAGLINE LINKSBOVEN -->
-        <div class="banner-heading" style="position: absolute; top: 6.5%; left: 9.2%; color: #ffffff; font-size: 1.3vw; font-weight: 900; letter-spacing: 1px;">
-          ${t('brand_title')}
-        </div>
-        <div class="banner-divider" style="position: absolute; top: 12.5%; left: 9.2%;">
-          ${t('tagline')}
-        </div>
 
         <!-- GROTE HOOFDTITEL "ONTDEKKEN" -->
         <div class="gold-gradient-3d" style="position: absolute; top: 21%; left: 3.5%; font-size: 5.4vw; line-height: 1; letter-spacing: 1px;">
