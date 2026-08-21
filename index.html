@@ -75,15 +75,23 @@ nav a:hover, nav a.active { color: #fff; background: rgba(255,255,255,.08); box-
 .page { width: min(1320px, 100%); margin: auto; padding: 34px 22px 80px; }
 .banner-container { position: relative; width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid rgba(239,210,143,.24); box-shadow: 0 20px 50px rgba(0,0,0,.6); margin-bottom: 40px; display: flex; align-items: center; min-height: 350px; background: #08130f; }
 
-/* AANGEPASTE BANNER AFBEELDING */
+/* STANDAARD BANNER AFBEELDING */
 .banner-container img { 
   position: absolute; 
   width: 100%; 
   height: 100%; 
   object-fit: cover; 
-  object-position: center 15%; /* Focus naar boven verplaatst! */
   z-index: 1; 
   opacity: 0.6; 
+}
+
+/* SPECIFIEKE POSITIES VOOR DE BANNERS */
+.banner-img-home {
+  object-position: center center; /* Logo perfect in het midden */
+}
+
+.banner-img-explore {
+  object-position: center 15%; /* Legende-namen in beeld houden */
 }
 
 .banner-content { position: relative; z-index: 2; padding: 40px 5%; max-width: 600px; }
@@ -194,7 +202,8 @@ function googleTranslateElementInit() {
   <div id="view-home" class="view active">
     <div class="page">
       <div class="banner-container">
-        <img src="hero.png" alt="Football Shirt Market" onerror="this.style.display='none'">
+        <!-- class="banner-img-home" toegevoegd -->
+        <img src="hero.png" class="banner-img-home" alt="Football Shirt Market" onerror="this.style.display='none'">
         <div class="banner-content">
           <div class="banner-title">Koop. Verkoop.<br>Verzamel.</div>
           <div class="banner-description">De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.</div>
@@ -219,8 +228,8 @@ function googleTranslateElementInit() {
   <div id="view-explore" class="view">
     <div class="page">
       <div class="banner-container">
-        <!-- Zorg dat de afbeeldingsbron hier goed staat (bijv. image_4d3389.jpg) -->
-        <img src="image_4d3389.jpg" alt="Ontdekken" onerror="this.style.display='none'">
+        <!-- Let op: zorg dat src overeenkomt met jouw afbeeldingsnaam! class="banner-img-explore" toegevoegd -->
+        <img src="ontdekken.png" class="banner-img-explore" alt="Ontdekken" onerror="this.style.display='none'">
         <div class="banner-content">
           <div class="banner-title">Alle<br>Voetbalshirts</div>
           <div class="banner-description">Vind de mooiste klassiekers en unieke items voor jouw collectie.</div>
