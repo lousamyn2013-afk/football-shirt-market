@@ -111,22 +111,36 @@ nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 .banner-container img { width: 100%; display: block; height: auto; }
 .banner-heading { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
 
-/* TEKST IN HET ZWARTE LINT VAN DE BANNER AFBEELDING */
-.banner-ribbon-text {
+/* PRECIES BINNEN HET ZWARTE LINT VAN HET EMBLEEM GECOMPONEERD */
+.banner-ribbon-box {
   position: absolute;
-  top: 72.8%;
-  right: 6.8%;
-  width: 38.5%;
-  text-align: center;
+  top: 56.5%;
+  right: 5.5%;
+  width: 38%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.banner-ribbon-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
-  font-size: 1.2vw;
-  color: #f7e1a0;
+  font-size: 1.15vw;
+  color: #fceabb;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.9);
-  pointer-events: none;
-  white-space: nowrap;
+  line-height: 1.1;
+}
+.banner-ribbon-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.65vw;
+  color: var(--gold-hi);
+  letter-spacing: 2px;
+  margin-top: 2px;
 }
 
 .banner-btn-green {
@@ -264,7 +278,6 @@ const dict = {
     hero_title: "Koop. Verkoop.<br>Verzamel.",
     hero_desc: "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.",
     btn_explore: "Ontdek shirts", btn_sell: "Verkoop een shirt",
-    ribbon_text: "FOOTBALL SHIRT MARKET",
     featured_title: "Populaire <span>Voetbalshirts</span>",
     btn_view: "Bekijken"
   },
@@ -275,7 +288,6 @@ const dict = {
     hero_title: "Buy. Sell.<br>Collect.",
     hero_desc: "The marketplace for football shirts, collectors, and true football fans.",
     btn_explore: "Explore shirts", btn_sell: "Sell a shirt",
-    ribbon_text: "FOOTBALL SHIRT MARKET",
     featured_title: "Featured <span>Football Shirts</span>",
     btn_view: "View Shirt"
   }
@@ -342,8 +354,12 @@ function renderHome() {
           <a href="#/explore" class="banner-btn-green">${t('btn_explore')}</a>
           <a href="#/sell" class="banner-btn-white">${t('btn_sell')}</a>
         </div>
-        <!-- TEKST OP HET ZWARTE LINT -->
-        <div class="banner-ribbon-text" data-i18n="ribbon_text">${t('ribbon_text')}</div>
+        
+        <!-- TEKST EXACT IN HET LINT VAN DE GOEDEN BADGE -->
+        <div class="banner-ribbon-box">
+          <div class="banner-ribbon-title">FOOTBALL-SHIRT-MARKET</div>
+          <div class="banner-ribbon-subtitle">SINCE 2026</div>
+        </div>
       </div>
       ${renderShirtsGrid()}
     </div>
