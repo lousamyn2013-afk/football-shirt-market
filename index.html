@@ -59,7 +59,7 @@ nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 }
 .lang-btn:hover { border-color: var(--gold-hi); background: #0e2019; transform: translateY(-1px); }
 
-/* MODAL ZOEKBALK VOOR 100+ TALEN */
+/* MODAL ZOEKBALK VOOR TALEN */
 .lang-modal-backdrop {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -111,11 +111,22 @@ nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 .banner-container img { width: 100%; display: block; height: auto; }
 .banner-heading { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
 
-.gold-gradient-3d {
-  font-family: 'Montserrat', sans-serif; font-weight: 900;
-  background: linear-gradient(180deg, #fffbeb 0%, #ffe380 25%, #d6a133 50%, #8a5e12 78%, #fceabb 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0px 3px 0px #3a2202) drop-shadow(0px 6px 12px rgba(0,0,0,0.9));
+/* TEKST IN HET ZWARTE LINT VAN DE BANNER AFBEELDING */
+.banner-ribbon-text {
+  position: absolute;
+  top: 72.8%;
+  right: 6.8%;
+  width: 38.5%;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.2vw;
+  color: #f7e1a0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .banner-btn-green {
@@ -211,7 +222,6 @@ footer { text-align: center; padding: 42px 20px; background: #020504; border-top
   </div>
 </header>
 
-<!-- MODAL VOOR TAAL ZOEKEN -->
 <div id="langModal" class="lang-modal-backdrop">
   <div class="lang-modal">
     <div class="lang-modal-header">
@@ -231,7 +241,6 @@ footer { text-align: center; padding: 42px 20px; background: #020504; border-top
 </footer>
 
 <script>
-// 100+ TALEN ZONDER DESTRUCTIEVE SCRIPTS
 const languages = [
   { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -242,60 +251,9 @@ const languages = [
   { code: 'pt', name: 'Português', flag: '🇵🇹' },
   { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
   { code: 'pl', name: 'Polski', flag: '🇵🇱' },
-  { code: 'ar', name: 'العربية (Arabic)', flag: '🇸🇦' },
-  { code: 'zh', name: '中文 (Chinese)', flag: '🇨🇳' },
-  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
-  { code: 'ko', name: '한국어 (Korean)', flag: '🇰🇷' },
-  { code: 'ru', name: 'Русский (Russian)', flag: '🇷🇺' },
-  { code: 'uk', name: 'Українська (Ukrainian)', flag: '🇺🇦' },
-  { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
-  { code: 'no', name: 'Norsk', flag: '🇳🇴' },
-  { code: 'da', name: 'Dansk', flag: '🇩🇰' },
-  { code: 'fi', name: 'Suomi', flag: '🇫🇮' },
-  { code: 'el', name: 'Ελληνικά (Greek)', flag: '🇬🇷' },
-  { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
-  { code: 'hu', name: 'Magyar', flag: '🇭🇺' },
-  { code: 'ro', name: 'Română', flag: '🇷🇴' },
-  { code: 'bg', name: 'Български (Bulgarian)', flag: '🇧🇬' },
-  { code: 'hr', name: 'Hrvatski', flag: '🇭🇷' },
-  { code: 'sr', name: 'Српски (Serbian)', flag: '🇷🇸' },
-  { code: 'sk', name: 'Slovenčina', flag: '🇸🇰' },
-  { code: 'sl', name: 'Slovenščina', flag: '🇸🇮' },
-  { code: 'et', name: 'Eesti', flag: '🇪🇪' },
-  { code: 'lv', name: 'Latviešu', flag: '🇱🇻' },
-  { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
-  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
-  { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
-  { code: 'th', name: 'ไทย (Thai)', flag: '🇹🇭' },
-  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
-  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
-  { code: 'bn', name: 'বাংলা (Bengali)', flag: '🇧🇩' },
-  { code: 'ur', name: 'اردو (Urdu)', flag: '🇵🇰' },
-  { code: 'fa', name: 'فارسی (Persian)', flag: '🇮🇷' },
-  { code: 'he', name: 'עברית (Hebrew)', flag: '🇮🇱' },
-  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
-  { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
-  { code: 'sq', name: 'Shqip', flag: '🇦🇱' },
-  { code: 'am', name: 'አማርኛ (Amharic)', flag: '🇪🇹' },
-  { code: 'hy', name: 'Հայերեն (Armenian)', flag: '🇦🇲' },
-  { code: 'az', name: 'Azərbaycan', flag: '🇦🇿' },
-  { code: 'eu', name: 'Euskara', flag: '🇪🇸' },
-  { code: 'be', name: 'Беларуская (Belarusian)', flag: '🇧🇾' },
-  { code: 'bs', name: 'Bosanski', flag: '🇧🇦' },
-  { code: 'ca', name: 'Català', flag: '🇪🇸' },
-  { code: 'cy', name: 'Cymraeg', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿' },
-  { code: 'is', name: 'Íslenska', flag: '🇮🇸' },
-  { code: 'ga', name: 'Gaeilge', flag: '🇮🇪' },
-  { code: 'ka', name: 'ქართული (Georgian)', flag: '🇬🇪' },
-  { code: 'kk', name: 'Қазақ тілі (Kazakh)', flag: '🇰🇿' },
-  { code: 'km', name: 'ភាសាខ្មែរ (Khmer)', flag: '🇰🇭' },
-  { code: 'mk', name: 'Makedonski', flag: '🇲🇰' },
-  { code: 'mt', name: 'Malti', flag: '🇲🇹' },
-  { code: 'mn', name: 'Монгол (Mongolian)', flag: '🇲🇳' },
-  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
-  { code: 'si', name: 'සිංහල (Sinhala)', flag: '🇱🇰' },
-  { code: 'uz', name: 'Oʻzbekcha', flag: '🇺🇿' },
-  { code: 'zu', name: 'isiZulu', flag: '🇿🇦' }
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' }
 ];
 
 const dict = {
@@ -306,12 +264,7 @@ const dict = {
     hero_title: "Koop. Verkoop.<br>Verzamel.",
     hero_desc: "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.",
     btn_explore: "Ontdek shirts", btn_sell: "Verkoop een shirt",
-    title_explore: "ONTDEKKEN",
-    sub_find: "VIND JOUW", sub_next: "VOLGENDE", sub_shirt: "SHIRT",
-    desc_line1: "Van iconische klassiekers tot de nieuwste releases.",
-    desc_line2: "Ontdek, verzamel en draag jouw passie.",
-    search_cta: "ZOEK. VIND. VERZAMEL.",
-    search_sub: "JOUW COLLECTIE BEGINT HIER",
+    ribbon_text: "FOOTBALL SHIRT MARKET",
     featured_title: "Populaire <span>Voetbalshirts</span>",
     btn_view: "Bekijken"
   },
@@ -322,12 +275,7 @@ const dict = {
     hero_title: "Buy. Sell.<br>Collect.",
     hero_desc: "The marketplace for football shirts, collectors, and true football fans.",
     btn_explore: "Explore shirts", btn_sell: "Sell a shirt",
-    title_explore: "EXPLORE",
-    sub_find: "FIND YOUR", sub_next: "NEXT", sub_shirt: "SHIRT",
-    desc_line1: "From iconic classics to the newest releases.",
-    desc_line2: "Discover, collect, and wear your passion.",
-    search_cta: "SEARCH. FIND. COLLECT.",
-    search_sub: "YOUR COLLECTION STARTS HERE",
+    ribbon_text: "FOOTBALL SHIRT MARKET",
     featured_title: "Featured <span>Football Shirts</span>",
     btn_view: "View Shirt"
   }
@@ -394,40 +342,8 @@ function renderHome() {
           <a href="#/explore" class="banner-btn-green">${t('btn_explore')}</a>
           <a href="#/sell" class="banner-btn-white">${t('btn_sell')}</a>
         </div>
-      </div>
-      ${renderShirtsGrid()}
-    </div>
-  `;
-}
-
-function renderExplore() {
-  document.getElementById("app").innerHTML = `
-    <div class="page">
-      <div class="banner-container">
-        <img src="ontdekken.png" alt="Explore Banner">
-        <div class="gold-gradient-3d" style="position: absolute; top: 18%; left: 3.2%; font-size: 4.2vw; line-height: 1; letter-spacing: 0.5px; max-width: 38vw; white-space: nowrap;">
-          ${t('title_explore')}
-        </div>
-        <div style="position: absolute; top: 35%; left: 3.2%; width: 33vw; text-align: center;">
-          <div style="color: var(--gold-mid); font-size: 1vw; margin-bottom: 0.1vw;">👑</div>
-          <div class="banner-heading" style="color: #ffffff; font-size: 1.25vw; font-weight: 900; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 0.6vw;">
-            <span style="height: 1px; width: 2.5vw; background: linear-gradient(90deg, transparent, var(--gold-mid));"></span>
-            ${t('sub_find')} <span style="color: var(--green);">${t('sub_next')}</span> ${t('sub_shirt')}
-            <span style="height: 1px; width: 2.5vw; background: linear-gradient(90deg, var(--gold-mid), transparent);"></span>
-          </div>
-        </div>
-        <div style="position: absolute; top: 48%; left: 3.2%; width: 33vw; text-align: center; color: #d0d7d3; font-size: 0.8vw; line-height: 1.4; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.9);">
-          <div>${t('desc_line1')}</div>
-          <div>${t('desc_line2')}</div>
-        </div>
-        <div style="position: absolute; top: 76.5%; left: 11.2%; pointer-events: none;">
-          <div class="banner-heading" style="color: #ffffff; font-size: 1.05vw; font-weight: 900; letter-spacing: 0.5px; line-height: 1.1;">
-            ${t('search_cta')}
-          </div>
-          <div style="color: var(--green); font-size: 0.7vw; font-weight: 800; letter-spacing: 0.8px; margin-top: 0.2vw;">
-            ${t('search_sub')}
-          </div>
-        </div>
+        <!-- TEKST OP HET ZWARTE LINT -->
+        <div class="banner-ribbon-text" data-i18n="ribbon_text">${t('ribbon_text')}</div>
       </div>
       ${renderShirtsGrid()}
     </div>
@@ -436,8 +352,7 @@ function renderExplore() {
 
 function route() {
   const hash = location.hash || "#/";
-  if (hash === "#/explore") renderExplore();
-  else renderHome();
+  renderHome();
   
   document.querySelectorAll("[data-i18n]").forEach(el => {
     el.innerHTML = t(el.getAttribute("data-i18n"));
@@ -445,7 +360,7 @@ function route() {
 
   const activeLangObj = languages.find(l => l.code === currentLang) || languages[0];
   document.getElementById("currentFlag").textContent = activeLangObj.flag;
-  document.getElementById("currentLangCode").textContent = activeLangObj.code.split('-')[0].toUpperCase();
+  document.getElementById("currentLangCode").textContent = activeLangObj.code.toUpperCase();
 }
 
 function renderLanguageList(filterText = "") {
