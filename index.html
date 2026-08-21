@@ -109,39 +109,6 @@ nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
   margin-bottom: 40px;
 }
 .banner-container img { width: 100%; display: block; height: auto; }
-.banner-heading { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
-
-/* PRECIES BINNEN HET ZWARTE LINT VAN HET EMBLEEM GECOMPONEERD */
-.banner-ribbon-box {
-  position: absolute;
-  top: 56.5%;
-  right: 5.5%;
-  width: 38%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transform: translateY(-50%);
-}
-.banner-ribbon-title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: 1.15vw;
-  color: #fceabb;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
-  line-height: 1.1;
-}
-.banner-ribbon-subtitle {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 0.65vw;
-  color: var(--gold-hi);
-  letter-spacing: 2px;
-  margin-top: 2px;
-}
 
 .banner-btn-green {
   background: linear-gradient(135deg, #18b875, #118252); color: #fff; padding: 0.8vw 1.6vw;
@@ -208,27 +175,43 @@ nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 .shirt-card:hover .shirt-btn { background: var(--gold-mid); color: #000; }
 
 footer { text-align: center; padding: 42px 20px; background: #020504; border-top: 1px solid rgba(239, 210, 143, .18); }
+
+/* VERBERG GOOGLE TRANSLATE ZICHTBARE ELEMENTEN OM HET DESIGN STRAK TE HOUDEN */
+body { top: 0 !important; position: static !important; }
+.skiptranslate iframe { display: none !important; }
+.goog-te-banner-frame { display: none !important; }
+#goog-te-setup { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
 </style>
 </head>
 <body>
+
+<!-- Onzichtbare container voor de achterliggende Google Translate -->
+<div id="goog-te-setup" style="display:none;"></div>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage: 'nl', autoDisplay: false}, 'goog-te-setup');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <header class="site-header">
   <div class="header-inner">
     <a href="#/" class="logo-link">
       <img class="header-logo" src="logo.png" alt="Logo">
       <div class="brand-name">
-        <span class="brand-title">Football-Shirt-Market</span>
-        <span class="brand-since">SINCE 2026</span>
+        <span class="brand-title" translate="no">Football-Shirt-Market</span>
+        <span class="brand-since" translate="no">SINCE 2026</span>
       </div>
     </a>
 
     <nav>
-      <a href="#/" data-i18n="nav_home">Home</a>
-      <a href="#/explore" data-i18n="nav_explore">Ontdekken</a>
-      <a href="#/sell" data-i18n="nav_sell">Verkopen</a>
+      <a href="#/">Home</a>
+      <a href="#/explore">Ontdekken</a>
+      <a href="#/sell">Verkopen</a>
     </nav>
 
-    <button id="langPickerBtn" class="lang-btn">
+    <button id="langPickerBtn" class="lang-btn" translate="no">
       <span id="currentFlag">🇳🇱</span>
       <span id="currentLangCode">NL</span>
       <span style="font-size: 10px; opacity: 0.7;">▼</span>
@@ -239,59 +222,133 @@ footer { text-align: center; padding: 42px 20px; background: #020504; border-top
 <div id="langModal" class="lang-modal-backdrop">
   <div class="lang-modal">
     <div class="lang-modal-header">
-      <div class="lang-modal-title" data-i18n="select_language">Kies een taal / Select Language</div>
+      <div class="lang-modal-title">Kies een taal / Select Language</div>
       <button class="lang-close-btn" id="closeLangModal">&times;</button>
     </div>
     <input type="text" id="langSearchInput" class="lang-search-box" placeholder="Zoek taal / Search language...">
-    <div id="langList" class="lang-list"></div>
+    <div id="langList" class="lang-list" translate="no"></div>
   </div>
 </div>
 
 <main id="app"></main>
 
 <footer>
-  <strong>⚽ Football-Shirt-Market</strong><br>
-  <span><span data-i18n="footer_tag">De marketplace voor voetbalshirts</span> · <span style="color:var(--gold-hi)">Since 2026</span></span>
+  <strong translate="no">⚽ Football-Shirt-Market</strong><br>
+  <span>De marketplace voor voetbalshirts · <span style="color:var(--gold-hi)" translate="no">Since 2026</span></span>
 </footer>
 
 <script>
+// LIJST VAN 108 TALEN! 
 const languages = [
-  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+  { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
+  { code: 'sq', name: 'Albanian (Shqip)', flag: '🇦🇱' },
+  { code: 'am', name: 'Amharic (አማርኛ)', flag: '🇪🇹' },
+  { code: 'ar', name: 'Arabic (العربية)', flag: '🇸🇦' },
+  { code: 'hy', name: 'Armenian (Հայերեն)', flag: '🇦🇲' },
+  { code: 'az', name: 'Azerbaijani (Azərbaycan)', flag: '🇦🇿' },
+  { code: 'eu', name: 'Basque (Euskara)', flag: '🇪🇸' },
+  { code: 'be', name: 'Belarusian (Беларуская)', flag: '🇧🇾' },
+  { code: 'bn', name: 'Bengali (বাংলা)', flag: '🇧🇩' },
+  { code: 'bs', name: 'Bosnian (Bosanski)', flag: '🇧🇦' },
+  { code: 'bg', name: 'Bulgarian (Български)', flag: '🇧🇬' },
+  { code: 'ca', name: 'Catalan (Català)', flag: '🇪🇸' },
+  { code: 'ceb', name: 'Cebuano', flag: '🇵🇭' },
+  { code: 'zh-CN', name: 'Chinese Simplified (简体中文)', flag: '🇨🇳' },
+  { code: 'zh-TW', name: 'Chinese Traditional (繁體中文)', flag: '🇹🇼' },
+  { code: 'co', name: 'Corsican (Corsu)', flag: '🇫🇷' },
+  { code: 'hr', name: 'Croatian (Hrvatski)', flag: '🇭🇷' },
+  { code: 'cs', name: 'Czech (Čeština)', flag: '🇨🇿' },
+  { code: 'da', name: 'Danish (Dansk)', flag: '🇩🇰' },
+  { code: 'nl', name: 'Dutch (Nederlands)', flag: '🇳🇱' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
-  { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
-  { code: 'pl', name: 'Polski', flag: '🇵🇱' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' }
+  { code: 'eo', name: 'Esperanto', flag: '🏳️' },
+  { code: 'et', name: 'Estonian (Eesti)', flag: '🇪🇪' },
+  { code: 'fi', name: 'Finnish (Suomi)', flag: '🇫🇮' },
+  { code: 'fr', name: 'French (Français)', flag: '🇫🇷' },
+  { code: 'fy', name: 'Frisian (Frysk)', flag: '🇳🇱' },
+  { code: 'gl', name: 'Galician (Galego)', flag: '🇪🇸' },
+  { code: 'ka', name: 'Georgian (ქართული)', flag: '🇬🇪' },
+  { code: 'de', name: 'German (Deutsch)', flag: '🇩🇪' },
+  { code: 'el', name: 'Greek (Ελληνικά)', flag: '🇬🇷' },
+  { code: 'gu', name: 'Gujarati (ગુજરાતી)', flag: '🇮🇳' },
+  { code: 'ht', name: 'Haitian Creole', flag: '🇭🇹' },
+  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+  { code: 'haw', name: 'Hawaiian', flag: '🇺🇸' },
+  { code: 'he', name: 'Hebrew (עברית)', flag: '🇮🇱' },
+  { code: 'hi', name: 'Hindi (हिन्दी)', flag: '🇮🇳' },
+  { code: 'hmn', name: 'Hmong', flag: '🇨🇳' },
+  { code: 'hu', name: 'Hungarian (Magyar)', flag: '🇭🇺' },
+  { code: 'is', name: 'Icelandic (Íslenska)', flag: '🇮🇸' },
+  { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
+  { code: 'id', name: 'Indonesian (Indonesia)', flag: '🇮🇩' },
+  { code: 'ga', name: 'Irish (Gaeilge)', flag: '🇮🇪' },
+  { code: 'it', name: 'Italian (Italiano)', flag: '🇮🇹' },
+  { code: 'ja', name: 'Japanese (日本語)', flag: '🇯🇵' },
+  { code: 'jv', name: 'Javanese (Jawa)', flag: '🇮🇩' },
+  { code: 'kn', name: 'Kannada (ಕನ್ನಡ)', flag: '🇮🇳' },
+  { code: 'kk', name: 'Kazakh (Қазақ)', flag: '🇰🇿' },
+  { code: 'km', name: 'Khmer (ខ្មែរ)', flag: '🇰🇭' },
+  { code: 'rw', name: 'Kinyarwanda', flag: '🇷🇼' },
+  { code: 'ko', name: 'Korean (한국어)', flag: '🇰🇷' },
+  { code: 'ku', name: 'Kurdish (Kurdî)', flag: '🇹🇯' },
+  { code: 'ky', name: 'Kyrgyz (Кыргызча)', flag: '🇰🇬' },
+  { code: 'lo', name: 'Lao (ລາວ)', flag: '🇱🇦' },
+  { code: 'la', name: 'Latin (Latina)', flag: '🇻🇦' },
+  { code: 'lv', name: 'Latvian (Latviešu)', flag: '🇱🇻' },
+  { code: 'lt', name: 'Lithuanian (Lietuvių)', flag: '🇱🇹' },
+  { code: 'lb', name: 'Luxembourgish (Lëtzebuergesch)', flag: '🇱🇺' },
+  { code: 'mk', name: 'Macedonian (Македонски)', flag: '🇲🇰' },
+  { code: 'mg', name: 'Malagasy', flag: '🇲🇬' },
+  { code: 'ms', name: 'Malay (Melayu)', flag: '🇲🇾' },
+  { code: 'ml', name: 'Malayalam (മലയാളം)', flag: '🇮🇳' },
+  { code: 'mt', name: 'Maltese (Malti)', flag: '🇲🇹' },
+  { code: 'mi', name: 'Maori (Māori)', flag: '🇳🇿' },
+  { code: 'mr', name: 'Marathi (मराठी)', flag: '🇮🇳' },
+  { code: 'mn', name: 'Mongolian (Монгол)', flag: '🇲🇳' },
+  { code: 'my', name: 'Myanmar (Burmese)', flag: '🇲🇲' },
+  { code: 'ne', name: 'Nepali (नेपाली)', flag: '🇳🇵' },
+  { code: 'no', name: 'Norwegian (Norsk)', flag: '🇳🇴' },
+  { code: 'ny', name: 'Nyanja (Chichewa)', flag: '🇲🇼' },
+  { code: 'or', name: 'Odia (Oriya)', flag: '🇮🇳' },
+  { code: 'ps', name: 'Pashto (پښتو)', flag: '🇦🇫' },
+  { code: 'fa', name: 'Persian (فارسی)', flag: '🇮🇷' },
+  { code: 'pl', name: 'Polish (Polski)', flag: '🇵🇱' },
+  { code: 'pt', name: 'Portuguese (Português)', flag: '🇵🇹' },
+  { code: 'pa', name: 'Punjabi (ਪੰਜਾਬੀ)', flag: '🇮🇳' },
+  { code: 'ro', name: 'Romanian (Română)', flag: '🇷🇴' },
+  { code: 'ru', name: 'Russian (Русский)', flag: '🇷🇺' },
+  { code: 'sm', name: 'Samoan', flag: '🇼🇸' },
+  { code: 'gd', name: 'Scots Gaelic', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
+  { code: 'sr', name: 'Serbian (Српски)', flag: '🇷🇸' },
+  { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
+  { code: 'sn', name: 'Shona', flag: '🇿🇼' },
+  { code: 'sd', name: 'Sindhi (سنڌي)', flag: '🇵🇰' },
+  { code: 'si', name: 'Sinhala (සිංහල)', flag: '🇱🇰' },
+  { code: 'sk', name: 'Slovak (Slovenčina)', flag: '🇸🇰' },
+  { code: 'sl', name: 'Slovenian (Slovenščina)', flag: '🇸🇮' },
+  { code: 'so', name: 'Somali (Soomaali)', flag: '🇸🇴' },
+  { code: 'es', name: 'Spanish (Español)', flag: '🇪🇸' },
+  { code: 'su', name: 'Sundanese (Basa Sunda)', flag: '🇮🇩' },
+  { code: 'sw', name: 'Swahili (Kiswahili)', flag: '🇰🇪' },
+  { code: 'sv', name: 'Swedish (Svenska)', flag: '🇸🇪' },
+  { code: 'tg', name: 'Tajik (Тоҷикӣ)', flag: '🇹🇯' },
+  { code: 'ta', name: 'Tamil (தமிழ்)', flag: '🇮🇳' },
+  { code: 'tt', name: 'Tatar (Татар)', flag: '🇷🇺' },
+  { code: 'te', name: 'Telugu (తెలుగు)', flag: '🇮🇳' },
+  { code: 'th', name: 'Thai (ไทย)', flag: '🇹🇭' },
+  { code: 'tr', name: 'Turkish (Türkçe)', flag: '🇹🇷' },
+  { code: 'tk', name: 'Turkmen (Türkmen)', flag: '🇹🇲' },
+  { code: 'uk', name: 'Ukrainian (Українська)', flag: '🇺🇦' },
+  { code: 'ur', name: 'Urdu (اردو)', flag: '🇵🇰' },
+  { code: 'ug', name: 'Uyghur (ئۇيغۇرچە)', flag: '🇨🇳' },
+  { code: 'uz', name: 'Uzbek (Oʻzbek)', flag: '🇺🇿' },
+  { code: 'vi', name: 'Vietnamese (Tiếng Việt)', flag: '🇻🇳' },
+  { code: 'cy', name: 'Welsh (Cymraeg)', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿' },
+  { code: 'xh', name: 'Xhosa (isiXhosa)', flag: '🇿🇦' },
+  { code: 'yi', name: 'Yiddish (ייִדיש)', flag: '🇮🇱' },
+  { code: 'yo', name: 'Yoruba (Yorùbá)', flag: '🇳🇬' },
+  { code: 'zu', name: 'Zulu (isiZulu)', flag: '🇿🇦' }
 ];
-
-const dict = {
-  nl: {
-    nav_home: "Home", nav_explore: "Ontdekken", nav_sell: "Verkopen",
-    select_language: "Kies een taal",
-    footer_tag: "De marketplace voor voetbalshirts",
-    hero_title: "Koop. Verkoop.<br>Verzamel.",
-    hero_desc: "De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.",
-    btn_explore: "Ontdek shirts", btn_sell: "Verkoop een shirt",
-    featured_title: "Populaire <span>Voetbalshirts</span>",
-    btn_view: "Bekijken"
-  },
-  en: {
-    nav_home: "Home", nav_explore: "Explore", nav_sell: "Sell",
-    select_language: "Select Language",
-    footer_tag: "The marketplace for football shirts",
-    hero_title: "Buy. Sell.<br>Collect.",
-    hero_desc: "The marketplace for football shirts, collectors, and true football fans.",
-    btn_explore: "Explore shirts", btn_sell: "Sell a shirt",
-    featured_title: "Featured <span>Football Shirts</span>",
-    btn_view: "View Shirt"
-  }
-};
 
 const shirtsData = [
   { club: "AC Milan", name: "AC Milan 1994-1995 Home #3 Maldini", price: "€ 149,95", condition: "Mint Condition", icon: "🔴🖤" },
@@ -304,16 +361,11 @@ const shirtsData = [
 
 let currentLang = localStorage.getItem("fsm_lang") || "nl";
 
-function t(key) {
-  const langDict = dict[currentLang] || dict['en'] || dict['nl'];
-  return langDict[key] || dict['nl'][key] || key;
-}
-
 function renderShirtsGrid() {
   return `
     <section style="margin-top: 30px;">
       <div class="section-header">
-        <div class="section-title" data-i18n="featured_title">${t('featured_title')}</div>
+        <div class="section-title">Populaire <span style="color:var(--gold-hi)">Voetbalshirts</span></div>
       </div>
       <div class="shirts-grid">
         ${shirtsData.map(shirt => `
@@ -324,12 +376,12 @@ function renderShirtsGrid() {
             </div>
             <div class="shirt-info">
               <div>
-                <div class="shirt-club">${shirt.icon} ${shirt.club}</div>
-                <div class="shirt-name">${shirt.name}</div>
+                <div class="shirt-club" translate="no">${shirt.icon} ${shirt.club}</div>
+                <div class="shirt-name" translate="no">${shirt.name}</div>
               </div>
               <div class="shirt-footer">
-                <div class="shirt-price">${shirt.price}</div>
-                <button class="shirt-btn" data-i18n="btn_view">${t('btn_view')}</button>
+                <div class="shirt-price" translate="no">${shirt.price}</div>
+                <button class="shirt-btn">Bekijken</button>
               </div>
             </div>
           </div>
@@ -344,21 +396,15 @@ function renderHome() {
     <div class="page">
       <div class="banner-container">
         <img src="hero.png" alt="Hero Banner">
-        <div class="banner-heading" style="position: absolute; top: 28%; left: 5%; color: #ffffff; font-size: 3.8vw; font-weight: 900; line-height: 1.1; max-width: 45%;">
-          ${t('hero_title')}
+        <div style="position: absolute; top: 28%; left: 5%; color: #ffffff; font-size: 3.8vw; font-weight: 900; line-height: 1.1; max-width: 45%; font-family: 'Montserrat', sans-serif; text-transform: uppercase;">
+          Koop. Verkoop.<br>Verzamel.
         </div>
         <div style="position: absolute; top: 54%; left: 5%; color: #c2cfc7; font-size: 1.1vw; max-width: 38%; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">
-          ${t('hero_desc')}
+          De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.
         </div>
         <div style="position: absolute; top: 68%; left: 5%; display: flex; gap: 1vw;">
-          <a href="#/explore" class="banner-btn-green">${t('btn_explore')}</a>
-          <a href="#/sell" class="banner-btn-white">${t('btn_sell')}</a>
-        </div>
-        
-        <!-- TEKST EXACT IN HET LINT VAN DE GOEDEN BADGE -->
-        <div class="banner-ribbon-box">
-          <div class="banner-ribbon-title">FOOTBALL-SHIRT-MARKET</div>
-          <div class="banner-ribbon-subtitle">SINCE 2026</div>
+          <a href="#/explore" class="banner-btn-green">Ontdek shirts</a>
+          <a href="#/sell" class="banner-btn-white">Verkoop een shirt</a>
         </div>
       </div>
       ${renderShirtsGrid()}
@@ -367,16 +413,18 @@ function renderHome() {
 }
 
 function route() {
-  const hash = location.hash || "#/";
+  // Bepaal tekstrichting voor talen zoals Arabisch/Hebreeuws
+  const rtlLangs = ['ar', 'he', 'fa', 'ur', 'ps', 'sd', 'ug'];
+  document.documentElement.dir = rtlLangs.includes(currentLang) ? 'rtl' : 'ltr';
+  
   renderHome();
   
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    el.innerHTML = t(el.getAttribute("data-i18n"));
-  });
-
-  const activeLangObj = languages.find(l => l.code === currentLang) || languages[0];
-  document.getElementById("currentFlag").textContent = activeLangObj.flag;
-  document.getElementById("currentLangCode").textContent = activeLangObj.code.toUpperCase();
+  const activeLangObj = languages.find(l => l.code === currentLang) || languages.find(l => l.code === 'nl');
+  
+  if(activeLangObj) {
+    document.getElementById("currentFlag").textContent = activeLangObj.flag;
+    document.getElementById("currentLangCode").textContent = activeLangObj.code.split('-')[0].toUpperCase();
+  }
 }
 
 function renderLanguageList(filterText = "") {
@@ -392,12 +440,25 @@ function renderLanguageList(filterText = "") {
     const item = document.createElement("div");
     item.className = `lang-item ${lang.code === currentLang ? 'active' : ''}`;
     item.innerHTML = `<span>${lang.flag}</span> <span>${lang.name}</span>`;
+    
+    // VERTAAL LOGICA
     item.onclick = () => {
-      currentLang = lang.code;
-      localStorage.setItem("fsm_lang", currentLang);
+      localStorage.setItem("fsm_lang", lang.code);
+      
+      // We stellen het vertaal-cookie in voor de Google Translate API
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + location.hostname + ";";
+      
+      if (lang.code !== 'nl') {
+        document.cookie = \`googtrans=/nl/\${lang.code}; path=/;\`;
+      }
+      
       document.getElementById("langModal").classList.remove("open");
-      route();
+      
+      // Pagina herladen triggert de Google Translate over het hele document
+      location.reload(); 
     };
+    
     langList.appendChild(item);
   });
 }
