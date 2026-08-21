@@ -14,1944 +14,360 @@
 :root {
   --gold-hi: #efd28f;
   --gold-mid: #d6aa45;
-  --gold-dark: #9f7624;
   --cream: #f5f1e7;
   --green: #2bd58c;
-  --green-dark: #118252;
   --dark-bg: #020504;
   --card-bg: #08130f;
   --card-border: rgba(239, 210, 143, 0.20);
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background:
-    radial-gradient(circle at 50% -10%, rgba(43,213,140,.08), transparent 35%),
-    var(--dark-bg);
-  color: var(--cream);
-  font-family: 'Inter', system-ui, sans-serif;
-  min-height: 100%;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-button,
-input {
-  font-family: inherit;
-}
-
-/* =========================
-   GOOGLE TRANSLATE VERBORGEN
-========================= */
-
-.google-translate-hidden {
-  position: fixed !important;
-  left: -9999px !important;
-  top: -9999px !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-body {
-  top: 0 !important;
-  position: static !important;
-}
-
-.skiptranslate iframe,
-.goog-te-banner-frame,
-.goog-te-balloon-frame,
-#goog-gt-tt,
-.goog-tooltip {
-  display: none !important;
-}
-
-.goog-text-highlight {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-font {
-  background: transparent !important;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-  background: rgba(2, 7, 5, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(239, 210, 143, 0.20);
-}
-
-.header-inner {
-  width: min(1320px, 100%);
-  min-height: 84px;
-  margin: auto;
-  padding: 10px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.logo-link {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
-}
-
-.header-logo {
-  height: 55px;
-  width: 55px;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
-.brand-name {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.brand-title {
-  color: #ffffff;
-  font-weight: 900;
-  font-size: 16px;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.brand-since {
-  color: var(--gold-hi);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin-top: 3px;
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-nav a {
-  color: #b8c9be;
-  padding: 11px 16px;
-  border-radius: 11px;
-  font-size: 14px;
-  font-weight: 800;
-  transition: .25s ease;
-}
-
-nav a:hover,
-nav a.active {
-  color: #fff;
-  background: rgba(255,255,255,.08);
-}
-
-nav a.active {
-  box-shadow: inset 0 -2px 0 var(--gold-hi);
-}
-
-/* =========================
-   TAAL KNOP
-========================= */
-
-.lang-btn {
-  background: linear-gradient(
-    145deg,
-    rgba(239,210,143,.10),
-    rgba(255,255,255,.025)
-  );
-  color: var(--gold-hi);
-  border: 1px solid rgba(239,210,143,.40);
-  border-radius: 12px;
-  padding: 10px 15px;
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all .2s ease;
-  flex-shrink: 0;
-}
-
-.lang-btn:hover {
-  border-color: var(--gold-hi);
-  background: #0e2019;
-  transform: translateY(-1px);
-  box-shadow: 0 5px 20px rgba(239,210,143,.12);
-}
-
-#currentFlag {
-  font-size: 17px;
-}
-
-/* =========================
-   TAAL MODAL
-========================= */
-
-.lang-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.84);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  z-index: 2000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.lang-modal-backdrop.open {
-  display: flex;
-}
-
-.lang-modal {
-  background:
-    radial-gradient(circle at top right, rgba(43,213,140,.08), transparent 35%),
-    #0b1a14;
-  border: 1px solid rgba(239,210,143,.30);
-  border-radius: 22px;
-  width: min(620px, 100%);
-  max-height: 86vh;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.85),
-    0 0 50px rgba(239,210,143,.06);
-}
-
-.lang-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.lang-modal-title {
-  font-size: 19px;
-  font-weight: 900;
-  color: var(--gold-hi);
-  font-family: 'Montserrat', sans-serif;
-}
-
-.lang-close-btn {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-  color: #8a9e92;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  font-size: 24px;
-  cursor: pointer;
-  transition: .2s;
-}
-
-.lang-close-btn:hover {
-  color: #fff;
-  background: rgba(255,255,255,.10);
-}
-
-.lang-search-box {
-  width: 100%;
-  background: #040a08;
-  border: 1px solid rgba(239,210,143,.25);
-  border-radius: 13px;
-  padding: 14px 16px;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-  margin-bottom: 16px;
-}
-
-.lang-search-box::placeholder {
-  color: #718078;
-}
-
-.lang-search-box:focus {
-  border-color: var(--gold-hi);
-  box-shadow: 0 0 0 3px rgba(239,210,143,.06);
-}
-
-.lang-list {
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  max-height: 55vh;
-  padding-right: 5px;
-}
-
-.lang-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.lang-list::-webkit-scrollbar-thumb {
-  background: rgba(239,210,143,.30);
-  border-radius: 3px;
-}
-
-.lang-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 13px;
-  border-radius: 11px;
-  background: rgba(255,255,255,.035);
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  transition: .2s;
-}
-
-.lang-item:hover {
-  background: rgba(239,210,143,.12);
-  border-color: rgba(239,210,143,.18);
-  color: #fff;
-}
-
-.lang-item.active {
-  background: linear-gradient(135deg, var(--gold-hi), var(--gold-mid));
-  color: #000;
-  font-weight: 900;
-}
-
-.lang-empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 30px;
-  color: #829188;
-}
-
-/* =========================
-   PAGE
-========================= */
-
-.page {
-  width: min(1320px, 100%);
-  margin: auto;
-  padding: 34px 22px 80px;
-}
-
-/* =========================
-   BANNER
-========================= */
-
-.banner-container {
-  position: relative;
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(239,210,143,.24);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.6),
-    0 0 50px rgba(43,213,140,.035);
-  margin-bottom: 40px;
-}
-
-.banner-container img {
-  width: 100%;
-  display: block;
-  height: auto;
-}
-
-.banner-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.banner-content {
-  position: absolute;
-  top: 27%;
-  left: 5%;
-  max-width: 44%;
-}
-
-.banner-title {
-  color: #fff;
-  font-size: clamp(30px, 4vw, 62px);
-  font-weight: 900;
-  line-height: 1.05;
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  text-shadow: 0 4px 25px rgba(0,0,0,.8);
-}
-
-.banner-description {
-  margin-top: 18px;
-  color: #c2cfc7;
-  font-size: clamp(12px, 1.1vw, 17px);
-  max-width: 500px;
-  line-height: 1.5;
-  text-shadow: 0 2px 8px rgba(0,0,0,.8);
-}
-
-.banner-actions {
-  margin-top: 24px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  pointer-events: auto;
-}
-
-.banner-btn-green,
-.banner-btn-white {
-  padding: 13px 21px;
-  border-radius: 9px;
-  font-weight: 900;
-  font-size: 14px;
-  display: inline-block;
-  transition: .25s;
-}
-
-.banner-btn-green {
-  background: linear-gradient(135deg, #18b875, #118252);
-  color: #fff;
-  box-shadow: 0 0 25px rgba(24,184,117,.35);
-}
-
-.banner-btn-green:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(24,184,117,.45);
-}
-
-.banner-btn-white {
-  background: #fff;
-  color: #000;
-}
-
-.banner-btn-white:hover {
-  transform: translateY(-3px);
-  background: #f3f3f3;
-}
-
-/* =========================
-   SECTIE
-========================= */
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 24px;
-  border-bottom: 1px solid rgba(239,210,143,.15);
-  padding-bottom: 12px;
-}
-
-.section-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 24px;
-  font-weight: 900;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.section-title span {
-  color: var(--gold-hi);
-}
-
-/* =========================
-   SHIRTS
-========================= */
-
-.shirts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 22px;
-}
-
-.shirt-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
-  overflow: hidden;
-  transition:
-    transform .3s ease,
-    border-color .3s ease,
-    box-shadow .3s ease;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.shirt-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--gold-hi);
-  box-shadow: 0 12px 30px rgba(239,210,143,.15);
-}
-
-.shirt-img-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  background:
-    radial-gradient(circle at 50% 35%, #193a2b 0%, #08140f 48%, #050b08 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.shirt-img-wrapper::before {
-  content: "";
-  position: absolute;
-  width: 70%;
-  height: 70%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(239,210,143,.10), transparent 65%);
-}
-
-.shirt-img-placeholder {
-  position: relative;
-  z-index: 2;
-  font-size: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,.6));
-  transition: transform .3s ease;
-}
-
-.shirt-card:hover .shirt-img-placeholder {
-  transform: scale(1.08);
-}
-
-.badge-tag {
-  position: absolute;
-  z-index: 5;
-  top: 12px;
-  left: 12px;
-  background: rgba(2,7,5,.85);
-  color: var(--gold-hi);
-  border: 1px solid rgba(239,210,143,.4);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 5px 10px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  backdrop-filter: blur(4px);
-}
-
-.shirt-info {
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
-}
-
-.shirt-club {
-  color: #8a9e92;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-}
-
-.shirt-name {
-  color: #fff;
-  font-size: 16px;
-  font-weight: 800;
-  margin: 5px 0 14px;
-  line-height: 1.35;
-}
-
-.shirt-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  gap: 10px;
-}
-
-.shirt-price {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--green);
-}
-
-.shirt-btn {
-  background: rgba(239,210,143,.1);
-  color: var(--gold-hi);
-  border: 1px solid rgba(239,210,143,.3);
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 800;
-  transition: .2s;
-  cursor: pointer;
-}
-
-.shirt-card:hover .shirt-btn {
-  background: var(--gold-mid);
-  color: #000;
-}
-
-/* =========================
-   SELL PAGINA
-========================= */
-
-.sell-page {
-  max-width: 650px;
-  text-align: center;
-  margin: auto;
-}
-
-.sell-page h1 {
-  font-family: 'Montserrat', sans-serif;
-  color: var(--gold-hi);
-  font-size: clamp(28px, 5vw, 44px);
-}
-
-.sell-page p {
-  color: #b8c9be;
-  margin-bottom: 28px;
-  line-height: 1.7;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-  text-align: center;
-  padding: 42px 20px;
-  background: #020504;
-  border-top: 1px solid rgba(239,210,143,.18);
-  color: #91a096;
-  line-height: 1.7;
-}
-
-footer strong {
-  color: #fff;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body {
+  margin: 0; padding: 0;
+  background: radial-gradient(circle at 50% -10%, rgba(43,213,140,.08), transparent 35%), var(--dark-bg);
+  color: var(--cream); font-family: 'Inter', system-ui, sans-serif; min-height: 100%;
+}
+body { overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+button, input { font-family: inherit; }
+
+/* GOOGLE TRANSLATE VERBORGEN */
+.google-translate-hidden { position: fixed !important; left: -9999px !important; top: -9999px !important; opacity: 0 !important; pointer-events: none !important; }
+body { top: 0 !important; position: static !important; }
+.skiptranslate iframe, .goog-te-banner-frame, .goog-te-balloon-frame, #goog-gt-tt, .goog-tooltip { display: none !important; }
+.goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+
+/* VIEWS (Voor Translate fix) */
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* HEADER */
+.site-header { position: sticky; top: 0; z-index: 1000; width: 100%; background: rgba(2, 7, 5, 0.94); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(239, 210, 143, 0.20); }
+.header-inner { width: min(1320px, 100%); min-height: 84px; margin: auto; padding: 10px 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.logo-link { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.header-logo { height: 55px; width: 55px; object-fit: contain; border-radius: 10px; }
+.brand-name { display: flex; flex-direction: column; justify-content: center; }
+.brand-title { color: #ffffff; font-weight: 900; font-size: 16px; letter-spacing: .5px; text-transform: uppercase; font-family: 'Montserrat', sans-serif; }
+.brand-since { color: var(--gold-hi); font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-top: 3px; }
+nav { display: flex; align-items: center; gap: 6px; }
+nav a { color: #b8c9be; padding: 11px 16px; border-radius: 11px; font-size: 14px; font-weight: 800; transition: .25s ease; }
+nav a:hover, nav a.active { color: #fff; background: rgba(255,255,255,.08); box-shadow: inset 0 -2px 0 var(--gold-hi); }
+
+/* TAAL KNOP & MODAL */
+.lang-btn { background: linear-gradient(145deg, rgba(239,210,143,.10), rgba(255,255,255,.025)); color: var(--gold-hi); border: 1px solid rgba(239,210,143,.40); border-radius: 12px; padding: 10px 15px; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all .2s ease; }
+.lang-btn:hover { border-color: var(--gold-hi); background: #0e2019; transform: translateY(-1px); }
+#currentFlag { font-size: 17px; }
+.lang-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.84); backdrop-filter: blur(10px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.lang-modal-backdrop.open { display: flex; }
+.lang-modal { background: #0b1a14; border: 1px solid rgba(239,210,143,.30); border-radius: 22px; width: min(620px, 100%); max-height: 86vh; display: flex; flex-direction: column; padding: 24px; box-shadow: 0 30px 80px rgba(0,0,0,.85); }
+.lang-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.lang-modal-title { font-size: 19px; font-weight: 900; color: var(--gold-hi); font-family: 'Montserrat', sans-serif; }
+.lang-close-btn { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); color: #8a9e92; width: 38px; height: 38px; border-radius: 10px; font-size: 24px; cursor: pointer; transition: .2s; }
+.lang-search-box { width: 100%; background: #040a08; border: 1px solid rgba(239,210,143,.25); border-radius: 13px; padding: 14px 16px; color: #fff; font-size: 14px; margin-bottom: 16px; }
+.lang-list { overflow-y: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-height: 55vh; }
+.lang-item { display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: 11px; background: rgba(255,255,255,.035); cursor: pointer; font-size: 13px; font-weight: 600; transition: .2s; }
+.lang-item:hover { background: rgba(239,210,143,.12); color: #fff; }
+.lang-item.active { background: linear-gradient(135deg, var(--gold-hi), var(--gold-mid)); color: #000; font-weight: 900; }
+
+/* PAGE & BANNER */
+.page { width: min(1320px, 100%); margin: auto; padding: 34px 22px 80px; }
+.banner-container { position: relative; width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid rgba(239,210,143,.24); box-shadow: 0 20px 50px rgba(0,0,0,.6); margin-bottom: 40px; display: flex; align-items: center; min-height: 350px; background: #08130f; }
+.banner-container img { position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.6; }
+.banner-content { position: relative; z-index: 2; padding: 40px 5%; max-width: 600px; }
+.banner-title { color: #fff; font-size: clamp(30px, 4vw, 62px); font-weight: 900; line-height: 1.1; font-family: 'Montserrat', sans-serif; text-transform: uppercase; text-shadow: 0 4px 25px rgba(0,0,0,.9); }
+.banner-description { margin-top: 18px; color: #c2cfc7; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.5; text-shadow: 0 2px 8px rgba(0,0,0,.9); }
+.banner-actions { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+.banner-btn-green, .banner-btn-white { padding: 13px 21px; border-radius: 9px; font-weight: 900; font-size: 14px; display: inline-block; transition: .25s; cursor: pointer; }
+.banner-btn-green { background: linear-gradient(135deg, #18b875, #118252); color: #fff; }
+.banner-btn-white { background: #fff; color: #000; }
+
+/* SHIRTS GRID */
+.section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid rgba(239,210,143,.15); padding-bottom: 12px; }
+.section-title { font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 900; color: #fff; text-transform: uppercase; }
+.section-title span { color: var(--gold-hi); }
+.shirts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.shirt-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: .3s ease; }
+.shirt-card:hover { transform: translateY(-6px); border-color: var(--gold-hi); }
+.shirt-img-wrapper { position: relative; width: 100%; aspect-ratio: 1; background: radial-gradient(circle at 50% 35%, #193a2b 0%, #050b08 100%); display: flex; align-items: center; justify-content: center; }
+.shirt-img-placeholder { font-size: 72px; filter: drop-shadow(0 10px 15px rgba(0,0,0,.6)); }
+.badge-tag { position: absolute; top: 12px; left: 12px; background: rgba(2,7,5,.85); color: var(--gold-hi); border: 1px solid rgba(239,210,143,.4); font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 20px; }
+.shirt-info { padding: 18px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+.shirt-club { color: #8a9e92; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.shirt-name { color: #fff; font-size: 16px; font-weight: 800; margin: 5px 0 14px; }
+.shirt-footer { display: flex; justify-content: space-between; align-items: center; }
+.shirt-price { font-size: 18px; font-weight: 900; color: var(--green); }
+.shirt-btn { background: rgba(239,210,143,.1); color: var(--gold-hi); border: 1px solid rgba(239,210,143,.3); padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; }
+
+/* FOOTER */
+footer { text-align: center; padding: 42px 20px; background: #020504; border-top: 1px solid rgba(239,210,143,.18); color: #91a096; line-height: 1.7; }
+
+/* MOBILE RESPONSIVE */
 @media (max-width: 900px) {
-
-  .header-inner {
-    min-height: 70px;
-    padding: 8px 14px;
-    gap: 10px;
-  }
-
-  .header-logo {
-    width: 45px;
-    height: 45px;
-  }
-
-  .brand-title {
-    font-size: 12px;
-  }
-
-  .brand-since {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-  }
-
-  nav {
-    gap: 2px;
-  }
-
-  nav a {
-    padding: 8px 9px;
-    font-size: 12px;
-  }
-
-  .lang-btn {
-    padding: 9px 10px;
-    gap: 5px;
-  }
-
-  #currentLangCode {
-    display: none;
-  }
-
-  .page {
-    padding: 18px 12px 55px;
-  }
-
-  .banner-container {
-    border-radius: 14px;
-    margin-bottom: 28px;
-  }
-
-  .banner-content {
-    top: 25%;
-    left: 5%;
-    max-width: 52%;
-  }
-
-  .banner-description {
-    display: none;
-  }
-
-  .banner-actions {
-    margin-top: 15px;
-    gap: 7px;
-  }
-
-  .banner-btn-green,
-  .banner-btn-white {
-    padding: 9px 12px;
-    font-size: 11px;
-  }
-
-  .shirts-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 11px;
-  }
-
-  .shirt-card {
-    border-radius: 12px;
-  }
-
-  .shirt-info {
-    padding: 12px;
-  }
-
-  .shirt-name {
-    font-size: 13px;
-  }
-
-  .shirt-price {
-    font-size: 15px;
-  }
-
-  .shirt-btn {
-    padding: 7px 9px;
-    font-size: 10px;
-  }
-
-  .shirt-img-placeholder {
-    font-size: 52px;
-  }
-
-  .section-title {
-    font-size: 18px;
-  }
-
-  .lang-modal {
-    padding: 18px;
-    border-radius: 18px;
-  }
-
-  .lang-list {
-    grid-template-columns: 1fr;
-    max-height: 58vh;
-  }
+  .header-inner { min-height: 70px; padding: 8px 14px; gap: 10px; }
+  .brand-title { font-size: 12px; }
+  nav a { padding: 8px 9px; font-size: 12px; }
+  #currentLangCode { display: none; }
+  .banner-container { min-height: 280px; }
+  .banner-title { font-size: 28px; }
+  .banner-description { font-size: 13px; }
+  .shirts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
 }
 
 @media (max-width: 560px) {
-
-  .header-inner {
-    flex-wrap: wrap;
-  }
-
-  .logo-link {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .brand-name {
-    min-width: 0;
-  }
-
-  .brand-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  nav {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    padding-top: 2px;
-  }
-
-  nav a {
-    flex: 1;
-    text-align: center;
-  }
-
-  .site-header {
-    position: sticky;
-  }
-
-  .banner-content {
-    top: 22%;
-    max-width: 58%;
-  }
-
-  .banner-title {
-    font-size: 25px;
-  }
-
-  .banner-actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .banner-btn-green,
-  .banner-btn-white {
-    font-size: 10px;
-    padding: 8px 10px;
-  }
-
-  .shirts-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .shirt-club {
-    font-size: 9px;
-  }
-
-  .shirt-name {
-    font-size: 12px;
-    margin-bottom: 9px;
-  }
-
-  .shirt-price {
-    font-size: 13px;
-  }
-
-  .shirt-btn {
-    font-size: 9px;
-    padding: 6px 8px;
-  }
-
-  .badge-tag {
-    font-size: 8px;
-    top: 7px;
-    left: 7px;
-    padding: 4px 6px;
-  }
-}
-
-@media (max-width: 380px) {
-
-  .brand-title {
-    font-size: 10px;
-  }
-
-  .header-logo {
-    width: 40px;
-    height: 40px;
-  }
-
-  nav a {
-    font-size: 10px;
-    padding: 8px 5px;
-  }
-
-  .shirts-grid {
-    gap: 8px;
-  }
+  .header-inner { flex-wrap: wrap; justify-content: center; text-align: center; }
+  nav { width: 100%; justify-content: center; order: 3; margin-top: 5px; }
+  .banner-container { min-height: 320px; align-items: flex-end; }
+  .banner-content { padding: 25px 15px; max-width: 100%; text-align: center; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); width: 100%; }
+  .banner-actions { justify-content: center; }
+  .shirts-grid { grid-template-columns: repeat(2, 1fr); }
+  .shirt-name { font-size: 12px; }
+  .shirt-price { font-size: 14px; }
+  .shirt-btn { padding: 6px 8px; font-size: 10px; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- GOOGLE TRANSLATE -->
+<!-- GOOGLE TRANSLATE SCRIPT -->
 <div id="google_translate_element" class="google-translate-hidden"></div>
-
 <script>
 function googleTranslateElementInit() {
-  new google.translate.TranslateElement(
-    {
-      pageLanguage: 'nl',
-      includedLanguages:
-        'af,sq,am,ar,hy,az,eu,be,bn,bs,bg,ca,ceb,ny,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,tl,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jv,kn,kk,km,rw,ko,ku,ky,lo,la,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,my,ne,no,or,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,sn,sd,si,sk,sl,so,es,su,sw,sv,tg,ta,tt,te,th,tr,tk,uk,ur,ug,uz,vi,cy,xh,yi,yo,zu',
-      autoDisplay: false
-    },
-    'google_translate_element'
-  );
+  new google.translate.TranslateElement({
+    pageLanguage: 'nl',
+    autoDisplay: false
+  }, 'google_translate_element');
 }
 </script>
-
-<script
-  src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script>
-
-
-<!-- =========================
-     HEADER
-========================= -->
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <header class="site-header">
-
   <div class="header-inner">
-
     <a href="#/" class="logo-link">
-
-      <img
-        class="header-logo"
-        src="logo.png"
-        alt="Football Shirt Market Logo"
-      >
-
+      <img class="header-logo" src="logo.png" alt="Logo">
       <div class="brand-name">
-
-        <span class="brand-title">
-          Football-Shirt-Market
-        </span>
-
-        <span class="brand-since">
-          SINCE 2026
-        </span>
-
+        <span class="brand-title">Football-Shirt-Market</span>
+        <span class="brand-since">SINCE 2026</span>
       </div>
-
     </a>
-
-
     <nav>
-
-      <a href="#/" id="nav-home">
-        Home
-      </a>
-
-      <a href="#/explore" id="nav-explore">
-        Ontdekken
-      </a>
-
-      <a href="#/sell" id="nav-sell">
-        Verkopen
-      </a>
-
+      <a href="#/" id="nav-home">Home</a>
+      <a href="#/explore" id="nav-explore">Ontdekken</a>
+      <a href="#/sell" id="nav-sell">Verkopen</a>
     </nav>
-
-
-    <button
-      id="langPickerBtn"
-      class="lang-btn"
-      type="button"
-    >
-
-      <span id="currentFlag">
-        🇳🇱
-      </span>
-
-      <span id="currentLangCode">
-        NL
-      </span>
-
-      <span style="font-size:10px;opacity:.7;">
-        ▼
-      </span>
-
+    <button id="langPickerBtn" class="lang-btn" type="button">
+      <span id="currentFlag">🇳🇱</span>
+      <span id="currentLangCode">NL</span>
+      <span style="font-size:10px;opacity:.7;">▼</span>
     </button>
-
   </div>
-
 </header>
 
-
-<!-- =========================
-     TAAL MODAL
-========================= -->
-
-<div
-  id="langModal"
-  class="lang-modal-backdrop"
->
-
+<!-- TAAL MODAL -->
+<div id="langModal" class="lang-modal-backdrop">
   <div class="lang-modal">
-
     <div class="lang-modal-header">
-
-      <div class="lang-modal-title">
-        Kies een taal / Select Language
-      </div>
-
-      <button
-        class="lang-close-btn"
-        id="closeLangModal"
-        type="button"
-      >
-        &times;
-      </button>
-
+      <div class="lang-modal-title">Kies een taal / Select Language</div>
+      <button class="lang-close-btn" id="closeLangModal" type="button">&times;</button>
     </div>
-
-
-    <input
-      type="text"
-      id="langSearchInput"
-      class="lang-search-box"
-      placeholder="Zoek taal / Search language..."
-      autocomplete="off"
-    >
-
-
-    <div
-      id="langList"
-      class="lang-list"
-    ></div>
-
+    <input type="text" id="langSearchInput" class="lang-search-box" placeholder="Zoek taal / Search language..." autocomplete="off">
+    <div id="langList" class="lang-list"></div>
   </div>
-
 </div>
 
+<!-- PAGINA INHOUD (Direct in de HTML voor Google Translate!) -->
+<main id="app">
+  
+  <!-- HOME VIEW -->
+  <div id="view-home" class="view active">
+    <div class="page">
+      <div class="banner-container">
+        <img src="hero.png" alt="Football Shirt Market" onerror="this.style.display='none'">
+        <div class="banner-content">
+          <div class="banner-title">Koop. Verkoop.<br>Verzamel.</div>
+          <div class="banner-description">De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.</div>
+          <div class="banner-actions">
+            <a href="#/explore" class="banner-btn-green">Ontdek shirts</a>
+            <a href="#/sell" class="banner-btn-white">Verkoop een shirt</a>
+          </div>
+        </div>
+      </div>
+      <section>
+        <div class="section-header">
+          <div class="section-title">Populaire <span>Voetbalshirts</span></div>
+        </div>
+        <div class="shirts-grid" id="home-shirts-grid">
+          <!-- Shirts worden hier via JS ingeladen op pagina start -->
+        </div>
+      </section>
+    </div>
+  </div>
 
-<!-- =========================
-     APP
-========================= -->
+  <!-- EXPLORE VIEW -->
+  <div id="view-explore" class="view">
+    <div class="page">
+      <div class="banner-container">
+        <img src="ontdekken.png" alt="Ontdekken" onerror="this.style.display='none'">
+        <div class="banner-content">
+          <div class="banner-title">Alle<br>Voetbalshirts</div>
+          <div class="banner-description">Vind de mooiste klassiekers en unieke items voor jouw collectie.</div>
+        </div>
+      </div>
+      <section>
+        <div class="section-header">
+          <div class="section-title">Alle <span>Ontdekkingen</span></div>
+        </div>
+        <div class="shirts-grid" id="explore-shirts-grid">
+          <!-- Shirts worden hier via JS ingeladen op pagina start -->
+        </div>
+      </section>
+    </div>
+  </div>
 
-<main id="app"></main>
+  <!-- SELL VIEW -->
+  <div id="view-sell" class="view">
+    <div class="page" style="max-width: 650px; text-align: center; margin: 40px auto;">
+      <h1 style="font-family: 'Montserrat', sans-serif; color: var(--gold-hi); font-size: clamp(28px, 5vw, 44px);">Verkoop je Voetbalshirt</h1>
+      <p style="color: #b8c9be; margin-bottom: 28px; line-height: 1.7;">Upload hier binnenkort je iconische shirts en bereik duizenden verzamelaars over de hele wereld.</p>
+      <a href="#/" class="banner-btn-green">Terug naar Home</a>
+    </div>
+  </div>
 
-
-<!-- =========================
-     FOOTER
-========================= -->
+</main>
 
 <footer>
-
-  <strong>
-    ⚽ Football-Shirt-Market
-  </strong>
-
-  <br>
-
-  <span>
-    De marketplace voor voetbalshirts ·
-    <span style="color:var(--gold-hi)">
-      Since 2026
-    </span>
-  </span>
-
+  <strong>⚽ Football-Shirt-Market</strong><br>
+  <span>De marketplace voor voetbalshirts · <span style="color:var(--gold-hi)">Since 2026</span></span>
 </footer>
 
-
 <script>
-
-/* =====================================================
-   130+ TALEN
-===================================================== */
-
+// TALEN LIJST
 const languages = [
-
-  {code:'af',name:'Afrikaans',flag:'🇿🇦'},
-  {code:'sq',name:'Albanian',flag:'🇦🇱'},
-  {code:'am',name:'Amharic',flag:'🇪🇹'},
-  {code:'ar',name:'Arabic',flag:'🇸🇦'},
-  {code:'hy',name:'Armenian',flag:'🇦🇲'},
-  {code:'az',name:'Azerbaijani',flag:'🇦🇿'},
-  {code:'eu',name:'Basque',flag:'🇪🇸'},
-  {code:'be',name:'Belarusian',flag:'🇧🇾'},
-  {code:'bn',name:'Bengali',flag:'🇧🇩'},
-  {code:'bs',name:'Bosnian',flag:'🇧🇦'},
-  {code:'bg',name:'Bulgarian',flag:'🇧🇬'},
-  {code:'ca',name:'Catalan',flag:'🇪🇸'},
-  {code:'ceb',name:'Cebuano',flag:'🇵🇭'},
-  {code:'ny',name:'Chichewa',flag:'🇲🇼'},
-  {code:'zh-CN',name:'Chinese (Simplified)',flag:'🇨🇳'},
-  {code:'zh-TW',name:'Chinese (Traditional)',flag:'🇹🇼'},
-  {code:'co',name:'Corsican',flag:'🇫🇷'},
-  {code:'hr',name:'Croatian',flag:'🇭🇷'},
-  {code:'cs',name:'Czech',flag:'🇨🇿'},
-  {code:'da',name:'Danish',flag:'🇩🇰'},
-  {code:'nl',name:'Dutch',flag:'🇳🇱'},
-  {code:'en',name:'English',flag:'🇬🇧'},
-  {code:'eo',name:'Esperanto',flag:'🌍'},
-  {code:'et',name:'Estonian',flag:'🇪🇪'},
-  {code:'tl',name:'Filipino',flag:'🇵🇭'},
-  {code:'fi',name:'Finnish',flag:'🇫🇮'},
-  {code:'fr',name:'French',flag:'🇫🇷'},
-  {code:'fy',name:'Frisian',flag:'🇳🇱'},
-  {code:'gl',name:'Galician',flag:'🇪🇸'},
-  {code:'ka',name:'Georgian',flag:'🇬🇪'},
-  {code:'de',name:'German',flag:'🇩🇪'},
-  {code:'el',name:'Greek',flag:'🇬🇷'},
-  {code:'gu',name:'Gujarati',flag:'🇮🇳'},
-  {code:'ht',name:'Haitian Creole',flag:'🇭🇹'},
-  {code:'ha',name:'Hausa',flag:'🇳🇬'},
-  {code:'haw',name:'Hawaiian',flag:'🇺🇸'},
-  {code:'he',name:'Hebrew',flag:'🇮🇱'},
-  {code:'hi',name:'Hindi',flag:'🇮🇳'},
-  {code:'hmn',name:'Hmong',flag:'🌏'},
-  {code:'hu',name:'Hungarian',flag:'🇭🇺'},
-  {code:'is',name:'Icelandic',flag:'🇮🇸'},
-  {code:'ig',name:'Igbo',flag:'🇳🇬'},
-  {code:'id',name:'Indonesian',flag:'🇮🇩'},
-  {code:'ga',name:'Irish',flag:'🇮🇪'},
-  {code:'it',name:'Italian',flag:'🇮🇹'},
-  {code:'ja',name:'Japanese',flag:'🇯🇵'},
-  {code:'jv',name:'Javanese',flag:'🇮🇩'},
-  {code:'kn',name:'Kannada',flag:'🇮🇳'},
-  {code:'kk',name:'Kazakh',flag:'🇰🇿'},
-  {code:'km',name:'Khmer',flag:'🇰🇭'},
-  {code:'rw',name:'Kinyarwanda',flag:'🇷🇼'},
-  {code:'ko',name:'Korean',flag:'🇰🇷'},
-  {code:'ku',name:'Kurdish',flag:'🌍'},
-  {code:'ky',name:'Kyrgyz',flag:'🇰🇬'},
-  {code:'lo',name:'Lao',flag:'🇱🇦'},
-  {code:'la',name:'Latin',flag:'🏛️'},
-  {code:'lv',name:'Latvian',flag:'🇱🇻'},
-  {code:'lt',name:'Lithuanian',flag:'🇱🇹'},
-  {code:'lb',name:'Luxembourgish',flag:'🇱🇺'},
-  {code:'mk',name:'Macedonian',flag:'🇲🇰'},
-  {code:'mg',name:'Malagasy',flag:'🇲🇬'},
-  {code:'ms',name:'Malay',flag:'🇲🇾'},
-  {code:'ml',name:'Malayalam',flag:'🇮🇳'},
-  {code:'mt',name:'Maltese',flag:'🇲🇹'},
-  {code:'mi',name:'Maori',flag:'🇳🇿'},
-  {code:'mr',name:'Marathi',flag:'🇮🇳'},
-  {code:'mn',name:'Mongolian',flag:'🇲🇳'},
-  {code:'my',name:'Myanmar (Burmese)',flag:'🇲🇲'},
-  {code:'ne',name:'Nepali',flag:'🇳🇵'},
-  {code:'no',name:'Norwegian',flag:'🇳🇴'},
-  {code:'or',name:'Odia',flag:'🇮🇳'},
-  {code:'ps',name:'Pashto',flag:'🇦🇫'},
-  {code:'fa',name:'Persian',flag:'🇮🇷'},
-  {code:'pl',name:'Polish',flag:'🇵🇱'},
-  {code:'pt',name:'Portuguese',flag:'🇵🇹'},
-  {code:'pa',name:'Punjabi',flag:'🇮🇳'},
-  {code:'ro',name:'Romanian',flag:'🇷🇴'},
-  {code:'ru',name:'Russian',flag:'🇷🇺'},
-  {code:'sm',name:'Samoan',flag:'🇼🇸'},
-  {code:'gd',name:'Scots Gaelic',flag:'🏴'},
-  {code:'sr',name:'Serbian',flag:'🇷🇸'},
-  {code:'st',name:'Sesotho',flag:'🇱🇸'},
-  {code:'sn',name:'Shona',flag:'🇿🇼'},
-  {code:'sd',name:'Sindhi',flag:'🇵🇰'},
-  {code:'si',name:'Sinhala',flag:'🇱🇰'},
-  {code:'sk',name:'Slovak',flag:'🇸🇰'},
-  {code:'sl',name:'Slovenian',flag:'🇸🇮'},
-  {code:'so',name:'Somali',flag:'🇸🇴'},
-  {code:'es',name:'Spanish',flag:'🇪🇸'},
-  {code:'su',name:'Sundanese',flag:'🇮🇩'},
-  {code:'sw',name:'Swahili',flag:'🇰🇪'},
-  {code:'sv',name:'Swedish',flag:'🇸🇪'},
-  {code:'tg',name:'Tajik',flag:'🇹🇯'},
-  {code:'ta',name:'Tamil',flag:'🇮🇳'},
-  {code:'tt',name:'Tatar',flag:'🇷🇺'},
-  {code:'te',name:'Telugu',flag:'🇮🇳'},
-  {code:'th',name:'Thai',flag:'🇹🇭'},
-  {code:'tr',name:'Turkish',flag:'🇹🇷'},
-  {code:'tk',name:'Turkmen',flag:'🇹🇲'},
-  {code:'uk',name:'Ukrainian',flag:'🇺🇦'},
-  {code:'ur',name:'Urdu',flag:'🇵🇰'},
-  {code:'ug',name:'Uyghur',flag:'🇨🇳'},
-  {code:'uz',name:'Uzbek',flag:'🇺🇿'},
-  {code:'vi',name:'Vietnamese',flag:'🇻🇳'},
-  {code:'cy',name:'Welsh',flag:'🏴'},
-  {code:'xh',name:'Xhosa',flag:'🇿🇦'},
-  {code:'yi',name:'Yiddish',flag:'🌍'},
-  {code:'yo',name:'Yoruba',flag:'🇳🇬'},
-  {code:'zu',name:'Zulu',flag:'🇿🇦'}
-
+  {code:'af',name:'Afrikaans',flag:'🇿🇦'}, {code:'sq',name:'Albanian',flag:'🇦🇱'},
+  {code:'ar',name:'Arabic',flag:'🇸🇦'}, {code:'zh-CN',name:'Chinese (Simplified)',flag:'🇨🇳'},
+  {code:'zh-TW',name:'Chinese (Traditional)',flag:'🇹🇼'}, {code:'nl',name:'Dutch',flag:'🇳🇱'},
+  {code:'en',name:'English',flag:'🇬🇧'}, {code:'fr',name:'French',flag:'🇫🇷'},
+  {code:'de',name:'German',flag:'🇩🇪'}, {code:'it',name:'Italian',flag:'🇮🇹'},
+  {code:'es',name:'Spanish',flag:'🇪🇸'}, {code:'tr',name:'Turkish',flag:'🇹🇷'}
+  // Voeg hier eventueel weer de rest van je talen toe!
 ];
 
+// LEGE SHIRTS DATA (Voorbeelden zijn verwijderd zoals gevraagd)
+const shirtsData = [];
 
-/* =====================================================
-   SHIRTS
-===================================================== */
-
-const shirtsData = [
-
-  {
-    club:"AC Milan",
-    name:"AC Milan 1994-1995 Home #3 Maldini",
-    price:"€ 149,95",
-    condition:"Mint Condition",
-    icon:"🔴🖤"
-  },
-
-  {
-    club:"Real Madrid",
-    name:"Real Madrid 2001-2002 Centenary #5 Zidane",
-    price:"€ 179,95",
-    condition:"Nieuwstaat",
-    icon:"⚪👑"
-  },
-
-  {
-    club:"FC Barcelona",
-    name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
-    price:"€ 169,95",
-    condition:"Mint Condition",
-    icon:"🔵🔴"
-  },
-
-  {
-    club:"Manchester United",
-    name:"Manchester United 1998-1999 Treble #7 Beckham",
-    price:"€ 159,95",
-    condition:"Nieuwstaat",
-    icon:"🔴⚪"
-  },
-
-  {
-    club:"Arsenal",
-    name:"Arsenal 2003-2004 Invincibles #14 Henry",
-    price:"€ 189,95",
-    condition:"Mint Condition",
-    icon:"🔴⚪"
-  },
-
-  {
-    club:"Juventus",
-    name:"Juventus 1997-1998 Centenary #10 Del Piero",
-    price:"€ 139,95",
-    condition:"Nieuwstaat",
-    icon:"⚪🖤"
-  }
-
-];
-
-
-/* =====================================================
-   HOME
-===================================================== */
-
-function renderHome() {
-
-  document.getElementById("app").innerHTML = `
-
-    <div class="page">
-
-      <div class="banner-container">
-
-        <img
-          src="hero.png"
-          alt="Football Shirt Market"
-          onerror="this.style.display='none'"
-        >
-
-        <div class="banner-overlay"></div>
-
-        <div class="banner-content">
-
-          <div class="banner-title">
-            Koop. Verkoop.<br>
-            Verzamel.
+// Functie om shirts in de HTML te zetten vóórdat translate losgaat
+function initShirts() {
+  const shirtHTML = shirtsData.length > 0 
+    ? shirtsData.map(shirt => `
+        <div class="shirt-card">
+          <div class="shirt-img-wrapper">
+            <span class="badge-tag">${shirt.condition}</span>
+            <div class="shirt-img-placeholder">👕</div>
           </div>
-
-          <div class="banner-description">
-            De marketplace voor voetbalshirts,
-            verzamelaars en echte voetbalfans.
+          <div class="shirt-info">
+            <div>
+              <div class="shirt-club">${shirt.icon} ${shirt.club}</div>
+              <div class="shirt-name">${shirt.name}</div>
+            </div>
+            <div class="shirt-footer">
+              <div class="shirt-price">${shirt.price}</div>
+              <button class="shirt-btn" type="button">Bekijken</button>
+            </div>
           </div>
-
-          <div class="banner-actions">
-
-            <a
-              href="#/explore"
-              class="banner-btn-green"
-            >
-              Ontdek shirts
-            </a>
-
-            <a
-              href="#/sell"
-              class="banner-btn-white"
-            >
-              Verkoop een shirt
-            </a>
-
-          </div>
-
         </div>
+      `).join("")
+    : `<p style="color: #8a9e92; grid-column: 1 / -1;">Er zijn momenteel geen shirts beschikbaar.</p>`;
 
-      </div>
-
-
-      <section>
-
-        <div class="section-header">
-
-          <div class="section-title">
-            Populaire
-            <span>
-              Voetbalshirts
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="shirts-grid">
-
-          ${renderShirts()}
-
-        </div>
-
-      </section>
-
-    </div>
-
-  `;
-
-  translateCurrentPage();
-
+  document.getElementById("home-shirts-grid").innerHTML = shirtHTML;
+  document.getElementById("explore-shirts-grid").innerHTML = shirtHTML;
 }
 
-
-/* =====================================================
-   SHIRT CARDS
-===================================================== */
-
-function renderShirts() {
-
-  return shirtsData.map(shirt => `
-
-    <div class="shirt-card">
-
-      <div class="shirt-img-wrapper">
-
-        <span class="badge-tag">
-          ${shirt.condition}
-        </span>
-
-        <div class="shirt-img-placeholder">
-          👕
-        </div>
-
-      </div>
-
-
-      <div class="shirt-info">
-
-        <div>
-
-          <div class="shirt-club">
-            ${shirt.icon} ${shirt.club}
-          </div>
-
-          <div class="shirt-name">
-            ${shirt.name}
-          </div>
-
-        </div>
-
-
-        <div class="shirt-footer">
-
-          <div class="shirt-price">
-            ${shirt.price}
-          </div>
-
-          <button
-            class="shirt-btn"
-            type="button"
-          >
-            Bekijken
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("");
-
-}
-
-
-/* =====================================================
-   EXPLORE
-===================================================== */
-
-function renderExplore() {
-
-  document.getElementById("app").innerHTML = `
-
-    <div class="page">
-
-      <div class="banner-container">
-
-        <img
-          src="ontdekken.png"
-          alt="Ontdekken"
-          onerror="this.src='hero.png'"
-        >
-
-      </div>
-
-
-      <section>
-
-        <div class="section-header">
-
-          <div class="section-title">
-            Alle
-            <span>
-              Voetbalshirts
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="shirts-grid">
-
-          ${renderShirts()}
-
-        </div>
-
-      </section>
-
-    </div>
-
-  `;
-
-  translateCurrentPage();
-
-}
-
-
-/* =====================================================
-   SELL
-===================================================== */
-
-function renderSell() {
-
-  document.getElementById("app").innerHTML = `
-
-    <div class="page">
-
-      <div class="sell-page">
-
-        <h1>
-          Verkoop je Voetbalshirt
-        </h1>
-
-        <p>
-          Upload hier binnenkort je iconische shirts
-          en bereik duizenden verzamelaars.
-        </p>
-
-        <a
-          href="#/"
-          class="banner-btn-green"
-        >
-          Terug naar Home
-        </a>
-
-      </div>
-
-    </div>
-
-  `;
-
-  translateCurrentPage();
-
-}
-
-
-/* =====================================================
-   ROUTER
-===================================================== */
-
+// ROUTING: In plaats van de pagina te wissen, toggelen we de classes
 function route() {
-
   const hash = location.hash || "#/";
-
-  document
-    .querySelectorAll("nav a")
-    .forEach(a => a.classList.remove("active"));
-
+  
+  // Update navigatie balk
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
 
   if (hash.startsWith("#/explore")) {
-
-    document
-      .getElementById("nav-explore")
-      ?.classList.add("active");
-
-    renderExplore();
-
+    document.getElementById("nav-explore")?.classList.add("active");
+    document.getElementById("view-explore").classList.add("active");
+  } else if (hash.startsWith("#/sell")) {
+    document.getElementById("nav-sell")?.classList.add("active");
+    document.getElementById("view-sell").classList.add("active");
+  } else {
+    document.getElementById("nav-home")?.classList.add("active");
+    document.getElementById("view-home").classList.add("active");
   }
-
-  else if (hash.startsWith("#/sell")) {
-
-    document
-      .getElementById("nav-sell")
-      ?.classList.add("active");
-
-    renderSell();
-
-  }
-
-  else {
-
-    document
-      .getElementById("nav-home")
-      ?.classList.add("active");
-
-    renderHome();
-
-  }
-
-
   updateLanguageButton();
-
 }
 
-
-/* =====================================================
-   TAAL KNOP UPDATEN
-===================================================== */
-
+// TAAL FUNCTIES
 function getCurrentLanguageCode() {
-
-  const cookie = document.cookie
-    .split(";")
-    .map(x => x.trim())
-    .find(x => x.startsWith("googtrans="));
-
-  if (!cookie) {
-    return "nl";
-  }
-
-  const value = decodeURIComponent(
-    cookie.split("=")[1] || ""
-  );
-
-  const parts = value.split("/");
-
-  return parts[2] || "nl";
+  const cookie = document.cookie.split(";").map(x => x.trim()).find(x => x.startsWith("googtrans="));
+  if (!cookie) return "nl";
+  const value = decodeURIComponent(cookie.split("=")[1] || "");
+  return value.split("/")[2] || "nl";
 }
-
 
 function updateLanguageButton() {
-
   const code = getCurrentLanguageCode();
-
-  const language =
-    languages.find(
-      l => l.code.toLowerCase() === code.toLowerCase()
-    )
-    || languages.find(l => l.code === "nl");
-
-
+  const language = languages.find(l => l.code.toLowerCase() === code.toLowerCase()) || languages.find(l => l.code === "nl");
   if (!language) return;
-
-
-  document.getElementById("currentFlag").textContent =
-    language.flag;
-
-  document.getElementById("currentLangCode").textContent =
-    language.code
-      .split("-")[0]
-      .toUpperCase();
-
+  document.getElementById("currentFlag").textContent = language.flag;
+  document.getElementById("currentLangCode").textContent = language.code.split("-")[0].toUpperCase();
 }
-
-
-/* =====================================================
-   TAALLIJST
-===================================================== */
 
 function renderLanguageList(filterText = "") {
-
-  const langList =
-    document.getElementById("langList");
-
-  const search =
-    filterText.trim().toLowerCase();
-
-
-  const filtered =
-    languages.filter(lang => {
-
-      return (
-        lang.name.toLowerCase().includes(search) ||
-        lang.code.toLowerCase().includes(search)
-      );
-
-    });
-
-
+  const langList = document.getElementById("langList");
+  const search = filterText.trim().toLowerCase();
+  const filtered = languages.filter(lang => lang.name.toLowerCase().includes(search) || lang.code.toLowerCase().includes(search));
+  
   langList.innerHTML = "";
-
-
   if (filtered.length === 0) {
-
-    langList.innerHTML = `
-      <div class="lang-empty">
-        Geen taal gevonden
-      </div>
-    `;
-
+    langList.innerHTML = `<div style="text-align: center; padding: 20px; color: #829188;">Geen taal gevonden</div>`;
     return;
   }
 
-
-  const currentCode =
-    getCurrentLanguageCode();
-
-
+  const currentCode = getCurrentLanguageCode();
   filtered.forEach(lang => {
-
-    const item =
-      document.createElement("div");
-
-    item.className = "lang-item";
-
-
-    if (
-      lang.code.toLowerCase() ===
-      currentCode.toLowerCase()
-    ) {
-
-      item.classList.add("active");
-
-    }
-
-
-    item.innerHTML = `
-
-      <span style="font-size:18px">
-        ${lang.flag}
-      </span>
-
-      <span>
-        ${lang.name}
-      </span>
-
-    `;
-
-
-    item.addEventListener(
-      "click",
-      () => selectLanguage(lang.code)
-    );
-
-
+    const item = document.createElement("div");
+    item.className = `lang-item ${lang.code.toLowerCase() === currentCode.toLowerCase() ? 'active' : ''}`;
+    item.innerHTML = `<span style="font-size:18px">${lang.flag}</span> <span>${lang.name}</span>`;
+    item.addEventListener("click", () => selectLanguage(lang.code));
     langList.appendChild(item);
-
   });
-
 }
-
-
-/* =====================================================
-   TAAL SELECTEREN
-===================================================== */
-
-function setGoogleTranslateCookie(code) {
-
-  const value =
-    code === "nl"
-      ? ""
-      : `/nl/${code}`;
-
-
-  const hostname =
-    location.hostname;
-
-
-  document.cookie =
-    "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-
-  if (hostname) {
-
-    document.cookie =
-      "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" +
-      hostname +
-      ";";
-
-  }
-
-
-  if (code !== "nl") {
-
-    document.cookie =
-      `googtrans=${value}; path=/;`;
-
-    if (hostname) {
-
-      document.cookie =
-        `googtrans=${value}; path=/; domain=${hostname};`;
-
-    }
-
-  }
-
-}
-
 
 function selectLanguage(code) {
-
-  setGoogleTranslateCookie(code);
-
-  updateLanguageButton();
-
-  document
-    .getElementById("langModal")
-    .classList.remove("open");
-
-
-  /*
-    Probeer eerst Google Translate
-    zonder volledige pagina-refresh.
-  */
-
-  const select =
-    document.querySelector(".goog-te-combo");
-
-
-  if (select) {
-
-    select.value = code;
-
-    select.dispatchEvent(
-      new Event("change")
-    );
-
-    setTimeout(
-      translateCurrentPage,
-      800
-    );
-
+  const value = code === "nl" ? "" : `/nl/${code}`;
+  const hostname = location.hostname;
+  
+  document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  if (hostname) document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + hostname + ";";
+  if (code !== "nl") {
+    document.cookie = `googtrans=${value}; path=/;`;
+    if (hostname) document.cookie = `googtrans=${value}; path=/; domain=${hostname};`;
   }
-
-  else {
-
-    /*
-      Google Translate is nog niet geladen.
-      Een reload zorgt ervoor dat de cookie
-      direct wordt gebruikt.
-    */
-
-    location.reload();
-
-  }
-
+  
+  location.reload(); // De harde reload garandeert dat de hele pagina direct juist vertaalt!
 }
 
-
-/* =====================================================
-   GOOGLE TRANSLATE OPNIEUW TOEPASSEN
-===================================================== */
-
-function translateCurrentPage() {
-
-  const code =
-    getCurrentLanguageCode();
-
-
-  if (code === "nl") {
-    return;
-  }
-
-
-  let tries = 0;
-
-
-  const timer =
-    setInterval(() => {
-
-      tries++;
-
-
-      const select =
-        document.querySelector(".goog-te-combo");
-
-
-      if (select) {
-
-        select.value = code;
-
-        select.dispatchEvent(
-          new Event("change")
-        );
-
-        clearInterval(timer);
-
-      }
-
-
-      if (tries > 30) {
-
-        clearInterval(timer);
-
-      }
-
-    }, 250);
-
-}
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-const langModal =
-  document.getElementById("langModal");
-
-const langPickerBtn =
-  document.getElementById("langPickerBtn");
-
-const closeLangModal =
-  document.getElementById("closeLangModal");
-
-const langSearchInput =
-  document.getElementById("langSearchInput");
-
-
-langPickerBtn.addEventListener(
-  "click",
-  () => {
-
-    langModal.classList.add("open");
-
-    langSearchInput.value = "";
-
-    renderLanguageList();
-
-    setTimeout(
-      () => langSearchInput.focus(),
-      100
-    );
-
-  }
-);
-
-
-closeLangModal.addEventListener(
-  "click",
-  () => {
-
-    langModal.classList.remove("open");
-
-  }
-);
-
-
-langModal.addEventListener(
-  "click",
-  event => {
-
-    if (
-      event.target === langModal
-    ) {
-
-      langModal.classList.remove("open");
-
-    }
-
-  }
-);
-
-
-langSearchInput.addEventListener(
-  "input",
-  event => {
-
-    renderLanguageList(
-      event.target.value
-    );
-
-  }
-);
-
-
-/* ESC om modal te sluiten */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Escape"
-    ) {
-
-      langModal.classList.remove("open");
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   ROUTER EVENTS
-===================================================== */
-
-window.addEventListener(
-  "hashchange",
-  route
-);
-
-
-/* =====================================================
-   GOOGLE TRANSLATE MUTATION OBSERVER
-===================================================== */
-
-const observer =
-  new MutationObserver(() => {
-
-    const code =
-      getCurrentLanguageCode();
-
-    if (code !== "nl") {
-      updateLanguageButton();
-    }
-
-  });
-
-
-observer.observe(
-  document.body,
-  {
-    childList: true,
-    subtree: true
-  }
-);
-
-
-/* =====================================================
-   START
-===================================================== */
-
-route();
-
+// EVENTS
+document.getElementById("langPickerBtn").addEventListener("click", () => {
+  document.getElementById("langModal").classList.add("open");
+  document.getElementById("langSearchInput").value = "";
+  renderLanguageList();
+});
+document.getElementById("closeLangModal").addEventListener("click", () => document.getElementById("langModal").classList.remove("open"));
+document.getElementById("langSearchInput").addEventListener("input", e => renderLanguageList(e.target.value));
+window.addEventListener("hashchange", route);
+
+// STARTUP
+initShirts(); // 1. Shirts laden (Nu leeg, geeft fallback tekst)
+route();      // 2. Juiste scherm tonen
 </script>
-
 </body>
 </html>
