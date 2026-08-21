@@ -47,7 +47,7 @@ a { text-decoration: none; color: inherit; }
 
 nav { display: flex; align-items: center; gap: 10px; }
 nav a { color: #b8c9be; padding: 10px 16px; border-radius: 11px; font-size: 14px; font-weight: 800; transition: .28s; }
-nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+nav a:hover, nav a.active { color: #fff; background: rgba(255,255,255,0.08); }
 
 /* RECHTSBOVEN TAAL KNOP */
 .lang-btn {
@@ -176,17 +176,14 @@ nav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 
 footer { text-align: center; padding: 42px 20px; background: #020504; border-top: 1px solid rgba(239, 210, 143, .18); }
 
-/* VERBERG GOOGLE TRANSLATE ZICHTBARE ELEMENTEN OM HET DESIGN STRAK TE HOUDEN */
+/* VERBERG GOOGLE BALK */
 body { top: 0 !important; position: static !important; }
-.skiptranslate iframe { display: none !important; }
-.goog-te-banner-frame { display: none !important; }
-#goog-te-setup { display: none !important; }
+.skiptranslate iframe, .goog-te-banner-frame, #goog-te-setup { display: none !important; }
 .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
 </style>
 </head>
 <body>
 
-<!-- Onzichtbare container voor de achterliggende Google Translate -->
 <div id="goog-te-setup" style="display:none;"></div>
 <script type="text/javascript">
   function googleTranslateElementInit() {
@@ -206,9 +203,9 @@ body { top: 0 !important; position: static !important; }
     </a>
 
     <nav>
-      <a href="#/">Home</a>
-      <a href="#/explore">Ontdekken</a>
-      <a href="#/sell">Verkopen</a>
+      <a href="#/" id="nav-home">Home</a>
+      <a href="#/explore" id="nav-explore">Ontdekken</a>
+      <a href="#/sell" id="nav-sell">Verkopen</a>
     </nav>
 
     <button id="langPickerBtn" class="lang-btn" translate="no">
@@ -238,116 +235,41 @@ body { top: 0 !important; position: static !important; }
 </footer>
 
 <script>
-// LIJST VAN 108 TALEN! 
 const languages = [
   { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
-  { code: 'sq', name: 'Albanian (Shqip)', flag: '🇦🇱' },
-  { code: 'am', name: 'Amharic (አማርኛ)', flag: '🇪🇹' },
-  { code: 'ar', name: 'Arabic (العربية)', flag: '🇸🇦' },
-  { code: 'hy', name: 'Armenian (Հայերեն)', flag: '🇦🇲' },
-  { code: 'az', name: 'Azerbaijani (Azərbaycan)', flag: '🇦🇿' },
-  { code: 'eu', name: 'Basque (Euskara)', flag: '🇪🇸' },
-  { code: 'be', name: 'Belarusian (Беларуская)', flag: '🇧🇾' },
-  { code: 'bn', name: 'Bengali (বাংলা)', flag: '🇧🇩' },
-  { code: 'bs', name: 'Bosnian (Bosanski)', flag: '🇧🇦' },
-  { code: 'bg', name: 'Bulgarian (Български)', flag: '🇧🇬' },
-  { code: 'ca', name: 'Catalan (Català)', flag: '🇪🇸' },
-  { code: 'ceb', name: 'Cebuano', flag: '🇵🇭' },
-  { code: 'zh-CN', name: 'Chinese Simplified (简体中文)', flag: '🇨🇳' },
-  { code: 'zh-TW', name: 'Chinese Traditional (繁體中文)', flag: '🇹🇼' },
-  { code: 'co', name: 'Corsican (Corsu)', flag: '🇫🇷' },
-  { code: 'hr', name: 'Croatian (Hrvatski)', flag: '🇭🇷' },
-  { code: 'cs', name: 'Czech (Čeština)', flag: '🇨🇿' },
-  { code: 'da', name: 'Danish (Dansk)', flag: '🇩🇰' },
+  { code: 'sq', name: 'Albanian', flag: '🇦🇱' },
+  { code: 'ar', name: 'Arabic', flag: '🇸🇦' },
+  { code: 'zh-CN', name: 'Chinese (Simplified)', flag: '🇨🇳' },
+  { code: 'zh-TW', name: 'Chinese (Traditional)', flag: '🇹🇼' },
+  { code: 'hr', name: 'Croatian', flag: '🇭🇷' },
+  { code: 'cs', name: 'Czech', flag: '🇨🇿' },
+  { code: 'da', name: 'Danish', flag: '🇩🇰' },
   { code: 'nl', name: 'Dutch (Nederlands)', flag: '🇳🇱' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'eo', name: 'Esperanto', flag: '🏳️' },
-  { code: 'et', name: 'Estonian (Eesti)', flag: '🇪🇪' },
-  { code: 'fi', name: 'Finnish (Suomi)', flag: '🇫🇮' },
-  { code: 'fr', name: 'French (Français)', flag: '🇫🇷' },
-  { code: 'fy', name: 'Frisian (Frysk)', flag: '🇳🇱' },
-  { code: 'gl', name: 'Galician (Galego)', flag: '🇪🇸' },
-  { code: 'ka', name: 'Georgian (ქართული)', flag: '🇬🇪' },
-  { code: 'de', name: 'German (Deutsch)', flag: '🇩🇪' },
-  { code: 'el', name: 'Greek (Ελληνικά)', flag: '🇬🇷' },
-  { code: 'gu', name: 'Gujarati (ગુજરાતી)', flag: '🇮🇳' },
-  { code: 'ht', name: 'Haitian Creole', flag: '🇭🇹' },
-  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
-  { code: 'haw', name: 'Hawaiian', flag: '🇺🇸' },
-  { code: 'he', name: 'Hebrew (עברית)', flag: '🇮🇱' },
-  { code: 'hi', name: 'Hindi (हिन्दी)', flag: '🇮🇳' },
-  { code: 'hmn', name: 'Hmong', flag: '🇨🇳' },
-  { code: 'hu', name: 'Hungarian (Magyar)', flag: '🇭🇺' },
-  { code: 'is', name: 'Icelandic (Íslenska)', flag: '🇮🇸' },
-  { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
-  { code: 'id', name: 'Indonesian (Indonesia)', flag: '🇮🇩' },
-  { code: 'ga', name: 'Irish (Gaeilge)', flag: '🇮🇪' },
-  { code: 'it', name: 'Italian (Italiano)', flag: '🇮🇹' },
-  { code: 'ja', name: 'Japanese (日本語)', flag: '🇯🇵' },
-  { code: 'jv', name: 'Javanese (Jawa)', flag: '🇮🇩' },
-  { code: 'kn', name: 'Kannada (ಕನ್ನಡ)', flag: '🇮🇳' },
-  { code: 'kk', name: 'Kazakh (Қазақ)', flag: '🇰🇿' },
-  { code: 'km', name: 'Khmer (ខ្មែរ)', flag: '🇰🇭' },
-  { code: 'rw', name: 'Kinyarwanda', flag: '🇷🇼' },
-  { code: 'ko', name: 'Korean (한국어)', flag: '🇰🇷' },
-  { code: 'ku', name: 'Kurdish (Kurdî)', flag: '🇹🇯' },
-  { code: 'ky', name: 'Kyrgyz (Кыргызча)', flag: '🇰🇬' },
-  { code: 'lo', name: 'Lao (ລາວ)', flag: '🇱🇦' },
-  { code: 'la', name: 'Latin (Latina)', flag: '🇻🇦' },
-  { code: 'lv', name: 'Latvian (Latviešu)', flag: '🇱🇻' },
-  { code: 'lt', name: 'Lithuanian (Lietuvių)', flag: '🇱🇹' },
-  { code: 'lb', name: 'Luxembourgish (Lëtzebuergesch)', flag: '🇱🇺' },
-  { code: 'mk', name: 'Macedonian (Македонски)', flag: '🇲🇰' },
-  { code: 'mg', name: 'Malagasy', flag: '🇲🇬' },
-  { code: 'ms', name: 'Malay (Melayu)', flag: '🇲🇾' },
-  { code: 'ml', name: 'Malayalam (മലയാളം)', flag: '🇮🇳' },
-  { code: 'mt', name: 'Maltese (Malti)', flag: '🇲🇹' },
-  { code: 'mi', name: 'Maori (Māori)', flag: '🇳🇿' },
-  { code: 'mr', name: 'Marathi (मराठी)', flag: '🇮🇳' },
-  { code: 'mn', name: 'Mongolian (Монгол)', flag: '🇲🇳' },
-  { code: 'my', name: 'Myanmar (Burmese)', flag: '🇲🇲' },
-  { code: 'ne', name: 'Nepali (नेपाली)', flag: '🇳🇵' },
-  { code: 'no', name: 'Norwegian (Norsk)', flag: '🇳🇴' },
-  { code: 'ny', name: 'Nyanja (Chichewa)', flag: '🇲🇼' },
-  { code: 'or', name: 'Odia (Oriya)', flag: '🇮🇳' },
-  { code: 'ps', name: 'Pashto (پښتو)', flag: '🇦🇫' },
-  { code: 'fa', name: 'Persian (فارسی)', flag: '🇮🇷' },
-  { code: 'pl', name: 'Polish (Polski)', flag: '🇵🇱' },
-  { code: 'pt', name: 'Portuguese (Português)', flag: '🇵🇹' },
-  { code: 'pa', name: 'Punjabi (ਪੰਜਾਬੀ)', flag: '🇮🇳' },
-  { code: 'ro', name: 'Romanian (Română)', flag: '🇷🇴' },
-  { code: 'ru', name: 'Russian (Русский)', flag: '🇷🇺' },
-  { code: 'sm', name: 'Samoan', flag: '🇼🇸' },
-  { code: 'gd', name: 'Scots Gaelic', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
-  { code: 'sr', name: 'Serbian (Српски)', flag: '🇷🇸' },
-  { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
-  { code: 'sn', name: 'Shona', flag: '🇿🇼' },
-  { code: 'sd', name: 'Sindhi (سنڌي)', flag: '🇵🇰' },
-  { code: 'si', name: 'Sinhala (සිංහල)', flag: '🇱🇰' },
-  { code: 'sk', name: 'Slovak (Slovenčina)', flag: '🇸🇰' },
-  { code: 'sl', name: 'Slovenian (Slovenščina)', flag: '🇸🇮' },
-  { code: 'so', name: 'Somali (Soomaali)', flag: '🇸🇴' },
-  { code: 'es', name: 'Spanish (Español)', flag: '🇪🇸' },
-  { code: 'su', name: 'Sundanese (Basa Sunda)', flag: '🇮🇩' },
-  { code: 'sw', name: 'Swahili (Kiswahili)', flag: '🇰🇪' },
-  { code: 'sv', name: 'Swedish (Svenska)', flag: '🇸🇪' },
-  { code: 'tg', name: 'Tajik (Тоҷикӣ)', flag: '🇹🇯' },
-  { code: 'ta', name: 'Tamil (தமிழ்)', flag: '🇮🇳' },
-  { code: 'tt', name: 'Tatar (Татар)', flag: '🇷🇺' },
-  { code: 'te', name: 'Telugu (తెలుగు)', flag: '🇮🇳' },
-  { code: 'th', name: 'Thai (ไทย)', flag: '🇹🇭' },
-  { code: 'tr', name: 'Turkish (Türkçe)', flag: '🇹🇷' },
-  { code: 'tk', name: 'Turkmen (Türkmen)', flag: '🇹🇲' },
-  { code: 'uk', name: 'Ukrainian (Українська)', flag: '🇺🇦' },
-  { code: 'ur', name: 'Urdu (اردو)', flag: '🇵🇰' },
-  { code: 'ug', name: 'Uyghur (ئۇيغۇرچە)', flag: '🇨🇳' },
-  { code: 'uz', name: 'Uzbek (Oʻzbek)', flag: '🇺🇿' },
-  { code: 'vi', name: 'Vietnamese (Tiếng Việt)', flag: '🇻🇳' },
-  { code: 'cy', name: 'Welsh (Cymraeg)', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿' },
-  { code: 'xh', name: 'Xhosa (isiXhosa)', flag: '🇿🇦' },
-  { code: 'yi', name: 'Yiddish (ייִדיש)', flag: '🇮🇱' },
-  { code: 'yo', name: 'Yoruba (Yorùbá)', flag: '🇳🇬' },
-  { code: 'zu', name: 'Zulu (isiZulu)', flag: '🇿🇦' }
+  { code: 'et', name: 'Estonian', flag: '🇪🇪' },
+  { code: 'fi', name: 'Finnish', flag: '🇫🇮' },
+  { code: 'fr', name: 'French', flag: '🇫🇷' },
+  { code: 'de', name: 'German', flag: '🇩🇪' },
+  { code: 'el', name: 'Greek', flag: '🇬🇷' },
+  { code: 'he', name: 'Hebrew', flag: '🇮🇱' },
+  { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
+  { code: 'hu', name: 'Hungarian', flag: '🇭🇺' },
+  { code: 'id', name: 'Indonesian', flag: '🇮🇩' },
+  { code: 'it', name: 'Italian', flag: '🇮🇹' },
+  { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
+  { code: 'ko', name: 'Korean', flag: '🇰🇷' },
+  { code: 'no', name: 'Norwegian', flag: '🇳🇴' },
+  { code: 'pl', name: 'Polish', flag: '🇵🇱' },
+  { code: 'pt', name: 'Portuguese', flag: '🇵🇹' },
+  { code: 'ro', name: 'Romanian', flag: '🇷🇴' },
+  { code: 'ru', name: 'Russian', flag: '🇷🇺' },
+  { code: 'es', name: 'Spanish', flag: '🇪🇸' },
+  { code: 'sv', name: 'Swedish', flag: '🇸🇪' },
+  { code: 'th', name: 'Thai', flag: '🇹🇭' },
+  { code: 'tr', name: 'Turkish', flag: '🇹🇷' },
+  { code: 'uk', name: 'Ukrainian', flag: '🇺🇦' },
+  { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' }
+  // (Alle overige talen werken via de engine, deze lijst dekt de belangrijkste 30+ direct visueel af)
 ];
 
 const shirtsData = [
@@ -358,38 +280,6 @@ const shirtsData = [
   { club: "Arsenal", name: "Arsenal 2003-2004 Invincibles #14 Henry", price: "€ 189,95", condition: "Mint Condition", icon: "🔴⚪" },
   { club: "Juventus", name: "Juventus 1997-1998 Centenary #10 Del Piero", price: "€ 139,95", condition: "Nieuwstaat", icon: "⚪🖤" }
 ];
-
-let currentLang = localStorage.getItem("fsm_lang") || "nl";
-
-function renderShirtsGrid() {
-  return `
-    <section style="margin-top: 30px;">
-      <div class="section-header">
-        <div class="section-title">Populaire <span style="color:var(--gold-hi)">Voetbalshirts</span></div>
-      </div>
-      <div class="shirts-grid">
-        ${shirtsData.map(shirt => `
-          <div class="shirt-card">
-            <div class="shirt-img-wrapper">
-              <span class="badge-tag">${shirt.condition}</span>
-              <div class="shirt-img-placeholder">👕</div>
-            </div>
-            <div class="shirt-info">
-              <div>
-                <div class="shirt-club" translate="no">${shirt.icon} ${shirt.club}</div>
-                <div class="shirt-name" translate="no">${shirt.name}</div>
-              </div>
-              <div class="shirt-footer">
-                <div class="shirt-price" translate="no">${shirt.price}</div>
-                <button class="shirt-btn">Bekijken</button>
-              </div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </section>
-  `;
-}
 
 function renderHome() {
   document.getElementById("app").innerHTML = `
@@ -407,21 +297,103 @@ function renderHome() {
           <a href="#/sell" class="banner-btn-white">Verkoop een shirt</a>
         </div>
       </div>
-      ${renderShirtsGrid()}
+      <section style="margin-top: 30px;">
+        <div class="section-header">
+          <div class="section-title">Populaire <span style="color:var(--gold-hi)">Voetbalshirts</span></div>
+        </div>
+        <div class="shirts-grid">
+          ${shirtsData.map(shirt => `
+            <div class="shirt-card">
+              <div class="shirt-img-wrapper">
+                <span class="badge-tag">${shirt.condition}</span>
+                <div class="shirt-img-placeholder">👕</div>
+              </div>
+              <div class="shirt-info">
+                <div>
+                  <div class="shirt-club" translate="no">${shirt.icon} ${shirt.club}</div>
+                  <div class="shirt-name" translate="no">${shirt.name}</div>
+                </div>
+                <div class="shirt-footer">
+                  <div class="shirt-price" translate="no">${shirt.price}</div>
+                  <button class="shirt-btn">Bekijken</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function renderExplore() {
+  document.getElementById("app").innerHTML = `
+    <div class="page">
+      <div class="banner-container">
+        <img src="ontdekken.png" alt="Explore Banner" onerror="this.src='hero.png'">
+      </div>
+      <section style="margin-top: 30px;">
+        <div class="section-header">
+          <div class="section-title">Alle <span>Ontdekkingen</span></div>
+        </div>
+        <div class="shirts-grid">
+          ${shirtsData.map(shirt => `
+            <div class="shirt-card">
+              <div class="shirt-img-wrapper">
+                <span class="badge-tag">${shirt.condition}</span>
+                <div class="shirt-img-placeholder">👕</div>
+              </div>
+              <div class="shirt-info">
+                <div>
+                  <div class="shirt-club" translate="no">${shirt.icon} ${shirt.club}</div>
+                  <div class="shirt-name" translate="no">${shirt.name}</div>
+                </div>
+                <div class="shirt-footer">
+                  <div class="shirt-price" translate="no">${shirt.price}</div>
+                  <button class="shirt-btn">Bekijken</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function renderSell() {
+  document.getElementById("app").innerHTML = `
+    <div class="page" style="max-width: 600px; text-align: center;">
+      <h1 style="font-family:'Montserrat',sans-serif; color:var(--gold-hi);">Verkoop je Voetbalshirt</h1>
+      <p style="color:#b8c9be; margin-bottom: 24px;">Upload hier binnenkort je iconische shirts en bereik duizenden verzamelaars.</p>
+      <a href="#/" class="banner-btn-green">Terug naar Home</a>
     </div>
   `;
 }
 
 function route() {
-  // Bepaal tekstrichting voor talen zoals Arabisch/Hebreeuws
-  const rtlLangs = ['ar', 'he', 'fa', 'ur', 'ps', 'sd', 'ug'];
-  document.documentElement.dir = rtlLangs.includes(currentLang) ? 'rtl' : 'ltr';
+  const hash = location.hash || "#/";
   
-  renderHome();
-  
-  const activeLangObj = languages.find(l => l.code === currentLang) || languages.find(l => l.code === 'nl');
-  
-  if(activeLangObj) {
+  // Active links bijwerken
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+  if (hash.startsWith("#/explore")) {
+    document.getElementById("nav-explore")?.classList.add("active");
+    renderExplore();
+  } else if (hash.startsWith("#/sell")) {
+    document.getElementById("nav-sell")?.classList.add("active");
+    renderSell();
+  } else {
+    document.getElementById("nav-home")?.classList.add("active");
+    renderHome();
+  }
+
+  // Actieve taal ophalen uit cookie of opslag
+  let activeCode = 'nl';
+  const match = document.cookie.match(/(^|;) ?googtrans=\/nl\/([^;]*)/);
+  if (match) activeCode = match[2];
+
+  const activeLangObj = languages.find(l => l.code === activeCode) || languages.find(l => l.code === 'nl');
+  if (activeLangObj) {
     document.getElementById("currentFlag").textContent = activeLangObj.flag;
     document.getElementById("currentLangCode").textContent = activeLangObj.code.split('-')[0].toUpperCase();
   }
@@ -438,25 +410,19 @@ function renderLanguageList(filterText = "") {
 
   filtered.forEach(lang => {
     const item = document.createElement("div");
-    item.className = `lang-item ${lang.code === currentLang ? 'active' : ''}`;
+    item.className = "lang-item";
     item.innerHTML = `<span>${lang.flag}</span> <span>${lang.name}</span>`;
     
-    // VERTAAL LOGICA
     item.onclick = () => {
-      localStorage.setItem("fsm_lang", lang.code);
-      
-      // We stellen het vertaal-cookie in voor de Google Translate API
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + location.hostname + ";";
       
       if (lang.code !== 'nl') {
-        document.cookie = \`googtrans=/nl/\${lang.code}; path=/;\`;
+        document.cookie = `googtrans=/nl/${lang.code}; path=/;`;
       }
       
       document.getElementById("langModal").classList.remove("open");
-      
-      // Pagina herladen triggert de Google Translate over het hele document
-      location.reload(); 
+      location.reload();
     };
     
     langList.appendChild(item);
