@@ -49,7 +49,7 @@ nav { display: flex; align-items: center; gap: 10px; }
 nav a { color: #b8c9be; padding: 10px 16px; border-radius: 11px; font-size: 14px; font-weight: 800; transition: .28s; }
 nav a:hover, nav a.active { color: #fff; background: rgba(255,255,255,0.08); }
 
-/* RECHTSBOVEN TAAL KNOP */
+/* TAAL KNOP */
 .lang-btn {
   background: var(--card-bg); color: var(--gold-hi); 
   border: 1px solid rgba(239, 210, 143, 0.4);
@@ -109,16 +109,6 @@ nav a:hover, nav a.active { color: #fff; background: rgba(255,255,255,0.08); }
   margin-bottom: 40px;
 }
 .banner-container img { width: 100%; display: block; height: auto; }
-
-.banner-btn-green {
-  background: linear-gradient(135deg, #18b875, #118252); color: #fff; padding: 0.8vw 1.6vw;
-  border-radius: 8px; font-weight: 800; font-size: 1.1vw; text-decoration: none; display: inline-block;
-  box-shadow: 0 0 20px rgba(24, 184, 117, 0.4);
-}
-.banner-btn-white {
-  background: #ffffff; color: #000; padding: 0.8vw 1.6vw; border-radius: 8px;
-  font-weight: 800; font-size: 1.1vw; text-decoration: none; display: inline-block;
-}
 
 /* SHIRTS GRID SECTIE */
 .section-header {
@@ -269,7 +259,6 @@ const languages = [
   { code: 'tr', name: 'Turkish', flag: '🇹🇷' },
   { code: 'uk', name: 'Ukrainian', flag: '🇺🇦' },
   { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' }
-  // (Alle overige talen werken via de engine, deze lijst dekt de belangrijkste 30+ direct visueel af)
 ];
 
 const shirtsData = [
@@ -286,35 +275,25 @@ function renderHome() {
     <div class="page">
       <div class="banner-container">
         <img src="hero.png" alt="Hero Banner">
-        <div style="position: absolute; top: 28%; left: 5%; color: #ffffff; font-size: 3.8vw; font-weight: 900; line-height: 1.1; max-width: 45%; font-family: 'Montserrat', sans-serif; text-transform: uppercase;">
-          Koop. Verkoop.<br>Verzamel.
-        </div>
-        <div style="position: absolute; top: 54%; left: 5%; color: #c2cfc7; font-size: 1.1vw; max-width: 38%; line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">
-          De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.
-        </div>
-        <div style="position: absolute; top: 68%; left: 5%; display: flex; gap: 1vw;">
-          <a href="#/explore" class="banner-btn-green">Ontdek shirts</a>
-          <a href="#/sell" class="banner-btn-white">Verkoop een shirt</a>
-        </div>
       </div>
       <section style="margin-top: 30px;">
         <div class="section-header">
-          <div class="section-title">Populaire <span style="color:var(--gold-hi)">Voetbalshirts</span></div>
+          <div class="section-title">Populaire <span>Voetbalshirts</span></div>
         </div>
         <div class="shirts-grid">
           ${shirtsData.map(shirt => `
             <div class="shirt-card">
               <div class="shirt-img-wrapper">
                 <span class="badge-tag">${shirt.condition}</span>
-                <div class="shirt-img-placeholder">👕</div>
+                <div class="shirt-img-placeholder">${shirt.icon}</div>
               </div>
               <div class="shirt-info">
                 <div>
-                  <div class="shirt-club" translate="no">${shirt.icon} ${shirt.club}</div>
-                  <div class="shirt-name" translate="no">${shirt.name}</div>
+                  <div class="shirt-club">${shirt.club}</div>
+                  <div class="shirt-name">${shirt.name}</div>
                 </div>
                 <div class="shirt-footer">
-                  <div class="shirt-price" translate="no">${shirt.price}</div>
+                  <div class="shirt-price">${shirt.price}</div>
                   <button class="shirt-btn">Bekijken</button>
                 </div>
               </div>
@@ -341,15 +320,15 @@ function renderExplore() {
             <div class="shirt-card">
               <div class="shirt-img-wrapper">
                 <span class="badge-tag">${shirt.condition}</span>
-                <div class="shirt-img-placeholder">👕</div>
+                <div class="shirt-img-placeholder">${shirt.icon}</div>
               </div>
               <div class="shirt-info">
                 <div>
-                  <div class="shirt-club" translate="no">${shirt.icon} ${shirt.club}</div>
-                  <div class="shirt-name" translate="no">${shirt.name}</div>
+                  <div class="shirt-club">${shirt.club}</div>
+                  <div class="shirt-name">${shirt.name}</div>
                 </div>
                 <div class="shirt-footer">
-                  <div class="shirt-price" translate="no">${shirt.price}</div>
+                  <div class="shirt-price">${shirt.price}</div>
                   <button class="shirt-btn">Bekijken</button>
                 </div>
               </div>
@@ -366,7 +345,7 @@ function renderSell() {
     <div class="page" style="max-width: 600px; text-align: center;">
       <h1 style="font-family:'Montserrat',sans-serif; color:var(--gold-hi);">Verkoop je Voetbalshirt</h1>
       <p style="color:#b8c9be; margin-bottom: 24px;">Upload hier binnenkort je iconische shirts en bereik duizenden verzamelaars.</p>
-      <a href="#/" class="banner-btn-green">Terug naar Home</a>
+      <a href="#/" class="banner-btn-green" style="background:var(--gold-mid); color:#000; padding:12px 24px; border-radius:8px; font-weight:800;">Terug naar Home</a>
     </div>
   `;
 }
@@ -374,7 +353,6 @@ function renderSell() {
 function route() {
   const hash = location.hash || "#/";
   
-  // Active links bijwerken
   document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
   if (hash.startsWith("#/explore")) {
     document.getElementById("nav-explore")?.classList.add("active");
@@ -387,7 +365,6 @@ function route() {
     renderHome();
   }
 
-  // Actieve taal ophalen uit cookie of opslag
   let activeCode = 'nl';
   const match = document.cookie.match(/(^|;) ?googtrans=\/nl\/([^;]*)/);
   if (match) activeCode = match[2];
