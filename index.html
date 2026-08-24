@@ -2,84 +2,100 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050806">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Football-Shirt-Market</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-  --gold:#e5bd67;
-  --gold-light:#f4d99b;
-  --gold-dark:#b98a2d;
-  --green:#19c783;
-  --green-dark:#087c50;
-  --bg:#020504;
-  --bg2:#06100c;
-  --card:#091711;
-  --card2:#0d1d16;
-  --text:#f5f2e9;
-  --muted:#9caca4;
-  --border:rgba(229,189,103,.20);
+    --black:#020504;
+    --black2:#050b08;
+    --green:#19c77a;
+    --green2:#0d8e56;
+    --green-dark:#06291b;
+    --gold:#e9c46a;
+    --gold2:#b98722;
+    --gold-light:#f6df9d;
+    --white:#ffffff;
+    --muted:#9eaaa4;
+    --card:#07130e;
+    --border:rgba(233,196,106,.22);
 }
 
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
+    overflow-x:hidden;
 }
 
 body{
-  background:
-    radial-gradient(circle at 20% -10%,rgba(20,100,70,.18),transparent 35%),
-    radial-gradient(circle at 90% 10%,rgba(229,189,103,.08),transparent 30%),
-    var(--bg);
-  color:var(--text);
-  font-family:'Inter',sans-serif;
-  min-height:100vh;
+    background:
+        radial-gradient(circle at 50% -10%,rgba(26,110,72,.15),transparent 35%),
+        var(--black);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
 }
 
-body.top{
-  top:0!important;
+body.translated-ltr,
+body.translated-rtl{
+    top:0!important;
 }
 
 a{
-  color:inherit;
-  text-decoration:none;
+    color:inherit;
+    text-decoration:none;
 }
 
 button,
 input{
-  font-family:inherit;
+    font-family:inherit;
+}
+
+img{
+    max-width:100%;
 }
 
 /* =========================================
-   GOOGLE TRANSLATE VERBERGEN
+   GOOGLE TRANSLATE
 ========================================= */
 
+#google_translate_element{
+    position:absolute;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    opacity:0;
+    pointer-events:none;
+}
+
 .goog-te-banner-frame,
-.goog-te-banner-frame.skiptranslate,
-.skiptranslate iframe,
-#goog-gt-tt,
-.goog-tooltip,
+.skiptranslate iframe{
+    display:none!important;
+}
+
+.goog-te-gadget{
+    font-size:0!important;
+}
+
 .goog-text-highlight{
-  display:none!important;
+    background:none!important;
+    box-shadow:none!important;
 }
 
 body{
-  top:0!important;
-}
-
-.goog-te-menu-value{
-  display:none!important;
+    top:0!important;
 }
 
 /* =========================================
@@ -87,149 +103,140 @@ body{
 ========================================= */
 
 .site-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(2,6,4,.88);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  border-bottom:1px solid var(--border);
-}
-
-.site-header::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:-1px;
-  height:1px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(229,189,103,.5),
-    transparent
-  );
+    position:sticky;
+    top:0;
+    z-index:1000;
+    width:100%;
+    background:rgba(2,7,5,.88);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border-bottom:1px solid rgba(233,196,106,.16);
 }
 
 .header-inner{
-  width:min(1380px,100%);
-  min-height:82px;
-  margin:auto;
-  padding:10px 24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:25px;
+    width:min(1380px,100%);
+    min-height:82px;
+    margin:auto;
+    padding:10px 24px;
+    display:flex;
+    align-items:center;
+    gap:22px;
 }
 
-/* LOGO */
-
 .logo-link{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+    flex-shrink:0;
 }
 
 .header-logo{
-  width:auto;
-  height:54px;
-  object-fit:contain;
-  transition:.35s ease;
+    width:58px;
+    height:58px;
+    object-fit:contain;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,.5));
 }
 
-.logo-link:hover .header-logo{
-  transform:scale(1.04);
-}
-
-.brand-name{
-  display:flex;
-  flex-direction:column;
+.brand{
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
 }
 
 .brand-title{
-  font-family:'Montserrat',sans-serif;
-  font-weight:900;
-  font-size:15px;
-  letter-spacing:.7px;
-  color:#fff;
+    font-family:'Montserrat',sans-serif;
+    font-size:15px;
+    font-weight:900;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    white-space:nowrap;
 }
 
 .brand-since{
-  color:var(--gold-light);
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:2.5px;
-  margin-top:4px;
+    color:var(--gold);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:2px;
+    margin-top:5px;
 }
 
 /* NAV */
 
 nav{
-  display:flex;
-  align-items:center;
-  gap:5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    margin-left:auto;
 }
 
 nav a{
-  color:#aab9b1;
-  font-size:14px;
-  font-weight:800;
-  padding:11px 17px;
-  border-radius:12px;
-  transition:.25s ease;
+    color:#aebdb5;
+    padding:11px 15px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:800;
+    transition:.25s ease;
 }
 
 nav a:hover{
-  color:#fff;
-  background:rgba(255,255,255,.06);
+    color:#fff;
+    background:rgba(255,255,255,.06);
 }
 
 nav a.active{
-  color:#fff;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(229,189,103,.16),
-      rgba(25,199,131,.08)
-    );
-  border:1px solid rgba(229,189,103,.18);
+    color:#fff;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(233,196,106,.16),
+            rgba(25,199,122,.08)
+        );
+    border:1px solid rgba(233,196,106,.15);
 }
 
-/* LANGUAGE BUTTON */
+/* LANGUAGE */
 
 .lang-btn{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-shrink:0;
-
-  border:1px solid rgba(229,189,103,.32);
-  background:linear-gradient(
-    135deg,
-    rgba(255,255,255,.045),
-    rgba(229,189,103,.06)
-  );
-
-  color:var(--gold-light);
-  padding:10px 14px;
-  border-radius:13px;
-  cursor:pointer;
-  font-size:12px;
-  font-weight:800;
-
-  transition:.25s ease;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#07140e;
+    color:var(--gold-light);
+    border:1px solid rgba(233,196,106,.32);
+    border-radius:12px;
+    padding:10px 13px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s ease;
 }
 
 .lang-btn:hover{
-  transform:translateY(-2px);
-  border-color:var(--gold);
-  box-shadow:0 8px 25px rgba(229,189,103,.10);
+    border-color:var(--gold);
+    transform:translateY(-1px);
+    box-shadow:0 8px 25px rgba(233,196,106,.08);
 }
 
-.lang-arrow{
-  font-size:9px;
-  opacity:.7;
+#currentFlag{
+    font-size:16px;
+}
+
+/* MOBILE MENU BUTTON */
+
+.mobile-menu{
+    display:none;
+    margin-left:auto;
+    width:42px;
+    height:42px;
+    border:1px solid rgba(233,196,106,.25);
+    background:#07130e;
+    color:#fff;
+    border-radius:11px;
+    font-size:20px;
+    cursor:pointer;
 }
 
 /* =========================================
@@ -237,635 +244,636 @@ nav a.active{
 ========================================= */
 
 .lang-modal-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:5000;
-
-  display:none;
-  align-items:center;
-  justify-content:center;
-
-  padding:20px;
-
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(15px);
-  -webkit-backdrop-filter:blur(15px);
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(12px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
 .lang-modal-backdrop.open{
-  display:flex;
-  animation:fadeIn .2s ease;
+    display:flex;
+    animation:fadeIn .2s ease;
 }
 
 @keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
+    from{opacity:0}
+    to{opacity:1}
 }
 
 .lang-modal{
-  width:min(650px,100%);
-  max-height:86vh;
-
-  display:flex;
-  flex-direction:column;
-
-  padding:25px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(229,189,103,.08),
-      transparent 35%
-    ),
-    #08130e;
-
-  border:1px solid rgba(229,189,103,.25);
-  border-radius:24px;
-
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.8),
-    inset 0 1px 0 rgba(255,255,255,.04);
-
-  animation:modalUp .25s ease;
+    width:min(650px,100%);
+    max-height:min(750px,90vh);
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(25,199,122,.08),
+            transparent 35%
+        ),
+        #08150f;
+    border:1px solid rgba(233,196,106,.25);
+    border-radius:22px;
+    padding:24px;
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.8),
+        inset 0 1px 0 rgba(255,255,255,.03);
+    display:flex;
+    flex-direction:column;
 }
 
-@keyframes modalUp{
-  from{
-    transform:translateY(15px) scale(.98);
-    opacity:0;
-  }
-  to{
-    transform:none;
-    opacity:1;
-  }
+.lang-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
 }
 
-.lang-modal-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
+.lang-title{
+    color:var(--gold-light);
+    font-family:'Montserrat',sans-serif;
+    font-size:18px;
+    font-weight:900;
 }
 
-.lang-modal-title{
-  font-family:'Montserrat',sans-serif;
-  font-size:20px;
-  font-weight:900;
-  color:#fff;
+.lang-close{
+    width:38px;
+    height:38px;
+    border:0;
+    border-radius:10px;
+    background:rgba(255,255,255,.05);
+    color:#aaa;
+    font-size:24px;
+    cursor:pointer;
 }
 
-.lang-modal-subtitle{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:5px;
+.lang-close:hover{
+    color:#fff;
+    background:rgba(255,255,255,.1);
 }
 
-.lang-close-btn{
-  width:38px;
-  height:38px;
-
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:10px;
-
-  background:rgba(255,255,255,.04);
-  color:#aab9b1;
-
-  font-size:23px;
-  cursor:pointer;
-  transition:.2s;
+.lang-search{
+    width:100%;
+    height:48px;
+    border-radius:12px;
+    border:1px solid rgba(233,196,106,.2);
+    background:#030806;
+    color:#fff;
+    outline:none;
+    padding:0 15px;
+    font-size:14px;
+    margin-bottom:15px;
 }
 
-.lang-close-btn:hover{
-  color:#fff;
-  background:rgba(255,255,255,.09);
-}
-
-/* SEARCH */
-
-.lang-search-wrap{
-  position:relative;
-  margin-bottom:15px;
-}
-
-.lang-search-icon{
-  position:absolute;
-  left:15px;
-  top:50%;
-  transform:translateY(-50%);
-  opacity:.55;
-}
-
-.lang-search-box{
-  width:100%;
-
-  background:#030906;
-  color:#fff;
-
-  border:1px solid rgba(229,189,103,.18);
-  border-radius:13px;
-
-  padding:13px 15px 13px 43px;
-
-  outline:none;
-  font-size:14px;
-
-  transition:.2s;
-}
-
-.lang-search-box:focus{
-  border-color:rgba(229,189,103,.65);
-  box-shadow:0 0 0 3px rgba(229,189,103,.06);
+.lang-search:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(233,196,106,.06);
 }
 
 .lang-list{
-  overflow-y:auto;
-
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-
-  gap:7px;
-
-  padding-right:5px;
-  max-height:55vh;
+    overflow-y:auto;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+    padding-right:5px;
 }
 
 .lang-list::-webkit-scrollbar{
-  width:6px;
+    width:5px;
 }
 
 .lang-list::-webkit-scrollbar-thumb{
-  background:rgba(229,189,103,.28);
-  border-radius:10px;
+    background:rgba(233,196,106,.3);
+    border-radius:10px;
 }
 
 .lang-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  min-width:0;
-
-  padding:11px 12px;
-
-  border:1px solid transparent;
-  border-radius:11px;
-
-  background:rgba(255,255,255,.025);
-
-  color:#d5ded9;
-
-  cursor:pointer;
-
-  font-size:13px;
-  font-weight:600;
-
-  transition:.2s ease;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    padding:11px 12px;
+    border-radius:10px;
+    border:1px solid transparent;
+    background:rgba(255,255,255,.025);
+    color:#d4ddd8;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+    transition:.18s ease;
 }
 
 .lang-item:hover{
-  background:rgba(229,189,103,.10);
-  border-color:rgba(229,189,103,.18);
-  color:#fff;
-  transform:translateX(2px);
+    background:rgba(233,196,106,.1);
+    border-color:rgba(233,196,106,.15);
+    color:#fff;
 }
 
 .lang-item.active{
-  background:linear-gradient(
-    135deg,
-    var(--gold),
-    #c99b3e
-  );
-  color:#050806;
-  font-weight:800;
+    background:linear-gradient(
+        135deg,
+        rgba(233,196,106,.25),
+        rgba(25,199,122,.1)
+    );
+    border-color:rgba(233,196,106,.3);
+    color:#fff;
 }
 
 .lang-flag{
-  font-size:19px;
-  width:24px;
-  text-align:center;
-  flex-shrink:0;
+    font-size:17px;
+    flex-shrink:0;
 }
 
 .lang-name{
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 /* =========================================
-   MAIN
+   PAGE
 ========================================= */
 
 .page{
-  width:min(1380px,100%);
-  margin:auto;
-  padding:35px 24px 90px;
+    width:min(1380px,100%);
+    margin:auto;
+    padding:25px 24px 80px;
 }
 
 /* =========================================
    HERO
 ========================================= */
 
-.banner-container{
-  position:relative;
-  overflow:hidden;
-
-  width:100%;
-
-  border-radius:25px;
-  border:1px solid rgba(229,189,103,.22);
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.55),
-    0 0 0 1px rgba(255,255,255,.02);
-
-  margin-bottom:50px;
+.hero{
+    position:relative;
+    width:100%;
+    min-height:clamp(430px,48vw,680px);
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid rgba(233,196,106,.2);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.6),
+        inset 0 1px 0 rgba(255,255,255,.04);
+    background:#020604;
 }
 
-.banner-container::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(0,0,0,.55),
-      rgba(0,0,0,.12) 55%,
-      transparent
-    );
+.hero-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
 }
 
-.banner-container img{
-  width:100%;
-  display:block;
-  height:auto;
-
-  transition:transform 1s ease;
-}
-
-.banner-container:hover img{
-  transform:scale(1.015);
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(1,5,4,.88) 0%,
+            rgba(1,5,4,.65) 34%,
+            rgba(1,5,4,.1) 67%,
+            rgba(1,5,4,.15) 100%
+        );
 }
 
 .hero-content{
-  position:absolute;
-  z-index:2;
+    position:absolute;
+    z-index:2;
+    left:6%;
+    top:50%;
+    transform:translateY(-50%);
+    width:min(520px,45%);
+}
 
-  left:6%;
-  top:50%;
-  transform:translateY(-50%);
-
-  max-width:47%;
+.hero-kicker{
+    color:var(--gold);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin-bottom:15px;
 }
 
 .hero-title{
-  font-family:'Montserrat',sans-serif;
-  font-size:clamp(28px,4vw,64px);
-  line-height:1.02;
-  font-weight:900;
-
-  text-transform:uppercase;
-  color:#fff;
-
-  letter-spacing:-1.5px;
-
-  text-shadow:0 4px 25px rgba(0,0,0,.65);
+    font-family:'Montserrat',sans-serif;
+    font-size:clamp(40px,5.2vw,78px);
+    line-height:.95;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:-2px;
+    color:#fff;
+    text-shadow:0 5px 25px rgba(0,0,0,.55);
 }
 
 .hero-title span{
-  color:var(--gold-light);
+    color:var(--gold-light);
 }
 
 .hero-text{
-  margin-top:18px;
-
-  color:#d0dad4;
-
-  font-size:clamp(12px,1.1vw,16px);
-  line-height:1.55;
-
-  max-width:520px;
+    color:#c5d0cb;
+    font-size:clamp(13px,1.1vw,16px);
+    line-height:1.6;
+    max-width:470px;
+    margin-top:20px;
 }
 
-.hero-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:11px;
-  margin-top:24px;
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:26px;
 }
 
-.banner-btn-green,
-.banner-btn-white{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:12px 19px;
-
-  border-radius:10px;
-
-  font-size:13px;
-  font-weight:800;
-
-  transition:.25s ease;
+.btn{
+    min-height:45px;
+    padding:0 19px;
+    border-radius:10px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:900;
+    transition:.25s ease;
+    border:1px solid transparent;
 }
 
-.banner-btn-green{
-  color:#fff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #20c98b,
-      #087d51
+.btn-green{
+    color:#fff;
+    background:linear-gradient(
+        135deg,
+        #19c77a,
+        #0d8c54
     );
-
-  box-shadow:
-    0 8px 25px rgba(25,199,131,.20);
+    box-shadow:0 10px 30px rgba(25,199,122,.2);
 }
 
-.banner-btn-green:hover{
-  transform:translateY(-3px);
-  box-shadow:0 13px 30px rgba(25,199,131,.28);
+.btn-green:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 35px rgba(25,199,122,.3);
 }
 
-.banner-btn-white{
-  color:#101411;
-  background:#f5f2e9;
+.btn-gold{
+    color:#080b09;
+    background:linear-gradient(
+        135deg,
+        #f4d98d,
+        #c69a35
+    );
 }
 
-.banner-btn-white:hover{
-  transform:translateY(-3px);
-  background:#fff;
+.btn-dark{
+    color:#fff;
+    background:rgba(255,255,255,.07);
+    border-color:rgba(255,255,255,.16);
+}
+
+.btn-dark:hover{
+    background:rgba(255,255,255,.12);
+}
+
+/* SEARCH BAR */
+
+.hero-search{
+    position:absolute;
+    z-index:4;
+    left:5%;
+    bottom:28px;
+    width:min(455px,42%);
+    height:57px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:7px 9px 7px 16px;
+    border-radius:14px;
+    background:rgba(0,0,0,.78);
+    border:1px solid rgba(233,196,106,.45);
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.5),
+        0 0 25px rgba(233,196,106,.08);
+    backdrop-filter:blur(12px);
+}
+
+.search-icon{
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:22px;
+    flex-shrink:0;
+}
+
+.hero-search input{
+    min-width:0;
+    flex:1;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font-size:13px;
+}
+
+.hero-search input::placeholder{
+    color:#a5aea9;
+}
+
+.search-arrow{
+    width:40px;
+    height:40px;
+    border-radius:9px;
+    border:0;
+    background:linear-gradient(
+        135deg,
+        #e9c46a,
+        #b98722
+    );
+    color:#050705;
+    font-size:21px;
+    font-weight:900;
+    cursor:pointer;
 }
 
 /* =========================================
-   SECTION
+   SECTIONS
 ========================================= */
 
+.section{
+    margin-top:48px;
+}
+
 .section-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-
-  margin-bottom:23px;
-  padding-bottom:13px;
-
-  border-bottom:1px solid rgba(229,189,103,.13);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    padding-bottom:13px;
+    border-bottom:1px solid rgba(233,196,106,.13);
+    margin-bottom:20px;
 }
 
 .section-title{
-  font-family:'Montserrat',sans-serif;
-  font-size:25px;
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.3px;
+    font-family:'Montserrat',sans-serif;
+    font-size:clamp(21px,2.2vw,29px);
+    font-weight:900;
+    text-transform:uppercase;
 }
 
 .section-title span{
-  color:var(--gold-light);
+    color:var(--gold-light);
 }
 
-.section-description{
-  color:var(--muted);
-  font-size:12px;
+.section-link{
+    color:var(--gold);
+    font-size:12px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.section-link:hover{
+    color:#fff;
 }
 
 /* =========================================
-   SHIRTS
+   SHIRT GRID
 ========================================= */
 
 .shirts-grid{
-  display:grid;
-
-  grid-template-columns:
-    repeat(auto-fill,minmax(245px,1fr));
-
-  gap:20px;
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:16px;
 }
 
 .shirt-card{
-  position:relative;
-
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.025),
-      transparent
-    ),
-    var(--card);
-
-  border:1px solid var(--border);
-  border-radius:18px;
-
-  display:flex;
-  flex-direction:column;
-
-  cursor:pointer;
-
-  transition:
-    transform .35s ease,
-    border-color .35s ease,
-    box-shadow .35s ease;
-}
-
-.shirt-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      120deg,
-      transparent 30%,
-      rgba(229,189,103,.05),
-      transparent 70%
-    );
-
-  opacity:0;
-  transition:.35s;
+    min-width:0;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10,30,21,.95),
+            rgba(5,16,11,.98)
+        );
+    border:1px solid rgba(233,196,106,.2);
+    border-radius:15px;
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
 }
 
 .shirt-card:hover{
-  transform:translateY(-8px);
-
-  border-color:rgba(229,189,103,.55);
-
-  box-shadow:
-    0 20px 45px rgba(0,0,0,.45),
-    0 5px 25px rgba(229,189,103,.07);
+    transform:translateY(-6px);
+    border-color:rgba(233,196,106,.55);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.4),
+        0 0 25px rgba(233,196,106,.07);
 }
 
-.shirt-card:hover::before{
-  opacity:1;
+.shirt-image{
+    position:relative;
+    aspect-ratio:1 / 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(
+            circle at center,
+            #123c28 0%,
+            #07150e 58%,
+            #030906 100%
+        );
+    overflow:hidden;
 }
 
-.shirt-img-wrapper{
-  position:relative;
-
-  width:100%;
-  aspect-ratio:1;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  overflow:hidden;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #173526 0%,
-      #09150f 48%,
-      #030806 100%
-    );
+.shirt-image::before{
+    content:"";
+    position:absolute;
+    width:65%;
+    height:65%;
+    border-radius:50%;
+    background:rgba(25,199,122,.08);
+    filter:blur(25px);
 }
 
-.shirt-img-placeholder{
-  font-size:80px;
-
-  filter:drop-shadow(0 15px 20px rgba(0,0,0,.65));
-
-  transition:.35s ease;
+.shirt-icon{
+    position:relative;
+    z-index:2;
+    font-size:72px;
+    filter:drop-shadow(0 12px 15px rgba(0,0,0,.55));
+    transition:.3s ease;
 }
 
-.shirt-card:hover .shirt-img-placeholder{
-  transform:scale(1.1) rotate(-2deg);
+.shirt-card:hover .shirt-icon{
+    transform:scale(1.1);
 }
 
-.badge-tag{
-  position:absolute;
-
-  z-index:2;
-
-  top:12px;
-  left:12px;
-
-  padding:5px 9px;
-
-  border-radius:20px;
-
-  background:rgba(2,7,5,.82);
-  border:1px solid rgba(229,189,103,.35);
-
-  color:var(--gold-light);
-
-  font-size:9px;
-  font-weight:800;
-
-  text-transform:uppercase;
-
-  backdrop-filter:blur(6px);
+.badge{
+    position:absolute;
+    z-index:4;
+    top:10px;
+    left:10px;
+    color:var(--gold-light);
+    background:rgba(2,7,5,.82);
+    border:1px solid rgba(233,196,106,.4);
+    border-radius:20px;
+    padding:4px 8px;
+    font-size:8px;
+    font-weight:900;
+    text-transform:uppercase;
+    backdrop-filter:blur(5px);
 }
 
 .shirt-info{
-  padding:17px;
-
-  display:flex;
-  flex-direction:column;
-
-  flex:1;
+    padding:14px;
 }
 
 .shirt-club{
-  color:#82948a;
-
-  font-size:11px;
-  font-weight:700;
-
-  text-transform:uppercase;
-  letter-spacing:.7px;
+    color:#91a098;
+    font-size:9px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .shirt-name{
-  color:#fff;
-
-  font-size:15px;
-  line-height:1.35;
-
-  font-weight:800;
-
-  margin:5px 0 16px;
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+    line-height:1.35;
+    margin-top:5px;
+    min-height:33px;
 }
 
 .shirt-footer{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:7px;
+    margin-top:14px;
 }
 
-.shirt-price{
-  color:var(--green);
-
-  font-size:17px;
-  font-weight:900;
+.price{
+    color:var(--green);
+    font-size:13px;
+    font-weight:900;
+    white-space:nowrap;
 }
 
-.shirt-btn{
-  padding:8px 12px;
-
-  border-radius:8px;
-
-  background:rgba(229,189,103,.08);
-  border:1px solid rgba(229,189,103,.25);
-
-  color:var(--gold-light);
-
-  font-size:11px;
-  font-weight:800;
-
-  transition:.2s;
+.view-btn{
+    border:1px solid rgba(233,196,106,.28);
+    background:rgba(233,196,106,.07);
+    color:var(--gold-light);
+    border-radius:7px;
+    padding:7px 9px;
+    font-size:9px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.shirt-card:hover .shirt-btn{
-  color:#050806;
-  background:var(--gold);
+.view-btn:hover{
+    background:var(--gold);
+    color:#050705;
 }
 
 /* =========================================
-   SELL PAGE
+   EXPLORE BANNER
+========================================= */
+
+.explore-banner{
+    position:relative;
+    width:100%;
+    min-height:320px;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid rgba(233,196,106,.2);
+}
+
+.explore-banner img{
+    width:100%;
+    height:100%;
+    min-height:320px;
+    object-fit:cover;
+}
+
+.explore-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        90deg,
+        rgba(2,5,4,.85),
+        transparent 70%
+    );
+}
+
+.explore-content{
+    position:absolute;
+    left:6%;
+    top:50%;
+    transform:translateY(-50%);
+    max-width:450px;
+}
+
+.explore-content h1{
+    font-family:'Montserrat',sans-serif;
+    font-size:clamp(32px,4vw,55px);
+    line-height:1;
+    text-transform:uppercase;
+}
+
+.explore-content h1 span{
+    color:var(--gold);
+}
+
+.explore-content p{
+    margin-top:14px;
+    color:#b9c5bf;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* =========================================
+   SELL
 ========================================= */
 
 .sell-box{
-  width:min(650px,100%);
-  margin:30px auto;
-
-  text-align:center;
-
-  padding:45px 30px;
-
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(229,189,103,.09),
-      transparent 45%
-    ),
-    var(--card);
-
-  border:1px solid var(--border);
-  border-radius:22px;
-
-  box-shadow:0 25px 70px rgba(0,0,0,.4);
+    width:min(650px,100%);
+    margin:50px auto;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(25,199,122,.1),
+            transparent 50%
+        ),
+        #07130e;
+    border:1px solid rgba(233,196,106,.2);
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
 }
 
 .sell-box h1{
-  font-family:'Montserrat',sans-serif;
-  font-size:32px;
-  color:var(--gold-light);
-  margin-bottom:15px;
+    font-family:'Montserrat',sans-serif;
+    font-size:32px;
+    color:var(--gold-light);
 }
 
 .sell-box p{
-  color:var(--muted);
-  line-height:1.6;
-  margin-bottom:25px;
+    color:#aab7b0;
+    line-height:1.7;
+    margin:15px auto 25px;
+    max-width:500px;
 }
 
 /* =========================================
@@ -873,1216 +881,1346 @@ nav a.active{
 ========================================= */
 
 footer{
-  padding:45px 20px;
-
-  text-align:center;
-
-  border-top:1px solid rgba(229,189,103,.15);
-
-  background:#010302;
-
-  color:#87968f;
-
-  font-size:13px;
+    border-top:1px solid rgba(233,196,106,.13);
+    text-align:center;
+    padding:40px 20px;
+    color:#84918b;
+    font-size:12px;
 }
 
 footer strong{
-  color:#fff;
-  font-family:'Montserrat',sans-serif;
+    color:#fff;
+    font-family:'Montserrat',sans-serif;
 }
 
 /* =========================================
    MOBILE
 ========================================= */
 
-@media(max-width:900px){
+@media(max-width:1100px){
 
-  .header-inner{
-    min-height:70px;
-    padding:8px 15px;
-    gap:10px;
-  }
+    .shirts-grid{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+    }
 
-  .header-logo{
-    height:45px;
-  }
+    .hero-content{
+        width:50%;
+    }
 
-  .brand-name{
-    display:none;
-  }
-
-  nav{
-    gap:2px;
-  }
-
-  nav a{
-    font-size:12px;
-    padding:9px 9px;
-  }
-
-  .lang-btn{
-    padding:9px 10px;
-  }
-
-  .page{
-    padding:20px 14px 60px;
-  }
-
-  .banner-container{
-    border-radius:17px;
-    margin-bottom:35px;
-  }
-
-  .hero-content{
-    left:6%;
-    top:50%;
-    max-width:55%;
-  }
-
-  .hero-text{
-    margin-top:9px;
-    font-size:10px;
-  }
-
-  .hero-buttons{
-    margin-top:13px;
-    gap:6px;
-  }
-
-  .banner-btn-green,
-  .banner-btn-white{
-    padding:8px 11px;
-    font-size:9px;
-    border-radius:7px;
-  }
-
-  .shirts-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:11px;
-  }
-
-  .shirt-card{
-    border-radius:13px;
-  }
-
-  .shirt-info{
-    padding:11px;
-  }
-
-  .shirt-name{
-    font-size:12px;
-    margin-bottom:11px;
-  }
-
-  .shirt-price{
-    font-size:14px;
-  }
-
-  .shirt-btn{
-    padding:7px 9px;
-    font-size:9px;
-  }
-
-  .section-title{
-    font-size:19px;
-  }
-
-  .section-description{
-    display:none;
-  }
-
-  .lang-modal{
-    padding:18px;
-    border-radius:19px;
-  }
-
-  .lang-list{
-    grid-template-columns:1fr;
-    max-height:58vh;
-  }
 }
 
-@media(max-width:500px){
+@media(max-width:850px){
 
-  .header-inner{
-    justify-content:space-between;
-  }
+    .header-inner{
+        min-height:68px;
+        padding:8px 14px;
+    }
 
-  nav a{
-    padding:8px 6px;
-    font-size:10px;
-  }
+    .header-logo{
+        width:45px;
+        height:45px;
+    }
 
-  .lang-btn{
-    font-size:10px;
-  }
+    .brand-title{
+        font-size:12px;
+    }
 
-  .lang-btn .lang-arrow{
-    display:none;
-  }
+    .brand-since{
+        font-size:8px;
+    }
 
-  .hero-title{
-    font-size:25px;
-  }
+    nav{
+        display:none;
+        position:absolute;
+        top:68px;
+        left:10px;
+        right:10px;
+        padding:10px;
+        flex-direction:column;
+        background:rgba(4,12,8,.97);
+        border:1px solid rgba(233,196,106,.2);
+        border-radius:14px;
+        box-shadow:0 20px 50px rgba(0,0,0,.6);
+    }
 
-  .hero-text{
-    display:none;
-  }
+    nav.mobile-open{
+        display:flex;
+    }
 
-  .hero-buttons{
-    margin-top:12px;
-  }
+    nav a{
+        width:100%;
+        text-align:center;
+    }
 
-  .shirts-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+    .mobile-menu{
+        display:block;
+    }
 
-  .shirt-img-placeholder{
-    font-size:55px;
-  }
+    .lang-btn{
+        padding:9px 10px;
+    }
 
-  .sell-box{
-    padding:35px 20px;
-  }
+    .page{
+        padding:15px 12px 60px;
+    }
+
+    .hero{
+        min-height:590px;
+        border-radius:16px;
+    }
+
+    .hero-image{
+        object-position:58% center;
+    }
+
+    .hero-overlay{
+        background:
+            linear-gradient(
+                180deg,
+                rgba(1,5,4,.25),
+                rgba(1,5,4,.6) 45%,
+                rgba(1,5,4,.96) 82%
+            );
+    }
+
+    .hero-content{
+        left:20px;
+        right:20px;
+        bottom:125px;
+        top:auto;
+        transform:none;
+        width:auto;
+    }
+
+    .hero-kicker{
+        font-size:9px;
+        letter-spacing:1.8px;
+        margin-bottom:10px;
+    }
+
+    .hero-title{
+        font-size:42px;
+        letter-spacing:-1.5px;
+    }
+
+    .hero-text{
+        font-size:12px;
+        line-height:1.5;
+        margin-top:13px;
+    }
+
+    .hero-actions{
+        margin-top:16px;
+    }
+
+    .btn{
+        min-height:40px;
+        padding:0 13px;
+        font-size:10px;
+    }
+
+    .hero-search{
+        left:16px;
+        right:16px;
+        bottom:20px;
+        width:auto;
+        height:51px;
+    }
+
+    .shirts-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .shirt-card{
+        border-radius:12px;
+    }
+
+    .shirt-info{
+        padding:11px;
+    }
+
+    .shirt-icon{
+        font-size:55px;
+    }
+
+    .shirt-name{
+        font-size:11px;
+    }
+
+    .price{
+        font-size:12px;
+    }
+
+    .view-btn{
+        padding:6px 7px;
+        font-size:8px;
+    }
+
+    .section{
+        margin-top:35px;
+    }
+
 }
 
-/* =========================================
-   REDUCED MOTION
-========================================= */
+@media(max-width:520px){
 
-@media(prefers-reduced-motion:reduce){
+    .header-inner{
+        gap:7px;
+    }
 
-  *,
-  *::before,
-  *::after{
-    animation:none!important;
-    transition:none!important;
-    scroll-behavior:auto!important;
-  }
+    .brand{
+        display:none;
+    }
+
+    .header-logo{
+        width:43px;
+        height:43px;
+    }
+
+    .lang-btn{
+        margin-left:auto;
+    }
+
+    .hero{
+        min-height:575px;
+    }
+
+    .hero-content{
+        bottom:120px;
+    }
+
+    .hero-title{
+        font-size:37px;
+    }
+
+    .hero-text{
+        max-width:330px;
+    }
+
+    .hero-actions{
+        flex-direction:row;
+    }
+
+    .hero-actions .btn{
+        flex:1;
+    }
+
+    .section-header{
+        align-items:center;
+    }
+
+    .section-title{
+        font-size:19px;
+    }
+
+    .section-link{
+        font-size:10px;
+    }
+
+    .lang-modal{
+        padding:17px;
+        border-radius:17px;
+    }
+
+    .lang-list{
+        grid-template-columns:1fr;
+    }
+
+    .lang-item{
+        padding:12px;
+    }
+
+    .explore-banner,
+    .explore-banner img{
+        min-height:350px;
+    }
+
+    .explore-content{
+        left:22px;
+        right:22px;
+    }
+
+    .sell-box{
+        padding:28px 18px;
+    }
+
+    .sell-box h1{
+        font-size:27px;
+    }
+
 }
+
+/* EXTRA SMALL */
+
+@media(max-width:370px){
+
+    .hero-title{
+        font-size:33px;
+    }
+
+    .shirts-grid{
+        grid-template-columns:1fr;
+    }
+
+    .shirt-image{
+        aspect-ratio:1.25;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- =========================================
-     GOOGLE TRANSLATE ENGINE
-========================================= -->
-
-<div id="google_translate_element"
-     style="position:absolute;left:-9999px;top:-9999px;">
-</div>
+<!-- Google Translate -->
+<div id="google_translate_element"></div>
 
 <script>
+
 function googleTranslateElementInit(){
 
-  new google.translate.TranslateElement({
-    pageLanguage:'nl',
-    includedLanguages:
-    'af,sq,am,ar,hy,az,eu,be,bn,bs,bg,ca,ceb,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jw,kn,kk,km,rw,ko,ku,ky,lo,la,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,my,ne,no,ny,or,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,si,sk,sl,so,es,su,sw,sv,tg,ta,tt,te,th,tr,tk,uk,ur,ug,uz,vi,cy,xh,yi,yo,zu',
-    autoDisplay:false
-  },'google_translate_element');
+    new google.translate.TranslateElement({
+        pageLanguage:'nl',
+        includedLanguages:'',
+        autoDisplay:false
+    },'google_translate_element');
 
 }
+
 </script>
 
-<script
-src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
+<!-- HEADER -->
 
 <header class="site-header">
 
-  <div class="header-inner">
+<div class="header-inner">
 
-    <a href="#/" class="logo-link">
+<a href="#/" class="logo-link">
 
-      <img
-        class="header-logo"
-        src="logo.png"
-        alt="Football-Shirt-Market logo"
-      >
+<img
+src="logo.png"
+class="header-logo"
+alt="Football Shirt Market Logo"
+>
 
-      <div class="brand-name">
-        <span
-          class="brand-title"
-          translate="no"
-        >
-          Football-Shirt-Market
-        </span>
+<div class="brand">
 
-        <span
-          class="brand-since"
-          translate="no"
-        >
-          SINCE 2026
-        </span>
-      </div>
+<span class="brand-title">
+Football-Shirt-Market
+</span>
 
-    </a>
+<span class="brand-since">
+SINCE 2026
+</span>
+
+</div>
+
+</a>
 
 
-    <nav>
+<nav id="mainNav">
 
-      <a href="#/" id="nav-home">
-        Home
-      </a>
+<a href="#/" id="nav-home">
+Home
+</a>
 
-      <a href="#/explore" id="nav-explore">
-        Ontdekken
-      </a>
+<a href="#/explore" id="nav-explore">
+Ontdekken
+</a>
 
-      <a href="#/sell" id="nav-sell">
-        Verkopen
-      </a>
+<a href="#/sell" id="nav-sell">
+Verkopen
+</a>
 
-    </nav>
+</nav>
 
 
-    <button
-      id="langPickerBtn"
-      class="lang-btn"
-      translate="no"
-      type="button"
-    >
+<button
+class="mobile-menu"
+id="mobileMenu"
+aria-label="Menu"
+>
+☰
+</button>
 
-      <span id="currentFlag">
-        🇳🇱
-      </span>
 
-      <span id="currentLangCode">
-        NL
-      </span>
+<button
+class="lang-btn"
+id="langPickerBtn"
+>
 
-      <span class="lang-arrow">
-        ▼
-      </span>
+<span id="currentFlag">
+🇳🇱
+</span>
 
-    </button>
+<span id="currentLangCode">
+NL
+</span>
 
-  </div>
+<span>▼</span>
+
+</button>
+
+</div>
 
 </header>
 
 
-<!-- =========================================
-     LANGUAGE MODAL
-========================================= -->
+<!-- LANGUAGE MODAL -->
 
 <div
-  id="langModal"
-  class="lang-modal-backdrop"
+class="lang-modal-backdrop"
+id="langModal"
 >
 
-  <div
-    class="lang-modal"
-    role="dialog"
-    aria-modal="true"
-  >
+<div class="lang-modal">
 
-    <div class="lang-modal-header">
+<div class="lang-header">
 
-      <div>
+<div class="lang-title">
+Kies je taal
+</div>
 
-        <div class="lang-modal-title">
-          Kies je taal
-        </div>
+<button
+class="lang-close"
+id="closeLangModal"
+>
+×
+</button>
 
-        <div class="lang-modal-subtitle">
-          Zoek uit meer dan 100 beschikbare talen
-        </div>
+</div>
 
-      </div>
+<input
+id="langSearchInput"
+class="lang-search"
+type="text"
+placeholder="Zoek een taal..."
+autocomplete="off"
+>
 
-      <button
-        class="lang-close-btn"
-        id="closeLangModal"
-        type="button"
-      >
-        ×
-      </button>
+<div
+id="langList"
+class="lang-list"
+></div>
 
-    </div>
-
-
-    <div class="lang-search-wrap">
-
-      <span class="lang-search-icon">
-        🔎
-      </span>
-
-      <input
-        type="text"
-        id="langSearchInput"
-        class="lang-search-box"
-        placeholder="Zoek een taal..."
-        autocomplete="off"
-      >
-
-    </div>
-
-
-    <div
-      id="langList"
-      class="lang-list"
-      translate="no"
-    ></div>
-
-  </div>
+</div>
 
 </div>
 
 
-<!-- =========================================
-     APP
-========================================= -->
+<!-- APP -->
 
 <main id="app"></main>
 
 
-<!-- =========================================
-     FOOTER
-========================================= -->
+<!-- FOOTER -->
 
 <footer>
 
-  <strong translate="no">
-    ⚽ Football-Shirt-Market
-  </strong>
+<strong>
+⚽ Football-Shirt-Market
+</strong>
 
-  <br><br>
+<br><br>
 
-  <span>
-    De marketplace voor voetbalshirts
-  </span>
+<span>
+De marketplace voor voetbalshirts
+</span>
 
-  ·
+<span> · </span>
 
-  <span
-    style="color:var(--gold-light)"
-    translate="no"
-  >
-    Since 2026
-  </span>
+<span style="color:var(--gold)">
+Since 2026
+</span>
 
 </footer>
 
 
 <script>
 
-/* =========================================================
+/* =========================================
    100+ TALEN
-========================================================= */
+========================================= */
 
 const languages = [
 
-  {code:'af',name:'Afrikaans',flag:'🇿🇦'},
-  {code:'sq',name:'Albanian',flag:'🇦🇱'},
-  {code:'am',name:'Amharic',flag:'🇪🇹'},
-  {code:'ar',name:'Arabic',flag:'🇸🇦'},
-  {code:'hy',name:'Armenian',flag:'🇦🇲'},
-  {code:'az',name:'Azerbaijani',flag:'🇦🇿'},
-  {code:'eu',name:'Basque',flag:'🇪🇸'},
-  {code:'be',name:'Belarusian',flag:'🇧🇾'},
-  {code:'bn',name:'Bengali',flag:'🇧🇩'},
-  {code:'bs',name:'Bosnian',flag:'🇧🇦'},
-  {code:'bg',name:'Bulgarian',flag:'🇧🇬'},
-  {code:'ca',name:'Catalan',flag:'🇪🇸'},
-  {code:'ceb',name:'Cebuano',flag:'🇵🇭'},
-  {code:'zh-CN',name:'Chinese (Simplified)',flag:'🇨🇳'},
-  {code:'zh-TW',name:'Chinese (Traditional)',flag:'🇹🇼'},
-  {code:'co',name:'Corsican',flag:'🇫🇷'},
-  {code:'hr',name:'Croatian',flag:'🇭🇷'},
-  {code:'cs',name:'Czech',flag:'🇨🇿'},
-  {code:'da',name:'Danish',flag:'🇩🇰'},
-  {code:'nl',name:'Dutch',flag:'🇳🇱'},
-  {code:'en',name:'English',flag:'🇬🇧'},
-  {code:'eo',name:'Esperanto',flag:'🌍'},
-  {code:'et',name:'Estonian',flag:'🇪🇪'},
-  {code:'fi',name:'Finnish',flag:'🇫🇮'},
-  {code:'fr',name:'French',flag:'🇫🇷'},
-  {code:'fy',name:'Frisian',flag:'🇳🇱'},
-  {code:'gl',name:'Galician',flag:'🇪🇸'},
-  {code:'ka',name:'Georgian',flag:'🇬🇪'},
-  {code:'de',name:'German',flag:'🇩🇪'},
-  {code:'el',name:'Greek',flag:'🇬🇷'},
-  {code:'gu',name:'Gujarati',flag:'🇮🇳'},
-  {code:'ht',name:'Haitian Creole',flag:'🇭🇹'},
-  {code:'ha',name:'Hausa',flag:'🇳🇬'},
-  {code:'haw',name:'Hawaiian',flag:'🇺🇸'},
-  {code:'he',name:'Hebrew',flag:'🇮🇱'},
-  {code:'hi',name:'Hindi',flag:'🇮🇳'},
-  {code:'hmn',name:'Hmong',flag:'🌏'},
-  {code:'hu',name:'Hungarian',flag:'🇭🇺'},
-  {code:'is',name:'Icelandic',flag:'🇮🇸'},
-  {code:'ig',name:'Igbo',flag:'🇳🇬'},
-  {code:'id',name:'Indonesian',flag:'🇮🇩'},
-  {code:'ga',name:'Irish',flag:'🇮🇪'},
-  {code:'it',name:'Italian',flag:'🇮🇹'},
-  {code:'ja',name:'Japanese',flag:'🇯🇵'},
-  {code:'jw',name:'Javanese',flag:'🇮🇩'},
-  {code:'kn',name:'Kannada',flag:'🇮🇳'},
-  {code:'kk',name:'Kazakh',flag:'🇰🇿'},
-  {code:'km',name:'Khmer',flag:'🇰🇭'},
-  {code:'rw',name:'Kinyarwanda',flag:'🇷🇼'},
-  {code:'ko',name:'Korean',flag:'🇰🇷'},
-  {code:'ku',name:'Kurdish',flag:'🌍'},
-  {code:'ky',name:'Kyrgyz',flag:'🇰🇬'},
-  {code:'lo',name:'Lao',flag:'🇱🇦'},
-  {code:'la',name:'Latin',flag:'🏛️'},
-  {code:'lv',name:'Latvian',flag:'🇱🇻'},
-  {code:'lt',name:'Lithuanian',flag:'🇱🇹'},
-  {code:'lb',name:'Luxembourgish',flag:'🇱🇺'},
-  {code:'mk',name:'Macedonian',flag:'🇲🇰'},
-  {code:'mg',name:'Malagasy',flag:'🇲🇬'},
-  {code:'ms',name:'Malay',flag:'🇲🇾'},
-  {code:'ml',name:'Malayalam',flag:'🇮🇳'},
-  {code:'mt',name:'Maltese',flag:'🇲🇹'},
-  {code:'mi',name:'Maori',flag:'🇳🇿'},
-  {code:'mr',name:'Marathi',flag:'🇮🇳'},
-  {code:'mn',name:'Mongolian',flag:'🇲🇳'},
-  {code:'my',name:'Myanmar (Burmese)',flag:'🇲🇲'},
-  {code:'ne',name:'Nepali',flag:'🇳🇵'},
-  {code:'no',name:'Norwegian',flag:'🇳🇴'},
-  {code:'ny',name:'Nyanja',flag:'🇲🇼'},
-  {code:'or',name:'Odia',flag:'🇮🇳'},
-  {code:'ps',name:'Pashto',flag:'🇦🇫'},
-  {code:'fa',name:'Persian',flag:'🇮🇷'},
-  {code:'pl',name:'Polish',flag:'🇵🇱'},
-  {code:'pt',name:'Portuguese',flag:'🇵🇹'},
-  {code:'pa',name:'Punjabi',flag:'🇮🇳'},
-  {code:'ro',name:'Romanian',flag:'🇷🇴'},
-  {code:'ru',name:'Russian',flag:'🇷🇺'},
-  {code:'sm',name:'Samoan',flag:'🇼🇸'},
-  {code:'gd',name:'Scots Gaelic',flag:'🏴'},
-  {code:'sr',name:'Serbian',flag:'🇷🇸'},
-  {code:'st',name:'Sesotho',flag:'🇱🇸'},
-  {code:'si',name:'Sinhala',flag:'🇱🇰'},
-  {code:'sk',name:'Slovak',flag:'🇸🇰'},
-  {code:'sl',name:'Slovenian',flag:'🇸🇮'},
-  {code:'so',name:'Somali',flag:'🇸🇴'},
-  {code:'es',name:'Spanish',flag:'🇪🇸'},
-  {code:'su',name:'Sundanese',flag:'🇮🇩'},
-  {code:'sw',name:'Swahili',flag:'🇰🇪'},
-  {code:'sv',name:'Swedish',flag:'🇸🇪'},
-  {code:'tg',name:'Tajik',flag:'🇹🇯'},
-  {code:'ta',name:'Tamil',flag:'🇮🇳'},
-  {code:'tt',name:'Tatar',flag:'🇷🇺'},
-  {code:'te',name:'Telugu',flag:'🇮🇳'},
-  {code:'th',name:'Thai',flag:'🇹🇭'},
-  {code:'tr',name:'Turkish',flag:'🇹🇷'},
-  {code:'tk',name:'Turkmen',flag:'🇹🇲'},
-  {code:'uk',name:'Ukrainian',flag:'🇺🇦'},
-  {code:'ur',name:'Urdu',flag:'🇵🇰'},
-  {code:'ug',name:'Uyghur',flag:'🇨🇳'},
-  {code:'uz',name:'Uzbek',flag:'🇺🇿'},
-  {code:'vi',name:'Vietnamese',flag:'🇻🇳'},
-  {code:'cy',name:'Welsh',flag:'🏴'},
-  {code:'xh',name:'Xhosa',flag:'🇿🇦'},
-  {code:'yi',name:'Yiddish',flag:'🌍'},
-  {code:'yo',name:'Yoruba',flag:'🇳🇬'},
-  {code:'zu',name:'Zulu',flag:'🇿🇦'}
+{code:'af',name:'Afrikaans',flag:'🇿🇦'},
+{code:'sq',name:'Albanian',flag:'🇦🇱'},
+{code:'am',name:'Amharic',flag:'🇪🇹'},
+{code:'ar',name:'Arabic',flag:'🇸🇦'},
+{code:'hy',name:'Armenian',flag:'🇦🇲'},
+{code:'az',name:'Azerbaijani',flag:'🇦🇿'},
+{code:'eu',name:'Basque',flag:'🇪🇸'},
+{code:'be',name:'Belarusian',flag:'🇧🇾'},
+{code:'bn',name:'Bengali',flag:'🇧🇩'},
+{code:'bs',name:'Bosnian',flag:'🇧🇦'},
+{code:'bg',name:'Bulgarian',flag:'🇧🇬'},
+{code:'ca',name:'Catalan',flag:'🇪🇸'},
+{code:'ceb',name:'Cebuano',flag:'🇵🇭'},
+{code:'zh-CN',name:'Chinese (Simplified)',flag:'🇨🇳'},
+{code:'zh-TW',name:'Chinese (Traditional)',flag:'🇹🇼'},
+{code:'co',name:'Corsican',flag:'🇫🇷'},
+{code:'hr',name:'Croatian',flag:'🇭🇷'},
+{code:'cs',name:'Czech',flag:'🇨🇿'},
+{code:'da',name:'Danish',flag:'🇩🇰'},
+{code:'nl',name:'Dutch / Nederlands',flag:'🇳🇱'},
+{code:'en',name:'English',flag:'🇬🇧'},
+{code:'eo',name:'Esperanto',flag:'🌍'},
+{code:'et',name:'Estonian',flag:'🇪🇪'},
+{code:'fi',name:'Finnish',flag:'🇫🇮'},
+{code:'fr',name:'French',flag:'🇫🇷'},
+{code:'fy',name:'Frisian',flag:'🇳🇱'},
+{code:'gl',name:'Galician',flag:'🇪🇸'},
+{code:'ka',name:'Georgian',flag:'🇬🇪'},
+{code:'de',name:'German',flag:'🇩🇪'},
+{code:'el',name:'Greek',flag:'🇬🇷'},
+{code:'gu',name:'Gujarati',flag:'🇮🇳'},
+{code:'ht',name:'Haitian Creole',flag:'🇭🇹'},
+{code:'ha',name:'Hausa',flag:'🇳🇬'},
+{code:'haw',name:'Hawaiian',flag:'🇺🇸'},
+{code:'he',name:'Hebrew',flag:'🇮🇱'},
+{code:'hi',name:'Hindi',flag:'🇮🇳'},
+{code:'hmn',name:'Hmong',flag:'🌏'},
+{code:'hu',name:'Hungarian',flag:'🇭🇺'},
+{code:'is',name:'Icelandic',flag:'🇮🇸'},
+{code:'ig',name:'Igbo',flag:'🇳🇬'},
+{code:'id',name:'Indonesian',flag:'🇮🇩'},
+{code:'ga',name:'Irish',flag:'🇮🇪'},
+{code:'it',name:'Italian',flag:'🇮🇹'},
+{code:'ja',name:'Japanese',flag:'🇯🇵'},
+{code:'jv',name:'Javanese',flag:'🇮🇩'},
+{code:'kn',name:'Kannada',flag:'🇮🇳'},
+{code:'kk',name:'Kazakh',flag:'🇰🇿'},
+{code:'km',name:'Khmer',flag:'🇰🇭'},
+{code:'rw',name:'Kinyarwanda',flag:'🇷🇼'},
+{code:'ko',name:'Korean',flag:'🇰🇷'},
+{code:'ku',name:'Kurdish',flag:'🌍'},
+{code:'ky',name:'Kyrgyz',flag:'🇰🇬'},
+{code:'lo',name:'Lao',flag:'🇱🇦'},
+{code:'la',name:'Latin',flag:'🏛️'},
+{code:'lv',name:'Latvian',flag:'🇱🇻'},
+{code:'lt',name:'Lithuanian',flag:'🇱🇹'},
+{code:'lb',name:'Luxembourgish',flag:'🇱🇺'},
+{code:'mk',name:'Macedonian',flag:'🇲🇰'},
+{code:'mg',name:'Malagasy',flag:'🇲🇬'},
+{code:'ms',name:'Malay',flag:'🇲🇾'},
+{code:'ml',name:'Malayalam',flag:'🇮🇳'},
+{code:'mt',name:'Maltese',flag:'🇲🇹'},
+{code:'mi',name:'Maori',flag:'🇳🇿'},
+{code:'mr',name:'Marathi',flag:'🇮🇳'},
+{code:'mn',name:'Mongolian',flag:'🇲🇳'},
+{code:'my',name:'Myanmar / Burmese',flag:'🇲🇲'},
+{code:'ne',name:'Nepali',flag:'🇳🇵'},
+{code:'no',name:'Norwegian',flag:'🇳🇴'},
+{code:'ny',name:'Chichewa',flag:'🇲🇼'},
+{code:'or',name:'Odia',flag:'🇮🇳'},
+{code:'ps',name:'Pashto',flag:'🇦🇫'},
+{code:'fa',name:'Persian',flag:'🇮🇷'},
+{code:'pl',name:'Polish',flag:'🇵🇱'},
+{code:'pt',name:'Portuguese',flag:'🇵🇹'},
+{code:'pa',name:'Punjabi',flag:'🇮🇳'},
+{code:'ro',name:'Romanian',flag:'🇷🇴'},
+{code:'ru',name:'Russian',flag:'🇷🇺'},
+{code:'sm',name:'Samoan',flag:'🇼🇸'},
+{code:'gd',name:'Scots Gaelic',flag:'🏴'},
+{code:'sr',name:'Serbian',flag:'🇷🇸'},
+{code:'st',name:'Sesotho',flag:'🇱🇸'},
+{code:'sn',name:'Shona',flag:'🇿🇼'},
+{code:'sd',name:'Sindhi',flag:'🇵🇰'},
+{code:'si',name:'Sinhala',flag:'🇱🇰'},
+{code:'sk',name:'Slovak',flag:'🇸🇰'},
+{code:'sl',name:'Slovenian',flag:'🇸🇮'},
+{code:'so',name:'Somali',flag:'🇸🇴'},
+{code:'es',name:'Spanish',flag:'🇪🇸'},
+{code:'su',name:'Sundanese',flag:'🇮🇩'},
+{code:'sw',name:'Swahili',flag:'🇰🇪'},
+{code:'sv',name:'Swedish',flag:'🇸🇪'},
+{code:'tl',name:'Filipino / Tagalog',flag:'🇵🇭'},
+{code:'tg',name:'Tajik',flag:'🇹🇯'},
+{code:'ta',name:'Tamil',flag:'🇮🇳'},
+{code:'tt',name:'Tatar',flag:'🇷🇺'},
+{code:'te',name:'Telugu',flag:'🇮🇳'},
+{code:'th',name:'Thai',flag:'🇹🇭'},
+{code:'tr',name:'Turkish',flag:'🇹🇷'},
+{code:'tk',name:'Turkmen',flag:'🇹🇲'},
+{code:'uk',name:'Ukrainian',flag:'🇺🇦'},
+{code:'ur',name:'Urdu',flag:'🇵🇰'},
+{code:'ug',name:'Uyghur',flag:'🇨🇳'},
+{code:'uz',name:'Uzbek',flag:'🇺🇿'},
+{code:'vi',name:'Vietnamese',flag:'🇻🇳'},
+{code:'cy',name:'Welsh',flag:'🏴'},
+{code:'xh',name:'Xhosa',flag:'🇿🇦'},
+{code:'yi',name:'Yiddish',flag:'🌍'},
+{code:'yo',name:'Yoruba',flag:'🇳🇬'},
+{code:'zu',name:'Zulu',flag:'🇿🇦'}
 
 ];
 
 
-/* =========================================================
-   SHIRTS
-========================================================= */
+/* =========================================
+   SHIRT DATA
+========================================= */
 
-const shirtsData = [
+const shirtsData=[
 
-  {
-    club:"AC Milan",
-    name:"AC Milan 1994-1995 Home #3 Maldini",
-    price:"€ 149,95",
-    condition:"Mint Condition",
-    icon:"🔴⚫"
-  },
+{
+club:"AC Milan",
+name:"AC Milan 1994-1995 Home #3 Maldini",
+price:"€ 149,95",
+condition:"Mint Condition",
+icon:"🔴⚫"
+},
 
-  {
-    club:"Real Madrid",
-    name:"Real Madrid 2001-2002 Centenary #5 Zidane",
-    price:"€ 179,95",
-    condition:"Nieuwstaat",
-    icon:"⚪👑"
-  },
+{
+club:"Real Madrid",
+name:"Real Madrid 2001-2002 Centenary #5 Zidane",
+price:"€ 179,95",
+condition:"Nieuwstaat",
+icon:"⚪👑"
+},
 
-  {
-    club:"FC Barcelona",
-    name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
-    price:"€ 169,95",
-    condition:"Mint Condition",
-    icon:"🔵🔴"
-  },
+{
+club:"FC Barcelona",
+name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
+price:"€ 169,95",
+condition:"Mint Condition",
+icon:"🔵🔴"
+},
 
-  {
-    club:"Manchester United",
-    name:"Manchester United 1998-1999 Treble #7 Beckham",
-    price:"€ 159,95",
-    condition:"Nieuwstaat",
-    icon:"🔴⚪"
-  },
+{
+club:"Manchester United",
+name:"Manchester United 1998-1999 Treble #7 Beckham",
+price:"€ 159,95",
+condition:"Nieuwstaat",
+icon:"🔴⚪"
+},
 
-  {
-    club:"Arsenal",
-    name:"Arsenal 2003-2004 Invincibles #14 Henry",
-    price:"€ 189,95",
-    condition:"Mint Condition",
-    icon:"🔴⚪"
-  },
+{
+club:"Arsenal",
+name:"Arsenal 2003-2004 Invincibles #14 Henry",
+price:"€ 189,95",
+condition:"Mint Condition",
+icon:"🔴⚪"
+},
 
-  {
-    club:"Juventus",
-    name:"Juventus 1997-1998 Centenary #10 Del Piero",
-    price:"€ 139,95",
-    condition:"Nieuwstaat",
-    icon:"⚪⚫"
-  }
+{
+club:"Juventus",
+name:"Juventus 1997-1998 Centenary #10 Del Piero",
+price:"€ 139,95",
+condition:"Nieuwstaat",
+icon:"⚪⚫"
+},
+
+{
+club:"Brazil",
+name:"Brazil 2002 World Cup #9 Ronaldo",
+price:"€ 199,95",
+condition:"Zeldzaam",
+icon:"🟡🟢"
+},
+
+{
+club:"Netherlands",
+name:"Netherlands 1998 Home #8 Bergkamp",
+price:"€ 174,95",
+condition:"Vintage",
+icon:"🟠"
+},
+
+{
+club:"Chelsea",
+name:"Chelsea 2004-2005 Home",
+price:"€ 129,95",
+condition:"Vintage",
+icon:"🔵"
+},
+
+{
+club:"Liverpool",
+name:"Liverpool 2005-2006 Home",
+price:"€ 119,95",
+condition:"Goede staat",
+icon:"🔴"
+}
 
 ];
 
 
-/* =========================================================
+/* =========================================
    SHIRT CARD
-========================================================= */
+========================================= */
 
-function createShirtCard(shirt){
+function shirtCard(shirt){
 
-  return `
+return `
 
-    <div class="shirt-card">
+<div class="shirt-card">
 
-      <div class="shirt-img-wrapper">
+    <div class="shirt-image">
 
-        <span class="badge-tag">
-          ${shirt.condition}
+        <span class="badge">
+            ${shirt.condition}
         </span>
 
-        <div class="shirt-img-placeholder">
-          👕
+        <div class="shirt-icon">
+            👕
         </div>
 
-      </div>
+    </div>
 
-      <div class="shirt-info">
+    <div class="shirt-info">
 
         <div>
 
-          <div class="shirt-club">
-            ${shirt.icon} ${shirt.club}
-          </div>
+            <div class="shirt-club">
+                ${shirt.icon} ${shirt.club}
+            </div>
 
-          <div class="shirt-name">
-            ${shirt.name}
-          </div>
+            <div class="shirt-name">
+                ${shirt.name}
+            </div>
 
         </div>
 
         <div class="shirt-footer">
 
-          <div class="shirt-price">
-            ${shirt.price}
-          </div>
+            <span class="price">
+                ${shirt.price}
+            </span>
 
-          <button
-            class="shirt-btn"
-            type="button"
-          >
-            Bekijken
-          </button>
+            <button class="view-btn">
+                Bekijken
+            </button>
 
         </div>
 
-      </div>
-
     </div>
 
-  `;
+</div>
+
+`;
 
 }
 
 
-/* =========================================================
+/* =========================================
    HOME
-========================================================= */
+========================================= */
 
 function renderHome(){
 
-  document.getElementById("app").innerHTML = `
+document.getElementById("app").innerHTML=`
 
-    <div class="page">
+<div class="page">
 
-      <div class="banner-container">
+<section class="hero">
 
-        <img
-          src="hero.png"
-          alt="Football-Shirt-Market"
-        >
+<img
+src="hero.png"
+class="hero-image"
+alt="Football Shirt Market"
+>
 
-        <div class="hero-content">
-
-          <div class="hero-title">
-            Koop.<br>
-            Verkoop.<br>
-            <span>Verzamel.</span>
-          </div>
-
-          <div class="hero-text">
-            De marketplace voor voetbalshirts,
-            verzamelaars en echte voetbalfans.
-          </div>
-
-          <div class="hero-buttons">
-
-            <a
-              href="#/explore"
-              class="banner-btn-green"
-            >
-              Ontdek shirts
-            </a>
-
-            <a
-              href="#/sell"
-              class="banner-btn-white"
-            >
-              Verkoop een shirt
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
+<div class="hero-overlay"></div>
 
 
-      <section>
+<div class="hero-content">
 
-        <div class="section-header">
+<div class="hero-kicker">
+FOOTBALL-SHIRT-MARKET · SINCE 2026
+</div>
 
-          <div class="section-title">
-            Populaire
-            <span>Voetbalshirts</span>
-          </div>
+<h1 class="hero-title">
+Koop.<br>
+Verkoop.<br>
+<span>Verzamel.</span>
+</h1>
 
-          <div class="section-description">
-            Iconische shirts voor verzamelaars
-          </div>
+<p class="hero-text">
+De marketplace voor voetbalshirts,
+verzamelaars en echte voetbalfans.
+</p>
 
-        </div>
+<div class="hero-actions">
+
+<a
+href="#/explore"
+class="btn btn-green"
+>
+Ontdek shirts
+</a>
+
+<a
+href="#/sell"
+class="btn btn-dark"
+>
+Verkoop een shirt
+</a>
+
+</div>
+
+</div>
 
 
-        <div class="shirts-grid">
+<div class="hero-search">
 
-          ${shirtsData.map(createShirtCard).join("")}
+<div class="search-icon">
+⌕
+</div>
 
-        </div>
+<input
+id="heroSearch"
+type="search"
+placeholder="Zoek shirts, clubs, spelers..."
+>
 
-      </section>
+<button
+class="search-arrow"
+onclick="performSearch()"
+>
+→
+</button>
 
-    </div>
+</div>
 
-  `;
+</section>
+
+
+<section class="section">
+
+<div class="section-header">
+
+<div class="section-title">
+Populaire <span>shirts</span>
+</div>
+
+<a
+href="#/explore"
+class="section-link"
+>
+Alle shirts →
+</a>
+
+</div>
+
+
+<div class="shirts-grid">
+
+${shirtsData.slice(0,5).map(shirtCard).join("")}
+
+</div>
+
+</section>
+
+</div>
+
+`;
 
 }
 
 
-/* =========================================================
+/* =========================================
    EXPLORE
-========================================================= */
+========================================= */
 
 function renderExplore(){
 
-  document.getElementById("app").innerHTML = `
+document.getElementById("app").innerHTML=`
 
-    <div class="page">
+<div class="page">
 
-      <div class="banner-container">
+<section class="explore-banner">
 
-        <img
-          src="ontdekken.png"
-          alt="Ontdek voetbalshirts"
-          onerror="this.src='hero.png'"
-        >
+<img
+src="ontdekken.png"
+alt="Ontdekken"
+onerror="this.src='hero.png'"
+>
 
-      </div>
+<div class="explore-overlay"></div>
+
+<div class="explore-content">
+
+<h1>
+Ontdek <span>shirts.</span>
+</h1>
+
+<p>
+Bekijk unieke vintage shirts,
+iconische voetbalshirts en
+zeldzame collector items.
+</p>
+
+</div>
+
+</section>
 
 
-      <section>
+<section class="section">
 
-        <div class="section-header">
+<div class="section-header">
 
-          <div class="section-title">
-            Alle
-            <span>Voetbalshirts</span>
-          </div>
+<div class="section-title">
+Alle <span>shirts</span>
+</div>
 
-          <div class="section-description">
-            Ontdek unieke voetbalshirts
-          </div>
-
-        </div>
+</div>
 
 
-        <div class="shirts-grid">
+<div class="shirts-grid">
 
-          ${shirtsData.map(createShirtCard).join("")}
+${shirtsData.map(shirtCard).join("")}
 
-        </div>
+</div>
 
-      </section>
+</section>
 
-    </div>
+</div>
 
-  `;
+`;
 
 }
 
 
-/* =========================================================
+/* =========================================
    SELL
-========================================================= */
+========================================= */
 
 function renderSell(){
 
-  document.getElementById("app").innerHTML = `
+document.getElementById("app").innerHTML=`
 
-    <div class="page">
+<div class="page">
 
-      <div class="sell-box">
+<div class="sell-box">
 
-        <h1>
-          Verkoop je Voetbalshirt
-        </h1>
+<h1>
+Verkoop je voetbalshirt
+</h1>
 
-        <p>
-          Upload binnenkort je iconische
-          voetbalshirts en bereik verzamelaars
-          en voetbalfans van over de hele wereld.
-        </p>
+<p>
+Heb je een uniek, vintage of zeldzaam
+voetbalshirt? Binnenkort kun je het
+hier aanbieden aan verzamelaars
+van over de hele wereld.
+</p>
 
-        <a
-          href="#/"
-          class="banner-btn-green"
-        >
-          Terug naar Home
-        </a>
+<a
+href="#/"
+class="btn btn-green"
+>
+Terug naar Home
+</a>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-  `;
-
-}
-
-
-/* =========================================================
-   GOOGLE TRANSLATE COOKIE
-========================================================= */
-
-function getCurrentLanguage(){
-
-  const match = document.cookie.match(
-    /(?:^|;\s*)googtrans=\/nl\/([^;]+)/
-  );
-
-  if(match && match[1]){
-    return decodeURIComponent(match[1]);
-  }
-
-  return "nl";
-}
-
-
-/* =========================================================
-   LANGUAGE BUTTON
-========================================================= */
-
-function updateLanguageButton(){
-
-  const currentCode = getCurrentLanguage();
-
-  const language =
-    languages.find(
-      language => language.code === currentCode
-    ) ||
-    languages.find(
-      language => language.code === "nl"
-    );
-
-  if(!language) return;
-
-  document.getElementById("currentFlag").textContent =
-    language.flag;
-
-  document.getElementById("currentLangCode").textContent =
-    language.code
-      .split("-")[0]
-      .toUpperCase();
+`;
 
 }
 
 
-/* =========================================================
-   TAAL INSTELLEN
-========================================================= */
-
-function setLanguage(code){
-
-  /*
-    Eerst oude Google Translate cookies verwijderen.
-  */
-
-  const expires =
-    "expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-
-  document.cookie =
-    `googtrans=; ${expires} path=/;`;
-
-  document.cookie =
-    `googtrans=; ${expires} path=/; domain=${location.hostname};`;
-
-
-  /*
-    Nederlands = originele taal.
-  */
-
-  if(code === "nl"){
-
-    localStorage.setItem(
-      "selectedLanguage",
-      "nl"
-    );
-
-  }else{
-
-    /*
-      Google Translate gebruikt:
-      /nl/taalcode
-    */
-
-    document.cookie =
-      `googtrans=/nl/${code}; path=/;`;
-
-    /*
-      Voor sites met www / subdomeinen.
-    */
-
-    const host = location.hostname;
-
-    if(
-      host &&
-      host !== "localhost" &&
-      !host.includes("127.0.0.1")
-    ){
-
-      document.cookie =
-        `googtrans=/nl/${code}; path=/; domain=.${host};`;
-
-    }
-
-    localStorage.setItem(
-      "selectedLanguage",
-      code
-    );
-
-  }
-
-  document.getElementById(
-    "langModal"
-  ).classList.remove("open");
-
-  /*
-    Kleine vertraging zodat de cookie
-    zeker opgeslagen is.
-  */
-
-  setTimeout(() => {
-
-    location.reload();
-
-  },150);
-
-}
-
-
-/* =========================================================
-   LANGUAGE LIST
-========================================================= */
-
-function renderLanguageList(search=""){
-
-  const list =
-    document.getElementById("langList");
-
-  const query =
-    search
-      .trim()
-      .toLowerCase();
-
-  const current =
-    getCurrentLanguage();
-
-
-  const filtered =
-    languages.filter(language => {
-
-      return (
-        language.name
-          .toLowerCase()
-          .includes(query)
-        ||
-        language.code
-          .toLowerCase()
-          .includes(query)
-      );
-
-    });
-
-
-  list.innerHTML = "";
-
-
-  if(filtered.length === 0){
-
-    list.innerHTML = `
-
-      <div
-        style="
-          grid-column:1/-1;
-          text-align:center;
-          padding:35px 15px;
-          color:#82948a;
-        "
-      >
-        Geen taal gevonden.
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  filtered.forEach(language => {
-
-    const item =
-      document.createElement("button");
-
-    item.type = "button";
-
-    item.className =
-      "lang-item";
-
-    if(language.code === current){
-
-      item.classList.add("active");
-
-    }
-
-
-    item.innerHTML = `
-
-      <span class="lang-flag">
-        ${language.flag}
-      </span>
-
-      <span class="lang-name">
-        ${language.name}
-      </span>
-
-    `;
-
-
-    item.addEventListener(
-      "click",
-      () => setLanguage(language.code)
-    );
-
-
-    list.appendChild(item);
-
-  });
-
-}
-
-
-/* =========================================================
-   LANGUAGE MODAL
-========================================================= */
-
-const langModal =
-  document.getElementById("langModal");
-
-const langPickerBtn =
-  document.getElementById("langPickerBtn");
-
-const closeLangModal =
-  document.getElementById("closeLangModal");
-
-const langSearchInput =
-  document.getElementById("langSearchInput");
-
-
-langPickerBtn.addEventListener(
-  "click",
-  () => {
-
-    langModal.classList.add("open");
-
-    langSearchInput.value = "";
-
-    renderLanguageList();
-
-    setTimeout(
-      () => langSearchInput.focus(),
-      50
-    );
-
-  }
-);
-
-
-closeLangModal.addEventListener(
-  "click",
-  () => {
-
-    langModal.classList.remove("open");
-
-  }
-);
-
-
-langModal.addEventListener(
-  "click",
-  event => {
-
-    if(event.target === langModal){
-
-      langModal.classList.remove("open");
-
-    }
-
-  }
-);
-
-
-langSearchInput.addEventListener(
-  "input",
-  event => {
-
-    renderLanguageList(
-      event.target.value
-    );
-
-  }
-);
-
-
-/*
-  ESC om taalvenster te sluiten.
-*/
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if(
-      event.key === "Escape" &&
-      langModal.classList.contains("open")
-    ){
-
-      langModal.classList.remove("open");
-
-    }
-
-  }
-);
-
-
-/* =========================================================
+/* =========================================
    ROUTER
-========================================================= */
+========================================= */
 
 function route(){
 
-  const hash =
-    location.hash || "#/";
+const hash=location.hash || "#/";
+
+document
+.querySelectorAll("nav a")
+.forEach(a=>a.classList.remove("active"));
 
 
-  document
-    .querySelectorAll("nav a")
-    .forEach(
-      link => link.classList.remove("active")
-    );
+if(hash.startsWith("#/explore")){
 
+document
+.getElementById("nav-explore")
+.classList.add("active");
 
-  if(hash.startsWith("#/explore")){
+renderExplore();
 
-    document
-      .getElementById("nav-explore")
-      ?.classList.add("active");
+}
 
-    renderExplore();
+else if(hash.startsWith("#/sell")){
 
-  }
+document
+.getElementById("nav-sell")
+.classList.add("active");
 
-  else if(hash.startsWith("#/sell")){
+renderSell();
 
-    document
-      .getElementById("nav-sell")
-      ?.classList.add("active");
+}
 
-    renderSell();
+else{
 
-  }
+document
+.getElementById("nav-home")
+.classList.add("active");
 
-  else{
+renderHome();
 
-    document
-      .getElementById("nav-home")
-      ?.classList.add("active");
+}
 
-    renderHome();
-
-  }
-
-
-  updateLanguageButton();
+setTimeout(()=>{
+restoreSearch();
+},100);
 
 }
 
 
-/* =========================================================
-   START
-========================================================= */
+/* =========================================
+   SEARCH
+========================================= */
+
+function performSearch(){
+
+const input=document.getElementById("heroSearch");
+
+if(!input)return;
+
+const value=input.value.trim().toLowerCase();
+
+if(!value){
+
+location.hash="#/explore";
+return;
+
+}
+
+location.hash="#/explore";
+
+setTimeout(()=>{
+
+const cards=document.querySelectorAll(".shirt-card");
+
+cards.forEach(card=>{
+
+const text=card.innerText.toLowerCase();
+
+card.style.display=
+text.includes(value)
+?""
+:"none";
+
+});
+
+},100);
+
+}
+
+
+function restoreSearch(){
+
+const input=document.getElementById("heroSearch");
+
+if(!input)return;
+
+input.addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+performSearch();
+
+}
+
+});
+
+}
+
+
+/* =========================================
+   LANGUAGE SYSTEM
+========================================= */
+
+const langModal=document.getElementById("langModal");
+
+const langList=document.getElementById("langList");
+
+const langSearch=document.getElementById("langSearchInput");
+
+
+function getCurrentLanguage(){
+
+const cookie=document.cookie
+.split(";")
+.map(x=>x.trim())
+.find(x=>x.startsWith("googtrans="));
+
+if(cookie){
+
+const value=decodeURIComponent(cookie.split("=")[1]||"");
+
+const parts=value.split("/");
+
+if(parts.length>=3){
+
+return parts[2];
+
+}
+
+}
+
+return "nl";
+
+}
+
+
+function setLanguageDisplay(){
+
+const code=getCurrentLanguage();
+
+const language=
+languages.find(l=>l.code===code) ||
+languages.find(l=>l.code==="nl");
+
+if(!language)return;
+
+document.getElementById("currentFlag").textContent=
+language.flag;
+
+document.getElementById("currentLangCode").textContent=
+language.code
+.split("-")[0]
+.toUpperCase();
+
+}
+
+
+function renderLanguageList(filter=""){
+
+const query=filter
+.toLowerCase()
+.trim();
+
+const filtered=languages.filter(language=>{
+
+return language.name
+.toLowerCase()
+.includes(query)
+
+||
+
+language.code
+.toLowerCase()
+.includes(query);
+
+});
+
+
+langList.innerHTML="";
+
+
+filtered.forEach(language=>{
+
+const item=document.createElement("div");
+
+item.className="lang-item";
+
+if(language.code===getCurrentLanguage()){
+
+item.classList.add("active");
+
+}
+
+item.innerHTML=`
+
+<span class="lang-flag">
+${language.flag}
+</span>
+
+<span class="lang-name">
+${language.name}
+</span>
+
+`;
+
+item.addEventListener("click",()=>{
+
+changeLanguage(language.code);
+
+});
+
+langList.appendChild(item);
+
+});
+
+}
+
+
+function clearTranslationCookies(){
+
+const domains=[
+"",
+location.hostname,
+"."+location.hostname
+];
+
+domains.forEach(domain=>{
+
+const domainPart=
+domain
+?"; domain="+domain
+:"";
+
+document.cookie=
+"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"+domainPart;
+
+});
+
+}
+
+
+function changeLanguage(code){
+
+if(code==="nl"){
+
+clearTranslationCookies();
+
+localStorage.setItem("fsm-language","nl");
+
+location.reload();
+
+return;
+
+}
+
+
+/*
+Google Translate cookie.
+*/
+
+clearTranslationCookies();
+
+document.cookie=
+"googtrans=/nl/"+code+
+"; path=/; max-age=31536000";
+
+localStorage.setItem(
+"fsm-language",
+code
+);
+
+langModal.classList.remove("open");
+
+location.reload();
+
+}
+
+
+/* =========================================
+   LANGUAGE MODAL EVENTS
+========================================= */
+
+document
+.getElementById("langPickerBtn")
+.addEventListener("click",()=>{
+
+langModal.classList.add("open");
+
+langSearch.value="";
+
+renderLanguageList();
+
+setTimeout(()=>{
+langSearch.focus();
+},100);
+
+});
+
+
+document
+.getElementById("closeLangModal")
+.addEventListener("click",()=>{
+
+langModal.classList.remove("open");
+
+});
+
+
+langModal.addEventListener("click",(e)=>{
+
+if(e.target===langModal){
+
+langModal.classList.remove("open");
+
+}
+
+});
+
+
+langSearch.addEventListener("input",(e)=>{
+
+renderLanguageList(e.target.value);
+
+});
+
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="Escape"){
+
+langModal.classList.remove("open");
+
+}
+
+});
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+document
+.getElementById("mobileMenu")
+.addEventListener("click",()=>{
+
+document
+.getElementById("mainNav")
+.classList.toggle("mobile-open");
+
+});
+
+
+document
+.querySelectorAll("nav a")
+.forEach(link=>{
+
+link.addEventListener("click",()=>{
+
+document
+.getElementById("mainNav")
+.classList.remove("mobile-open");
+
+});
+
+});
+
+
+/* =========================================
+   HASH CHANGES
+========================================= */
 
 window.addEventListener(
-  "hashchange",
-  route
+"hashchange",
+route
 );
+
+
+/* =========================================
+   INIT
+========================================= */
+
+setLanguageDisplay();
 
 route();
-
-
-/* =========================================================
-   EXTRA: GOOGLE TRANSLATE OPNIEUW CONTROLEREN
-========================================================= */
-
-window.addEventListener(
-  "load",
-  () => {
-
-    updateLanguageButton();
-
-  }
-);
 
 </script>
 
