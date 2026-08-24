@@ -2,30 +2,26 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Football-Shirt-Market</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-    --black:#020504;
-    --black2:#050b08;
-    --green:#19c77a;
-    --green2:#0d8e56;
-    --green-dark:#06291b;
-    --gold:#e9c46a;
-    --gold2:#b98722;
-    --gold-light:#f6df9d;
-    --white:#ffffff;
-    --muted:#9eaaa4;
-    --card:#07130e;
-    --border:rgba(233,196,106,.22);
+    --gold:#d6aa45;
+    --gold-light:#efd28f;
+    --green:#18b875;
+    --green-dark:#08734b;
+    --bg:#020504;
+    --card:#07120d;
+    --text:#f5f1e7;
+    --muted:#9aa9a1;
+    --border:rgba(239,210,143,.20);
 }
 
 *{
@@ -36,21 +32,15 @@
 
 html{
     scroll-behavior:smooth;
-    overflow-x:hidden;
 }
 
 body{
     background:
-        radial-gradient(circle at 50% -10%,rgba(26,110,72,.15),transparent 35%),
-        var(--black);
-    color:var(--white);
+        radial-gradient(circle at 50% -20%,rgba(24,184,117,.08),transparent 35%),
+        var(--bg);
+    color:var(--text);
     font-family:'Inter',sans-serif;
     overflow-x:hidden;
-}
-
-body.translated-ltr,
-body.translated-rtl{
-    top:0!important;
 }
 
 a{
@@ -63,64 +53,29 @@ input{
     font-family:inherit;
 }
 
-img{
-    max-width:100%;
-}
-
-/* =========================================
-   GOOGLE TRANSLATE
-========================================= */
-
-#google_translate_element{
-    position:absolute;
-    width:1px;
-    height:1px;
-    overflow:hidden;
-    opacity:0;
-    pointer-events:none;
-}
-
-.goog-te-banner-frame,
-.skiptranslate iframe{
-    display:none!important;
-}
-
-.goog-te-gadget{
-    font-size:0!important;
-}
-
-.goog-text-highlight{
-    background:none!important;
-    box-shadow:none!important;
-}
-
-body{
-    top:0!important;
-}
-
-/* =========================================
+/* =========================
    HEADER
-========================================= */
+========================= */
 
 .site-header{
     position:sticky;
     top:0;
     z-index:1000;
     width:100%;
-    background:rgba(2,7,5,.88);
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-    border-bottom:1px solid rgba(233,196,106,.16);
+    background:rgba(2,7,5,.92);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(239,210,143,.16);
 }
 
 .header-inner{
-    width:min(1380px,100%);
-    min-height:82px;
+    width:min(1400px,100%);
+    min-height:78px;
     margin:auto;
     padding:10px 24px;
     display:flex;
     align-items:center;
-    gap:22px;
+    justify-content:space-between;
+    gap:25px;
 }
 
 .logo-link{
@@ -128,23 +83,22 @@ body{
     align-items:center;
     gap:12px;
     min-width:0;
-    flex-shrink:0;
 }
 
 .header-logo{
-    width:58px;
-    height:58px;
+    width:55px;
+    height:55px;
     object-fit:contain;
-    filter:drop-shadow(0 4px 12px rgba(0,0,0,.5));
 }
 
-.brand{
+.brand-name{
     display:flex;
     flex-direction:column;
-    line-height:1.1;
+    min-width:0;
 }
 
 .brand-title{
+    color:white;
     font-family:'Montserrat',sans-serif;
     font-size:15px;
     font-weight:900;
@@ -154,271 +108,79 @@ body{
 }
 
 .brand-since{
-    color:var(--gold);
+    color:var(--gold-light);
     font-size:10px;
     font-weight:800;
     letter-spacing:2px;
-    margin-top:5px;
+    margin-top:3px;
 }
-
-/* NAV */
 
 nav{
     display:flex;
     align-items:center;
-    justify-content:center;
-    gap:4px;
-    margin-left:auto;
+    gap:5px;
 }
 
 nav a{
-    color:#aebdb5;
-    padding:11px 15px;
+    color:#b8c9be;
+    padding:10px 15px;
     border-radius:10px;
-    font-size:13px;
+    font-size:14px;
     font-weight:800;
-    transition:.25s ease;
+    transition:.25s;
 }
 
-nav a:hover{
-    color:#fff;
-    background:rgba(255,255,255,.06);
-}
-
+nav a:hover,
 nav a.active{
-    color:#fff;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(233,196,106,.16),
-            rgba(25,199,122,.08)
-        );
-    border:1px solid rgba(233,196,106,.15);
+    color:white;
+    background:rgba(255,255,255,.08);
 }
-
-/* LANGUAGE */
 
 .lang-btn{
-    flex-shrink:0;
     display:flex;
     align-items:center;
-    gap:8px;
-    background:#07140e;
+    gap:7px;
+    border:1px solid rgba(239,210,143,.35);
+    background:#08130f;
     color:var(--gold-light);
-    border:1px solid rgba(233,196,106,.32);
-    border-radius:12px;
-    padding:10px 13px;
+    border-radius:11px;
+    padding:10px 14px;
     font-size:12px;
     font-weight:800;
     cursor:pointer;
-    transition:.25s ease;
+    transition:.25s;
 }
 
 .lang-btn:hover{
-    border-color:var(--gold);
+    border-color:var(--gold-light);
     transform:translateY(-1px);
-    box-shadow:0 8px 25px rgba(233,196,106,.08);
 }
 
-#currentFlag{
-    font-size:16px;
-}
-
-/* MOBILE MENU BUTTON */
-
-.mobile-menu{
-    display:none;
-    margin-left:auto;
-    width:42px;
-    height:42px;
-    border:1px solid rgba(233,196,106,.25);
-    background:#07130e;
-    color:#fff;
-    border-radius:11px;
-    font-size:20px;
-    cursor:pointer;
-}
-
-/* =========================================
-   LANGUAGE MODAL
-========================================= */
-
-.lang-modal-backdrop{
-    position:fixed;
-    inset:0;
-    z-index:5000;
-    background:rgba(0,0,0,.82);
-    backdrop-filter:blur(12px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.lang-modal-backdrop.open{
-    display:flex;
-    animation:fadeIn .2s ease;
-}
-
-@keyframes fadeIn{
-    from{opacity:0}
-    to{opacity:1}
-}
-
-.lang-modal{
-    width:min(650px,100%);
-    max-height:min(750px,90vh);
-    background:
-        radial-gradient(
-            circle at top right,
-            rgba(25,199,122,.08),
-            transparent 35%
-        ),
-        #08150f;
-    border:1px solid rgba(233,196,106,.25);
-    border-radius:22px;
-    padding:24px;
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.8),
-        inset 0 1px 0 rgba(255,255,255,.03);
-    display:flex;
-    flex-direction:column;
-}
-
-.lang-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin-bottom:18px;
-}
-
-.lang-title{
-    color:var(--gold-light);
-    font-family:'Montserrat',sans-serif;
-    font-size:18px;
-    font-weight:900;
-}
-
-.lang-close{
-    width:38px;
-    height:38px;
-    border:0;
-    border-radius:10px;
-    background:rgba(255,255,255,.05);
-    color:#aaa;
-    font-size:24px;
-    cursor:pointer;
-}
-
-.lang-close:hover{
-    color:#fff;
-    background:rgba(255,255,255,.1);
-}
-
-.lang-search{
-    width:100%;
-    height:48px;
-    border-radius:12px;
-    border:1px solid rgba(233,196,106,.2);
-    background:#030806;
-    color:#fff;
-    outline:none;
-    padding:0 15px;
-    font-size:14px;
-    margin-bottom:15px;
-}
-
-.lang-search:focus{
-    border-color:var(--gold);
-    box-shadow:0 0 0 3px rgba(233,196,106,.06);
-}
-
-.lang-list{
-    overflow-y:auto;
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:7px;
-    padding-right:5px;
-}
-
-.lang-list::-webkit-scrollbar{
-    width:5px;
-}
-
-.lang-list::-webkit-scrollbar-thumb{
-    background:rgba(233,196,106,.3);
-    border-radius:10px;
-}
-
-.lang-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    min-width:0;
-    padding:11px 12px;
-    border-radius:10px;
-    border:1px solid transparent;
-    background:rgba(255,255,255,.025);
-    color:#d4ddd8;
-    cursor:pointer;
-    font-size:12px;
-    font-weight:600;
-    transition:.18s ease;
-}
-
-.lang-item:hover{
-    background:rgba(233,196,106,.1);
-    border-color:rgba(233,196,106,.15);
-    color:#fff;
-}
-
-.lang-item.active{
-    background:linear-gradient(
-        135deg,
-        rgba(233,196,106,.25),
-        rgba(25,199,122,.1)
-    );
-    border-color:rgba(233,196,106,.3);
-    color:#fff;
-}
-
-.lang-flag{
-    font-size:17px;
-    flex-shrink:0;
-}
-
-.lang-name{
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-}
-
-/* =========================================
+/* =========================
    PAGE
-========================================= */
+========================= */
 
 .page{
-    width:min(1380px,100%);
+    width:min(1400px,100%);
     margin:auto;
-    padding:25px 24px 80px;
+    padding:28px 24px 80px;
 }
 
-/* =========================================
+/* =========================
    HERO
-========================================= */
+========================= */
 
 .hero{
     position:relative;
     width:100%;
-    min-height:clamp(430px,48vw,680px);
+    min-height:560px;
     border-radius:22px;
     overflow:hidden;
-    border:1px solid rgba(233,196,106,.2);
+    border:1px solid rgba(239,210,143,.25);
     box-shadow:
-        0 25px 70px rgba(0,0,0,.6),
-        inset 0 1px 0 rgba(255,255,255,.04);
-    background:#020604;
+        0 25px 70px rgba(0,0,0,.65),
+        inset 0 0 80px rgba(0,0,0,.25);
+    background:#030706;
 }
 
 .hero-image{
@@ -427,7 +189,7 @@ nav a.active{
     width:100%;
     height:100%;
     object-fit:cover;
-    object-position:center center;
+    object-position:center;
 }
 
 .hero-overlay{
@@ -436,192 +198,167 @@ nav a.active{
     background:
         linear-gradient(
             90deg,
-            rgba(1,5,4,.88) 0%,
-            rgba(1,5,4,.65) 34%,
-            rgba(1,5,4,.1) 67%,
-            rgba(1,5,4,.15) 100%
+            rgba(2,6,5,.94) 0%,
+            rgba(2,6,5,.78) 31%,
+            rgba(2,6,5,.18) 61%,
+            rgba(2,6,5,.05) 100%
         );
 }
 
 .hero-content{
-    position:absolute;
+    position:relative;
     z-index:2;
-    left:6%;
-    top:50%;
-    transform:translateY(-50%);
-    width:min(520px,45%);
+    width:48%;
+    min-height:560px;
+    padding:70px 0 40px 55px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
-.hero-kicker{
-    color:var(--gold);
+.hero-small{
+    color:var(--gold-light);
+    font-family:'Montserrat',sans-serif;
     font-size:12px;
     font-weight:900;
-    letter-spacing:2.5px;
+    letter-spacing:2px;
     text-transform:uppercase;
-    margin-bottom:15px;
+    margin-bottom:18px;
 }
 
 .hero-title{
     font-family:'Montserrat',sans-serif;
-    font-size:clamp(40px,5.2vw,78px);
-    line-height:.95;
+    font-size:clamp(42px,5vw,76px);
+    line-height:.94;
     font-weight:900;
-    text-transform:uppercase;
     letter-spacing:-2px;
-    color:#fff;
-    text-shadow:0 5px 25px rgba(0,0,0,.55);
+    text-transform:uppercase;
 }
 
 .hero-title span{
     color:var(--gold-light);
 }
 
-.hero-text{
-    color:#c5d0cb;
-    font-size:clamp(13px,1.1vw,16px);
-    line-height:1.6;
+.hero-description{
     max-width:470px;
-    margin-top:20px;
+    margin-top:24px;
+    color:#d5ded9;
+    font-size:15px;
+    line-height:1.6;
 }
 
-.hero-actions{
+.hero-buttons{
     display:flex;
-    flex-wrap:wrap;
     gap:10px;
-    margin-top:26px;
+    margin-top:27px;
+    flex-wrap:wrap;
 }
 
 .btn{
-    min-height:45px;
-    padding:0 19px;
-    border-radius:10px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+    border:0;
+    border-radius:9px;
+    padding:13px 19px;
     font-size:12px;
     font-weight:900;
-    transition:.25s ease;
-    border:1px solid transparent;
+    cursor:pointer;
+    transition:.25s;
 }
 
 .btn-green{
-    color:#fff;
-    background:linear-gradient(
-        135deg,
-        #19c77a,
-        #0d8c54
-    );
-    box-shadow:0 10px 30px rgba(25,199,122,.2);
+    background:linear-gradient(135deg,#19c47d,#08764c);
+    color:white;
+    box-shadow:0 8px 25px rgba(24,184,117,.22);
 }
 
 .btn-green:hover{
     transform:translateY(-2px);
-    box-shadow:0 14px 35px rgba(25,199,122,.3);
+    box-shadow:0 12px 30px rgba(24,184,117,.32);
 }
 
-.btn-gold{
-    color:#080b09;
-    background:linear-gradient(
-        135deg,
-        #f4d98d,
-        #c69a35
-    );
+.btn-white{
+    background:white;
+    color:#111;
 }
 
-.btn-dark{
-    color:#fff;
-    background:rgba(255,255,255,.07);
-    border-color:rgba(255,255,255,.16);
+.btn-white:hover{
+    transform:translateY(-2px);
+    background:#f2f2f2;
 }
 
-.btn-dark:hover{
-    background:rgba(255,255,255,.12);
-}
-
-/* SEARCH BAR */
+/* =========================
+   SEARCH
+========================= */
 
 .hero-search{
-    position:absolute;
-    z-index:4;
-    left:5%;
-    bottom:28px;
-    width:min(455px,42%);
-    height:57px;
+    width:min(440px,100%);
+    height:54px;
+    margin-top:28px;
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:7px 9px 7px 16px;
-    border-radius:14px;
-    background:rgba(0,0,0,.78);
-    border:1px solid rgba(233,196,106,.45);
-    box-shadow:
-        0 10px 35px rgba(0,0,0,.5),
-        0 0 25px rgba(233,196,106,.08);
-    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,.72);
+    border:1px solid rgba(239,210,143,.5);
+    border-radius:12px;
+    padding:5px 5px 5px 16px;
+    box-shadow:0 0 25px rgba(239,210,143,.08);
 }
 
 .search-icon{
-    width:34px;
-    height:34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:22px;
-    flex-shrink:0;
+    font-size:21px;
+    margin-right:11px;
+    color:#ddd;
 }
 
 .hero-search input{
-    min-width:0;
     flex:1;
+    min-width:0;
+    background:transparent;
     border:0;
     outline:0;
-    background:transparent;
-    color:#fff;
+    color:white;
     font-size:13px;
 }
 
 .hero-search input::placeholder{
-    color:#a5aea9;
+    color:#89958f;
 }
 
-.search-arrow{
-    width:40px;
-    height:40px;
-    border-radius:9px;
+.search-submit{
+    width:42px;
+    height:42px;
     border:0;
-    background:linear-gradient(
-        135deg,
-        #e9c46a,
-        #b98722
-    );
-    color:#050705;
-    font-size:21px;
-    font-weight:900;
+    border-radius:9px;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));
+    color:#111;
+    font-size:20px;
     cursor:pointer;
+    transition:.2s;
 }
 
-/* =========================================
-   SECTIONS
-========================================= */
+.search-submit:hover{
+    transform:translateX(2px);
+}
 
-.section{
+/* =========================
+   SHIRT SECTION
+========================= */
+
+.shirt-section{
     margin-top:48px;
 }
 
 .section-header{
     display:flex;
-    align-items:flex-end;
+    align-items:end;
     justify-content:space-between;
     gap:20px;
-    padding-bottom:13px;
-    border-bottom:1px solid rgba(233,196,106,.13);
     margin-bottom:20px;
+    padding-bottom:13px;
+    border-bottom:1px solid rgba(239,210,143,.14);
 }
 
 .section-title{
     font-family:'Montserrat',sans-serif;
-    font-size:clamp(21px,2.2vw,29px);
+    font-size:26px;
     font-weight:900;
     text-transform:uppercase;
 }
@@ -630,541 +367,450 @@ nav a.active{
     color:var(--gold-light);
 }
 
-.section-link{
-    color:var(--gold);
-    font-size:12px;
+.all-shirts{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--gold-light);
+    font-size:13px;
     font-weight:800;
-    white-space:nowrap;
+    padding:9px 13px;
+    border:1px solid rgba(239,210,143,.25);
+    border-radius:9px;
+    transition:.25s;
 }
 
-.section-link:hover{
-    color:#fff;
+.all-shirts:hover{
+    background:rgba(239,210,143,.1);
+    border-color:var(--gold-light);
 }
 
-/* =========================================
-   SHIRT GRID
-========================================= */
+.arrow{
+    font-size:20px;
+}
 
-.shirts-grid{
+/* horizontale rij op Home */
+
+.shirts-row{
     display:grid;
-    grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:16px;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:18px;
 }
+
+/* =========================
+   SHIRT CARDS
+========================= */
 
 .shirt-card{
     min-width:0;
-    overflow:hidden;
     background:
         linear-gradient(
             180deg,
-            rgba(10,30,21,.95),
-            rgba(5,16,11,.98)
+            rgba(12,34,24,.96),
+            rgba(5,17,12,.98)
         );
-    border:1px solid rgba(233,196,106,.2);
-    border-radius:15px;
-    transition:
-        transform .3s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    transition:.3s;
 }
 
 .shirt-card:hover{
     transform:translateY(-6px);
-    border-color:rgba(233,196,106,.55);
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.4),
-        0 0 25px rgba(233,196,106,.07);
+    border-color:var(--gold-light);
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
 }
 
 .shirt-image{
-    position:relative;
-    aspect-ratio:1 / 1;
+    height:230px;
     display:flex;
     align-items:center;
     justify-content:center;
     background:
         radial-gradient(
             circle at center,
-            #123c28 0%,
-            #07150e 58%,
+            #173526 0%,
+            #08140e 55%,
             #030906 100%
         );
-    overflow:hidden;
-}
-
-.shirt-image::before{
-    content:"";
-    position:absolute;
-    width:65%;
-    height:65%;
-    border-radius:50%;
-    background:rgba(25,199,122,.08);
-    filter:blur(25px);
-}
-
-.shirt-icon{
-    position:relative;
-    z-index:2;
-    font-size:72px;
-    filter:drop-shadow(0 12px 15px rgba(0,0,0,.55));
-    transition:.3s ease;
-}
-
-.shirt-card:hover .shirt-icon{
-    transform:scale(1.1);
-}
-
-.badge{
-    position:absolute;
-    z-index:4;
-    top:10px;
-    left:10px;
-    color:var(--gold-light);
-    background:rgba(2,7,5,.82);
-    border:1px solid rgba(233,196,106,.4);
-    border-radius:20px;
-    padding:4px 8px;
-    font-size:8px;
-    font-weight:900;
-    text-transform:uppercase;
-    backdrop-filter:blur(5px);
+    font-size:75px;
 }
 
 .shirt-info{
-    padding:14px;
+    padding:15px;
 }
 
 .shirt-club{
-    color:#91a098;
-    font-size:9px;
+    color:#91a49a;
+    font-size:10px;
     font-weight:800;
     text-transform:uppercase;
-    letter-spacing:.5px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    letter-spacing:.6px;
 }
 
 .shirt-name{
-    color:#fff;
-    font-size:12px;
+    color:white;
+    font-size:14px;
     font-weight:800;
     line-height:1.35;
     margin-top:5px;
-    min-height:33px;
+    min-height:38px;
 }
 
-.shirt-footer{
+.shirt-bottom{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:7px;
-    margin-top:14px;
+    gap:10px;
+    margin-top:15px;
 }
 
 .price{
-    color:var(--green);
-    font-size:13px;
+    color:#18d78a;
+    font-size:15px;
     font-weight:900;
-    white-space:nowrap;
 }
 
 .view-btn{
-    border:1px solid rgba(233,196,106,.28);
-    background:rgba(233,196,106,.07);
+    border:1px solid rgba(239,210,143,.3);
+    background:rgba(239,210,143,.07);
     color:var(--gold-light);
+    padding:7px 10px;
     border-radius:7px;
-    padding:7px 9px;
-    font-size:9px;
+    font-size:10px;
     font-weight:900;
     cursor:pointer;
+}
+
+/* =========================
+   EXPLORE GRID
+========================= */
+
+.explore-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:20px;
+}
+
+/* =========================
+   LANGUAGE MODAL
+========================= */
+
+.lang-modal-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(10px);
+}
+
+.lang-modal-backdrop.open{
+    display:flex;
+}
+
+.lang-modal{
+    width:min(650px,100%);
+    max-height:85vh;
+    display:flex;
+    flex-direction:column;
+    padding:25px;
+    border-radius:20px;
+    background:#0a1812;
+    border:1px solid rgba(239,210,143,.28);
+    box-shadow:0 30px 80px rgba(0,0,0,.8);
+}
+
+.lang-modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+}
+
+.lang-modal-title{
+    color:var(--gold-light);
+    font-size:18px;
+    font-weight:900;
+}
+
+.lang-close{
+    border:0;
+    background:transparent;
+    color:#9aa9a1;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.lang-search{
+    width:100%;
+    padding:13px 15px;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:1px solid rgba(239,210,143,.22);
+    background:#030806;
+    color:white;
+    outline:0;
+}
+
+.lang-search:focus{
+    border-color:var(--gold-light);
+}
+
+.lang-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+    overflow-y:auto;
+    padding-right:4px;
+}
+
+.lang-item{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:11px;
+    border-radius:9px;
+    background:rgba(255,255,255,.035);
+    cursor:pointer;
+    color:#dbe4df;
+    font-size:12px;
+    font-weight:700;
     transition:.2s;
 }
 
-.view-btn:hover{
+.lang-item:hover{
+    background:rgba(239,210,143,.12);
+    color:white;
+}
+
+.lang-item.active{
     background:var(--gold);
-    color:#050705;
+    color:#000;
 }
 
-/* =========================================
-   EXPLORE BANNER
-========================================= */
-
-.explore-banner{
-    position:relative;
-    width:100%;
-    min-height:320px;
-    border-radius:20px;
-    overflow:hidden;
-    border:1px solid rgba(233,196,106,.2);
-}
-
-.explore-banner img{
-    width:100%;
-    height:100%;
-    min-height:320px;
-    object-fit:cover;
-}
-
-.explore-overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        90deg,
-        rgba(2,5,4,.85),
-        transparent 70%
-    );
-}
-
-.explore-content{
-    position:absolute;
-    left:6%;
-    top:50%;
-    transform:translateY(-50%);
-    max-width:450px;
-}
-
-.explore-content h1{
-    font-family:'Montserrat',sans-serif;
-    font-size:clamp(32px,4vw,55px);
-    line-height:1;
-    text-transform:uppercase;
-}
-
-.explore-content h1 span{
-    color:var(--gold);
-}
-
-.explore-content p{
-    margin-top:14px;
-    color:#b9c5bf;
-    line-height:1.6;
-    font-size:14px;
-}
-
-/* =========================================
-   SELL
-========================================= */
-
-.sell-box{
-    width:min(650px,100%);
-    margin:50px auto;
-    padding:40px;
-    border-radius:20px;
-    text-align:center;
-    background:
-        radial-gradient(
-            circle at top,
-            rgba(25,199,122,.1),
-            transparent 50%
-        ),
-        #07130e;
-    border:1px solid rgba(233,196,106,.2);
-    box-shadow:0 25px 70px rgba(0,0,0,.35);
-}
-
-.sell-box h1{
-    font-family:'Montserrat',sans-serif;
-    font-size:32px;
-    color:var(--gold-light);
-}
-
-.sell-box p{
-    color:#aab7b0;
-    line-height:1.7;
-    margin:15px auto 25px;
-    max-width:500px;
-}
-
-/* =========================================
+/* =========================
    FOOTER
-========================================= */
+========================= */
 
 footer{
-    border-top:1px solid rgba(233,196,106,.13);
-    text-align:center;
     padding:40px 20px;
-    color:#84918b;
-    font-size:12px;
+    text-align:center;
+    border-top:1px solid rgba(239,210,143,.15);
+    color:#87948e;
+    font-size:13px;
 }
 
 footer strong{
-    color:#fff;
-    font-family:'Montserrat',sans-serif;
+    color:white;
 }
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================
+   GOOGLE TRANSLATE HIDE
+========================= */
 
-@media(max-width:1100px){
-
-    .shirts-grid{
-        grid-template-columns:repeat(4,minmax(0,1fr));
-    }
-
-    .hero-content{
-        width:50%;
-    }
-
+body{
+    top:0!important;
 }
 
-@media(max-width:850px){
+.goog-te-banner-frame,
+.skiptranslate iframe,
+#goog-te-setup{
+    display:none!important;
+}
+
+.goog-text-highlight{
+    background:transparent!important;
+    box-shadow:none!important;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1050px){
 
     .header-inner{
-        min-height:68px;
-        padding:8px 14px;
+        padding:10px 18px;
     }
 
-    .header-logo{
-        width:45px;
-        height:45px;
-    }
-
-    .brand-title{
-        font-size:12px;
-    }
-
-    .brand-since{
-        font-size:8px;
-    }
-
-    nav{
+    .brand-name{
         display:none;
-        position:absolute;
-        top:68px;
-        left:10px;
-        right:10px;
-        padding:10px;
-        flex-direction:column;
-        background:rgba(4,12,8,.97);
-        border:1px solid rgba(233,196,106,.2);
-        border-radius:14px;
-        box-shadow:0 20px 50px rgba(0,0,0,.6);
-    }
-
-    nav.mobile-open{
-        display:flex;
-    }
-
-    nav a{
-        width:100%;
-        text-align:center;
-    }
-
-    .mobile-menu{
-        display:block;
-    }
-
-    .lang-btn{
-        padding:9px 10px;
-    }
-
-    .page{
-        padding:15px 12px 60px;
     }
 
     .hero{
-        min-height:590px;
-        border-radius:16px;
+        min-height:500px;
+    }
+
+    .hero-content{
+        width:55%;
+        min-height:500px;
+        padding-left:40px;
+    }
+
+    .shirts-row,
+    .explore-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:750px){
+
+    .header-inner{
+        min-height:68px;
+        padding:8px 12px;
+        gap:8px;
+    }
+
+    .header-logo{
+        width:46px;
+        height:46px;
+    }
+
+    nav{
+        gap:0;
+    }
+
+    nav a{
+        padding:8px 7px;
+        font-size:11px;
+    }
+
+    .lang-btn{
+        padding:8px 9px;
+    }
+
+    .page{
+        padding:15px 12px 50px;
+    }
+
+    .hero{
+        min-height:620px;
+        border-radius:15px;
     }
 
     .hero-image{
-        object-position:58% center;
+        object-position:63% center;
     }
 
     .hero-overlay{
         background:
             linear-gradient(
                 180deg,
-                rgba(1,5,4,.25),
-                rgba(1,5,4,.6) 45%,
-                rgba(1,5,4,.96) 82%
+                rgba(2,6,5,.90) 0%,
+                rgba(2,6,5,.82) 48%,
+                rgba(2,6,5,.50) 100%
             );
     }
 
     .hero-content{
-        left:20px;
-        right:20px;
-        bottom:125px;
-        top:auto;
-        transform:none;
-        width:auto;
+        width:100%;
+        min-height:620px;
+        padding:55px 24px 25px;
+        justify-content:flex-start;
     }
 
-    .hero-kicker{
+    .hero-small{
         font-size:9px;
-        letter-spacing:1.8px;
-        margin-bottom:10px;
+        margin-bottom:15px;
     }
 
     .hero-title{
-        font-size:42px;
+        font-size:clamp(39px,12vw,62px);
         letter-spacing:-1.5px;
     }
 
-    .hero-text{
-        font-size:12px;
-        line-height:1.5;
-        margin-top:13px;
+    .hero-description{
+        font-size:13px;
+        max-width:390px;
+        margin-top:18px;
     }
 
-    .hero-actions{
-        margin-top:16px;
+    .hero-buttons{
+        margin-top:20px;
     }
 
     .btn{
-        min-height:40px;
-        padding:0 13px;
-        font-size:10px;
-    }
-
-    .hero-search{
-        left:16px;
-        right:16px;
-        bottom:20px;
-        width:auto;
-        height:51px;
-    }
-
-    .shirts-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:10px;
-    }
-
-    .shirt-card{
-        border-radius:12px;
-    }
-
-    .shirt-info{
-        padding:11px;
-    }
-
-    .shirt-icon{
-        font-size:55px;
-    }
-
-    .shirt-name{
+        padding:11px 14px;
         font-size:11px;
     }
 
-    .price{
-        font-size:12px;
+    .hero-search{
+        margin-top:20px;
+        width:100%;
     }
 
-    .view-btn{
-        padding:6px 7px;
-        font-size:8px;
+    .shirts-row{
+        display:flex;
+        overflow-x:auto;
+        scroll-snap-type:x mandatory;
+        padding-bottom:10px;
     }
 
-    .section{
-        margin-top:35px;
+    .shirts-row .shirt-card{
+        min-width:260px;
+        scroll-snap-align:start;
     }
 
-}
-
-@media(max-width:520px){
-
-    .header-inner{
-        gap:7px;
+    .explore-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
     }
 
-    .brand{
-        display:none;
-    }
-
-    .header-logo{
-        width:43px;
-        height:43px;
-    }
-
-    .lang-btn{
-        margin-left:auto;
-    }
-
-    .hero{
-        min-height:575px;
-    }
-
-    .hero-content{
-        bottom:120px;
-    }
-
-    .hero-title{
-        font-size:37px;
-    }
-
-    .hero-text{
-        max-width:330px;
-    }
-
-    .hero-actions{
-        flex-direction:row;
-    }
-
-    .hero-actions .btn{
-        flex:1;
-    }
-
-    .section-header{
-        align-items:center;
+    .shirt-image{
+        height:180px;
     }
 
     .section-title{
         font-size:19px;
     }
 
-    .section-link{
-        font-size:10px;
-    }
-
-    .lang-modal{
-        padding:17px;
-        border-radius:17px;
+    .all-shirts{
+        font-size:11px;
     }
 
     .lang-list{
         grid-template-columns:1fr;
     }
 
-    .lang-item{
-        padding:12px;
-    }
-
-    .explore-banner,
-    .explore-banner img{
-        min-height:350px;
-    }
-
-    .explore-content{
-        left:22px;
-        right:22px;
-    }
-
-    .sell-box{
-        padding:28px 18px;
-    }
-
-    .sell-box h1{
-        font-size:27px;
-    }
-
 }
 
-/* EXTRA SMALL */
+/* kleine gsm */
 
-@media(max-width:370px){
+@media(max-width:430px){
+
+    .brand-name{
+        display:none;
+    }
+
+    nav a{
+        padding:7px 5px;
+        font-size:10px;
+    }
+
+    .lang-btn span:nth-child(2){
+        display:none;
+    }
+
+    .hero{
+        min-height:600px;
+    }
+
+    .hero-content{
+        min-height:600px;
+        padding:45px 20px 20px;
+    }
 
     .hero-title{
-        font-size:33px;
-    }
-
-    .shirts-grid{
-        grid-template-columns:1fr;
-    }
-
-    .shirt-image{
-        aspect-ratio:1.25;
+        font-size:43px;
     }
 
 }
@@ -1174,27 +820,31 @@ footer strong{
 
 <body>
 
-<!-- Google Translate -->
-<div id="google_translate_element"></div>
+<!-- =========================
+     GOOGLE TRANSLATE
+========================= -->
+
+<div id="google_translate_element" style="display:none"></div>
 
 <script>
-
 function googleTranslateElementInit(){
 
     new google.translate.TranslateElement({
         pageLanguage:'nl',
-        includedLanguages:'',
+        includedLanguages:
+        'af,sq,am,ar,hy,az,eu,be,bn,bs,bg,my,ca,ceb,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,tl,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jv,kn,kk,km,rw,ko,ku,ky,lo,la,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,ne,no,ny,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,si,sk,sl,so,es,su,sw,sv,tg,ta,tt,te,th,tr,tk,uk,ur,ug,uz,vi,cy,xh,yi,yo,zu',
         autoDisplay:false
     },'google_translate_element');
 
 }
-
 </script>
 
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <header class="site-header">
 
@@ -1205,16 +855,16 @@ function googleTranslateElementInit(){
 <img
 src="logo.png"
 class="header-logo"
-alt="Football Shirt Market Logo"
+alt="Football Shirt Market"
 >
 
-<div class="brand">
+<div class="brand-name">
 
-<span class="brand-title">
+<span class="brand-title" translate="no">
 Football-Shirt-Market
 </span>
 
-<span class="brand-since">
+<span class="brand-since" translate="no">
 SINCE 2026
 </span>
 
@@ -1223,7 +873,7 @@ SINCE 2026
 </a>
 
 
-<nav id="mainNav">
+<nav>
 
 <a href="#/" id="nav-home">
 Home
@@ -1240,23 +890,9 @@ Verkopen
 </nav>
 
 
-<button
-class="mobile-menu"
-id="mobileMenu"
-aria-label="Menu"
->
-☰
-</button>
+<button class="lang-btn" id="langPickerBtn">
 
-
-<button
-class="lang-btn"
-id="langPickerBtn"
->
-
-<span id="currentFlag">
-🇳🇱
-</span>
+<span id="currentFlag">🇳🇱</span>
 
 <span id="currentLangCode">
 NL
@@ -1271,19 +907,18 @@ NL
 </header>
 
 
-<!-- LANGUAGE MODAL -->
+<!-- =========================
+     LANGUAGE MODAL
+========================= -->
 
-<div
-class="lang-modal-backdrop"
-id="langModal"
->
+<div class="lang-modal-backdrop" id="langModal">
 
 <div class="lang-modal">
 
-<div class="lang-header">
+<div class="lang-modal-header">
 
-<div class="lang-title">
-Kies je taal
+<div class="lang-modal-title">
+Kies een taal
 </div>
 
 <button
@@ -1295,13 +930,14 @@ id="closeLangModal"
 
 </div>
 
+
 <input
 id="langSearchInput"
 class="lang-search"
-type="text"
 placeholder="Zoek een taal..."
 autocomplete="off"
 >
+
 
 <div
 id="langList"
@@ -1313,12 +949,16 @@ class="lang-list"
 </div>
 
 
-<!-- APP -->
+<!-- =========================
+     APP
+========================= -->
 
 <main id="app"></main>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
@@ -1329,12 +969,12 @@ class="lang-list"
 <br><br>
 
 <span>
-De marketplace voor voetbalshirts
+De marketplace voor voetbalshirts, verzamelaars en voetbalfans.
 </span>
 
-<span> · </span>
+<br>
 
-<span style="color:var(--gold)">
+<span style="color:var(--gold-light)">
 Since 2026
 </span>
 
@@ -1343,16 +983,23 @@ Since 2026
 
 <script>
 
-/* =========================================
+/* ==========================================
    100+ TALEN
-========================================= */
+========================================== */
 
 const languages = [
 
+{code:'nl',name:'Nederlands',flag:'🇳🇱'},
+{code:'en',name:'English',flag:'🇬🇧'},
+{code:'de',name:'Deutsch',flag:'🇩🇪'},
+{code:'fr',name:'Français',flag:'🇫🇷'},
+{code:'es',name:'Español',flag:'🇪🇸'},
+{code:'it',name:'Italiano',flag:'🇮🇹'},
+{code:'pt',name:'Português',flag:'🇵🇹'},
 {code:'af',name:'Afrikaans',flag:'🇿🇦'},
-{code:'sq',name:'Albanian',flag:'🇦🇱'},
+{code:'sq',name:'Shqip',flag:'🇦🇱'},
 {code:'am',name:'Amharic',flag:'🇪🇹'},
-{code:'ar',name:'Arabic',flag:'🇸🇦'},
+{code:'ar',name:'العربية',flag:'🇸🇦'},
 {code:'hy',name:'Armenian',flag:'🇦🇲'},
 {code:'az',name:'Azerbaijani',flag:'🇦🇿'},
 {code:'eu',name:'Basque',flag:'🇪🇸'},
@@ -1360,24 +1007,22 @@ const languages = [
 {code:'bn',name:'Bengali',flag:'🇧🇩'},
 {code:'bs',name:'Bosnian',flag:'🇧🇦'},
 {code:'bg',name:'Bulgarian',flag:'🇧🇬'},
+{code:'my',name:'Burmese',flag:'🇲🇲'},
 {code:'ca',name:'Catalan',flag:'🇪🇸'},
 {code:'ceb',name:'Cebuano',flag:'🇵🇭'},
-{code:'zh-CN',name:'Chinese (Simplified)',flag:'🇨🇳'},
-{code:'zh-TW',name:'Chinese (Traditional)',flag:'🇹🇼'},
+{code:'zh-CN',name:'Chinese Simplified',flag:'🇨🇳'},
+{code:'zh-TW',name:'Chinese Traditional',flag:'🇹🇼'},
 {code:'co',name:'Corsican',flag:'🇫🇷'},
 {code:'hr',name:'Croatian',flag:'🇭🇷'},
 {code:'cs',name:'Czech',flag:'🇨🇿'},
-{code:'da',name:'Danish',flag:'🇩🇰'},
-{code:'nl',name:'Dutch / Nederlands',flag:'🇳🇱'},
-{code:'en',name:'English',flag:'🇬🇧'},
+{code:'da',name:'Dansk',flag:'🇩🇰'},
 {code:'eo',name:'Esperanto',flag:'🌍'},
 {code:'et',name:'Estonian',flag:'🇪🇪'},
+{code:'tl',name:'Filipino',flag:'🇵🇭'},
 {code:'fi',name:'Finnish',flag:'🇫🇮'},
-{code:'fr',name:'French',flag:'🇫🇷'},
 {code:'fy',name:'Frisian',flag:'🇳🇱'},
 {code:'gl',name:'Galician',flag:'🇪🇸'},
 {code:'ka',name:'Georgian',flag:'🇬🇪'},
-{code:'de',name:'German',flag:'🇩🇪'},
 {code:'el',name:'Greek',flag:'🇬🇷'},
 {code:'gu',name:'Gujarati',flag:'🇮🇳'},
 {code:'ht',name:'Haitian Creole',flag:'🇭🇹'},
@@ -1391,7 +1036,6 @@ const languages = [
 {code:'ig',name:'Igbo',flag:'🇳🇬'},
 {code:'id',name:'Indonesian',flag:'🇮🇩'},
 {code:'ga',name:'Irish',flag:'🇮🇪'},
-{code:'it',name:'Italian',flag:'🇮🇹'},
 {code:'ja',name:'Japanese',flag:'🇯🇵'},
 {code:'jv',name:'Javanese',flag:'🇮🇩'},
 {code:'kn',name:'Kannada',flag:'🇮🇳'},
@@ -1414,65 +1058,57 @@ const languages = [
 {code:'mi',name:'Maori',flag:'🇳🇿'},
 {code:'mr',name:'Marathi',flag:'🇮🇳'},
 {code:'mn',name:'Mongolian',flag:'🇲🇳'},
-{code:'my',name:'Myanmar / Burmese',flag:'🇲🇲'},
 {code:'ne',name:'Nepali',flag:'🇳🇵'},
-{code:'no',name:'Norwegian',flag:'🇳🇴'},
+{code:'no',name:'Norsk',flag:'🇳🇴'},
 {code:'ny',name:'Chichewa',flag:'🇲🇼'},
-{code:'or',name:'Odia',flag:'🇮🇳'},
 {code:'ps',name:'Pashto',flag:'🇦🇫'},
 {code:'fa',name:'Persian',flag:'🇮🇷'},
-{code:'pl',name:'Polish',flag:'🇵🇱'},
-{code:'pt',name:'Portuguese',flag:'🇵🇹'},
+{code:'pl',name:'Polski',flag:'🇵🇱'},
 {code:'pa',name:'Punjabi',flag:'🇮🇳'},
-{code:'ro',name:'Romanian',flag:'🇷🇴'},
-{code:'ru',name:'Russian',flag:'🇷🇺'},
+{code:'ro',name:'Română',flag:'🇷🇴'},
+{code:'ru',name:'Русский',flag:'🇷🇺'},
 {code:'sm',name:'Samoan',flag:'🇼🇸'},
 {code:'gd',name:'Scots Gaelic',flag:'🏴'},
 {code:'sr',name:'Serbian',flag:'🇷🇸'},
 {code:'st',name:'Sesotho',flag:'🇱🇸'},
-{code:'sn',name:'Shona',flag:'🇿🇼'},
-{code:'sd',name:'Sindhi',flag:'🇵🇰'},
 {code:'si',name:'Sinhala',flag:'🇱🇰'},
 {code:'sk',name:'Slovak',flag:'🇸🇰'},
 {code:'sl',name:'Slovenian',flag:'🇸🇮'},
 {code:'so',name:'Somali',flag:'🇸🇴'},
-{code:'es',name:'Spanish',flag:'🇪🇸'},
 {code:'su',name:'Sundanese',flag:'🇮🇩'},
 {code:'sw',name:'Swahili',flag:'🇰🇪'},
-{code:'sv',name:'Swedish',flag:'🇸🇪'},
-{code:'tl',name:'Filipino / Tagalog',flag:'🇵🇭'},
+{code:'sv',name:'Svenska',flag:'🇸🇪'},
 {code:'tg',name:'Tajik',flag:'🇹🇯'},
 {code:'ta',name:'Tamil',flag:'🇮🇳'},
 {code:'tt',name:'Tatar',flag:'🇷🇺'},
 {code:'te',name:'Telugu',flag:'🇮🇳'},
 {code:'th',name:'Thai',flag:'🇹🇭'},
-{code:'tr',name:'Turkish',flag:'🇹🇷'},
+{code:'tr',name:'Türkçe',flag:'🇹🇷'},
 {code:'tk',name:'Turkmen',flag:'🇹🇲'},
-{code:'uk',name:'Ukrainian',flag:'🇺🇦'},
+{code:'uk',name:'Українська',flag:'🇺🇦'},
 {code:'ur',name:'Urdu',flag:'🇵🇰'},
 {code:'ug',name:'Uyghur',flag:'🇨🇳'},
 {code:'uz',name:'Uzbek',flag:'🇺🇿'},
 {code:'vi',name:'Vietnamese',flag:'🇻🇳'},
 {code:'cy',name:'Welsh',flag:'🏴'},
 {code:'xh',name:'Xhosa',flag:'🇿🇦'},
-{code:'yi',name:'Yiddish',flag:'🌍'},
+{code:'yi',name:'Yiddish',flag:'🕍'},
 {code:'yo',name:'Yoruba',flag:'🇳🇬'},
 {code:'zu',name:'Zulu',flag:'🇿🇦'}
 
 ];
 
 
-/* =========================================
-   SHIRT DATA
-========================================= */
+/* ==========================================
+   SHIRTS
+========================================== */
 
-const shirtsData=[
+const shirtsData = [
 
 {
 club:"AC Milan",
 name:"AC Milan 1994-1995 Home #3 Maldini",
 price:"€ 149,95",
-condition:"Mint Condition",
 icon:"🔴⚫"
 },
 
@@ -1480,7 +1116,6 @@ icon:"🔴⚫"
 club:"Real Madrid",
 name:"Real Madrid 2001-2002 Centenary #5 Zidane",
 price:"€ 179,95",
-condition:"Nieuwstaat",
 icon:"⚪👑"
 },
 
@@ -1488,7 +1123,6 @@ icon:"⚪👑"
 club:"FC Barcelona",
 name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
 price:"€ 169,95",
-condition:"Mint Condition",
 icon:"🔵🔴"
 },
 
@@ -1496,7 +1130,6 @@ icon:"🔵🔴"
 club:"Manchester United",
 name:"Manchester United 1998-1999 Treble #7 Beckham",
 price:"€ 159,95",
-condition:"Nieuwstaat",
 icon:"🔴⚪"
 },
 
@@ -1504,7 +1137,6 @@ icon:"🔴⚪"
 club:"Arsenal",
 name:"Arsenal 2003-2004 Invincibles #14 Henry",
 price:"€ 189,95",
-condition:"Mint Condition",
 icon:"🔴⚪"
 },
 
@@ -1512,48 +1144,15 @@ icon:"🔴⚪"
 club:"Juventus",
 name:"Juventus 1997-1998 Centenary #10 Del Piero",
 price:"€ 139,95",
-condition:"Nieuwstaat",
 icon:"⚪⚫"
-},
-
-{
-club:"Brazil",
-name:"Brazil 2002 World Cup #9 Ronaldo",
-price:"€ 199,95",
-condition:"Zeldzaam",
-icon:"🟡🟢"
-},
-
-{
-club:"Netherlands",
-name:"Netherlands 1998 Home #8 Bergkamp",
-price:"€ 174,95",
-condition:"Vintage",
-icon:"🟠"
-},
-
-{
-club:"Chelsea",
-name:"Chelsea 2004-2005 Home",
-price:"€ 129,95",
-condition:"Vintage",
-icon:"🔵"
-},
-
-{
-club:"Liverpool",
-name:"Liverpool 2005-2006 Home",
-price:"€ 119,95",
-condition:"Goede staat",
-icon:"🔴"
 }
 
 ];
 
 
-/* =========================================
+/* ==========================================
    SHIRT CARD
-========================================= */
+========================================== */
 
 function shirtCard(shirt){
 
@@ -1561,45 +1160,33 @@ return `
 
 <div class="shirt-card">
 
-    <div class="shirt-image">
+<div class="shirt-image">
+👕
+</div>
 
-        <span class="badge">
-            ${shirt.condition}
-        </span>
+<div class="shirt-info">
 
-        <div class="shirt-icon">
-            👕
-        </div>
+<div class="shirt-club">
+${shirt.icon} ${shirt.club}
+</div>
 
-    </div>
+<div class="shirt-name">
+${shirt.name}
+</div>
 
-    <div class="shirt-info">
+<div class="shirt-bottom">
 
-        <div>
+<div class="price">
+${shirt.price}
+</div>
 
-            <div class="shirt-club">
-                ${shirt.icon} ${shirt.club}
-            </div>
+<button class="view-btn">
+Bekijken
+</button>
 
-            <div class="shirt-name">
-                ${shirt.name}
-            </div>
+</div>
 
-        </div>
-
-        <div class="shirt-footer">
-
-            <span class="price">
-                ${shirt.price}
-            </span>
-
-            <button class="view-btn">
-                Bekijken
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
@@ -1608,9 +1195,9 @@ return `
 }
 
 
-/* =========================================
+/* ==========================================
    HOME
-========================================= */
+========================================== */
 
 function renderHome(){
 
@@ -1628,11 +1215,10 @@ alt="Football Shirt Market"
 
 <div class="hero-overlay"></div>
 
-
 <div class="hero-content">
 
-<div class="hero-kicker">
-FOOTBALL-SHIRT-MARKET · SINCE 2026
+<div class="hero-small">
+Football-Shirt-Market · Since 2026
 </div>
 
 <h1 class="hero-title">
@@ -1641,12 +1227,12 @@ Verkoop.<br>
 <span>Verzamel.</span>
 </h1>
 
-<p class="hero-text">
+<p class="hero-description">
 De marketplace voor voetbalshirts,
 verzamelaars en echte voetbalfans.
 </p>
 
-<div class="hero-actions">
+<div class="hero-buttons">
 
 <a
 href="#/explore"
@@ -1657,41 +1243,41 @@ Ontdek shirts
 
 <a
 href="#/sell"
-class="btn btn-dark"
+class="btn btn-white"
 >
 Verkoop een shirt
 </a>
 
 </div>
 
-</div>
-
 
 <div class="hero-search">
 
-<div class="search-icon">
+<span class="search-icon">
 ⌕
-</div>
+</span>
 
 <input
 id="heroSearch"
-type="search"
+type="text"
 placeholder="Zoek shirts, clubs, spelers..."
 >
 
 <button
-class="search-arrow"
-onclick="performSearch()"
+class="search-submit"
+onclick="searchShirts()"
 >
 →
 </button>
 
 </div>
 
+</div>
+
 </section>
 
 
-<section class="section">
+<section class="shirt-section">
 
 <div class="section-header">
 
@@ -1701,17 +1287,18 @@ Populaire <span>shirts</span>
 
 <a
 href="#/explore"
-class="section-link"
+class="all-shirts"
 >
-Alle shirts →
+Alle shirts
+<span class="arrow">→</span>
 </a>
 
 </div>
 
 
-<div class="shirts-grid">
+<div class="shirts-row">
 
-${shirtsData.slice(0,5).map(shirtCard).join("")}
+${shirtsData.slice(0,4).map(shirtCard).join("")}
 
 </div>
 
@@ -1724,9 +1311,9 @@ ${shirtsData.slice(0,5).map(shirtCard).join("")}
 }
 
 
-/* =========================================
+/* ==========================================
    EXPLORE
-========================================= */
+========================================== */
 
 function renderExplore(){
 
@@ -1734,34 +1321,7 @@ document.getElementById("app").innerHTML=`
 
 <div class="page">
 
-<section class="explore-banner">
-
-<img
-src="ontdekken.png"
-alt="Ontdekken"
-onerror="this.src='hero.png'"
->
-
-<div class="explore-overlay"></div>
-
-<div class="explore-content">
-
-<h1>
-Ontdek <span>shirts.</span>
-</h1>
-
-<p>
-Bekijk unieke vintage shirts,
-iconische voetbalshirts en
-zeldzame collector items.
-</p>
-
-</div>
-
-</section>
-
-
-<section class="section">
+<section class="shirt-section" style="margin-top:10px">
 
 <div class="section-header">
 
@@ -1771,8 +1331,7 @@ Alle <span>shirts</span>
 
 </div>
 
-
-<div class="shirts-grid">
+<div class="explore-grid">
 
 ${shirtsData.map(shirtCard).join("")}
 
@@ -1787,9 +1346,9 @@ ${shirtsData.map(shirtCard).join("")}
 }
 
 
-/* =========================================
+/* ==========================================
    SELL
-========================================= */
+========================================== */
 
 function renderSell(){
 
@@ -1797,27 +1356,44 @@ document.getElementById("app").innerHTML=`
 
 <div class="page">
 
-<div class="sell-box">
+<section
+style="
+max-width:650px;
+margin:80px auto;
+text-align:center;
+"
+>
 
-<h1>
+<h1
+style="
+font-family:Montserrat;
+font-size:40px;
+margin-bottom:20px;
+color:var(--gold-light);
+"
+>
 Verkoop je voetbalshirt
 </h1>
 
-<p>
-Heb je een uniek, vintage of zeldzaam
-voetbalshirt? Binnenkort kun je het
-hier aanbieden aan verzamelaars
-van over de hele wereld.
+<p
+style="
+color:#aebbb4;
+line-height:1.7;
+margin-bottom:30px;
+"
+>
+Upload binnenkort je vintage of iconische
+voetbalshirt en bereik verzamelaars.
 </p>
 
 <a
 href="#/"
 class="btn btn-green"
 >
-Terug naar Home
+← Terug naar Home
 </a>
 
-</div>
+</section>
 
 </div>
 
@@ -1826,16 +1402,46 @@ Terug naar Home
 }
 
 
-/* =========================================
+/* ==========================================
+   SEARCH
+========================================== */
+
+function searchShirts(){
+
+const input=document.getElementById("heroSearch");
+
+if(!input) return;
+
+const value=input.value.trim();
+
+if(value){
+
+location.hash="#/explore";
+
+}
+
+}
+
+document.addEventListener("keydown",function(e){
+
+if(e.key==="Enter" && document.activeElement?.id==="heroSearch"){
+
+searchShirts();
+
+}
+
+});
+
+
+/* ==========================================
    ROUTER
-========================================= */
+========================================== */
 
 function route(){
 
 const hash=location.hash || "#/";
 
-document
-.querySelectorAll("nav a")
+document.querySelectorAll("nav a")
 .forEach(a=>a.classList.remove("active"));
 
 
@@ -1869,162 +1475,55 @@ renderHome();
 
 }
 
-setTimeout(()=>{
-restoreSearch();
-},100);
-
 }
 
 
-/* =========================================
-   SEARCH
-========================================= */
+/* ==========================================
+   LANGUAGE
+========================================== */
 
-function performSearch(){
+const langModal=
+document.getElementById("langModal");
 
-const input=document.getElementById("heroSearch");
+const langList=
+document.getElementById("langList");
 
-if(!input)return;
-
-const value=input.value.trim().toLowerCase();
-
-if(!value){
-
-location.hash="#/explore";
-return;
-
-}
-
-location.hash="#/explore";
-
-setTimeout(()=>{
-
-const cards=document.querySelectorAll(".shirt-card");
-
-cards.forEach(card=>{
-
-const text=card.innerText.toLowerCase();
-
-card.style.display=
-text.includes(value)
-?""
-:"none";
-
-});
-
-},100);
-
-}
+const langSearch=
+document.getElementById("langSearchInput");
 
 
-function restoreSearch(){
+function getActiveLanguage(){
 
-const input=document.getElementById("heroSearch");
+let match=document.cookie.match(
+/(^|;) ?googtrans=\/nl\/([^;]+)/
+);
 
-if(!input)return;
-
-input.addEventListener("keydown",function(e){
-
-if(e.key==="Enter"){
-
-performSearch();
-
-}
-
-});
-
-}
-
-
-/* =========================================
-   LANGUAGE SYSTEM
-========================================= */
-
-const langModal=document.getElementById("langModal");
-
-const langList=document.getElementById("langList");
-
-const langSearch=document.getElementById("langSearchInput");
-
-
-function getCurrentLanguage(){
-
-const cookie=document.cookie
-.split(";")
-.map(x=>x.trim())
-.find(x=>x.startsWith("googtrans="));
-
-if(cookie){
-
-const value=decodeURIComponent(cookie.split("=")[1]||"");
-
-const parts=value.split("/");
-
-if(parts.length>=3){
-
-return parts[2];
-
-}
-
-}
-
-return "nl";
-
-}
-
-
-function setLanguageDisplay(){
-
-const code=getCurrentLanguage();
-
-const language=
-languages.find(l=>l.code===code) ||
-languages.find(l=>l.code==="nl");
-
-if(!language)return;
-
-document.getElementById("currentFlag").textContent=
-language.flag;
-
-document.getElementById("currentLangCode").textContent=
-language.code
-.split("-")[0]
-.toUpperCase();
+return match ? match[2] : "nl";
 
 }
 
 
 function renderLanguageList(filter=""){
 
-const query=filter
-.toLowerCase()
-.trim();
-
-const filtered=languages.filter(language=>{
-
-return language.name
-.toLowerCase()
-.includes(query)
-
-||
-
-language.code
-.toLowerCase()
-.includes(query);
-
-});
-
+const search=filter.toLowerCase().trim();
 
 langList.innerHTML="";
 
+const filtered=languages.filter(lang=>
 
-filtered.forEach(language=>{
+lang.name.toLowerCase().includes(search) ||
+
+lang.code.toLowerCase().includes(search)
+
+);
+
+filtered.forEach(lang=>{
 
 const item=document.createElement("div");
 
 item.className="lang-item";
 
-if(language.code===getCurrentLanguage()){
+if(lang.code===getActiveLanguage()){
 
 item.classList.add("active");
 
@@ -2032,21 +1531,25 @@ item.classList.add("active");
 
 item.innerHTML=`
 
-<span class="lang-flag">
-${language.flag}
-</span>
+<span>${lang.flag}</span>
 
-<span class="lang-name">
-${language.name}
-</span>
+<span>${lang.name}</span>
 
 `;
 
-item.addEventListener("click",()=>{
+item.onclick=()=>{
 
-changeLanguage(language.code);
+document.cookie=
+"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-});
+document.cookie=
+"googtrans=/nl/"+lang.code+"; path=/;";
+
+langModal.classList.remove("open");
+
+location.reload();
+
+};
 
 langList.appendChild(item);
 
@@ -2054,70 +1557,6 @@ langList.appendChild(item);
 
 }
 
-
-function clearTranslationCookies(){
-
-const domains=[
-"",
-location.hostname,
-"."+location.hostname
-];
-
-domains.forEach(domain=>{
-
-const domainPart=
-domain
-?"; domain="+domain
-:"";
-
-document.cookie=
-"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"+domainPart;
-
-});
-
-}
-
-
-function changeLanguage(code){
-
-if(code==="nl"){
-
-clearTranslationCookies();
-
-localStorage.setItem("fsm-language","nl");
-
-location.reload();
-
-return;
-
-}
-
-
-/*
-Google Translate cookie.
-*/
-
-clearTranslationCookies();
-
-document.cookie=
-"googtrans=/nl/"+code+
-"; path=/; max-age=31536000";
-
-localStorage.setItem(
-"fsm-language",
-code
-);
-
-langModal.classList.remove("open");
-
-location.reload();
-
-}
-
-
-/* =========================================
-   LANGUAGE MODAL EVENTS
-========================================= */
 
 document
 .getElementById("langPickerBtn")
@@ -2156,71 +1595,50 @@ langModal.classList.remove("open");
 });
 
 
-langSearch.addEventListener("input",(e)=>{
+langSearch.addEventListener("input",e=>{
 
 renderLanguageList(e.target.value);
 
 });
 
 
-document.addEventListener("keydown",(e)=>{
+/* ==========================================
+   CURRENT LANGUAGE
+========================================== */
 
-if(e.key==="Escape"){
+function updateLanguageButton(){
 
-langModal.classList.remove("open");
+const code=getActiveLanguage();
+
+const language=
+languages.find(x=>x.code===code)
+||
+languages.find(x=>x.code==="nl");
+
+if(language){
+
+document.getElementById("currentFlag")
+.textContent=language.flag;
+
+document.getElementById("currentLangCode")
+.textContent=language.code
+.split("-")[0]
+.toUpperCase();
 
 }
 
-});
+}
 
 
-/* =========================================
-   MOBILE MENU
-========================================= */
+/* ==========================================
+   START
+========================================== */
 
-document
-.getElementById("mobileMenu")
-.addEventListener("click",()=>{
-
-document
-.getElementById("mainNav")
-.classList.toggle("mobile-open");
-
-});
-
-
-document
-.querySelectorAll("nav a")
-.forEach(link=>{
-
-link.addEventListener("click",()=>{
-
-document
-.getElementById("mainNav")
-.classList.remove("mobile-open");
-
-});
-
-});
-
-
-/* =========================================
-   HASH CHANGES
-========================================= */
-
-window.addEventListener(
-"hashchange",
-route
-);
-
-
-/* =========================================
-   INIT
-========================================= */
-
-setLanguageDisplay();
+window.addEventListener("hashchange",route);
 
 route();
+
+updateLanguageButton();
 
 </script>
 
