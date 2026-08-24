@@ -321,16 +321,6 @@ body > .skiptranslate{
   justify-content:center;
 }
 
-.hero-small{
-  color:var(--gold);
-  font-family:Montserrat,sans-serif;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:2px;
-  margin-bottom:18px;
-  text-transform:uppercase;
-}
-
 .hero h1{
   font-family:Montserrat,sans-serif;
   font-size:clamp(42px,5vw,76px);
@@ -651,27 +641,6 @@ body > .skiptranslate{
   display:block;
 }
 
-.explore-overlay{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  padding-left:55px;
-  background:linear-gradient(90deg,rgba(2,5,4,.94),rgba(2,5,4,.55),transparent);
-}
-
-.explore-overlay h1{
-  max-width:420px;
-  font-family:Montserrat,sans-serif;
-  font-size:clamp(35px,5vw,65px);
-  line-height:.95;
-  text-transform:uppercase;
-}
-
-.explore-overlay h1 span{
-  color:var(--gold);
-}
-
 /* =========================
    SELL
 ========================= */
@@ -723,7 +692,7 @@ body > .skiptranslate{
 
 /* =========================
    LANGUAGE MODAL
-====================================================== */
+========================= */
 
 .modal-backdrop{
   position:fixed;
@@ -987,11 +956,6 @@ body > .skiptranslate{
     justify-content:flex-start;
   }
 
-  .hero-small{
-    margin-top:12px;
-    font-size:9px;
-  }
-
   .hero h1{
     font-size:clamp(38px,12vw,58px);
     letter-spacing:-1.5px;
@@ -1076,10 +1040,6 @@ body > .skiptranslate{
 
   .explore-top img{
     height:250px;
-  }
-
-  .explore-overlay{
-    padding:25px;
   }
 
   .sell-box{
@@ -1246,7 +1206,6 @@ function googleTranslateElementInit(){
 
 /* =========================================================
    TALEN
-   100+ talen die door Google Translate worden ondersteund
 ========================================================= */
 
 const languages = [
@@ -1313,7 +1272,7 @@ const languages = [
 {code:"ms",name:"Maleis",flag:"🇲🇾"},
 {code:"ml",name:"Malayalam",flag:"🇮🇳"},
 {code:"mt",name:"Maltees",flag:"🇲🇹"},
-{code:"mi",name:"Maori",flag:"🇳🇿"},
+{code:"mi",name:"Maori",flag:"🇳NZ"},
 {code:"mr",name:"Marathi",flag:"🇮🇳"},
 {code:"mn",name:"Mongools",flag:"🇲🇳"},
 {code:"my",name:"Myanmar",flag:"🇲🇲"},
@@ -1359,15 +1318,7 @@ const languages = [
 {code:"xh",name:"Xhosa",flag:"🌍"},
 {code:"yi",name:"Jiddisch",flag:"🌍"},
 {code:"yo",name:"Yoruba",flag:"🇳🇬"},
-{code:"zu",name:"Zoeloe",flag:"🌍"},
-
-{code:"fil",name:"Filipijns",flag:"🇵🇭"},
-{code:"jw",name:"Javaans",flag:"🇮🇩"},
-{code:"mww",name:"Hmong Daw",flag:"🌏"},
-{code:"mo",name:"Moldavisch",flag:"🇲🇩"},
-{code:"oc",name:"Occitaans",flag:"🇫🇷"},
-{code:"qu",name:"Quechua",flag:"🌎"},
-{code:"la",name:"Latijn",flag:"🌐"}
+{code:"zu",name:"Zoeloe",flag:"🌍"}
 
 ];
 
@@ -1611,10 +1562,6 @@ function renderHome(){
 
         <div class="hero-content">
 
-          <div class="hero-small">
-            FOOTBALL-SHIRT-MARKET • SINCE 2026
-          </div>
-
           <h1>
             Koop.<br>
             Verkoop.<br>
@@ -1848,15 +1795,6 @@ function renderExplore(){
           alt="Ontdek voetbalshirts"
         >
 
-        <div class="explore-overlay">
-
-          <h1>
-            Ontdek<br>
-            <span>shirts.</span>
-          </h1>
-
-        </div>
-
       </section>
 
 
@@ -2046,11 +1984,6 @@ function setLanguage(code){
     "fsm_language",
     code
   );
-
-  /*
-    Google Translate gebruikt deze cookie:
-    /source/target
-  */
 
   document.cookie =
     "googtrans=/nl/" + code +
