@@ -1,4 +1,4 @@
-:root{
+:root {
   --bg:#020504;
   --bg2:#050b08;
   --card:#08130f;
@@ -27,9 +27,9 @@ html{
 body{
   min-height:100vh;
   background: var(--bg);
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-  overflow-x:hidden;
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 a{ color:inherit; text-decoration:none; }
