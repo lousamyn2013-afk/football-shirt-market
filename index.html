@@ -133,17 +133,18 @@ nav a:hover, nav a.active{ color:#fff; background:rgba(255,255,255,.07); }
 .shirt-price{ color:var(--green); font-size:14px; font-weight:900; }
 .shirt-view{ color:var(--gold); background:rgba(239,210,143,.07); border:1px solid rgba(239,210,143,.27); border-radius:7px; padding:6px 10px; font-size:9px; font-weight:900; cursor:pointer; }
 
-/* EXPLORE BANNER - VERBETERDE VERSIE */
+/* EXPLORE BANNER - VERBETERDE VERSIE (NIET AFGESNEDEN) */
 .explore-banner{
     position:relative; width:100%; 
-    min-height:350px; height:clamp(350px, 35vw, 500px);
+    min-height:380px; height:clamp(380px, 42vw, 600px);
     overflow:hidden; border-radius:20px; 
     border:1px solid var(--line); background:#020504;
 }
 .explore-banner img{
     position:absolute; inset:0; z-index:1;
     width:100%; height:100%; display:block; 
-    object-fit:cover; object-position:center;
+    object-fit:cover; 
+    object-position:top center; /* <-- Dit zorgt dat hij bovenaan uitlijnt! */
 }
 .explore-overlay{
     position:absolute; inset:0; z-index:2;
