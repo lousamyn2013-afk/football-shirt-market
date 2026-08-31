@@ -254,20 +254,20 @@ function googleTranslateElementInit(){
 <div id="toast" class="toast"></div>
 
 <script>
+/* Corrected Languages Array */
 const languages=[
   {code:"nl",name:"Nederlands",flag:"🇳🇱"},{code:"en",name:"English",flag:"🇬🇧"},
   {code:"fr",name:"Français",flag:"🇫🇷"},{code:"de",name:"Deutsch",flag:"🇩🇪"},
   {code:"es",name:"Español",flag:"🇪🇸"},{code:"it",name:"Italiano",flag:"🇮🇹"},
   {code:"pt",name:"Português",flag:"🇵🇹"},{code:"af",name:"Afrikaans",flag:"🇿🇦"},
-  {code:"sq",name:"Albanian",flag:"🇦🇱"},{code:"am",name:"Amharic",flag:"🇪🇹"},
-  {code:"ar",name:"Arabic",flag:"🇸🇦"},{code:"hy",name:"Armenian",flag:"🇦🇲"},
-  {code:"az",name:"Azerbaijani",flag:"🇦🇿"},{code:"eu",name:"Basque",flag:"🇪🇸"},
-  {code:"be",name:"Belarusian",flag:"🇧🇾"},{code:"bn",name:"Bengali",flag:"🇧🇩"},
-  {code:"bs",name:"Bosnian",flag:"🇧🇦"},{code:"bg",name:"Bulgarian",flag:"🇧🇬"},
-  {code:"ca",name:"Catalan",flag:"🇪🇸"},{code:"ceb",name:"Cebuano",flag:"🇵🇭"},
-  {code:"zh-CN",name:"Chinese Simplified",flag:"🇨🇳"},{code:"zh-TW",name:"Chinese Traditional",flag:"🇹🇼"},
-  {code:"co",name:"Corsican",flag:"🇫🇷"},{code:"hr",name:"Croatian",flag:"🇭🇷"},
-  {code:"cs",name:"Czech",flag:"  {code:"yo",name:"Yoruba",flag:"🇳🇬"},{code:"zu",name:"Zulu",flag:"🇿🇦"}
+  {code:"ar",name:"Arabic",flag:"🇸🇦"},{code:"zh-CN",name:"Chinese Simplified",flag:"🇨🇳"},
+  {code:"da",name:"Danish",flag:"🇩🇰"},{code:"fi",name:"Finnish",flag:"🇫🇮"},
+  {code:"el",name:"Greek",flag:"🇬🇷"},{code:"hi",name:"Hindi",flag:"🇮🇳"},
+  {code:"id",name:"Indonesian",flag:"🇮🇩"},{code:"ja",name:"Japanese",flag:"🇯🇵"},
+  {code:"ko",name:"Korean",flag:"🇰🇷"},{code:"no",name:"Norwegian",flag:"🇳🇴"},
+  {code:"pl",name:"Polish",flag:"🇵🇱"},{code:"ru",name:"Russian",flag:"🇷🇺"},
+  {code:"sv",name:"Swedish",flag:"🇸🇪"},{code:"tr",name:"Turkish",flag:"🇹🇷"},
+  {code:"uk",name:"Ukrainian",flag:"🇺🇦"},{code:"vi",name:"Vietnamese",flag:"🇻🇳"}
 ];
 
 const shirts=[
@@ -338,8 +338,8 @@ function renderHome(){
     const value = search.value.trim();
     location.hash = value ? "#/explore?search=" + encodeURIComponent(value) : "#/explore";
   }
-  searchButton.addEventListener("click", executeSearch);
-  search.addEventListener("keydown", e => { if(e.key==="Enter") executeSearch(); });
+  if(searchButton) searchButton.addEventListener("click", executeSearch);
+  if(search) search.addEventListener("keydown", e => { if(e.key==="Enter") executeSearch(); });
 }
 
 function renderExplore(){
@@ -383,13 +383,16 @@ function route(){
   const hash = location.hash || "#/";
   document.querySelectorAll("nav a").forEach(x=>x.classList.remove("active"));
   if(hash.startsWith("#/explore")){
-    document.getElementById("navExplore").classList.add("active");
+    const navExplore = document.getElementById("navExplore");
+    if(navExplore) navExplore.classList.add("active");
     renderExplore();
   } else if(hash.startsWith("#/sell")){
-    document.getElementById("navSell").classList.add("active");
+    const navSell = document.getElementById("navSell");
+    if(navSell) navSell.classList.add("active");
     renderSell();
   } else {
-    document.getElementById("navHome").classList.add("active");
+    const navHome = document.getElementById("navHome");
+    if(navHome) navHome.classList.add("active");
     renderHome();
   }
 }
