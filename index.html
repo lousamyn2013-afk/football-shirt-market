@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>Football-Shirt-Market</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,782 +22,4376 @@
     --line:rgba(239,210,143,.2);
 }
 
-*{ box-sizing:border-box; margin:0; padding:0; }
-
-html, body{
-    margin:0; padding:0; background:var(--bg); color:#fff;
-    font-family:Inter,Arial,sans-serif; overflow-x:hidden; min-height:100vh;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-a{ color:inherit; text-decoration:none; }
-button, input, select, textarea{ font-family:inherit; }
+html,
+body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:#fff;
+    font-family:Inter,Arial,sans-serif;
+    overflow-x:hidden;
+    min-height:100vh;
+}
 
-.goog-te-banner-frame, .skiptranslate iframe, #google_translate_element{ display:none!important; }
-body{ top:0!important; }
-.goog-text-highlight{ background:transparent!important; box-shadow:none!important; }
+body{
+    top:0!important;
+}
 
-/* HEADER */
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+img{
+    max-width:100%;
+}
+
+.goog-te-banner-frame,
+.skiptranslate iframe,
+#google_translate_element{
+    display:none!important;
+}
+
+.goog-text-highlight{
+    background:transparent!important;
+    box-shadow:none!important;
+}
+
+/* ======================================================
+   HEADER
+====================================================== */
+
 .site-header{
-    position:sticky; top:0; z-index:1000;
-    background:rgba(2,6,4,.94); backdrop-filter:blur(18px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(2,6,4,.94);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
     border-bottom:1px solid var(--line);
 }
+
 .header-inner{
-    width:min(1400px,100%); min-height:78px; margin:auto; padding:9px 22px;
-    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    width:min(1400px,100%);
+    min-height:78px;
+    margin:auto;
+    padding:9px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
 }
-.logo-area{ display:flex; align-items:center; gap:11px; }
-.header-logo{ width:54px; height:54px; object-fit:contain; }
-.brand{ display:flex; flex-direction:column; }
-.brand-title{ font-family:Montserrat,sans-serif; font-size:14px; font-weight:900; letter-spacing:.5px; }
-.brand-since{ margin-top:3px; color:var(--gold); font-size:9px; letter-spacing:2px; font-weight:800; }
 
-nav{ display:flex; gap:5px; }
-nav a{ color:#adbbb4; padding:10px 15px; border-radius:10px; font-size:13px; font-weight:800; transition:.2s; }
-nav a:hover, nav a.active{ color:#fff; background:rgba(255,255,255,.07); }
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    min-width:0;
+}
 
-.header-right{ display:flex; align-items:center; gap:8px; }
+.header-logo{
+    width:54px;
+    height:54px;
+    object-fit:contain;
+    flex-shrink:0;
+}
+
+.brand{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.brand-title{
+    font-family:Montserrat,sans-serif;
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:.5px;
+    white-space:nowrap;
+}
+
+.brand-since{
+    margin-top:3px;
+    color:var(--gold);
+    font-size:9px;
+    letter-spacing:2px;
+    font-weight:800;
+}
+
+nav{
+    display:flex;
+    gap:5px;
+}
+
+nav a{
+    color:#adbbb4;
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:800;
+    transition:.2s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#fff;
+    background:rgba(255,255,255,.07);
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
 .language-button{
-    min-height:40px; border:1px solid rgba(239,210,143,.32); background:#07130e;
-    color:var(--gold); border-radius:10px; padding:0 12px; display:flex; align-items:center; gap:6px;
-    font-size:11px; font-weight:800; cursor:pointer;
+    min-height:40px;
+    border:1px solid rgba(239,210,143,.32);
+    background:#07130e;
+    color:var(--gold);
+    border-radius:10px;
+    padding:0 12px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
 }
-.menu-button{ display:none; width:42px; height:42px; border:1px solid var(--line); border-radius:10px; background:#07130e; color:#fff; font-size:20px; cursor:pointer; }
 
-/* MOBILE NAV */
-.mobile-nav{ display:none; border-top:1px solid rgba(239,210,143,.1); background:#030806; padding:10px 12px; }
-.mobile-nav.open{ display:block; }
-.mobile-nav a{ display:block; padding:13px; border-radius:99px; color:#dbe3df; font-weight:800; }
+.language-button:hover{
+    border-color:var(--gold);
+    transform:translateY(-1px);
+}
 
-/* PAGE & HERO */
-.page{ width:min(1400px,100%); margin:auto; padding:25px 22px 75px; }
+.menu-button{
+    display:none;
+    width:42px;
+    height:42px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:#07130e;
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* ======================================================
+   MOBILE NAV
+====================================================== */
+
+.mobile-nav{
+    display:none;
+    border-top:1px solid rgba(239,210,143,.1);
+    background:#030806;
+    padding:10px 12px;
+}
+
+.mobile-nav.open{
+    display:block;
+}
+
+.mobile-nav a{
+    display:block;
+    padding:13px;
+    border-radius:12px;
+    color:#dbe3df;
+    font-weight:800;
+}
+
+.mobile-nav a:hover{
+    background:rgba(255,255,255,.06);
+}
+
+/* ======================================================
+   PAGE & HERO
+====================================================== */
+
+.page{
+    width:min(1400px,100%);
+    margin:auto;
+    padding:25px 22px 75px;
+}
+
 .hero{
-    position:relative; width:100%; min-height:520px; height:clamp(520px,51vw,680px);
-    overflow:hidden; border-radius:22px; border:1px solid rgba(239,210,143,.22);
-    background:#020504; box-shadow:0 25px 70px rgba(0,0,0,.6);
+    position:relative;
+    width:100%;
+    min-height:520px;
+    height:clamp(520px,51vw,680px);
+    overflow:hidden;
+    border-radius:22px;
+    border:1px solid rgba(239,210,143,.22);
+    background:#020504;
+    box-shadow:0 25px 70px rgba(0,0,0,.6);
 }
-.hero-image{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:1; }
-.hero-shade{
-    position:absolute; inset:0; z-index:2;
-    background:linear-gradient(90deg, #020504 0%, rgba(2,5,4,.85) 40%, transparent 100%);
-    pointer-events:none;
-}
-.hero-clean-mask{
-    position:absolute; z-index:3; left:0; top:0; bottom:0; width:55%;
-    background:linear-gradient(90deg, #020504 0%, #020504 70%, transparent 100%);
-    pointer-events:none;
-}
-.hero-content{
-    position:absolute; z-index:5; left:5.5%; top:50%; transform:translateY(-50%);
-    width:min(530px,90%); display:flex; flex-direction:column; align-items:flex-start;
-}
-.hero-kicker{ color:var(--gold); font-family:Montserrat,sans-serif; font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
-.hero-title{ font-family:Montserrat,sans-serif; color:#fff; font-size:clamp(36px,4.5vw,68px); line-height:1; font-weight:900; text-transform:uppercase; }
-.hero-title span{ color:var(--gold); }
-.hero-description{ max-width:470px; color:#d1dbd6; margin-top:16px; font-size:14px; line-height:1.55; }
 
-.hero-buttons{ display:flex; gap:10px; margin-top:22px; z-index:6; }
-.hero-button{
-    min-height:45px; padding:0 20px; display:inline-flex; align-items:center; justify-content:center;
-    border-radius:99px; font-size:12px; font-weight:900; transition:.22s; border:none; cursor:pointer;
+.hero-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    z-index:1;
 }
-.hero-button.green{ color:#fff; background:linear-gradient(135deg, #19c982, #0a8955); box-shadow:0 8px 25px rgba(25,201,130,.22); }
-.hero-button.white{ background:#fff; color:#111; }
-.hero-button:hover{ transform:translateY(-2px); }
+
+.hero-shade{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:linear-gradient(
+        90deg,
+        #020504 0%,
+        rgba(2,5,4,.86) 38%,
+        rgba(2,5,4,.28) 65%,
+        transparent 100%
+    );
+    pointer-events:none;
+}
+
+.hero-clean-mask{
+    position:absolute;
+    z-index:3;
+    left:0;
+    top:0;
+    bottom:0;
+    width:55%;
+    background:linear-gradient(
+        90deg,
+        #020504 0%,
+        #020504 70%,
+        transparent 100%
+    );
+    pointer-events:none;
+}
+
+.hero-content{
+    position:absolute;
+    z-index:5;
+    left:5.5%;
+    top:50%;
+    transform:translateY(-50%);
+    width:min(530px,90%);
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.hero-kicker{
+    color:var(--gold);
+    font-family:Montserrat,sans-serif;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+}
+
+.hero-title{
+    font-family:Montserrat,sans-serif;
+    color:#fff;
+    font-size:clamp(36px,4.5vw,68px);
+    line-height:1;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.hero-title span{
+    color:var(--gold);
+}
+
+.hero-description{
+    max-width:470px;
+    color:#d1dbd6;
+    margin-top:16px;
+    font-size:14px;
+    line-height:1.55;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+    z-index:6;
+}
+
+.hero-button{
+    min-height:45px;
+    padding:0 20px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:99px;
+    font-size:12px;
+    font-weight:900;
+    transition:.22s;
+    border:none;
+    cursor:pointer;
+}
+
+.hero-button.green{
+    color:#fff;
+    background:linear-gradient(135deg,#19c982,#0a8955);
+    box-shadow:0 8px 25px rgba(25,201,130,.22);
+}
+
+.hero-button.white{
+    background:#fff;
+    color:#111;
+}
+
+.hero-button:hover{
+    transform:translateY(-2px);
+}
+
+/* ======================================================
+   HERO SEARCH
+====================================================== */
 
 .hero-search{
-    width:min(430px,100%); height:50px; margin-top:20px; display:flex; align-items:center;
-    background:rgba(8,20,15,.95); border:1px solid rgba(239,210,143,.48); border-radius:11px; overflow:hidden; z-index:6;
+    width:min(430px,100%);
+    height:50px;
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    background:rgba(8,20,15,.95);
+    border:1px solid rgba(239,210,143,.48);
+    border-radius:11px;
+    overflow:hidden;
+    z-index:6;
 }
-.hero-search-icon{ width:45px; display:flex; justify-content:center; align-items:center; color:#fff; font-size:18px; }
-.hero-search input{ flex:1; height:100%; border:0; outline:0; background:transparent; color:#fff; font-size:13px; }
-.hero-search button{ width:43px; height:38px; margin-right:5px; border:0; border-radius:8px; background:linear-gradient(135deg, var(--gold), var(--gold-dark)); color:#0a0d0b; font-weight:900; cursor:pointer; }
 
-/* SECTIONS & SHIRTS */
-.section{ margin-top:45px; }
-.section-head{ display:flex; justify-content:space-between; align-items:flex-end; padding-bottom:13px; margin-bottom:18px; border-bottom:1px solid rgba(239,210,143,.14); }
-.section-title{ font-family:Montserrat,sans-serif; font-size:24px; font-weight:900; text-transform:uppercase; }
-.section-title span{ color:var(--gold); }
-.section-link{ color:var(--gold); font-size:12px; font-weight:900; }
+.hero-search-icon{
+    width:45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:18px;
+}
 
-.explore-filters{ display:flex; gap:12px; margin-bottom:25px; flex-wrap:wrap; }
-.explore-filters select{ background:#030806; color:#fff; border:1px solid rgba(239,210,143,.25); padding:10px 14px; border-radius:10px; font-size:13px; cursor:pointer; outline:none; transition:.2s; }
-.explore-filters select:focus{ border-color:var(--gold); }
+.hero-search input{
+    flex:1;
+    height:100%;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font-size:13px;
+    min-width:0;
+}
 
-.home-shirt-row{ display:grid; grid-auto-flow:column; grid-auto-columns:245px; gap:15px; overflow-x:auto; padding-bottom:12px; }
-.explore-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(235px,1fr)); gap:18px; }
+.hero-search input::placeholder{
+    color:#829088;
+}
 
-.shirt-card{ background:linear-gradient(180deg,#0b1913,#06100c); border:1px solid var(--line); border-radius:15px; overflow:hidden; transition:.28s; }
-.shirt-card:hover{ transform:translateY(-5px); border-color:var(--gold); }
-.shirt-visual{ position:relative; width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle,#183c2a,#08150f 60%,#030805); font-size:64px; }
-.shirt-condition{ position:absolute; top:9px; left:9px; color:var(--gold); padding:4px 8px; background:rgba(0,0,0,.75); border:1px solid rgba(239,210,143,.3); border-radius:15px; font-size:8px; font-weight:900; z-index:2; }
-.shirt-info{ padding:14px; }
-.shirt-club{ color:#83948c; font-size:9px; font-weight:900; text-transform:uppercase; }
-.shirt-name{ color:#fff; font-size:13px; font-weight:900; margin-top:4px; min-height:36px; line-height:1.3; }
-.shirt-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
-.shirt-price{ color:var(--green); font-size:14px; font-weight:900; }
-.shirt-view{ color:var(--gold); background:rgba(239,210,143,.07); border:1px solid rgba(239,210,143,.27); border-radius:7px; padding:6px 10px; font-size:9px; font-weight:900; cursor:pointer; }
-.shirt-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-.shirt-boost-badge{ position:absolute; top:9px; right:9px; z-index:2; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); color:#0a0d0b; padding:4px 8px; border-radius:15px; font-size:8px; font-weight:900; letter-spacing:.5px; }
+.hero-search button{
+    width:43px;
+    height:38px;
+    margin-right:5px;
+    border:0;
+    border-radius:8px;
+    background:linear-gradient(
+        135deg,
+        var(--gold),
+        var(--gold-dark)
+    );
+    color:#0a0d0b;
+    font-weight:900;
+    cursor:pointer;
+}
 
-/* EXPLORE BANNER */
+/* ======================================================
+   SECTIONS
+====================================================== */
+
+.section{
+    margin-top:45px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    padding-bottom:13px;
+    margin-bottom:18px;
+    border-bottom:1px solid rgba(239,210,143,.14);
+    gap:15px;
+}
+
+.section-title{
+    font-family:Montserrat,sans-serif;
+    font-size:24px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.section-title span{
+    color:var(--gold);
+}
+
+.section-link{
+    color:var(--gold);
+    font-size:12px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+/* ======================================================
+   HOME SHIRT ROW
+====================================================== */
+
+.home-shirt-row{
+    display:grid;
+    grid-auto-flow:column;
+    grid-auto-columns:245px;
+    gap:15px;
+    overflow-x:auto;
+    padding-bottom:12px;
+}
+
+.home-shirt-row::-webkit-scrollbar{
+    height:5px;
+}
+
+.home-shirt-row::-webkit-scrollbar-thumb{
+    background:rgba(239,210,143,.3);
+    border-radius:10px;
+}
+
+/* ======================================================
+   EXPLORE FILTERS
+====================================================== */
+
+.explore-filters{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+}
+
+.filter-group{
+    position:relative;
+}
+
+.filter-trigger{
+    min-height:42px;
+    padding:0 13px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#030806;
+    border:1px solid rgba(239,210,143,.25);
+    color:#fff;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.filter-trigger:hover,
+.filter-trigger.open{
+    border-color:var(--gold);
+    background:#09160f;
+}
+
+.filter-arrow{
+    color:var(--gold);
+    font-size:9px;
+    transition:.2s;
+}
+
+.filter-trigger.open .filter-arrow{
+    transform:rotate(180deg);
+}
+
+.filter-count{
+    min-width:18px;
+    height:18px;
+    padding:0 5px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    border-radius:99px;
+    background:var(--gold);
+    color:#000;
+    font-size:9px;
+    font-weight:900;
+}
+
+.filter-count.show{
+    display:flex;
+}
+
+.filter-dropdown{
+    position:absolute;
+    z-index:200;
+    top:calc(100% + 8px);
+    left:0;
+    width:245px;
+    max-height:320px;
+    overflow-y:auto;
+    padding:9px;
+    display:none;
+    background:#08150f;
+    border:1px solid rgba(239,210,143,.28);
+    border-radius:13px;
+    box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
+
+.filter-dropdown.open{
+    display:block;
+}
+
+.filter-dropdown::-webkit-scrollbar{
+    width:5px;
+}
+
+.filter-dropdown::-webkit-scrollbar-thumb{
+    background:rgba(239,210,143,.25);
+    border-radius:10px;
+}
+
+.filter-option{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    color:#d5dfda;
+    background:transparent;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+}
+
+.filter-option:hover{
+    background:rgba(239,210,143,.08);
+    color:#fff;
+}
+
+.filter-option input{
+    width:16px;
+    height:16px;
+    accent-color:var(--gold);
+    flex-shrink:0;
+}
+
+.filter-reset{
+    min-height:42px;
+    padding:0 13px;
+    border-radius:10px;
+    border:1px solid rgba(239,210,143,.18);
+    background:rgba(255,255,255,.025);
+    color:#96a49d;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.filter-reset:hover{
+    color:#fff;
+    border-color:var(--gold);
+}
+
+/* ======================================================
+   EXPLORE GRID
+====================================================== */
+
+.explore-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(235px,1fr));
+    gap:18px;
+}
+
+/* ======================================================
+   SHIRTS
+====================================================== */
+
+.shirt-card{
+    background:linear-gradient(180deg,#0b1913,#06100c);
+    border:1px solid var(--line);
+    border-radius:15px;
+    overflow:hidden;
+    transition:.28s;
+}
+
+.shirt-card:hover{
+    transform:translateY(-5px);
+    border-color:var(--gold);
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+}
+
+.shirt-visual{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:radial-gradient(
+        circle,
+        #183c2a,
+        #08150f 60%,
+        #030805
+    );
+    font-size:64px;
+}
+
+.shirt-visual > img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.shirt-condition{
+    position:absolute;
+    top:9px;
+    left:9px;
+    z-index:3;
+    color:var(--gold);
+    padding:4px 8px;
+    background:rgba(0,0,0,.75);
+    border:1px solid rgba(239,210,143,.3);
+    border-radius:15px;
+    font-size:8px;
+    font-weight:900;
+}
+
+.shirt-boost-badge{
+    position:absolute;
+    top:9px;
+    right:9px;
+    z-index:4;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+    color:#000;
+    padding:4px 8px;
+    border-radius:15px;
+    font-size:8px;
+    font-weight:900;
+}
+
+.shirt-info{
+    padding:14px;
+}
+
+.shirt-club{
+    color:#83948c;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.shirt-name{
+    color:#fff;
+    font-size:13px;
+    font-weight:900;
+    margin-top:4px;
+    min-height:36px;
+    line-height:1.3;
+}
+
+.shirt-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:12px;
+    gap:8px;
+}
+
+.shirt-price{
+    color:var(--green);
+    font-size:14px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.shirt-view{
+    color:var(--gold);
+    background:rgba(239,210,143,.07);
+    border:1px solid rgba(239,210,143,.27);
+    border-radius:7px;
+    padding:6px 10px;
+    font-size:9px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.shirt-view:hover{
+    background:var(--gold-dark);
+    color:#000;
+}
+
+/* ======================================================
+   EXPLORE BANNER
+====================================================== */
+
 .explore-banner{
-    position:relative; width:100%; overflow:hidden;
-    border-radius:20px; border:1px solid var(--line); background:#020504;
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:#020504;
 }
+
 .explore-banner img{
-    width:100%; height:auto; display:block; object-fit:contain;
-    position:relative; z-index:1;
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:contain;
+    position:relative;
+    z-index:1;
 }
+
 .explore-overlay{
-    position:absolute; inset:0; z-index:2;
-    display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
-    padding:clamp(28px, 5vw, 60px) clamp(20px, 4.5vw, 55px);
-    background:linear-gradient(90deg, rgba(2,5,4,.9) 0%, rgba(2,5,4,.55) 45%, transparent 75%);
+    position:absolute;
+    inset:0;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    padding:clamp(28px,5vw,60px) clamp(20px,4.5vw,55px);
+    background:linear-gradient(
+        90deg,
+        rgba(2,5,4,.9) 0%,
+        rgba(2,5,4,.55) 45%,
+        transparent 75%
+    );
     pointer-events:none;
 }
+
 .explore-kicker{
-    color:var(--gold); font-family:Montserrat,sans-serif; font-size:clamp(10px,1.1vw,12px);
-    font-weight:900; letter-spacing:3px; text-transform:uppercase; margin-bottom:14px;
-    display:flex; align-items:center; gap:10px;
+    color:var(--gold);
+    font-family:Montserrat,sans-serif;
+    font-size:clamp(10px,1.1vw,12px);
+    font-weight:900;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
-.explore-kicker::before{ content:""; width:26px; height:2px; background:var(--gold); display:inline-block; }
+
+.explore-kicker::before{
+    content:"";
+    width:26px;
+    height:2px;
+    background:var(--gold);
+    display:inline-block;
+}
+
 .explore-title{
     font-family:Montserrat,sans-serif;
-    font-size:clamp(32px, 5.5vw, 64px);
-    line-height:1.05; font-weight:900; text-transform:uppercase;
+    font-size:clamp(32px,5.5vw,64px);
+    line-height:1.05;
+    font-weight:900;
+    text-transform:uppercase;
     text-shadow:0 6px 30px rgba(0,0,0,.55);
-    letter-spacing:.5px;
 }
+
 .explore-title span{
-    background:linear-gradient(135deg, var(--gold), var(--gold-dark));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background:linear-gradient(
+        135deg,
+        var(--gold),
+        var(--gold-dark)
+    );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
 }
+
 .explore-subtitle{
-    margin-top:16px; max-width:460px; color:#d1dbd6; font-size:clamp(13px,1.4vw,15px); line-height:1.6;
+    margin-top:16px;
+    max-width:460px;
+    color:#d1dbd6;
+    font-size:clamp(13px,1.4vw,15px);
+    line-height:1.6;
 }
+
+/* ======================================================
+   SEARCH OVERLAY
+====================================================== */
+
 .explore-search-overlay{
-    position:absolute; left:4.4%; top:74.8%; width:44.8%; height:11.9%; z-index:3;
+    position:absolute;
+    left:4.4%;
+    top:74.8%;
+    width:44.8%;
+    height:11.9%;
+    z-index:3;
 }
+
 .explore-search-overlay input{
-    position:absolute; inset:0; width:100%; height:100%;
-    padding-left:14%; padding-right:14%; background:transparent; border:0; outline:0;
-    color:#fff; font-size:clamp(12px,1.5vw,15px);
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    padding-left:14%;
+    padding-right:14%;
+    background:transparent;
+    border:0;
+    outline:0;
+    color:#fff;
+    font-size:clamp(12px,1.5vw,15px);
 }
-.explore-search-overlay input::placeholder{ color:rgba(255,255,255,.4); }
+
+.explore-search-overlay input::placeholder{
+    color:rgba(255,255,255,.4);
+}
+
 .explore-search-overlay button{
-    position:absolute; right:0; top:0; width:14%; height:100%; background:transparent; border:0; cursor:pointer;
+    position:absolute;
+    right:0;
+    top:0;
+    width:14%;
+    height:100%;
+    background:transparent;
+    border:0;
+    cursor:pointer;
 }
 
-/* SELL */
-.sell-box{ max-width:680px; margin:50px auto; padding:40px clamp(20px,4vw,40px); text-align:left; background:#07130e; border:1px solid var(--line); border-radius:20px; }
-.sell-box h1{ color:var(--gold); font-family:Montserrat,sans-serif; font-size:32px; text-align:center; }
-.sell-intro{ color:#a8b5ae; line-height:1.7; margin:15px 0 30px; text-align:center; font-size:14px; }
-.form-group{ margin-bottom:18px; }
-.form-group label{ display:block; color:var(--gold); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; margin-bottom:7px; }
-.form-group input[type=text], .form-group input[type=number], .form-group select, .form-group textarea{
-    width:100%; padding:13px 14px; background:#030806; border:1px solid rgba(239,210,143,.25); border-radius:10px;
-    color:#fff; font-size:16px; outline:0; font-family:inherit;
+/* ======================================================
+   SELL
+====================================================== */
+
+.sell-box{
+    max-width:680px;
+    margin:50px auto;
+    padding:40px clamp(20px,4vw,40px);
+    text-align:left;
+    background:#07130e;
+    border:1px solid var(--line);
+    border-radius:20px;
 }
-.type-checkboxes{ display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; }
-.type-checkbox-label{ display:flex; align-items:center; gap:8px; font-size:13px; color:#fff; cursor:pointer; background:#030806; padding:8px 14px; border:1px solid rgba(239,210,143,.25); border-radius:8px; }
-.type-checkbox-label input[type=checkbox]{ accent-color:var(--gold); width:16px; height:16px; cursor:pointer; }
-.form-group textarea{ resize:vertical; min-height:90px; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus{ border-color:var(--gold); }
-.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+.sell-box h1{
+    color:var(--gold);
+    font-family:Montserrat,sans-serif;
+    font-size:32px;
+    text-align:center;
+}
+
+.sell-intro{
+    color:#a8b5ae;
+    line-height:1.7;
+    margin:15px 0 30px;
+    text-align:center;
+    font-size:14px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    color:var(--gold);
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    margin-bottom:7px;
+}
+
+.form-group input[type=text],
+.form-group input[type=number],
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:13px 14px;
+    background:#030806;
+    border:1px solid rgba(239,210,143,.25);
+    border-radius:10px;
+    color:#fff;
+    font-size:16px;
+    outline:0;
+}
+
+.form-group textarea{
+    resize:vertical;
+    min-height:90px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--gold);
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.type-checkboxes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.type-checkbox-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    color:#fff;
+    cursor:pointer;
+    background:#030806;
+    padding:8px 12px;
+    border:1px solid rgba(239,210,143,.25);
+    border-radius:8px;
+}
+
+.type-checkbox-label input{
+    accent-color:var(--gold);
+    width:16px;
+    height:16px;
+}
+
 .photo-dropzone{
-    border:2px dashed rgba(239,210,143,.35); border-radius:14px; padding:26px 16px; text-align:center;
-    cursor:pointer; color:#a8b5ae; font-size:13px; transition:.2s;
+    border:2px dashed rgba(239,210,143,.35);
+    border-radius:14px;
+    padding:26px 16px;
+    text-align:center;
+    cursor:pointer;
+    color:#a8b5ae;
+    font-size:13px;
+    transition:.2s;
 }
-.photo-dropzone:hover, .photo-dropzone.dragover{ border-color:var(--gold); color:var(--gold); background:rgba(239,210,143,.05); }
-.photo-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(80px,1fr)); gap:10px; margin-top:14px; }
-.photo-thumb{ position:relative; aspect-ratio:1/1; border-radius:10px; overflow:hidden; border:1px solid var(--line); }
-.photo-thumb img{ width:100%; height:100%; object-fit:cover; }
-.photo-thumb button{ position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%; border:0; background:rgba(0,0,0,.8); color:#fff; font-size:13px; cursor:pointer; line-height:1; }
+
+.photo-dropzone:hover,
+.photo-dropzone.dragover{
+    border-color:var(--gold);
+    color:var(--gold);
+    background:rgba(239,210,143,.05);
+}
+
+.photo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(80px,1fr));
+    gap:10px;
+    margin-top:14px;
+}
+
+.photo-thumb{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid var(--line);
+}
+
+.photo-thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.photo-thumb button{
+    position:absolute;
+    top:4px;
+    right:4px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:0;
+    background:rgba(0,0,0,.8);
+    color:#fff;
+    font-size:13px;
+    cursor:pointer;
+}
+
 .boost-box{
-    display:flex; align-items:flex-start; gap:12px; padding:14px; margin-top:6px; margin-bottom:8px;
-    border:1px solid rgba(239,210,143,.3); border-radius:12px; background:rgba(239,210,143,.05);
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:14px;
+    margin-bottom:14px;
+    border:1px solid rgba(239,210,143,.3);
+    border-radius:12px;
+    background:rgba(239,210,143,.05);
 }
-.boost-box input[type=checkbox]{ margin-top:3px; width:18px; height:18px; flex-shrink:0; accent-color:var(--gold); cursor:pointer; }
-.boost-box-text strong{ color:var(--gold); display:block; font-size:13px; margin-bottom:3px; }
-.boost-box-text span{ color:#a8b5ae; font-size:12px; line-height:1.5; }
-.boost-options{ display:flex; flex-direction:column; gap:10px; margin-top:6px; margin-bottom:20px; }
+
+.boost-box input{
+    margin-top:3px;
+    width:18px;
+    height:18px;
+    accent-color:var(--gold);
+}
+
+.boost-box-text strong{
+    color:var(--gold);
+    display:block;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.boost-box-text span{
+    color:#a8b5ae;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.boost-options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
 .boost-option{
-    display:flex; align-items:center; gap:12px; padding:13px 14px; border:1px solid rgba(239,210,143,.22);
-    border-radius:12px; cursor:pointer; background:rgba(255,255,255,.02); transition:.15s;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
+    border:1px solid rgba(239,210,143,.22);
+    border-radius:12px;
+    cursor:pointer;
+    background:rgba(255,255,255,.02);
+    transition:.15s;
 }
-.boost-option:has(input:checked){ border-color:var(--gold); background:rgba(239,210,143,.08); }
-.boost-option input[type=radio]{ width:18px; height:18px; flex-shrink:0; accent-color:var(--gold); cursor:pointer; }
-.boost-option-text{ flex:1; }
-.boost-option-text strong{ display:block; font-size:13px; color:#fff; }
-.boost-option-text span{ font-size:11px; color:#a8b5ae; line-height:1.4; }
-.boost-option-price{ color:var(--gold); font-weight:900; font-size:14px; flex-shrink:0; }
-.sell-submit{ width:100%; margin-top:4px; }
-.form-error{ color:#ff8f8f; font-size:12px; margin-top:6px; margin-bottom:12px; display:none; }
-.form-error.show{ display:block; }
 
-/* LANGUAGE MODAL */
-.language-modal{ position:fixed; inset:0; z-index:4000; background:rgba(0,0,0,.85); backdrop-filter:blur(10px); display:none; align-items:center; justify-content:center; padding:20px; }
-.language-modal.open{ display:flex; }
-.language-box{ width:min(600px,100%); max-height:80vh; background:#09160f; border:1px solid rgba(239,210,143,.3); border-radius:18px; padding:20px; display:flex; flex-direction:column; }
-.language-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-.language-title{ color:var(--gold); font-family:Montserrat,sans-serif; font-size:16px; font-weight:900; }
-.language-close{ width:32px; height:32px; border:0; border-radius:8px; background:rgba(255,255,255,.1); color:#fff; font-size:20px; cursor:pointer; }
-.language-search{ width:100%; height:42px; padding:0 12px; border:1px solid rgba(239,210,143,.25); border-radius:8px; outline:0; background:#030806; color:#fff; margin-bottom:12px; }
-.language-list{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; overflow-y:auto; }
-.language-item{ min-height:40px; border:0; border-radius:8px; background:rgba(255,255,255,.03); color:#d6dfda; display:flex; align-items:center; gap:8px; padding:6px 10px; cursor:pointer; font-size:12px; }
-.language-item:hover, .language-item.active{ background:var(--gold-dark); color:#000; }
+.boost-option input[type=radio]{
+    width:18px;
+    height:18px;
+    accent-color:var(--gold);
+}
 
-footer{ padding:35px 20px; text-align:center; background:#010302; border-top:1px solid var(--line); color:#7e8c85; font-size:12px; }
-.toast{ position:fixed; left:50%; bottom:25px; transform:translate(-50%,120px); background:#07130e; border:1px solid var(--gold); color:#fff; border-radius:8px; padding:10px 16px; font-size:12px; font-weight:800; transition:.3s; z-index:5000; }
-.toast.show{ transform:translate(-50%,0); }
+.boost-option-text{
+    flex:1;
+}
 
-/* RESPONSIVE */
+.boost-option-text strong{
+    display:block;
+    font-size:13px;
+    color:#fff;
+}
+
+.boost-option-text span{
+    font-size:11px;
+    color:#a8b5ae;
+    line-height:1.4;
+}
+
+.boost-option-price{
+    color:var(--gold);
+    font-weight:900;
+    font-size:14px;
+}
+
+.sell-submit{
+    width:100%;
+    margin-top:18px;
+}
+
+.form-error{
+    color:#ff8f8f;
+    font-size:12px;
+    margin-top:6px;
+    display:none;
+}
+
+.form-error.show{
+    display:block;
+}
+
+/* ======================================================
+   LANGUAGE MODAL
+====================================================== */
+
+.language-modal{
+    position:fixed;
+    inset:0;
+    z-index:4000;
+    background:rgba(0,0,0,.85);
+    backdrop-filter:blur(10px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.language-modal.open{
+    display:flex;
+}
+
+.language-box{
+    width:min(600px,100%);
+    max-height:80vh;
+    background:#09160f;
+    border:1px solid rgba(239,210,143,.3);
+    border-radius:18px;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+}
+
+.language-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.language-title{
+    color:var(--gold);
+    font-family:Montserrat,sans-serif;
+    font-size:16px;
+    font-weight:900;
+}
+
+.language-close{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:8px;
+    background:rgba(255,255,255,.1);
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.language-search{
+    width:100%;
+    height:42px;
+    padding:0 12px;
+    border:1px solid rgba(239,210,143,.25);
+    border-radius:8px;
+    outline:0;
+    background:#030806;
+    color:#fff;
+    margin-bottom:12px;
+}
+
+.language-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:6px;
+    overflow-y:auto;
+}
+
+.language-item{
+    min-height:40px;
+    border:0;
+    border-radius:8px;
+    background:rgba(255,255,255,.03);
+    color:#d6dfda;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    cursor:pointer;
+    font-size:12px;
+    text-align:left;
+}
+
+.language-item:hover,
+.language-item.active{
+    background:var(--gold-dark);
+    color:#000;
+}
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+footer{
+    padding:35px 20px;
+    text-align:center;
+    background:#010302;
+    border-top:1px solid var(--line);
+    color:#7e8c85;
+    font-size:12px;
+}
+
+footer strong{
+    color:#fff;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translate(-50%,120px);
+    background:#07130e;
+    border:1px solid var(--gold);
+    color:#fff;
+    border-radius:8px;
+    padding:10px 16px;
+    font-size:12px;
+    font-weight:800;
+    transition:.3s;
+    z-index:5000;
+}
+
+.toast.show{
+    transform:translate(-50%,0);
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
 @media(max-width:900px){
-    .brand, nav{ display:none; }
-    .menu-button{ display:block; }
-    .hero{ height:auto; min-height:560px; padding:40px 0; }
-    .hero-clean-mask{ width:100%; background:linear-gradient(180deg, #020504 0%, rgba(2,5,4,.9) 70%, transparent 100%); }
-    .hero-content{ top:40px; left:20px; transform:none; width:calc(100% - 40px); }
-    .hero-title{ font-size:38px; }
-    .language-list{ grid-template-columns:1fr; }
-    .explore-overlay{ background:linear-gradient(180deg, rgba(2,5,4,.5) 0%, rgba(2,5,4,.92) 70%); }
+
+    .brand,
+    nav{
+        display:none;
+    }
+
+    .menu-button{
+        display:block;
+    }
+
+    .hero{
+        height:auto;
+        min-height:560px;
+    }
+
+    .hero-clean-mask{
+        width:100%;
+        background:
+            linear-gradient(
+                180deg,
+                #020504 0%,
+                rgba(2,5,4,.9) 70%,
+                transparent 100%
+            );
+    }
+
+    .hero-content{
+        top:40px;
+        left:20px;
+        transform:none;
+        width:calc(100% - 40px);
+    }
+
+    .hero-title{
+        font-size:38px;
+    }
+
+    .explore-overlay{
+        background:
+            linear-gradient(
+                180deg,
+                rgba(2,5,4,.45) 0%,
+                rgba(2,5,4,.92) 70%
+            );
+    }
+
+    .explore-filters{
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        padding-bottom:5px;
+        scrollbar-width:none;
+    }
+
+    .explore-filters::-webkit-scrollbar{
+        display:none;
+    }
+
+    .filter-group{
+        flex:0 0 auto;
+    }
+
+    .filter-trigger,
+    .filter-reset{
+        white-space:nowrap;
+    }
+
+    .explore-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .language-list{
+        grid-template-columns:1fr;
+    }
 }
-@media(max-width:520px){
-    .page{ padding:15px 12px 50px; }
-    .hero-title{ font-size:32px; }
-    .hero-buttons{ flex-direction:column; width:100%; }
-    .hero-button{ width:100%; }
-    .explore-overlay{ padding:24px 18px; }
-    .form-row{ grid-template-columns:1fr; }
-    .sell-box{ padding:26px 16px; margin:25px auto; }
+
+@media(max-width:650px){
+
+    .page{
+        padding:15px 12px 50px;
+    }
+
+    .header-inner{
+        min-height:67px;
+        padding:8px 12px;
+    }
+
+    .header-logo{
+        width:45px;
+        height:45px;
+    }
+
+    .hero{
+        min-height:590px;
+        border-radius:16px;
+    }
+
+    .hero-image{
+        object-position:65% center;
+    }
+
+    .hero-content{
+        left:17px;
+        width:calc(100% - 34px);
+    }
+
+    .hero-kicker{
+        font-size:8px;
+        letter-spacing:1.3px;
+    }
+
+    .hero-title{
+        font-size:35px;
+    }
+
+    .hero-description{
+        max-width:320px;
+        font-size:11px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .hero-button{
+        width:100%;
+    }
+
+    .hero-search{
+        width:100%;
+    }
+
+    .section-title{
+        font-size:19px;
+    }
+
+    .section-link{
+        font-size:10px;
+    }
+
+    .home-shirt-row{
+        grid-auto-columns:220px;
+    }
+
+    .explore-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .shirt-info{
+        padding:10px;
+    }
+
+    .shirt-name{
+        font-size:11px;
+    }
+
+    .shirt-price{
+        font-size:12px;
+    }
+
+    .shirt-view{
+        font-size:8px;
+        padding:6px 7px;
+    }
+
+    .filter-dropdown{
+        position:fixed;
+        left:10px;
+        right:10px;
+        top:auto;
+        bottom:10px;
+        width:auto;
+        max-height:58vh;
+        border-radius:16px;
+        padding:12px;
+        box-shadow:0 25px 80px rgba(0,0,0,.8);
+    }
+
+    .filter-option{
+        min-height:45px;
+        padding:10px;
+        font-size:13px;
+    }
+
+    .language-box{
+        padding:16px;
+    }
+
+    .sell-box{
+        margin:25px auto;
+        padding:25px 16px;
+    }
+}
+
+@media(max-width:390px){
+
+    .hero-title{
+        font-size:32px;
+    }
+
+    .hero{
+        min-height:560px;
+    }
+
+    .explore-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .shirt-club{
+        font-size:8px;
+    }
+
+    .shirt-name{
+        font-size:10px;
+    }
+
+    .shirt-price{
+        font-size:11px;
+    }
+
 }
 </style>
 </head>
 
 <body>
+
+<!-- ======================================================
+     GOOGLE TRANSLATE
+====================================================== -->
+
 <div id="google_translate_element"></div>
+
 <script>
 function googleTranslateElementInit(){
-    new google.translate.TranslateElement({ pageLanguage:"nl", autoDisplay:false }, "google_translate_element");
+
+    new google.translate.TranslateElement(
+        {
+            pageLanguage:"nl",
+            autoDisplay:false
+        },
+        "google_translate_element"
+    );
+
 }
 </script>
+
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
 <header class="site-header">
-  <div class="header-inner">
-    <a href="#/" class="logo-area">
-      <img src="logo.png" class="header-logo" alt="Football-Shirt-Market" onerror="this.style.display='none'">
-      <div class="brand">
-        <div class="brand-title">FOOTBALL-SHIRT-MARKET</div>
-        <div class="brand-since">SINCE 2026</div>
-      </div>
-    </a>
-    <nav>
-      <a href="#/" id="navHome">Home</a>
-      <a href="#/explore" id="navExplore">Ontdekken</a>
-      <a href="#/sell" id="navSell">Verkopen</a>
-    </nav>
-    <div class="header-right">
-      <button class="language-button" id="languageButton">
-        <span id="currentFlag">🇳🇱</span>
-        <span id="currentCode">NL</span> ▼
-      </button>
-      <button class="menu-button" id="menuButton">☰</button>
-    </div>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#/">Home</a>
-    <a href="#/explore">Ontdekken</a>
-    <a href="#/sell">Verkopen</a>
-  </div>
+
+<div class="header-inner">
+
+<a href="#/" class="logo-area">
+
+<img
+src="logo.png"
+class="header-logo"
+alt="Football-Shirt-Market"
+>
+
+<div class="brand">
+
+<div class="brand-title">
+FOOTBALL-SHIRT-MARKET
+</div>
+
+<div class="brand-since">
+SINCE 2026
+</div>
+
+</div>
+
+</a>
+
+
+<nav>
+
+<a href="#/" id="navHome">
+Home
+</a>
+
+<a href="#/explore" id="navExplore">
+Ontdekken
+</a>
+
+<a href="#/sell" id="navSell">
+Verkopen
+</a>
+
+</nav>
+
+
+<div class="header-right">
+
+<button
+class="language-button"
+id="languageButton"
+type="button"
+>
+
+<span id="currentFlag">
+🇳🇱
+</span>
+
+<span id="currentCode">
+NL
+</span>
+
+<span>
+▼
+</span>
+
+</button>
+
+
+<button
+class="menu-button"
+id="menuButton"
+type="button"
+>
+☰
+</button>
+
+</div>
+
+</div>
+
+
+<div
+class="mobile-nav"
+id="mobileNav"
+>
+
+<a href="#/">
+Home
+</a>
+
+<a href="#/explore">
+Ontdekken
+</a>
+
+<a href="#/sell">
+Verkopen
+</a>
+
+</div>
+
 </header>
 
-<div class="language-modal" id="languageModal">
-  <div class="language-box">
-    <div class="language-head">
-      <div class="language-title">Kies je taal</div>
-      <button class="language-close" id="languageClose">×</button>
-    </div>
-    <input id="languageSearch" class="language-search" type="search" placeholder="Zoek een taal..." autocomplete="off">
-    <div id="languageList" class="language-list"></div>
-  </div>
+
+<!-- ======================================================
+     LANGUAGE MODAL
+====================================================== -->
+
+<div
+class="language-modal"
+id="languageModal"
+>
+
+<div class="language-box">
+
+<div class="language-head">
+
+<div class="language-title">
+Kies je taal
 </div>
+
+<button
+class="language-close"
+id="languageClose"
+type="button"
+>
+×
+</button>
+
+</div>
+
+
+<input
+type="search"
+id="languageSearch"
+class="language-search"
+placeholder="Zoek een taal..."
+autocomplete="off"
+>
+
+
+<div
+id="languageList"
+class="language-list"
+></div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     APP
+====================================================== -->
 
 <main id="app"></main>
 
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
 <footer>
-  <strong>⚽ Football-Shirt-Market</strong><br><br>
-  De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.<br><br>
-  <span style="color:var(--gold)">SINCE 2026</span>
+
+<strong>
+⚽ Football-Shirt-Market
+</strong>
+
+<br><br>
+
+De marketplace voor voetbalshirts,
+verzamelaars en echte voetbalfans.
+
+<br><br>
+
+<span style="color:var(--gold)">
+SINCE 2026
+</span>
+
 </footer>
 
-<div id="toast" class="toast"></div>
+
+<div
+id="toast"
+class="toast"
+></div>
+
 
 <script>
-/* Menu toggle */
-document.getElementById('menuButton').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.toggle('open');
-});
 
-const languages=[
-  {code:"nl",name:"Nederlands",flag:"🇳🇱"},{code:"en",name:"English",flag:"🇬🇧"},
-  {code:"fr",name:"Français",flag:"🇫🇷"},{code:"de",name:"Deutsch",flag:"🇩🇪"},
-  {code:"es",name:"Español",flag:"🇪🇸"},{code:"it",name:"Italiano",flag:"🇮🇹"},
-  {code:"pt",name:"Português",flag:"🇵🇹"},{code:"af",name:"Afrikaans",flag:"🇿🇦"},
-  {code:"ar",name:"Arabic",flag:"🇸🇦"},{code:"zh-CN",name:"Chinese Simplified",flag:"🇨🇳"},
-  {code:"da",name:"Danish",flag:"🇩🇰"},{code:"fi",name:"Finnish",flag:"🇫🇮"},
-  {code:"el",name:"Greek",flag:"🇬🇷"},{code:"hi",name:"Hindi",flag:"🇮🇳"},
-  {code:"id",name:"Indonesian",flag:"🇮🇩"},{code:"ja",name:"Japanese",flag:"🇯🇵"},
-  {code:"ko",name:"Korean",flag:"🇰🇷"},{code:"no",name:"Norwegian",flag:"🇳🇴"},
-  {code:"pl",name:"Polish",flag:"🇵🇱"},{code:"ru",name:"Russian",flag:"🇷🇺"},
-  {code:"sv",name:"Swedish",flag:"🇸🇪"},{code:"tr",name:"Turkish",flag:"🇹🇷"},
-  {code:"uk",name:"Ukrainian",flag:"🇺🇦"},{code:"vi",name:"Vietnamese",flag:"🇻🇳"}
+/* ======================================================
+   TALEN
+====================================================== */
+
+const languages = [
+
+{code:"nl",name:"Nederlands",flag:"🇳🇱"},
+{code:"en",name:"English",flag:"🇬🇧"},
+{code:"fr",name:"Français",flag:"🇫🇷"},
+{code:"de",name:"Deutsch",flag:"🇩🇪"},
+{code:"es",name:"Español",flag:"🇪🇸"},
+{code:"it",name:"Italiano",flag:"🇮🇹"},
+{code:"pt",name:"Português",flag:"🇵🇹"},
+{code:"af",name:"Afrikaans",flag:"🇿🇦"},
+{code:"sq",name:"Albanian",flag:"🇦🇱"},
+{code:"am",name:"Amharic",flag:"🇪🇹"},
+{code:"ar",name:"Arabic",flag:"🇸🇦"},
+{code:"hy",name:"Armenian",flag:"🇦🇲"},
+{code:"az",name:"Azerbaijani",flag:"🇦🇿"},
+{code:"eu",name:"Basque",flag:"🇪🇸"},
+{code:"be",name:"Belarusian",flag:"🇧🇾"},
+{code:"bn",name:"Bengali",flag:"🇧🇩"},
+{code:"bs",name:"Bosnian",flag:"🇧🇦"},
+{code:"bg",name:"Bulgarian",flag:"🇧🇬"},
+{code:"ca",name:"Catalan",flag:"🇪🇸"},
+{code:"ceb",name:"Cebuano",flag:"🇵🇭"},
+{code:"zh-CN",name:"Chinese Simplified",flag:"🇨🇳"},
+{code:"zh-TW",name:"Chinese Traditional",flag:"🇹🇼"},
+{code:"co",name:"Corsican",flag:"🇫🇷"},
+{code:"hr",name:"Croatian",flag:"🇭🇷"},
+{code:"cs",name:"Czech",flag:"🇨🇿"},
+{code:"da",name:"Danish",flag:"🇩🇰"},
+{code:"eo",name:"Esperanto",flag:"🌍"},
+{code:"et",name:"Estonian",flag:"🇪🇪"},
+{code:"fi",name:"Finnish",flag:"🇫🇮"},
+{code:"fy",name:"Frisian",flag:"🇳🇱"},
+{code:"gl",name:"Galician",flag:"🇪🇸"},
+{code:"ka",name:"Georgian",flag:"🇬🇪"},
+{code:"el",name:"Greek",flag:"🇬🇷"},
+{code:"gu",name:"Gujarati",flag:"🇮🇳"},
+{code:"ht",name:"Haitian Creole",flag:"🇭🇹"},
+{code:"ha",name:"Hausa",flag:"🇳🇬"},
+{code:"haw",name:"Hawaiian",flag:"🇺🇸"},
+{code:"he",name:"Hebrew",flag:"🇮🇱"},
+{code:"hi",name:"Hindi",flag:"🇮🇳"},
+{code:"hmn",name:"Hmong",flag:"🌏"},
+{code:"hu",name:"Hungarian",flag:"🇭🇺"},
+{code:"is",name:"Icelandic",flag:"🇮🇸"},
+{code:"ig",name:"Igbo",flag:"🇳🇬"},
+{code:"id",name:"Indonesian",flag:"🇮🇩"},
+{code:"ga",name:"Irish",flag:"🇮🇪"},
+{code:"ja",name:"Japanese",flag:"🇯🇵"},
+{code:"jv",name:"Javanese",flag:"🇮🇩"},
+{code:"kn",name:"Kannada",flag:"🇮🇳"},
+{code:"kk",name:"Kazakh",flag:"🇰🇿"},
+{code:"km",name:"Khmer",flag:"🇰🇭"},
+{code:"rw",name:"Kinyarwanda",flag:"🇷🇼"},
+{code:"ko",name:"Korean",flag:"🇰🇷"},
+{code:"ku",name:"Kurdish",flag:"🌍"},
+{code:"ky",name:"Kyrgyz",flag:"🇰🇬"},
+{code:"lo",name:"Lao",flag:"🇱🇦"},
+{code:"la",name:"Latin",flag:"🌍"},
+{code:"lv",name:"Latvian",flag:"🇱🇻"},
+{code:"lt",name:"Lithuanian",flag:"🇱🇹"},
+{code:"lb",name:"Luxembourgish",flag:"🇱🇺"},
+{code:"mk",name:"Macedonian",flag:"🇲🇰"},
+{code:"mg",name:"Malagasy",flag:"🇲🇬"},
+{code:"ms",name:"Malay",flag:"🇲🇾"},
+{code:"ml",name:"Malayalam",flag:"🇮🇳"},
+{code:"mt",name:"Maltese",flag:"🇲🇹"},
+{code:"mi",name:"Maori",flag:"🇳🇿"},
+{code:"mr",name:"Marathi",flag:"🇮🇳"},
+{code:"mn",name:"Mongolian",flag:"🇲🇳"},
+{code:"my",name:"Myanmar",flag:"🇲🇲"},
+{code:"ne",name:"Nepali",flag:"🇳🇵"},
+{code:"no",name:"Norwegian",flag:"🇳🇴"},
+{code:"ny",name:"Chichewa",flag:"🇲🇼"},
+{code:"or",name:"Odia",flag:"🇮🇳"},
+{code:"ps",name:"Pashto",flag:"🇦🇫"},
+{code:"fa",name:"Persian",flag:"🇮🇷"},
+{code:"pl",name:"Polish",flag:"🇵🇱"},
+{code:"pa",name:"Punjabi",flag:"🇮🇳"},
+{code:"ro",name:"Romanian",flag:"🇷🇴"},
+{code:"ru",name:"Russian",flag:"🇷🇺"},
+{code:"sm",name:"Samoan",flag:"🇼🇸"},
+{code:"gd",name:"Scots Gaelic",flag:"🏴"},
+{code:"sr",name:"Serbian",flag:"🇷🇸"},
+{code:"st",name:"Sesotho",flag:"🇱🇸"},
+{code:"sn",name:"Shona",flag:"🇿🇼"},
+{code:"sd",name:"Sindhi",flag:"🌍"},
+{code:"si",name:"Sinhala",flag:"🇱🇰"},
+{code:"sk",name:"Slovak",flag:"🇸🇰"},
+{code:"sl",name:"Slovenian",flag:"🇸🇮"},
+{code:"so",name:"Somali",flag:"🇸🇴"},
+{code:"su",name:"Sundanese",flag:"🇮🇩"},
+{code:"sw",name:"Swahili",flag:"🌍"},
+{code:"sv",name:"Swedish",flag:"🇸🇪"},
+{code:"tl",name:"Tagalog",flag:"🇵🇭"},
+{code:"tg",name:"Tajik",flag:"🇹🇯"},
+{code:"ta",name:"Tamil",flag:"🇮🇳"},
+{code:"tt",name:"Tatar",flag:"🇷🇺"},
+{code:"te",name:"Telugu",flag:"🇮🇳"},
+{code:"th",name:"Thai",flag:"🇹🇭"},
+{code:"tr",name:"Turkish",flag:"🇹🇷"},
+{code:"tk",name:"Turkmen",flag:"🇹🇲"},
+{code:"uk",name:"Ukrainian",flag:"🇺🇦"},
+{code:"ur",name:"Urdu",flag:"🇵🇰"},
+{code:"ug",name:"Uyghur",flag:"🇨🇳"},
+{code:"uz",name:"Uzbek",flag:"🇺🇿"},
+{code:"vi",name:"Vietnamese",flag:"🇻🇳"},
+{code:"cy",name:"Welsh",flag:"🏴"},
+{code:"xh",name:"Xhosa",flag:"🌍"},
+{code:"yi",name:"Yiddish",flag:"🌍"},
+{code:"yo",name:"Yoruba",flag:"🇳🇬"},
+{code:"zu",name:"Zulu",flag:"🇿🇦"}
+
 ];
 
-/* Updated mock shirts with sizes and types for filtering */
-const shirts=[
-  {id:1,club:"AC Milan",name:"AC Milan 1994-1995 Home #3 Maldini",price:"€ 149,95",condition:"Heel goed",icon:"🔴⚫", type:["Club", "Replica"], size:"L"},
-  {id:2,club:"Real Madrid",name:"Real Madrid 2001-2002 Centenary #5 Zidane",price:"€ 179,95",condition:"Nieuw met prijskaartje",icon:"⚪👑", type:["Club"], size:"XL"},
-  {id:3,club:"FC Barcelona",name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",price:"€ 169,95",condition:"Heel goed",icon:"🔵🔴", type:["Club"], size:"M"},
-  {id:4,club:"Manchester United",name:"Manchester United 1998-1999 Treble #7 Beckham",price:"€ 159,95",condition:"Nieuw zonder prijskaartje",icon:"🔴⚪", type:["Club"], size:"L"},
-  {id:5,club:"Arsenal",name:"Arsenal 2003-2004 Invincibles #14 Henry",price:"€ 189,95",condition:"Heel goed",icon:"🔴⚪", type:["Club"], size:"L"},
-  {id:6,club:"Juventus",name:"Juventus 1997-1998 Centenary #10 Del Piero",price:"€ 139,95",condition:"Goed",icon:"⚪⚫", type:["Club"], size:"M"},
-  {id:7,club:"Chelsea",name:"Chelsea 2004-2005 Home #8 Lampard",price:"€ 129,95",condition:"Gebruikt",icon:"🔵", type:["Club"], size:"S"},
-  {id:8,club:"Liverpool",name:"Liverpool 2005-2006 Home",price:"€ 119,95",condition:"Goed",icon:"🔴", type:["Club"], size:"XL"}
+
+/* ======================================================
+   SHIRTS
+====================================================== */
+
+const shirtsData = [
+
+{
+id:1,
+club:"AC Milan",
+name:"AC Milan 1994-1995 Home #3 Maldini",
+price:"€ 149,95",
+condition:"Heel goed",
+icon:"🔴⚫",
+type:["Club","Replica"],
+size:"L"
+},
+
+{
+id:2,
+club:"Real Madrid",
+name:"Real Madrid 2001-2002 Centenary #5 Zidane",
+price:"€ 179,95",
+condition:"Nieuw met prijskaartje",
+icon:"⚪👑",
+type:["Club"],
+size:"XL"
+},
+
+{
+id:3,
+club:"FC Barcelona",
+name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
+price:"€ 169,95",
+condition:"Heel goed",
+icon:"🔵🔴",
+type:["Club"],
+size:"M"
+},
+
+{
+id:4,
+club:"Manchester United",
+name:"Manchester United 1998-1999 Treble #7 Beckham",
+price:"€ 159,95",
+condition:"Nieuw zonder prijskaartje",
+icon:"🔴⚪",
+type:["Club"],
+size:"L"
+},
+
+{
+id:5,
+club:"Arsenal",
+name:"Arsenal 2003-2004 Invincibles #14 Henry",
+price:"€ 189,95",
+condition:"Heel goed",
+icon:"🔴⚪",
+type:["Club"],
+size:"L"
+},
+
+{
+id:6,
+club:"Juventus",
+name:"Juventus 1997-1998 Centenary #10 Del Piero",
+price:"€ 139,95",
+condition:"Goed",
+icon:"⚪⚫",
+type:["Club"],
+size:"M"
+},
+
+{
+id:7,
+club:"Chelsea",
+name:"Chelsea 2004-2005 Home #8 Lampard",
+price:"€ 129,95",
+condition:"Gebruikt",
+icon:"🔵",
+type:["Club"],
+size:"S"
+},
+
+{
+id:8,
+club:"Liverpool",
+name:"Liverpool 2005-2006 Home",
+price:"€ 119,95",
+condition:"Goed",
+icon:"🔴",
+type:["Club"],
+size:"XL"
+}
+
 ];
 
-const LISTINGS_KEY = "fsm_user_listings";
+
+/* ======================================================
+   LOCAL STORAGE LISTINGS
+====================================================== */
+
+const LISTINGS_KEY="fsm_user_listings";
+
 
 function getListings(){
-  try{ return JSON.parse(localStorage.getItem(LISTINGS_KEY)) || []; }
-  catch(e){ return []; }
+
+    try{
+        const data=
+            JSON.parse(
+                localStorage.getItem(LISTINGS_KEY)
+            );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
 }
+
+
 function saveListings(list){
-  try{ localStorage.setItem(LISTINGS_KEY, JSON.stringify(list)); return true; }
-  catch(e){ return false; }
+
+    try{
+
+        localStorage.setItem(
+            LISTINGS_KEY,
+            JSON.stringify(list)
+        );
+
+        return true;
+
+    }catch(error){
+
+        return false;
+
+    }
+
 }
+
+
+/* ======================================================
+   ESCAPE HTML
+====================================================== */
+
 function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+    return String(str)
+        .replace(
+            /[&<>"']/g,
+            character=>({
+
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#39;"
+
+            }[character])
+        );
+
 }
+
+
+/* ======================================================
+   COMBINE SHIRTS
+====================================================== */
 
 function combinedShirts(){
-  const listings = getListings();
-  const now = Date.now();
-  let changed = false;
-  listings.forEach(l=>{
-    if(l.boosted && l.boostExpiresAt && l.boostExpiresAt <= now){
-      l.boosted = false;
-      changed = true;
-    }
-  });
-  if(changed) saveListings(listings);
 
-  const userShirts = listings.map(l=>({
-    id:"u"+l.id, club:l.club, name:l.name, price:l.price, condition:l.condition, size:l.size, type:l.type,
-    icon:"👕", image:(l.images && l.images[0]) || null, boosted:!!l.boosted
-  }));
-  const boosted = userShirts.filter(s=>s.boosted).sort((a,b)=> (b.id>a.id?1:-1));
-  const normalUser = userShirts.filter(s=>!s.boosted).sort((a,b)=> (b.id>a.id?1:-1));
-  return [...boosted, ...normalUser, ...shirts];
+    const listings=getListings();
+
+    const now=Date.now();
+
+    let changed=false;
+
+
+    listings.forEach(listing=>{
+
+        if(
+            listing.boosted &&
+            listing.boostExpiresAt &&
+            listing.boostExpiresAt <= now
+        ){
+
+            listing.boosted=false;
+
+            changed=true;
+
+        }
+
+    });
+
+
+    if(changed){
+        saveListings(listings);
+    }
+
+
+    const userShirts=
+        listings.map(listing=>({
+
+            id:"u"+listing.id,
+
+            club:listing.club,
+
+            name:listing.name,
+
+            price:listing.price,
+
+            condition:listing.condition,
+
+            size:listing.size,
+
+            type:listing.type || ["Club"],
+
+            icon:"👕",
+
+            image:
+                listing.images &&
+                listing.images.length
+                    ? listing.images[0]
+                    : null,
+
+            boosted:!!listing.boosted
+
+        }));
+
+
+    const boosted=
+        userShirts
+            .filter(shirt=>shirt.boosted);
+
+
+    const normal=
+        userShirts
+            .filter(shirt=>!shirt.boosted);
+
+
+    return [
+        ...boosted,
+        ...normal,
+        ...shirtsData
+    ];
+
 }
 
-const app = document.getElementById("app");
-app.addEventListener("click", e=>{
-  const btn = e.target.closest(".shirt-view");
-  if(btn) alert("Je bekijkt nu: " + btn.dataset.club + " (" + btn.dataset.price + ")");
-});
+
+/* ======================================================
+   SHIRT CARD
+====================================================== */
 
 function makeShirt(shirt){
-  const visual = shirt.image
-    ? `<img src="${shirt.image}" alt="${escapeHtml(shirt.name)}">`
-    : `<div>👕</div>`;
-  return `
-  <article class="shirt-card">
+
+    const visual=
+        shirt.image
+        ? `
+            <img
+                src="${shirt.image}"
+                alt="${escapeHtml(shirt.name)}"
+            >
+          `
+        : `
+            <div>👕</div>
+          `;
+
+
+    return `
+
+<article class="shirt-card">
+
     <div class="shirt-visual">
-      <div class="shirt-condition">${escapeHtml(shirt.condition)}</div>
-      ${shirt.boosted ? '<div class="shirt-boost-badge">BOOST</div>' : ''}
-      ${visual}
+
+        <div class="shirt-condition">
+            ${escapeHtml(shirt.condition)}
+        </div>
+
+        ${
+            shirt.boosted
+            ? `<div class="shirt-boost-badge">BOOST</div>`
+            : ""
+        }
+
+        ${visual}
+
     </div>
+
+
     <div class="shirt-info">
-      <div class="shirt-club">${shirt.icon} ${escapeHtml(shirt.club)}</div>
-      <div class="shirt-name">${escapeHtml(shirt.name)}</div>
-      <div class="shirt-footer">
-        <div class="shirt-price">${escapeHtml(shirt.price)}</div>
-        <button class="shirt-view" data-club="${escapeHtml(shirt.club)}" data-price="${escapeHtml(shirt.price)}">Bekijken</button>
-      </div>
+
+        <div class="shirt-club">
+            ${shirt.icon}
+            ${escapeHtml(shirt.club)}
+        </div>
+
+
+        <div class="shirt-name">
+            ${escapeHtml(shirt.name)}
+        </div>
+
+
+        <div class="shirt-footer">
+
+            <div class="shirt-price">
+                ${escapeHtml(shirt.price)}
+            </div>
+
+            <button
+                class="shirt-view"
+                data-club="${escapeHtml(shirt.club)}"
+                data-price="${escapeHtml(shirt.price)}"
+            >
+                Bekijken
+            </button>
+
+        </div>
+
     </div>
-  </article>`;
+
+</article>
+
+`;
+
 }
 
-/* RENDER HOME */
+
+/* ======================================================
+   HOME
+====================================================== */
+
 function renderHome(){
-  app.innerHTML=`
-  <div class="page">
-    <section class="hero">
-      <img src="hero.png" class="hero-image" alt="Football-Shirt-Market" onerror="this.style.display='none'">
-      <div class="hero-shade"></div>
-      <div class="hero-clean-mask"></div>
-      <div class="hero-content">
-        <div class="hero-kicker">FOOTBALL-SHIRT-MARKET • SINCE 2026</div>
-        <h1 class="hero-title">Koop.<br>Verkoop.<br><span>Verzamel.</span></h1>
-        <p class="hero-description">De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.</p>
-        <div class="hero-buttons">
-          <a href="#/explore" class="hero-button green">Ontdek shirts</a>
-          <a href="#/sell" class="hero-button white">Verkoop een shirt</a>
-        </div>
-        <div class="hero-search">
-          <div class="hero-search-icon">⌕</div>
-          <input id="homeSearch" type="search" placeholder="Zoek shirts, clubs, spelers...">
-          <button id="homeSearchButton">→</button>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="section-head">
-        <h2 class="section-title">Uitgelichte <span>shirts</span></h2>
-        <a href="#/explore" class="section-link">Alle shirts →</a>
-      </div>
-      <div class="home-shirt-row">${combinedShirts().slice(0,6).map(makeShirt).join("")}</div>
-    </section>
-  </div>`;
 
-  const search = document.getElementById("homeSearch");
-  const searchButton = document.getElementById("homeSearchButton");
-  function executeSearch(){
-    const value = search.value.trim();
-    location.hash = value ? "#/explore?search=" + encodeURIComponent(value) : "#/explore";
-  }
-  if(searchButton) searchButton.addEventListener("click", executeSearch);
-  if(search) search.addEventListener("keydown", e => { if(e.key==="Enter") executeSearch(); });
+    app.innerHTML=`
+
+<div class="page">
+
+<section class="hero">
+
+<img
+src="hero.png"
+class="hero-image"
+alt="Football-Shirt-Market"
+onerror="this.style.display='none'"
+>
+
+<div class="hero-shade"></div>
+
+<div class="hero-clean-mask"></div>
+
+
+<div class="hero-content">
+
+<div class="hero-kicker">
+FOOTBALL-SHIRT-MARKET • SINCE 2026
+</div>
+
+
+<h1 class="hero-title">
+Koop.<br>
+Verkoop.<br>
+<span>Verzamel.</span>
+</h1>
+
+
+<p class="hero-description">
+De marketplace voor voetbalshirts,
+verzamelaars en echte voetbalfans.
+</p>
+
+
+<div class="hero-buttons">
+
+<a
+href="#/explore"
+class="hero-button green"
+>
+Ontdek shirts
+</a>
+
+<a
+href="#/sell"
+class="hero-button white"
+>
+Verkoop een shirt
+</a>
+
+</div>
+
+
+<div class="hero-search">
+
+<div class="hero-search-icon">
+⌕
+</div>
+
+<input
+id="homeSearch"
+type="search"
+placeholder="Zoek shirts, clubs, spelers..."
+>
+
+<button id="homeSearchButton">
+→
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="section-head">
+
+<h2 class="section-title">
+Uitgelichte <span>shirts</span>
+</h2>
+
+<a
+href="#/explore"
+class="section-link"
+>
+Alle shirts →
+</a>
+
+</div>
+
+
+<div class="home-shirt-row">
+
+${combinedShirts()
+    .slice(0,6)
+    .map(makeShirt)
+    .join("")}
+
+</div>
+
+</section>
+
+</div>
+
+`;
+
+
+    const search=
+        document.getElementById(
+            "homeSearch"
+        );
+
+
+    const searchButton=
+        document.getElementById(
+            "homeSearchButton"
+        );
+
+
+    function executeSearch(){
+
+        const value=
+            search.value.trim();
+
+
+        if(!value){
+
+            location.hash=
+                "#/explore";
+
+            return;
+
+        }
+
+
+        location.hash=
+            "#/explore?search="+
+            encodeURIComponent(value);
+
+    }
+
+
+    if(searchButton){
+
+        searchButton.addEventListener(
+            "click",
+            executeSearch
+        );
+
+    }
+
+
+    if(search){
+
+        search.addEventListener(
+            "keydown",
+            event=>{
+
+                if(event.key==="Enter"){
+                    executeSearch();
+                }
+
+            }
+        );
+
+    }
+
 }
 
-/* RENDER EXPLORE (MET FILTERS) */
+
+/* ======================================================
+   EXPLORE
+====================================================== */
+
 function renderExplore(){
-  const hash = location.hash;
-  let query = hash.includes("?search=") ? decodeURIComponent(hash.split("?search=")[1]).toLowerCase() : "";
 
-  app.innerHTML=`
-  <div class="page">
-    <section class="explore-banner">
-      <img src="ontdekken.png" alt="Ontdekken" onerror="this.style.display='none'">
-      <div class="explore-overlay">
-        <div class="explore-kicker">Volledige collectie</div>
-        <h1 class="explore-title">Ontdek<br><span>iconische shirts.</span></h1>
-        <p class="explore-subtitle">Een marketplace waar voetbalfans en verzamelaars zelf shirts kopen en verkopen.</p>
-      </div>
-      <div class="explore-search-overlay">
-        <input id="exploreSearch" type="search" placeholder="Zoek shirts, clubs, spelers..." value="${query ? query.replace(/"/g,'&quot;') : ""}">
-        <button id="exploreSearchButton" aria-label="Zoeken"></button>
-      </div>
-    </section>
-    
-    <section class="section">
-      <div class="section-head">
-        <h2 class="section-title">Alle <span>shirts</span></h2>
-        <a href="#/" class="section-link">← Home</a>
-      </div>
+    const hash=
+        location.hash;
 
-      <!-- FILTER MENU -->
-      <div class="explore-filters">
-        <select id="filterType">
-          <option value="">Alle types</option>
-          <option value="Club">Club</option>
-          <option value="Land">Land</option>
-          <option value="Matchworn">Matchworn</option>
-          <option value="Signed">Signed</option>
-          <option value="Replica">Replica</option>
-        </select>
 
-        <select id="filterMaat">
-          <option value="">Alle maten</option>
-          <optgroup label="Kindermaten">
-            <option value="104">104</option><option value="116">116</option><option value="128">128</option>
-            <option value="140">140</option><option value="152">152</option><option value="164">164</option><option value="176">176</option>
-          </optgroup>
-          <optgroup label="Volwassen maten">
-            <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option>
-          </optgroup>
-        </select>
+    let query="";
 
-        <select id="filterCondition">
-          <option value="">Alle condities</option>
-          <option value="Nieuw met prijskaartje">Nieuw met prijskaartje</option>
-          <option value="Nieuw zonder prijskaartje">Nieuw zonder prijskaartje</option>
-          <option value="Heel goed">Heel goed</option>
-          <option value="Goed">Goed</option>
-          <option value="Gebruikt">Gebruikt</option>
-        </select>
-      </div>
 
-      <div class="explore-grid" id="exploreGrid">
-        <!-- Shirts will be injected here via JS -->
-      </div>
-    </section>
-  </div>`;
+    if(hash.includes("?search=")){
 
-  const searchInput = document.getElementById("exploreSearch");
-  const btnSearch = document.getElementById("exploreSearchButton");
-  const filterType = document.getElementById("filterType");
-  const filterMaat = document.getElementById("filterMaat");
-  const filterCond = document.getElementById("filterCondition");
-  const exploreGrid = document.getElementById("exploreGrid");
+        query=
+            decodeURIComponent(
+                hash
+                    .split("?search=")[1]
+            )
+            .trim()
+            .toLowerCase();
 
-  // Functie die de grid realtime updatet gebaseerd op filters & zoekbalk
-  function updateGrid() {
-    let list = combinedShirts();
-    const q = searchInput.value.trim().toLowerCase();
-    const t = filterType.value;
-    const m = filterMaat.value;
-    const c = filterCond.value;
+    }
 
-    if (q) list = list.filter(s => (s.club + " " + s.name).toLowerCase().includes(q));
-    if (t) list = list.filter(s => s.type && s.type.includes(t));
-    if (m) list = list.filter(s => s.size === m);
-    if (c) list = list.filter(s => s.condition === c);
 
-    exploreGrid.innerHTML = list.length 
-      ? list.map(makeShirt).join("") 
-      : '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#8a9891;">Geen shirts gevonden die voldoen aan je filters.</div>';
-  }
+    app.innerHTML=`
 
-  // Event listeners
-  if(btnSearch) btnSearch.addEventListener("click", updateGrid);
-  if(searchInput) searchInput.addEventListener("input", updateGrid);
-  filterType.addEventListener("change", updateGrid);
-  filterMaat.addEventListener("change", updateGrid);
-  filterCond.addEventListener("change", updateGrid);
+<div class="page">
 
-  // Initial render
-  updateGrid();
+
+<section class="explore-banner">
+
+<img
+src="ontdekken.png"
+alt="Ontdekken"
+onerror="this.src='hero.png'"
+>
+
+
+<div class="explore-overlay">
+
+<div class="explore-kicker">
+Volledige collectie
+</div>
+
+
+<h1 class="explore-title">
+
+Ontdek<br>
+
+<span>
+iconische shirts.
+</span>
+
+</h1>
+
+
+<p class="explore-subtitle">
+
+Een marketplace waar voetbalfans
+en verzamelaars zelf shirts kopen
+en verkopen.
+
+</p>
+
+</div>
+
+
+<div class="explore-search-overlay">
+
+<input
+id="exploreSearch"
+type="search"
+placeholder="Zoek shirts, clubs, spelers..."
+value="${query.replace(/"/g,"&quot;")}"
+>
+
+<button
+id="exploreSearchButton"
+aria-label="Zoeken"
+>
+</button>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+
+<div class="section-head">
+
+<h2 class="section-title">
+Alle <span>shirts</span>
+</h2>
+
+<a
+href="#/"
+class="section-link"
+>
+← Home
+</a>
+
+</div>
+
+
+<div class="explore-filters">
+
+
+<!-- TYPE -->
+
+<div class="filter-group">
+
+<button
+type="button"
+class="filter-trigger"
+data-filter-toggle="type"
+>
+
+Type
+
+<span
+class="filter-count"
+id="typeCount"
+></span>
+
+<span class="filter-arrow">
+▼
+</span>
+
+</button>
+
+
+<div
+class="filter-dropdown"
+id="typeDropdown"
+>
+
+${[
+    "Club",
+    "Land",
+    "Matchworn",
+    "Signed",
+    "Replica"
+].map(value=>`
+
+<label class="filter-option">
+
+<input
+type="checkbox"
+data-filter="type"
+value="${value}"
+>
+
+<span>
+${value}
+</span>
+
+</label>
+
+`).join("")}
+
+</div>
+
+</div>
+
+
+<!-- MAAT -->
+
+<div class="filter-group">
+
+<button
+type="button"
+class="filter-trigger"
+data-filter-toggle="size"
+>
+
+Maat
+
+<span
+class="filter-count"
+id="sizeCount"
+></span>
+
+<span class="filter-arrow">
+▼
+</span>
+
+</button>
+
+
+<div
+class="filter-dropdown"
+id="sizeDropdown"
+>
+
+<div
+style="
+padding:5px 9px 6px;
+color:var(--gold);
+font-size:9px;
+font-weight:900;
+text-transform:uppercase;
+"
+>
+Kindermaten
+</div>
+
+
+${[
+    "104",
+    "116",
+    "128",
+    "140",
+    "152",
+    "164",
+    "176"
+].map(value=>`
+
+<label class="filter-option">
+
+<input
+type="checkbox"
+data-filter="size"
+value="${value}"
+>
+
+<span>${value}</span>
+
+</label>
+
+`).join("")}
+
+
+<div
+style="
+padding:10px 9px 6px;
+color:var(--gold);
+font-size:9px;
+font-weight:900;
+text-transform:uppercase;
+"
+>
+Volwassen maten
+</div>
+
+
+${[
+    "S",
+    "M",
+    "L",
+    "XL",
+    "XXL"
+].map(value=>`
+
+<label class="filter-option">
+
+<input
+type="checkbox"
+data-filter="size"
+value="${value}"
+>
+
+<span>${value}</span>
+
+</label>
+
+`).join("")}
+
+</div>
+
+</div>
+
+
+<!-- CONDITIE -->
+
+<div class="filter-group">
+
+<button
+type="button"
+class="filter-trigger"
+data-filter-toggle="condition"
+>
+
+Conditie
+
+<span
+class="filter-count"
+id="conditionCount"
+></span>
+
+<span class="filter-arrow">
+▼
+</span>
+
+</button>
+
+
+<div
+class="filter-dropdown"
+id="conditionDropdown"
+>
+
+${[
+    "Nieuw met prijskaartje",
+    "Nieuw zonder prijskaartje",
+    "Heel goed",
+    "Goed",
+    "Gebruikt"
+].map(value=>`
+
+<label class="filter-option">
+
+<input
+type="checkbox"
+data-filter="condition"
+value="${value}"
+>
+
+<span>
+${value}
+</span>
+
+</label>
+
+`).join("")}
+
+</div>
+
+</div>
+
+
+<button
+type="button"
+class="filter-reset"
+id="resetFilters"
+>
+Filters wissen
+</button>
+
+
+</div>
+
+
+<div
+class="explore-grid"
+id="exploreGrid"
+>
+</div>
+
+
+</section>
+
+</div>
+
+`;
+
+
+    const searchInput=
+        document.getElementById(
+            "exploreSearch"
+        );
+
+
+    const searchButton=
+        document.getElementById(
+            "exploreSearchButton"
+        );
+
+
+    const grid=
+        document.getElementById(
+            "exploreGrid"
+        );
+
+
+    const reset=
+        document.getElementById(
+            "resetFilters"
+        );
+
+
+    /* ======================================
+       SELECTED FILTERS
+    ====================================== */
+
+    function selected(type){
+
+        return Array.from(
+            document.querySelectorAll(
+                `input[data-filter="${type}"]:checked`
+            )
+        ).map(
+            input=>input.value
+        );
+
+    }
+
+
+    /* ======================================
+       COUNTERS
+    ====================================== */
+
+    function updateCount(type){
+
+        const count=
+            selected(type).length;
+
+
+        const element=
+            document.getElementById(
+                type+"Count"
+            );
+
+
+        if(!element){
+            return;
+        }
+
+
+        if(count>0){
+
+            element.textContent=
+                count;
+
+            element.classList.add("show");
+
+        }else{
+
+            element.textContent="";
+
+            element.classList.remove("show");
+
+        }
+
+    }
+
+
+    /* ======================================
+       FILTERING
+    ====================================== */
+
+    function updateGrid(){
+
+        let list=
+            combinedShirts();
+
+
+        /* SEARCH */
+
+        const q=
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        if(q){
+
+            list=
+                list.filter(shirt=>{
+
+                    const text=
+                        (
+                            shirt.club+
+                            " "+
+                            shirt.name
+                        )
+                        .toLowerCase();
+
+                    return text.includes(q);
+
+                });
+
+        }
+
+
+        /* TYPES */
+
+        const types=
+            selected("type");
+
+
+        if(types.length){
+
+            list=
+                list.filter(shirt=>{
+
+                    if(!shirt.type){
+                        return false;
+                    }
+
+                    /*
+                       OR binnen dezelfde categorie:
+                       Club OF Land OF Replica...
+                    */
+
+                    return types.some(
+                        type=>
+                            shirt.type.includes(type)
+                    );
+
+                });
+
+        }
+
+
+        /* MATEN */
+
+        const sizes=
+            selected("size");
+
+
+        if(sizes.length){
+
+            list=
+                list.filter(shirt=>
+
+                    sizes.includes(
+                        String(shirt.size)
+                    )
+
+                );
+
+        }
+
+
+        /* CONDITIES */
+
+        const conditions=
+            selected("condition");
+
+
+        if(conditions.length){
+
+            list=
+                list.filter(shirt=>
+
+                    conditions.includes(
+                        shirt.condition
+                    )
+
+                );
+
+        }
+
+
+        if(list.length){
+
+            grid.innerHTML=
+                list
+                    .map(makeShirt)
+                    .join("");
+
+        }else{
+
+            grid.innerHTML=`
+
+<div
+style="
+grid-column:1/-1;
+padding:60px 20px;
+text-align:center;
+color:#8a9891;
+border:1px solid var(--line);
+border-radius:15px;
+"
+>
+Geen shirts gevonden die aan
+de gekozen filters voldoen.
+</div>
+
+`;
+
+        }
+
+
+        updateCount("type");
+        updateCount("size");
+        updateCount("condition");
+
+    }
+
+
+    /* ======================================
+       DROPDOWNS
+    ====================================== */
+
+    document
+        .querySelectorAll(
+            "[data-filter-toggle]"
+        )
+        .forEach(button=>{
+
+            button.addEventListener(
+                "click",
+                event=>{
+
+                    event.stopPropagation();
+
+
+                    const type=
+                        button.dataset
+                            .filterToggle;
+
+
+                    const dropdown=
+                        document.getElementById(
+                            type+"Dropdown"
+                        );
+
+
+                    const alreadyOpen=
+                        dropdown.classList.contains(
+                            "open"
+                        );
+
+
+                    document
+                        .querySelectorAll(
+                            ".filter-dropdown"
+                        )
+                        .forEach(menu=>
+                            menu.classList.remove("open")
+                        );
+
+
+                    document
+                        .querySelectorAll(
+                            ".filter-trigger"
+                        )
+                        .forEach(trigger=>
+                            trigger.classList.remove("open")
+                        );
+
+
+                    if(!alreadyOpen){
+
+                        dropdown.classList.add("open");
+
+                        button.classList.add("open");
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* ======================================
+       CHECKBOXES
+    ====================================== */
+
+    document
+        .querySelectorAll(
+            '.filter-option input[type="checkbox"]'
+        )
+        .forEach(input=>{
+
+            input.addEventListener(
+                "change",
+                updateGrid
+            );
+
+        });
+
+
+    /* ======================================
+       SEARCH
+    ====================================== */
+
+    searchInput.addEventListener(
+        "input",
+        updateGrid
+    );
+
+
+    searchInput.addEventListener(
+        "keydown",
+        event=>{
+
+            if(event.key==="Enter"){
+
+                updateGrid();
+
+            }
+
+        }
+    );
+
+
+    if(searchButton){
+
+        searchButton.addEventListener(
+            "click",
+            updateGrid
+        );
+
+    }
+
+
+    /* ======================================
+       RESET
+    ====================================== */
+
+    reset.addEventListener(
+        "click",
+        ()=>{
+
+            document
+                .querySelectorAll(
+                    '.filter-option input[type="checkbox"]'
+                )
+                .forEach(
+                    checkbox=>
+                        checkbox.checked=false
+                );
+
+
+            searchInput.value="";
+
+            document
+                .querySelectorAll(
+                    ".filter-dropdown"
+                )
+                .forEach(
+                    menu=>
+                        menu.classList.remove("open")
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".filter-trigger"
+                )
+                .forEach(
+                    trigger=>
+                        trigger.classList.remove("open")
+                );
+
+
+            updateGrid();
+
+        }
+    );
+
+
+    /*
+       Sluit filters wanneer je buiten
+       een filter klikt.
+    */
+
+    document.addEventListener(
+        "click",
+        function closeFilterMenus(event){
+
+            if(
+                !event.target.closest(
+                    ".filter-group"
+                )
+            ){
+
+                document
+                    .querySelectorAll(
+                        ".filter-dropdown"
+                    )
+                    .forEach(
+                        menu=>
+                            menu.classList.remove("open")
+                    );
+
+
+                document
+                    .querySelectorAll(
+                        ".filter-trigger"
+                    )
+                    .forEach(
+                        trigger=>
+                            trigger.classList.remove("open")
+                    );
+
+            }
+
+        }
+    );
+
+
+    updateGrid();
+
 }
 
-/* RENDER SELL (AANGEVULD) */
+
+/* ======================================================
+   SELL
+====================================================== */
+
 function renderSell(){
-  app.innerHTML=`
-  <div class="page">
-    <div class="sell-box">
-      <div style="font-size:48px;margin-bottom:10px;text-align:center;">👕</div>
-      <h1>Verkoop je shirt</h1>
-      <p class="sell-intro">Vul de gegevens in, voeg foto's toe en zet je shirt te koop op de marketplace.</p>
-      <form id="sellForm" novalidate>
-        
-        <div class="form-group">
-          <label>Foto's *</label>
-          <div class="photo-dropzone" id="photoDropzone">📷 Tik om foto's te uploaden (max 5)</div>
-          <input type="file" id="photoInput" accept="image/*" multiple style="display:none;">
-          <div class="photo-grid" id="photoGrid"></div>
-          <div class="form-error" id="photoError">Voeg minstens 1 foto toe.</div>
-        </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="sellClub">Club / Land *</label>
-            <input type="text" id="sellClub" placeholder="Bijv. FC Barcelona of Nederland" required>
-          </div>
-          <div class="form-group">
-            <label for="sellPrice">Prijs (€) *</label>
-            <input type="number" id="sellPrice" min="0" step="0.01" placeholder="49.95" required>
-          </div>
-        </div>
+    app.innerHTML=`
 
-        <div class="form-group">
-          <label>Type shirt (meerdere mogelijk)</label>
-          <div class="type-checkboxes">
-            <label class="type-checkbox-label"><input type="checkbox" name="sellType" value="Club"> Club</label>
-            <label class="type-checkbox-label"><input type="checkbox" name="sellType" value="Land"> Land</label>
-            <label class="type-checkbox-label"><input type="checkbox" name="sellType" value="Matchworn"> Matchworn</label>
-            <label class="type-checkbox-label"><input type="checkbox" name="sellType" value="Signed"> Signed</label>
-            <label class="type-checkbox-label"><input type="checkbox" name="sellType" value="Replica"> Replica</label>
-          </div>
-        </div>
+<div class="page">
 
-        <div class="form-group">
-          <label for="sellName">Titel van het shirt *</label>
-          <input type="text" id="sellName" placeholder="Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho" required>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="sellCondition">Conditie *</label>
-            <select id="sellCondition" required>
-              <option value="">Kies conditie</option>
-              <option value="Nieuw met prijskaartje">Nieuw met prijskaartje</option>
-              <option value="Nieuw zonder prijskaartje">Nieuw zonder prijskaartje</option>
-              <option value="Heel goed">Heel goed</option>
-              <option value="Goed">Goed</option>
-              <option value="Gebruikt">Gebruikt</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="sellMaat">Maat</label>
-            <select id="sellMaat">
-              <option value="">Onbekend</option>
-              <optgroup label="Kindermaten">
-                <option value="104">104</option><option value="116">116</option><option value="128">128</option>
-                <option value="140">140</option><option value="152">152</option><option value="164">164</option><option value="176">176</option>
-              </optgroup>
-              <optgroup label="Volwassen maten">
-                <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="sellDescription">Beschrijving</label>
-          <textarea id="sellDescription" rows="4" placeholder="Vertel meer over het shirt, staat, geschiedenis..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Boost je advertentie (optioneel)</label>
-          <div class="boost-options">
-            <label class="boost-option">
-              <input type="radio" name="boostOption" value="none" checked>
-              <div class="boost-option-text"><strong>Geen boost</strong><span>Gewone plaatsing tussen de andere shirts.</span></div>
-            </label>
-            <label class="boost-option">
-              <input type="radio" name="boostOption" value="24h">
-              <div class="boost-option-text"><strong>24 uur bovenaan</strong><span>Verschijnt 24 uur lang bovenaan bij Ontdekken.</span></div>
-              <div class="boost-option-price">€ 1</div>
-            </label>
-            <label class="boost-option">
-              <input type="radio" name="boostOption" value="week">
-              <div class="boost-option-text"><strong>7 dagen bovenaan</strong><span>Val een hele week op.</span></div>
-              <div class="boost-option-price">€ 4</div>
-            </label>
-          </div>
-        </div>
+<div class="sell-box">
 
-        <button type="submit" class="hero-button green sell-submit">Plaats advertentie</button>
-      </form>
-    </div>
-  </div>`;
+<div
+style="
+font-size:48px;
+margin-bottom:10px;
+text-align:center;
+"
+>
+👕
+</div>
 
-  // Basic form handling to make the application interactive
-  const form = document.getElementById("sellForm");
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-    
-    // Verzamel data
-    const club = document.getElementById("sellClub").value;
-    const priceRaw = document.getElementById("sellPrice").value;
-    const name = document.getElementById("sellName").value;
-    const condition = document.getElementById("sellCondition").value;
-    const size = document.getElementById("sellMaat").value;
-    
-    if(!club || !priceRaw || !name || !condition) {
-        alert("Vul alle verplichte velden in!");
+
+<h1>
+Verkoop je shirt
+</h1>
+
+
+<p class="sell-intro">
+Vul de gegevens in, voeg foto's toe
+en zet je shirt te koop op de marketplace.
+</p>
+
+
+<form
+id="sellForm"
+novalidate
+>
+
+
+<div class="form-group">
+
+<label>
+Foto's *
+</label>
+
+
+<div
+class="photo-dropzone"
+id="photoDropzone"
+>
+📷 Tik om foto's te uploaden
+(max 5)
+</div>
+
+
+<input
+type="file"
+id="photoInput"
+accept="image/*"
+multiple
+style="display:none"
+>
+
+
+<div
+class="photo-grid"
+id="photoGrid"
+></div>
+
+
+<div
+class="form-error"
+id="photoError"
+>
+Voeg minstens 1 foto toe.
+</div>
+
+</div>
+
+
+<div class="form-row">
+
+
+<div class="form-group">
+
+<label for="sellClub">
+Club / Land *
+</label>
+
+<input
+type="text"
+id="sellClub"
+placeholder="Bijv. FC Barcelona of Nederland"
+required
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="sellPrice">
+Prijs (€) *
+</label>
+
+<input
+type="number"
+id="sellPrice"
+min="0"
+step="0.01"
+placeholder="49.95"
+required
+>
+
+</div>
+
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Type shirt (meerdere mogelijk)
+</label>
+
+
+<div class="type-checkboxes">
+
+<label class="type-checkbox-label">
+<input
+type="checkbox"
+name="sellType"
+value="Club"
+>
+Club
+</label>
+
+<label class="type-checkbox-label">
+<input
+type="checkbox"
+name="sellType"
+value="Land"
+>
+Land
+</label>
+
+<label class="type-checkbox-label">
+<input
+type="checkbox"
+name="sellType"
+value="Matchworn"
+>
+Matchworn
+</label>
+
+<label class="type-checkbox-label">
+<input
+type="checkbox"
+name="sellType"
+value="Signed"
+>
+Signed
+</label>
+
+<label class="type-checkbox-label">
+<input
+type="checkbox"
+name="sellType"
+value="Replica"
+>
+Replica
+</label>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="sellName">
+Titel van het shirt *
+</label>
+
+<input
+type="text"
+id="sellName"
+placeholder="Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho"
+required
+>
+
+</div>
+
+
+<div class="form-row">
+
+
+<div class="form-group">
+
+<label for="sellCondition">
+Conditie *
+</label>
+
+<select
+id="sellCondition"
+required
+>
+
+<option value="">
+Kies conditie
+</option>
+
+<option value="Nieuw met prijskaartje">
+Nieuw met prijskaartje
+</option>
+
+<option value="Nieuw zonder prijskaartje">
+Nieuw zonder prijskaartje
+</option>
+
+<option value="Heel goed">
+Heel goed
+</option>
+
+<option value="Goed">
+Goed
+</option>
+
+<option value="Gebruikt">
+Gebruikt
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="sellMaat">
+Maat
+</label>
+
+<select id="sellMaat">
+
+<option value="">
+Onbekend
+</option>
+
+<optgroup label="Kindermaten">
+
+<option value="104">104</option>
+<option value="116">116</option>
+<option value="128">128</option>
+<option value="140">140</option>
+<option value="152">152</option>
+<option value="164">164</option>
+<option value="176">176</option>
+
+</optgroup>
+
+<optgroup label="Volwassen maten">
+
+<option value="S">S</option>
+<option value="M">M</option>
+<option value="L">L</option>
+<option value="XL">XL</option>
+<option value="XXL">XXL</option>
+
+</optgroup>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label for="sellDescription">
+Beschrijving
+</label>
+
+<textarea
+id="sellDescription"
+rows="4"
+placeholder="Vertel meer over het shirt, staat, geschiedenis..."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Boost je advertentie (optioneel)
+</label>
+
+
+<div class="boost-options">
+
+
+<label class="boost-option">
+
+<input
+type="radio"
+name="boostOption"
+value="none"
+checked
+>
+
+<div class="boost-option-text">
+
+<strong>
+Geen boost
+</strong>
+
+<span>
+Gewone plaatsing tussen de andere shirts.
+</span>
+
+</div>
+
+</label>
+
+
+<label class="boost-option">
+
+<input
+type="radio"
+name="boostOption"
+value="24h"
+>
+
+<div class="boost-option-text">
+
+<strong>
+24 uur bovenaan
+</strong>
+
+<span>
+Verschijnt 24 uur lang bovenaan bij Ontdekken.
+</span>
+
+</div>
+
+<div class="boost-option-price">
+€ 1
+</div>
+
+</label>
+
+
+<label class="boost-option">
+
+<input
+type="radio"
+name="boostOption"
+value="week"
+>
+
+<div class="boost-option-text">
+
+<strong>
+7 dagen bovenaan
+</strong>
+
+<span>
+Val een hele week op.
+</span>
+
+</div>
+
+<div class="boost-option-price">
+€ 4
+</div>
+
+</label>
+
+
+</div>
+
+</div>
+
+
+<button
+type="submit"
+class="hero-button green sell-submit"
+>
+Plaats advertentie
+</button>
+
+
+</form>
+
+</div>
+
+</div>
+
+`;
+
+
+    /* ======================================
+       PHOTO UPLOAD
+    ====================================== */
+
+    const photoDropzone=
+        document.getElementById(
+            "photoDropzone"
+        );
+
+
+    const photoInput=
+        document.getElementById(
+            "photoInput"
+        );
+
+
+    const photoGrid=
+        document.getElementById(
+            "photoGrid"
+        );
+
+
+    let selectedImages=[];
+
+
+    photoDropzone.addEventListener(
+        "click",
+        ()=>{
+            photoInput.click();
+        }
+    );
+
+
+    photoInput.addEventListener(
+        "change",
+        ()=>{
+            processFiles(
+                Array.from(
+                    photoInput.files
+                )
+            );
+        }
+    );
+
+
+    function processFiles(files){
+
+        const remaining=
+            5-selectedImages.length;
+
+
+        if(remaining<=0){
+            return;
+        }
+
+
+        files
+            .slice(0,remaining)
+            .forEach(file=>{
+
+                if(!file.type.startsWith("image/")){
+                    return;
+                }
+
+
+                const reader=
+                    new FileReader();
+
+
+                reader.onload=event=>{
+
+                    selectedImages.push(
+                        event.target.result
+                    );
+
+
+                    renderPhotos();
+
+                };
+
+
+                reader.readAsDataURL(file);
+
+            });
+
+    }
+
+
+    function renderPhotos(){
+
+        photoGrid.innerHTML=
+            selectedImages
+                .map(
+                    (src,index)=>`
+
+<div class="photo-thumb">
+
+<img
+src="${src}"
+alt="Foto ${index+1}"
+>
+
+<button
+type="button"
+data-photo-index="${index}"
+>
+×
+</button>
+
+</div>
+
+`
+                )
+                .join("");
+
+
+        photoGrid
+            .querySelectorAll(
+                "[data-photo-index]"
+            )
+            .forEach(button=>{
+
+                button.addEventListener(
+                    "click",
+                    ()=>{
+
+                        selectedImages.splice(
+                            Number(
+                                button.dataset.photoIndex
+                            ),
+                            1
+                        );
+
+                        renderPhotos();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* ======================================
+       FORM
+    ====================================== */
+
+    const form=
+        document.getElementById(
+            "sellForm"
+        );
+
+
+    form.addEventListener(
+        "submit",
+        event=>{
+
+            event.preventDefault();
+
+
+            const club=
+                document.getElementById(
+                    "sellClub"
+                ).value.trim();
+
+
+            const priceRaw=
+                document.getElementById(
+                    "sellPrice"
+                ).value;
+
+
+            const name=
+                document.getElementById(
+                    "sellName"
+                ).value.trim();
+
+
+            const condition=
+                document.getElementById(
+                    "sellCondition"
+                ).value;
+
+
+            const size=
+                document.getElementById(
+                    "sellMaat"
+                ).value;
+
+
+            const description=
+                document.getElementById(
+                    "sellDescription"
+                ).value.trim();
+
+
+            if(
+                !club ||
+                !priceRaw ||
+                !name ||
+                !condition
+            ){
+
+                alert(
+                    "Vul alle verplichte velden in."
+                );
+
+                return;
+
+            }
+
+
+            if(
+                selectedImages.length===0
+            ){
+
+                document
+                    .getElementById(
+                        "photoError"
+                    )
+                    .classList.add("show");
+
+                return;
+
+            }
+
+
+            document
+                .getElementById(
+                    "photoError"
+                )
+                .classList.remove("show");
+
+
+            const boost=
+                document
+                    .querySelector(
+                        'input[name="boostOption"]:checked'
+                    );
+
+
+            let boosted=false;
+            let boostExpiresAt=null;
+
+
+            if(
+                boost &&
+                boost.value!=="none"
+            ){
+
+                boosted=true;
+
+
+                boostExpiresAt=
+                    Date.now()+
+                    (
+                        boost.value==="24h"
+                        ?24*60*60*1000
+                        :7*24*60*60*1000
+                    );
+
+            }
+
+
+            const selectedTypes=
+                Array.from(
+                    document.querySelectorAll(
+                        'input[name="sellType"]:checked'
+                    )
+                )
+                .map(
+                    checkbox=>checkbox.value
+                );
+
+
+            const newShirt={
+
+                id:Date.now(),
+
+                club:club,
+
+                price:
+                    "€ "+
+                    parseFloat(priceRaw)
+                    .toFixed(2)
+                    .replace(".",","),
+
+                name:name,
+
+                condition:condition,
+
+                size:size,
+
+                type:
+                    selectedTypes.length
+                    ?selectedTypes
+                    :["Club"],
+
+                description:description,
+
+                boosted:boosted,
+
+                boostExpiresAt:boostExpiresAt,
+
+                images:selectedImages
+
+            };
+
+
+            const listings=
+                getListings();
+
+
+            listings.push(
+                newShirt
+            );
+
+
+            saveListings(
+                listings
+            );
+
+
+            showToast(
+                "Shirt succesvol geplaatst!"
+            );
+
+
+            setTimeout(
+                ()=>{
+                    location.hash="#/explore";
+                },
+                400
+            );
+
+        }
+    );
+
+}
+
+
+/* ======================================================
+   TOAST
+====================================================== */
+
+function showToast(message){
+
+    const element=
+        document.getElementById(
+            "toast"
+        );
+
+
+    element.textContent=
+        message;
+
+
+    element.classList.add("show");
+
+
+    clearTimeout(
+        window.toastTimeout
+    );
+
+
+    window.toastTimeout=
+        setTimeout(
+            ()=>{
+                element.classList.remove("show");
+            },
+            2500
+        );
+
+}
+
+
+/* ======================================================
+   BUTTON HANDLING
+====================================================== */
+
+app.addEventListener(
+    "click",
+    event=>{
+
+        const button=
+            event.target.closest(
+                ".shirt-view"
+            );
+
+
+        if(!button){
+            return;
+        }
+
+
+        showToast(
+            button.dataset.club+
+            " • "+
+            button.dataset.price
+        );
+
+    }
+);
+
+
+/* ======================================================
+   NAVIGATION
+====================================================== */
+
+function updateNav(){
+
+    const hash=
+        location.hash || "#/";
+
+
+    document
+        .querySelectorAll("nav a")
+        .forEach(
+            link=>
+                link.classList.remove("active")
+        );
+
+
+    if(
+        hash.startsWith(
+            "#/explore"
+        )
+    ){
+
+        document
+            .getElementById("navExplore")
+            ?.classList.add("active");
+
+    }
+
+    else if(
+        hash.startsWith(
+            "#/sell"
+        )
+    ){
+
+        document
+            .getElementById("navSell")
+            ?.classList.add("active");
+
+    }
+
+    else{
+
+        document
+            .getElementById("navHome")
+            ?.classList.add("active");
+
+    }
+
+
+    document
+        .getElementById("mobileNav")
+        ?.classList.remove("open");
+
+}
+
+
+/* ======================================================
+   ROUTER
+====================================================== */
+
+function router(){
+
+    updateNav();
+
+
+    const hash=
+        location.hash || "#/";
+
+
+    if(
+        hash.startsWith("#/explore")
+    ){
+
+        renderExplore();
+
+    }
+
+    else if(
+        hash.startsWith("#/sell")
+    ){
+
+        renderSell();
+
+    }
+
+    else{
+
+        renderHome();
+
+    }
+
+}
+
+
+window.addEventListener(
+    "hashchange",
+    router
+);
+
+
+/* ======================================================
+   MOBILE MENU
+====================================================== */
+
+document
+    .getElementById("menuButton")
+    .addEventListener(
+        "click",
+        ()=>{
+            document
+                .getElementById("mobileNav")
+                .classList.toggle("open");
+        }
+    );
+
+
+document
+    .querySelectorAll(
+        "#mobileNav a"
+    )
+    .forEach(link=>{
+
+        link.addEventListener(
+            "click",
+            ()=>{
+                document
+                    .getElementById("mobileNav")
+                    .classList.remove("open");
+            }
+        );
+
+    });
+
+
+/* ======================================================
+   LANGUAGE
+====================================================== */
+
+const langBtn=
+    document.getElementById(
+        "languageButton"
+    );
+
+
+const langModal=
+    document.getElementById(
+        "languageModal"
+    );
+
+
+const langClose=
+    document.getElementById(
+        "languageClose"
+    );
+
+
+const langList=
+    document.getElementById(
+        "languageList"
+    );
+
+
+const langSearch=
+    document.getElementById(
+        "languageSearch"
+    );
+
+
+let activeLang=
+    localStorage.getItem(
+        "fsm_language"
+    ) || "nl";
+
+
+function renderLanguages(
+    query=""
+){
+
+    const q=
+        query
+            .toLowerCase()
+            .trim();
+
+
+    const filtered=
+        languages.filter(
+            language=>
+                language.name
+                    .toLowerCase()
+                    .includes(q)
+                ||
+                language.code
+                    .toLowerCase()
+                    .includes(q)
+        );
+
+
+    langList.innerHTML=
+        filtered
+            .map(
+                language=>`
+
+<button
+type="button"
+class="language-item ${
+    language.code===activeLang
+    ?"active"
+    :""
+}"
+data-code="${language.code}"
+>
+
+<span class="language-flag">
+${language.flag}
+</span>
+
+<span>
+${language.name}
+</span>
+
+</button>
+
+`
+            )
+            .join("");
+
+
+}
+
+
+langBtn.addEventListener(
+    "click",
+    ()=>{
+
+        renderLanguages();
+
+        langModal.classList.add(
+            "open"
+        );
+
+        setTimeout(
+            ()=>{
+                langSearch.focus();
+            },
+            100
+        );
+
+    }
+);
+
+
+langClose.addEventListener(
+    "click",
+    ()=>{
+
+        langModal.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+langSearch.addEventListener(
+    "input",
+    event=>{
+
+        renderLanguages(
+            event.target.value
+        );
+
+    }
+);
+
+
+langList.addEventListener(
+    "click",
+    event=>{
+
+        const button=
+            event.target.closest(
+                ".language-item"
+            );
+
+
+        if(!button){
+            return;
+        }
+
+
+        activeLang=
+            button.dataset.code;
+
+
+        localStorage.setItem(
+            "fsm_language",
+            activeLang
+        );
+
+
+        /*
+           Google Translate cookie
+        */
+
+        document.cookie=
+            "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+
+
+        if(
+            activeLang!=="nl"
+        ){
+
+            document.cookie=
+                "googtrans=/nl/"+
+                activeLang+
+                "; path=/;";
+
+        }
+
+
+        langModal.classList.remove(
+            "open"
+        );
+
+
+        location.reload();
+
+    }
+);
+
+
+/* ======================================================
+   CURRENT LANGUAGE BUTTON
+====================================================== */
+
+function updateLanguageButton(){
+
+    const language=
+        languages.find(
+            item=>item.code===activeLang
+        )
+        ||
+        languages.find(
+            item=>item.code==="nl"
+        );
+
+
+    if(!language){
         return;
     }
 
-    const boostRadio = document.querySelector('input[name="boostOption"]:checked');
-    let boostTime = null;
-    let isBoosted = false;
-    if (boostRadio && boostRadio.value !== 'none') {
-        isBoosted = true;
-        boostTime = Date.now() + (boostRadio.value === '24h' ? 24*60*60*1000 : 7*24*60*60*1000);
+
+    document
+        .getElementById(
+            "currentFlag"
+        )
+        .textContent=
+            language.flag;
+
+
+    document
+        .getElementById(
+            "currentCode"
+        )
+        .textContent=
+            language.code
+                .split("-")[0]
+                .toUpperCase();
+
+}
+
+
+/* ======================================================
+   CLOSE LANGUAGE MODAL WHEN CLICKING OUTSIDE
+====================================================== */
+
+langModal.addEventListener(
+    "click",
+    event=>{
+
+        if(
+            event.target===
+            langModal
+        ){
+
+            langModal.classList.remove(
+                "open"
+            );
+
+        }
+
     }
+);
 
-    // Verzamel geselecteerde types
-    const typeCheckboxes = document.querySelectorAll('input[name="sellType"]:checked');
-    const selectedTypes = Array.from(typeCheckboxes).map(cb => cb.value);
 
-    // Maak een nieuw shirt object
-    const newShirt = {
-      id: Date.now(),
-      club: club,
-      price: "€ " + parseFloat(priceRaw).toFixed(2).replace('.', ','),
-      name: name,
-      condition: condition,
-      size: size,
-      type: selectedTypes.length > 0 ? selectedTypes : ["Club"],
-      boosted: isBoosted,
-      boostExpiresAt: boostTime,
-      images: [] // Foto upload logica overgeslagen voor dit voorbeeld
-    };
+/* ======================================================
+   ESCAPE KEY
+====================================================== */
 
-    const listings = getListings();
-    listings.push(newShirt);
-    saveListings(listings);
+document.addEventListener(
+    "keydown",
+    event=>{
 
-    showToast("Shirt succesvol geplaatst!");
-    location.hash = "#/explore";
-  });
-}
+        if(
+            event.key==="Escape"
+        ){
 
-function showToast(msg){
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),3000);
-}
+            langModal.classList.remove(
+                "open"
+            );
 
-function updateNav(){
-  const h = location.hash;
-  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
-  if(h.startsWith('#/explore') && document.getElementById('navExplore')) document.getElementById('navExplore').classList.add('active');
-  else if(h==='#/sell' && document.getElementById('navSell')) document.getElementById('navSell').classList.add('active');
-  else if(document.getElementById('navHome')) document.getElementById('navHome').classList.add('active');
-  document.getElementById('mobileNav').classList.remove('open');
-}
 
-function router(){
-  updateNav();
-  const h = location.hash;
-  if(h.startsWith('#/explore')) renderExplore();
-  else if(h==='#/sell') renderSell();
-  else renderHome();
-}
+            document
+                .querySelectorAll(
+                    ".filter-dropdown"
+                )
+                .forEach(
+                    menu=>
+                        menu.classList.remove("open")
+                );
 
-window.addEventListener('hashchange', router);
+
+            document
+                .querySelectorAll(
+                    ".filter-trigger"
+                )
+                .forEach(
+                    button=>
+                        button.classList.remove("open")
+                );
+
+        }
+
+    }
+);
+
+
+/* ======================================================
+   INIT
+====================================================== */
+
+updateLanguageButton();
+
+renderLanguages();
+
 router();
 
-/* LANGUAGE LOGIC */
-const langBtn = document.getElementById("languageButton");
-const langModal = document.getElementById("languageModal");
-const langClose = document.getElementById("languageClose");
-const langList = document.getElementById("languageList");
-const langSearch = document.getElementById("languageSearch");
-const curFlag = document.getElementById("currentFlag");
-const curCode = document.getElementById("currentCode");
-let activeLang = "nl";
-
-function renderLanguages(query=""){
-  const q = query.toLowerCase();
-  const html = languages.filter(l=>l.name.toLowerCase().includes(q) || l.code.toLowerCase().includes(q)).map(l=>`
-    <button class="language-item ${l.code===activeLang?'active':''}" data-code="${l.code}">
-      <span style="font-size:16px">${l.flag}</span> ${l.name}
-    </button>
-  `).join("");
-  langList.innerHTML = html;
-}
-
-langBtn.addEventListener("click", ()=>{
-  renderLanguages();
-  langModal.classList.add("open");
-  setTimeout(()=>langSearch.focus(),100);
-});
-langClose.addEventListener("click", ()=>langModal.classList.remove("open"));
-langSearch.addEventListener("input", e=>renderLanguages(e.target.value));
-
-langList.addEventListener("click", e=>{
-  const btn = e.target.closest(".language-item");
-  if(btn){
-    activeLang = btn.dataset.code;
-    const l = languages.find(x=>x.code===activeLang);
-    curFlag.innerText = l.flag;
-    curCode.innerText = l.code.toUpperCase();
-    langModal.classList.remove("open");
-    
-    // Google translate set language
-    const gtCombo = document.querySelector('.goog-te-combo');
-    if(gtCombo){
-      gtCombo.value = activeLang;
-      gtCombo.dispatchEvent(new Event('change'));
-    }
-  }
-});
 </script>
+
 </body>
 </html>
