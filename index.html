@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 
 <title>Football-Shirt-Market</title>
 
@@ -13,15 +13,14 @@
 <style>
 :root{
     --bg:#020504;
-    --bg2:#050b08;
-    --card:#08140f;
+    --green:#18bf77;
+    --green-dark:#08784c;
     --gold:#efd28f;
-    --gold2:#d6aa45;
-    --green:#20c982;
-    --green2:#0c8654;
+    --gold-dark:#d1a33d;
     --white:#fff;
-    --muted:#a6b4ad;
-    --border:rgba(239,210,143,.20);
+    --muted:#b7c4be;
+    --card:#08140f;
+    --line:rgba(239,210,143,.2);
 }
 
 *{
@@ -30,18 +29,18 @@
     padding:0;
 }
 
-html{
-    scroll-behavior:smooth;
+html,
+body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:#fff;
+    font-family:Inter,Arial,sans-serif;
+    overflow-x:hidden;
 }
 
 body{
     min-height:100vh;
-    background:
-        radial-gradient(circle at 70% 0%,rgba(32,201,130,.08),transparent 30%),
-        var(--bg);
-    color:var(--white);
-    font-family:Inter,Arial,sans-serif;
-    overflow-x:hidden;
 }
 
 a{
@@ -51,22 +50,16 @@ a{
 
 button,
 input{
-    font:inherit;
+    font-family:inherit;
 }
 
-img{
-    max-width:100%;
-}
-
-/* =========================================
-   GOOGLE TRANSLATE VERBERGEN
-========================================= */
+/* ================================
+   GOOGLE TRANSLATE
+================================ */
 
 .goog-te-banner-frame,
 .skiptranslate iframe,
-.goog-te-banner-frame.skiptranslate,
-#goog-gt-tt,
-.goog-tooltip{
+#google_translate_element{
     display:none!important;
 }
 
@@ -79,25 +72,24 @@ body{
     box-shadow:none!important;
 }
 
-/* =========================================
+/* ================================
    HEADER
-========================================= */
+================================ */
 
 .site-header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(2,7,5,.93);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--border);
+    background:rgba(2,6,4,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--line);
 }
 
 .header-inner{
     width:min(1400px,100%);
-    min-height:80px;
+    min-height:78px;
     margin:auto;
-    padding:10px 24px;
+    padding:9px 22px;
 
     display:flex;
     align-items:center;
@@ -105,55 +97,50 @@ body{
     gap:20px;
 }
 
-.logo-link{
+.logo-area{
     display:flex;
     align-items:center;
-    gap:12px;
-    min-width:0;
+    gap:11px;
 }
 
 .header-logo{
-    width:55px;
-    height:55px;
+    width:54px;
+    height:54px;
     object-fit:contain;
-    flex-shrink:0;
 }
 
 .brand{
     display:flex;
     flex-direction:column;
-    min-width:0;
 }
 
 .brand-title{
     font-family:Montserrat,sans-serif;
-    font-size:15px;
+    font-size:14px;
     font-weight:900;
-    letter-spacing:.6px;
-    white-space:nowrap;
+    letter-spacing:.5px;
 }
 
 .brand-since{
+    margin-top:3px;
     color:var(--gold);
     font-size:9px;
-    font-weight:800;
     letter-spacing:2px;
-    margin-top:4px;
+    font-weight:800;
 }
 
 nav{
     display:flex;
     gap:5px;
-    align-items:center;
 }
 
 nav a{
     color:#adbbb4;
-    padding:11px 15px;
+    padding:10px 15px;
     border-radius:10px;
     font-size:13px;
     font-weight:800;
-    transition:.25s ease;
+    transition:.2s;
 }
 
 nav a:hover,
@@ -162,60 +149,49 @@ nav a.active{
     background:rgba(255,255,255,.07);
 }
 
-.header-actions{
+.header-right{
     display:flex;
     align-items:center;
     gap:8px;
 }
 
-.lang-button{
-    min-height:42px;
-    padding:0 13px;
+.language-button{
+    min-height:40px;
+    border:1px solid rgba(239,210,143,.32);
+    background:#07130e;
+    color:var(--gold);
+    border-radius:10px;
+    padding:0 12px;
 
     display:flex;
     align-items:center;
-    gap:7px;
+    gap:6px;
 
-    border-radius:11px;
-    border:1px solid rgba(239,210,143,.32);
-    background:#08140f;
-    color:var(--gold);
-
-    font-size:12px;
+    font-size:11px;
     font-weight:800;
-
     cursor:pointer;
-    transition:.25s;
-}
-
-.lang-button:hover{
-    border-color:var(--gold);
-    transform:translateY(-1px);
 }
 
 .menu-button{
     display:none;
     width:42px;
     height:42px;
-
-    border:1px solid var(--border);
+    border:1px solid var(--line);
     border-radius:10px;
-
-    background:#08140f;
+    background:#07130e;
     color:#fff;
-
     font-size:20px;
 }
 
-/* =========================================
-   MOBILE MENU
-========================================= */
+/* ================================
+   MOBILE NAV
+================================ */
 
 .mobile-nav{
     display:none;
+    border-top:1px solid rgba(239,210,143,.1);
     background:#030806;
-    border-top:1px solid rgba(239,210,143,.10);
-    padding:10px 14px 15px;
+    padding:10px 12px;
 }
 
 .mobile-nav.open{
@@ -226,7 +202,7 @@ nav a.active{
     display:block;
     padding:13px;
     border-radius:9px;
-    color:#d9e2dd;
+    color:#dbe3df;
     font-weight:800;
 }
 
@@ -234,41 +210,40 @@ nav a.active{
     background:rgba(255,255,255,.06);
 }
 
-/* =========================================
+/* ================================
    PAGE
-========================================= */
+================================ */
 
 .page{
     width:min(1400px,100%);
     margin:auto;
-    padding:28px 24px 80px;
+    padding:25px 22px 75px;
 }
 
-/* =========================================
+/* ==================================================
    HERO
-========================================= */
+================================================== */
 
 .hero{
     position:relative;
     width:100%;
-    min-height:560px;
+    height:clamp(500px,51vw,700px);
 
-    border-radius:22px;
     overflow:hidden;
+    border-radius:22px;
 
-    border:1px solid rgba(239,210,143,.24);
+    border:1px solid rgba(239,210,143,.22);
 
-    background:#020604;
+    background:#020504;
 
     box-shadow:
-        0 25px 70px rgba(0,0,0,.62),
-        inset 0 0 80px rgba(0,0,0,.25);
+        0 25px 70px rgba(0,0,0,.6);
 }
 
 /*
-  De afbeelding blijft volledig zichtbaar.
-  Op desktop staat de rechterkant van de afbeelding
-  waar je logo zit op zijn plaats.
+   BELANGRIJK:
+   de afbeelding is maar één laag.
+   Er wordt niets van de afbeelding vervangen.
 */
 
 .hero-image{
@@ -279,52 +254,91 @@ nav a.active{
     height:100%;
 
     object-fit:cover;
-    object-position:center center;
+    object-position:center;
 
-    z-index:0;
+    display:block;
+
+    z-index:1;
 }
 
-.hero-overlay{
+/*
+   Deze overlay maakt alleen links iets donkerder.
+   Hierdoor blijven het logo en de rechterkant volledig zichtbaar.
+*/
+
+.hero-shade{
     position:absolute;
     inset:0;
-    z-index:1;
+    z-index:2;
 
     background:
         linear-gradient(
             90deg,
-            rgba(2,5,4,.94) 0%,
-            rgba(2,5,4,.80) 27%,
-            rgba(2,5,4,.28) 55%,
-            rgba(2,5,4,.06) 78%,
-            rgba(2,5,4,.12) 100%
+            rgba(2,5,4,.98) 0%,
+            rgba(2,5,4,.86) 27%,
+            rgba(2,5,4,.52) 46%,
+            rgba(2,5,4,.12) 65%,
+            rgba(2,5,4,0) 100%
         );
+
+    pointer-events:none;
 }
 
-/* HERO CONTENT */
+/*
+   CONTENT IS NU ÉÉN ENKELE LAAG.
+*/
 
 .hero-content{
-    position:relative;
-    z-index:3;
+    position:absolute;
+    z-index:5;
 
-    width:51%;
-    min-height:560px;
+    left:5.5%;
+    top:50%;
 
-    padding:60px 0 70px 56px;
+    transform:translateY(-50%);
+
+    width:min(530px,43%);
 
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:flex-start;
+}
+
+/* VERWIJDEREN VAN DUBBELE DONKERE TITEL:
+   de HTML-content wordt onder een extra donkere
+   zone gezet, zodat eventuele ingebakken oude tekst
+   in de afbeelding niet opvalt.
+*/
+
+.hero-clean-mask{
+    position:absolute;
+    z-index:3;
+    left:0;
+    top:0;
+    bottom:0;
+    width:47%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #020504 0%,
+            rgba(2,5,4,.99) 68%,
+            rgba(2,5,4,.50) 90%,
+            transparent 100%
+        );
+
+    pointer-events:none;
 }
 
 .hero-kicker{
     color:var(--gold);
+
     font-family:Montserrat,sans-serif;
 
     font-size:11px;
     font-weight:900;
 
-    letter-spacing:2.2px;
+    letter-spacing:2px;
     text-transform:uppercase;
 
     margin-bottom:17px;
@@ -333,45 +347,52 @@ nav a.active{
 .hero-title{
     font-family:Montserrat,sans-serif;
 
-    font-size:clamp(42px,5.4vw,78px);
+    color:#fff;
+
+    font-size:clamp(40px,5vw,75px);
+
     line-height:.94;
+
+    letter-spacing:-2px;
 
     font-weight:900;
 
-    letter-spacing:-2.5px;
     text-transform:uppercase;
 
-    color:#fff;
-
     text-shadow:
-        0 5px 25px rgba(0,0,0,.6);
+        0 5px 25px rgba(0,0,0,.65);
 }
 
-.hero-title .gold{
+.hero-title span{
     color:var(--gold);
 }
 
 .hero-description{
-    max-width:500px;
+    max-width:470px;
 
-    margin-top:22px;
+    color:#d1dbd6;
 
-    color:#d3ddd8;
+    margin-top:20px;
 
-    font-size:15px;
+    font-size:14px;
+
     line-height:1.55;
 }
 
 .hero-buttons{
-    margin-top:25px;
-
     display:flex;
-    flex-wrap:wrap;
     gap:10px;
+
+    margin-top:24px;
 }
 
-.hero-btn{
+/*
+   Geen grijze achtergrond!
+*/
+
+.hero-button{
     min-height:45px;
+
     padding:0 18px;
 
     display:inline-flex;
@@ -380,82 +401,81 @@ nav a.active{
 
     border-radius:9px;
 
-    font-size:12px;
+    font-size:11px;
     font-weight:900;
 
-    transition:.25s ease;
+    transition:.22s;
+
+    border:1px solid transparent;
 }
 
-.hero-btn.green{
-    color:white;
+.hero-button.green{
+    color:#fff;
 
     background:
         linear-gradient(
             135deg,
-            var(--green),
-            var(--green2)
+            #19c982,
+            #0a8955
         );
 
     box-shadow:
-        0 8px 25px rgba(25,201,130,.25);
+        0 8px 25px rgba(25,201,130,.22);
 }
 
-.hero-btn.green:hover{
+.hero-button.green:hover{
     transform:translateY(-2px);
-    box-shadow:
-        0 12px 32px rgba(25,201,130,.35);
 }
 
-.hero-btn.white{
-    color:#101411;
+.hero-button.white{
     background:#fff;
+    color:#111;
 }
 
-.hero-btn.white:hover{
+.hero-button.white:hover{
     transform:translateY(-2px);
-    background:#f2f2f2;
 }
 
-/* =========================================
-   HERO SEARCH
-========================================= */
+/* ================================
+   SEARCH BAR
+================================ */
 
 .hero-search{
-    width:min(450px,100%);
-    height:52px;
+    width:min(430px,100%);
+    height:50px;
 
-    margin-top:24px;
+    margin-top:22px;
 
     display:flex;
     align-items:center;
 
-    border-radius:12px;
+    background:rgba(0,0,0,.80);
 
-    border:1px solid rgba(239,210,143,.50);
-    background:rgba(0,0,0,.69);
+    border:1px solid rgba(239,210,143,.48);
+
+    border-radius:11px;
+
+    overflow:hidden;
 
     box-shadow:
-        0 8px 30px rgba(0,0,0,.35),
-        0 0 25px rgba(239,210,143,.06);
-
-    backdrop-filter:blur(8px);
+        0 10px 30px rgba(0,0,0,.4);
 }
 
 .hero-search-icon{
-    width:48px;
-
-    color:#fff;
-
-    font-size:22px;
+    width:47px;
 
     display:flex;
     justify-content:center;
     align-items:center;
+
+    color:#fff;
+    font-size:21px;
 }
 
 .hero-search input{
     flex:1;
     min-width:0;
+
     height:100%;
 
     border:0;
@@ -463,20 +483,20 @@ nav a.active{
 
     background:transparent;
 
-    color:white;
+    color:#fff;
 
-    font-size:13px;
+    font-size:12px;
 }
 
 .hero-search input::placeholder{
-    color:#84928b;
+    color:#8e9b95;
 }
 
 .hero-search button{
-    width:42px;
-    height:40px;
+    width:43px;
+    height:38px;
 
-    margin-right:6px;
+    margin-right:5px;
 
     border:0;
     border-radius:8px;
@@ -485,41 +505,38 @@ nav a.active{
         linear-gradient(
             135deg,
             var(--gold),
-            var(--gold2)
+            var(--gold-dark)
         );
 
-    color:#090b09;
+    color:#0a0d0b;
 
-    font-size:20px;
+    font-size:19px;
     font-weight:900;
 }
 
-/* =========================================
+/* ================================
    SECTIONS
-========================================= */
+================================ */
 
 .section{
-    margin-top:50px;
+    margin-top:45px;
 }
 
-.section-header{
+.section-head{
     display:flex;
-    align-items:end;
     justify-content:space-between;
-    gap:20px;
-
-    border-bottom:1px solid rgba(239,210,143,.14);
+    align-items:flex-end;
 
     padding-bottom:13px;
-    margin-bottom:20px;
+    margin-bottom:18px;
+
+    border-bottom:1px solid rgba(239,210,143,.14);
 }
 
 .section-title{
     font-family:Montserrat,sans-serif;
-
-    font-size:26px;
+    font-size:25px;
     font-weight:900;
-
     text-transform:uppercase;
 }
 
@@ -531,31 +548,23 @@ nav a.active{
     color:var(--gold);
     font-size:12px;
     font-weight:900;
-
-    white-space:nowrap;
 }
 
-.section-link:hover{
-    color:#fff;
-}
-
-/* =========================================
-   HOME SHIRT RIJ
-========================================= */
+/* ================================
+   HOME SHIRTS
+================================ */
 
 .home-shirt-row{
     display:grid;
 
     grid-auto-flow:column;
-    grid-auto-columns:minmax(225px,1fr);
+    grid-auto-columns:245px;
 
-    gap:17px;
+    gap:15px;
 
     overflow-x:auto;
 
-    padding:3px 3px 14px;
-
-    scroll-snap-type:x mandatory;
+    padding:4px 3px 12px;
 }
 
 .home-shirt-row::-webkit-scrollbar{
@@ -563,13 +572,13 @@ nav a.active{
 }
 
 .home-shirt-row::-webkit-scrollbar-thumb{
-    background:rgba(239,210,143,.28);
+    background:rgba(239,210,143,.3);
     border-radius:10px;
 }
 
-/* =========================================
+/* ================================
    EXPLORE GRID
-========================================= */
+================================ */
 
 .explore-grid{
     display:grid;
@@ -580,216 +589,165 @@ nav a.active{
     gap:18px;
 }
 
-/* =========================================
+/* ================================
    SHIRT CARD
-========================================= */
+================================ */
 
 .shirt-card{
-    min-width:0;
-
     overflow:hidden;
-
-    border:1px solid var(--border);
-    border-radius:16px;
 
     background:
         linear-gradient(
             180deg,
-            #0b1a13,
+            #0b1913,
             #06100c
         );
 
-    transition:
-        transform .3s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    transition:.28s;
 }
 
 .shirt-card:hover{
     transform:translateY(-6px);
 
-    border-color:rgba(239,210,143,.55);
+    border-color:var(--gold);
 
     box-shadow:
-        0 18px 38px rgba(0,0,0,.42);
+        0 16px 35px rgba(0,0,0,.45);
 }
 
-.shirt-image{
+.shirt-visual{
     position:relative;
 
-    aspect-ratio:1 / 1;
+    width:100%;
+    aspect-ratio:1/1;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    overflow:hidden;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #173827 0%,
-            #09150f 55%,
-            #030806 100%
-        );
-}
-
-.shirt-image::before{
-    content:"";
-
-    position:absolute;
-
-    width:70%;
-    height:70%;
-
-    border-radius:50%;
-
     background:
         radial-gradient(
             circle,
-            rgba(25,201,130,.11),
-            transparent 65%
+            #183c2a,
+            #08150f 60%,
+            #030805
         );
+
+    font-size:72px;
 }
 
-.shirt-icon{
-    position:relative;
-    z-index:2;
-
-    font-size:74px;
-
-    filter:
-        drop-shadow(0 14px 15px rgba(0,0,0,.65));
-
-    transition:.3s;
-}
-
-.shirt-card:hover .shirt-icon{
-    transform:scale(1.08) rotate(-2deg);
-}
-
-.badge{
+.shirt-condition{
     position:absolute;
-    z-index:3;
-
-    top:10px;
-    left:10px;
-
-    padding:5px 8px;
+    top:9px;
+    left:9px;
 
     color:var(--gold-light);
 
-    background:rgba(0,0,0,.76);
+    padding:4px 8px;
 
-    border:1px solid rgba(239,210,143,.35);
-    border-radius:20px;
+    background:rgba(0,0,0,.72);
+
+    border:1px solid rgba(239,210,143,.3);
+
+    border-radius:15px;
 
     font-size:8px;
     font-weight:900;
-    text-transform:uppercase;
 }
 
 .shirt-info{
-    padding:15px;
+    padding:14px;
 }
 
 .shirt-club{
-    color:#87988f;
+    color:#83948c;
 
     font-size:9px;
-    font-weight:900;
 
-    letter-spacing:.6px;
+    font-weight:900;
 
     text-transform:uppercase;
 
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    letter-spacing:.5px;
 }
 
 .shirt-name{
     color:#fff;
 
+    font-size:13px;
+
+    line-height:1.4;
+
+    font-weight:900;
+
     margin-top:5px;
 
-    min-height:40px;
-
-    font-size:13px;
-    line-height:1.35;
-    font-weight:900;
+    min-height:37px;
 }
 
-.shirt-bottom{
+.shirt-footer{
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
 
-    gap:8px;
+    justify-content:space-between;
 
-    margin-top:14px;
+    margin-top:13px;
+
+    gap:7px;
 }
 
-.price{
+.shirt-price{
     color:var(--green);
 
-    font-size:15px;
-    font-weight:900;
+    font-size:14px;
 
-    white-space:nowrap;
+    font-weight:900;
 }
 
-.view-button{
-    border:1px solid rgba(239,210,143,.27);
+.shirt-view{
+    color:var(--gold);
 
     background:rgba(239,210,143,.07);
 
-    color:var(--gold);
+    border:1px solid rgba(239,210,143,.27);
 
     border-radius:7px;
 
     padding:7px 9px;
 
     font-size:9px;
+
     font-weight:900;
 
     cursor:pointer;
-
-    transition:.2s;
 }
 
-.view-button:hover{
-    background:var(--gold2);
-    color:#000;
-}
+/* ================================
+   EXPLORE BANNER
+================================ */
 
-/* =========================================
-   EXPLORE TOP
-========================================= */
-
-.explore-top{
+.explore-banner{
     position:relative;
 
-    width:100%;
-    height:320px;
+    height:340px;
 
     overflow:hidden;
 
     border-radius:20px;
 
-    border:1px solid var(--border);
-
-    background:#020504;
-
-    margin-bottom:40px;
+    border:1px solid var(--line);
 }
 
-.explore-top img{
+.explore-banner img{
     width:100%;
     height:100%;
 
     object-fit:cover;
-    object-position:center;
 }
 
 .explore-overlay{
@@ -804,8 +762,8 @@ nav a.active{
     background:
         linear-gradient(
             90deg,
-            rgba(2,5,4,.90),
-            rgba(2,5,4,.42),
+            rgba(2,5,4,.91),
+            rgba(2,5,4,.4),
             transparent
         );
 }
@@ -813,7 +771,7 @@ nav a.active{
 .explore-title{
     font-family:Montserrat,sans-serif;
 
-    font-size:clamp(35px,4vw,58px);
+    font-size:clamp(35px,5vw,62px);
 
     line-height:.95;
 
@@ -824,12 +782,12 @@ nav a.active{
     color:var(--gold);
 }
 
-/* =========================================
+/* ================================
    SELL
-========================================= */
+================================ */
 
 .sell-box{
-    width:min(680px,100%);
+    max-width:650px;
 
     margin:70px auto;
 
@@ -841,93 +799,72 @@ nav a.active{
         radial-gradient(
             circle at top,
             rgba(239,210,143,.09),
-            transparent 50%
+            transparent 55%
         ),
         #07130e;
 
-    border:1px solid var(--border);
+    border:1px solid var(--line);
 
-    border-radius:22px;
+    border-radius:20px;
 
     box-shadow:var(--shadow);
 }
 
-.sell-box-icon{
-    font-size:50px;
-    margin-bottom:15px;
-}
-
 .sell-box h1{
-    font-family:Montserrat,sans-serif;
-
     color:var(--gold);
 
+    font-family:Montserrat,sans-serif;
+
     font-size:36px;
-
-    text-transform:uppercase;
 }
 
-.sell-box p{
-    margin:15px auto 27px;
-
-    color:#a9b7b0;
-
-    line-height:1.7;
-}
-
-/* =========================================
+/* ================================
    LANGUAGE MODAL
-========================================= */
+================================ */
 
-.language-modal-bg{
+.language-modal{
     position:fixed;
     inset:0;
-    z-index:5000;
+    z-index:4000;
+
+    background:rgba(0,0,0,.82);
+
+    backdrop-filter:blur(12px);
 
     display:none;
+
     align-items:center;
     justify-content:center;
 
     padding:20px;
-
-    background:rgba(0,0,0,.83);
-
-    backdrop-filter:blur(12px);
 }
 
-.language-modal-bg.open{
+.language-modal.open{
     display:flex;
 }
 
-.language-modal{
+.language-box{
     width:min(650px,100%);
-    max-height:86vh;
+    max-height:85vh;
+
+    background:#09160f;
+
+    border:1px solid rgba(239,210,143,.27);
+
+    border-radius:20px;
+
+    padding:22px;
 
     display:flex;
     flex-direction:column;
 
-    padding:23px;
-
-    border-radius:21px;
-
-    background:
-        radial-gradient(
-            circle at top right,
-            rgba(25,201,130,.07),
-            transparent 35%
-        ),
-        #09160f;
-
-    border:1px solid rgba(239,210,143,.27);
-
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.8);
+    box-shadow:0 30px 80px rgba(0,0,0,.8);
 }
 
-.language-header{
+.language-head{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 
     margin-bottom:15px;
 }
@@ -937,13 +874,13 @@ nav a.active{
 
     font-family:Montserrat,sans-serif;
 
-    font-size:19px;
+    font-size:18px;
     font-weight:900;
 }
 
 .language-close{
-    width:38px;
-    height:38px;
+    width:37px;
+    height:37px;
 
     border:0;
     border-radius:9px;
@@ -953,145 +890,109 @@ nav a.active{
     color:#aaa;
 
     font-size:24px;
-}
 
-.language-close:hover{
-    color:white;
+    cursor:pointer;
 }
 
 .language-search{
     width:100%;
     height:46px;
 
+    padding:0 14px;
+
     border:1px solid rgba(239,210,143,.23);
-    border-radius:11px;
+
+    border-radius:10px;
+
+    outline:0;
 
     background:#030806;
 
-    color:white;
+    color:#fff;
 
-    outline:none;
-
-    padding:0 14px;
-
-    margin-bottom:14px;
-}
-
-.language-search:focus{
-    border-color:var(--gold);
+    margin-bottom:13px;
 }
 
 .language-list{
     display:grid;
 
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(2,1fr);
 
     gap:7px;
 
     overflow-y:auto;
-
-    padding-right:4px;
 }
 
 .language-item{
+    min-height:42px;
+
+    border:1px solid transparent;
+
+    border-radius:9px;
+
+    background:rgba(255,255,255,.03);
+
+    color:#d6dfda;
+
     display:flex;
+
     align-items:center;
 
     gap:9px;
 
-    padding:10px 11px;
+    padding:8px 10px;
 
-    background:rgba(255,255,255,.03);
-
-    border:1px solid transparent;
-    border-radius:9px;
-
-    color:#dce5e0;
+    cursor:pointer;
 
     font-size:12px;
     font-weight:700;
 
-    cursor:pointer;
-
-    transition:.18s;
+    text-align:left;
 }
 
 .language-item:hover{
-    background:rgba(239,210,143,.10);
-    border-color:rgba(239,210,143,.18);
+    background:rgba(239,210,143,.1);
 }
 
 .language-item.active{
-    background:var(--gold2);
+    background:var(--gold-dark);
     color:#000;
 }
 
-.language-flag{
-    font-size:18px;
-}
-
-/* =========================================
+/* ================================
    FOOTER
-========================================= */
+================================ */
 
 footer{
-    padding:42px 20px;
+    padding:40px 20px;
 
     text-align:center;
 
-    border-top:1px solid var(--border);
-
     background:#010302;
 
-    color:#84928b;
+    border-top:1px solid var(--line);
+
+    color:#7e8c85;
 
     font-size:12px;
 }
 
 footer strong{
     color:#fff;
+
     font-family:Montserrat,sans-serif;
 }
 
-/* =========================================
-   TOAST
-========================================= */
+/* ================================
+   MOBILE
+================================ */
 
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:22px;
-    z-index:6000;
+@media(max-width:900px){
 
-    transform:translate(-50%,120px);
-
-    padding:12px 17px;
-
-    border-radius:10px;
-
-    background:#102117;
-
-    border:1px solid rgba(239,210,143,.35);
-
-    color:white;
-
-    font-size:12px;
-    font-weight:800;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.45);
-
-    transition:.3s;
-}
-
-.toast.show{
-    transform:translate(-50%,0);
-}
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media(max-width:1050px){
+    .header-inner{
+        min-height:68px;
+        padding:8px 12px;
+    }
 
     .brand{
         display:none;
@@ -1106,91 +1007,49 @@ footer strong{
     }
 
     .hero{
-        min-height:500px;
+        height:620px;
+        border-radius:16px;
     }
-
-    .hero-content{
-        min-height:500px;
-        width:57%;
-        padding-left:38px;
-    }
-
-    .hero-title{
-        font-size:clamp(39px,5.5vw,65px);
-    }
-
-    .shirt-row{
-        grid-auto-columns:230px;
-    }
-}
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media(max-width:700px){
-
-    .header-inner{
-        min-height:66px;
-        padding:8px 12px;
-        gap:8px;
-    }
-
-    .header-logo{
-        width:44px;
-        height:44px;
-    }
-
-    .header-actions{
-        margin-left:auto;
-    }
-
-    .lang-button{
-        min-height:39px;
-        padding:0 9px;
-    }
-
-    #currentLangCode{
-        display:none;
-    }
-
-    .page{
-        padding:13px 10px 55px;
-    }
-
-    .hero{
-        min-height:610px;
-        border-radius:15px;
-    }
-
-    /*
-      Op mobiel blijft de rechterkant van je afbeelding,
-      inclusief het logo, zichtbaar.
-    */
 
     .hero-image{
         object-position:68% center;
-        transform:scale(1.01);
     }
 
-    .hero-overlay{
+    .hero-shade{
         background:
             linear-gradient(
                 180deg,
-                rgba(2,5,4,.96) 0%,
-                rgba(2,5,4,.82) 42%,
-                rgba(2,5,4,.36) 70%,
-                rgba(2,5,4,.82) 100%
+                rgba(2,5,4,.9),
+                rgba(2,5,4,.72) 48%,
+                rgba(2,5,4,.28),
+                rgba(2,5,4,.65)
+            );
+    }
+
+    .hero-clean-mask{
+        width:100%;
+        height:56%;
+        bottom:auto;
+
+        background:
+            linear-gradient(
+                180deg,
+                #020504 0%,
+                rgba(2,5,4,.96) 72%,
+                transparent 100%
             );
     }
 
     .hero-content{
-        width:100%;
-        min-height:610px;
+        top:34px;
+        left:20px;
+        right:20px;
 
-        padding:42px 22px 23px;
+        transform:none;
 
-        justify-content:flex-start;
+        width:auto;
+
+        max-width:none;
     }
 
     .hero-kicker{
@@ -1200,43 +1059,86 @@ footer strong{
     }
 
     .hero-title{
-        font-size:clamp(37px,11vw,52px);
-        letter-spacing:-1.5px;
+        font-size:clamp(38px,11vw,54px);
+        letter-spacing:-1px;
     }
 
     .hero-description{
-        font-size:12px;
-        max-width:340px;
-        margin-top:17px;
+        max-width:350px;
+        margin-top:15px;
+        font-size:11px;
     }
 
     .hero-buttons{
-        margin-top:19px;
+        margin-top:17px;
     }
 
-    .hero-btn{
-        min-height:40px;
-        padding:0 13px;
-        font-size:10px;
+    .hero-button{
+        min-height:39px;
+        padding:0 12px;
+        font-size:9px;
     }
 
     .hero-search{
-        margin-top:20px;
+        margin-top:18px;
         width:100%;
-        height:49px;
+        max-width:390px;
     }
 
-    .hero-search input{
-        font-size:12px;
+    .home-shirt-row{
+        grid-auto-columns:220px;
     }
 
-    .hero-search button{
-        width:39px;
-        height:37px;
+    .language-list{
+        grid-template-columns:1fr;
     }
 
-    .section{
-        margin-top:35px;
+}
+
+@media(max-width:520px){
+
+    .page{
+        padding:12px 10px 55px;
+    }
+
+    .header-logo{
+        width:43px;
+        height:43px;
+    }
+
+    .hero{
+        height:600px;
+    }
+
+    .hero-image{
+        object-position:70% center;
+    }
+
+    .hero-content{
+        left:17px;
+        right:17px;
+        top:29px;
+    }
+
+    .hero-title{
+        font-size:40px;
+    }
+
+    .hero-description{
+        max-width:300px;
+        font-size:10px;
+    }
+
+    .hero-buttons{
+        width:100%;
+    }
+
+    .hero-button{
+        flex:1;
+    }
+
+    .hero-search{
+        width:100%;
     }
 
     .section-title{
@@ -1244,41 +1146,10 @@ footer strong{
     }
 
     .section-link{
-        font-size:10px;
+        font-size:9px;
     }
 
-    .home-shirt-row{
-        grid-auto-columns:205px;
-        gap:11px;
-    }
-
-    .shirt-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-    }
-
-    .explore-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:10px;
-    }
-
-    .shirt-info{
-        padding:11px;
-    }
-
-    .shirt-name{
-        font-size:11px;
-    }
-
-    .price{
-        font-size:12px;
-    }
-
-    .view-button{
-        font-size:8px;
-        padding:6px 7px;
-    }
-
-    .explore-top{
+    .explore-banner{
         height:300px;
     }
 
@@ -1286,50 +1157,20 @@ footer strong{
         padding-left:25px;
     }
 
-    .language-list{
-        grid-template-columns:1fr;
-    }
-
-    .language-modal{
-        padding:17px;
-    }
-
 }
 
-/* =========================================
-   VERY SMALL GSM
-========================================= */
-
-@media(max-width:420px){
+@media(max-width:380px){
 
     .hero{
-        min-height:585px;
-    }
-
-    .hero-content{
-        min-height:585px;
-        padding:34px 18px 18px;
+        height:570px;
     }
 
     .hero-title{
-        font-size:39px;
+        font-size:35px;
     }
 
     .hero-description{
-        max-width:290px;
-    }
-
-    .hero-buttons{
-        width:100%;
-    }
-
-    .hero-btn{
-        flex:1;
-    }
-
-    .shirts-grid,
-    .explore-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
+        display:none;
     }
 
 }
@@ -1339,10 +1180,7 @@ footer strong{
 
 <body>
 
-<!-- =========================================
-     GOOGLE TRANSLATE
-========================================= -->
-
+<!-- Google Translate -->
 <div id="google_translate_element"></div>
 
 <script>
@@ -1350,10 +1188,10 @@ function googleTranslateElementInit(){
 
     new google.translate.TranslateElement(
         {
-            pageLanguage:'nl',
+            pageLanguage:"nl",
             autoDisplay:false
         },
-        'google_translate_element'
+        "google_translate_element"
     );
 
 }
@@ -1370,7 +1208,7 @@ function googleTranslateElementInit(){
 
 <div class="header-inner">
 
-<a href="#/" class="logo-link">
+<a href="#/" class="logo-area">
 
 <img
 src="logo.png"
@@ -1410,33 +1248,20 @@ Verkopen
 </nav>
 
 
-<div class="header-actions">
+<div class="header-right">
 
 <button
-class="lang-button"
+class="language-button"
 id="languageButton"
-type="button"
 >
-
-<span id="currentFlag">
-🇳🇱
-</span>
-
-<span id="currentLangCode">
-NL
-</span>
-
-<span>
+<span id="currentFlag">🇳🇱</span>
+<span id="currentCode">NL</span>
 ▼
-</span>
-
 </button>
-
 
 <button
 class="menu-button"
 id="menuButton"
-type="button"
 >
 ☰
 </button>
@@ -1473,13 +1298,13 @@ Verkopen
 ========================================= -->
 
 <div
-class="language-modal-bg"
+class="language-modal"
 id="languageModal"
 >
 
-<div class="language-modal">
+<div class="language-box">
 
-<div class="language-header">
+<div class="language-head">
 
 <div class="language-title">
 Kies je taal
@@ -1488,7 +1313,6 @@ Kies je taal
 <button
 class="language-close"
 id="languageClose"
-type="button"
 >
 ×
 </button>
@@ -1535,7 +1359,7 @@ class="language-list"
 <br><br>
 
 De marketplace voor voetbalshirts,
-verzamelaars en voetbalfans.
+verzamelaars en echte voetbalfans.
 
 <br><br>
 
@@ -1546,20 +1370,13 @@ SINCE 2026
 </footer>
 
 
-<div
-class="toast"
-id="toast"
-></div>
-
-
 <script>
 
 /* =====================================================
-   TAALDATA
-   100+ talen
+   TALEN
 ===================================================== */
 
-const languages = [
+const languages=[
 
 {code:"nl",name:"Nederlands",flag:"🇳🇱"},
 {code:"en",name:"English",flag:"🇬🇧"},
@@ -1596,7 +1413,7 @@ const languages = [
 {code:"el",name:"Greek",flag:"🇬🇷"},
 {code:"gu",name:"Gujarati",flag:"🇮🇳"},
 {code:"ht",name:"Haitian Creole",flag:"🇭🇹"},
-{code:"ha",name:"Hausa",flag:"🇳🇬"},
+{code:"ha",name:"Hausa",flag:"🌍"},
 {code:"haw",name:"Hawaiian",flag:"🇺🇸"},
 {code:"he",name:"Hebrew",flag:"🇮🇱"},
 {code:"hi",name:"Hindi",flag:"🇮🇳"},
@@ -1607,7 +1424,7 @@ const languages = [
 {code:"id",name:"Indonesian",flag:"🇮🇩"},
 {code:"ga",name:"Irish",flag:"🇮🇪"},
 {code:"ja",name:"Japanese",flag:"🇯🇵"},
-{code:"jw",name:"Javanese",flag:"🇮🇩"},
+{code:"jv",name:"Javanese",flag:"🇮🇩"},
 {code:"kn",name:"Kannada",flag:"🇮🇳"},
 {code:"kk",name:"Kazakh",flag:"🇰🇿"},
 {code:"km",name:"Khmer",flag:"🇰🇭"},
@@ -1616,7 +1433,7 @@ const languages = [
 {code:"ku",name:"Kurdish",flag:"🌍"},
 {code:"ky",name:"Kyrgyz",flag:"🇰🇬"},
 {code:"lo",name:"Lao",flag:"🇱🇦"},
-{code:"la",name:"Latin",flag:"🌐"},
+{code:"la",name:"Latin",flag:"🌍"},
 {code:"lv",name:"Latvian",flag:"🇱🇻"},
 {code:"lt",name:"Lithuanian",flag:"🇱🇹"},
 {code:"lb",name:"Luxembourgish",flag:"🇱🇺"},
@@ -1642,8 +1459,8 @@ const languages = [
 {code:"sm",name:"Samoan",flag:"🇼🇸"},
 {code:"gd",name:"Scots Gaelic",flag:"🏴"},
 {code:"sr",name:"Serbian",flag:"🇷🇸"},
-{code:"st",name:"Sesotho",flag:"🇱🇸"},
-{code:"sn",name:"Shona",flag:"🇿🇼"},
+{code:"st",name:"Sesotho",flag:"🌍"},
+{code:"sn",name:"Shona",flag:"🌍"},
 {code:"sd",name:"Sindhi",flag:"🌍"},
 {code:"si",name:"Sinhala",flag:"🇱🇰"},
 {code:"sk",name:"Slovak",flag:"🇸🇰"},
@@ -1652,7 +1469,6 @@ const languages = [
 {code:"su",name:"Sundanese",flag:"🇮🇩"},
 {code:"sw",name:"Swahili",flag:"🌍"},
 {code:"sv",name:"Swedish",flag:"🇸🇪"},
-{code:"tl",name:"Tagalog",flag:"🇵🇭"},
 {code:"tg",name:"Tajik",flag:"🇹🇯"},
 {code:"ta",name:"Tamil",flag:"🇮🇳"},
 {code:"tt",name:"Tatar",flag:"🇷🇺"},
@@ -1756,87 +1572,46 @@ icon:"🔴"
 
 
 /* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function safe(text){
-
-return String(text)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function toast(message){
-
-const el=document.getElementById("toast");
-
-el.textContent=message;
-
-el.classList.add("show");
-
-clearTimeout(window.toastTimeout);
-
-window.toastTimeout=setTimeout(()=>{
-
-el.classList.remove("show");
-
-},2200);
-
-}
-
-
-/* =====================================================
    SHIRT CARD
 ===================================================== */
 
-function shirtCard(shirt){
+function makeShirt(shirt){
 
 return `
 
 <article class="shirt-card">
 
-<div class="shirt-image">
+<div class="shirt-visual">
 
-<div class="badge">
-${safe(shirt.condition)}
+<div class="shirt-condition">
+${shirt.condition}
 </div>
 
-<div class="shirt-icon">
+<div>
 👕
 </div>
 
 </div>
 
-
 <div class="shirt-info">
 
 <div class="shirt-club">
-${shirt.icon} ${safe(shirt.club)}
+${shirt.icon} ${shirt.club}
 </div>
 
 <div class="shirt-name">
-${safe(shirt.name)}
+${shirt.name}
 </div>
 
+<div class="shirt-footer">
 
-<div class="shirt-bottom">
-
-<div class="price">
-${safe(shirt.price)}
+<div class="shirt-price">
+${shirt.price}
 </div>
 
 <button
-class="view-button"
-onclick="showShirt(${shirt.id})"
+class="shirt-view"
+onclick="shirtMessage('${shirt.club.replace(/'/g,"\\'")}', '${shirt.price}')"
 >
 Bekijken
 </button>
@@ -1868,10 +1643,11 @@ app.innerHTML=`
 src="hero.png"
 class="hero-image"
 alt="Football-Shirt-Market"
-onerror="this.style.display='none'"
 >
 
-<div class="hero-overlay"></div>
+<div class="hero-shade"></div>
+
+<div class="hero-clean-mask"></div>
 
 
 <div class="hero-content">
@@ -1882,22 +1658,15 @@ FOOTBALL-SHIRT-MARKET • SINCE 2026
 
 
 <h1 class="hero-title">
-
 Koop.<br>
 Verkoop.<br>
-
-<span class="gold">
-Verzamel.
-</span>
-
+<span>Verzamel.</span>
 </h1>
 
 
 <p class="hero-description">
-
 De marketplace voor voetbalshirts,
 verzamelaars en echte voetbalfans.
-
 </p>
 
 
@@ -1905,15 +1674,14 @@ verzamelaars en echte voetbalfans.
 
 <a
 href="#/explore"
-class="hero-btn green"
+class="hero-button green"
 >
 Ontdek shirts
 </a>
 
-
 <a
 href="#/sell"
-class="hero-btn white"
+class="hero-button white"
 >
 Verkoop een shirt
 </a>
@@ -1931,11 +1699,10 @@ Verkoop een shirt
 id="homeSearch"
 type="search"
 placeholder="Zoek shirts, clubs, spelers..."
-autocomplete="off"
 >
 
 <button
-onclick="searchFromHome()"
+id="homeSearchButton"
 >
 →
 </button>
@@ -1949,12 +1716,11 @@ onclick="searchFromHome()"
 
 <section class="section">
 
-<div class="section-header">
+<div class="section-head">
 
 <h2 class="section-title">
 Uitgelichte <span>shirts</span>
 </h2>
-
 
 <a
 href="#/explore"
@@ -1968,7 +1734,7 @@ Alle shirts →
 
 <div class="home-shirt-row">
 
-${shirts.slice(0,6).map(shirtCard).join("")}
+${shirts.slice(0,6).map(makeShirt).join("")}
 
 </div>
 
@@ -1979,40 +1745,17 @@ ${shirts.slice(0,6).map(shirtCard).join("")}
 `;
 
 
-const searchInput=
+const search=
 document.getElementById("homeSearch");
 
-if(searchInput){
-
-searchInput.addEventListener(
-"keydown",
-event=>{
-
-if(event.key==="Enter"){
-
-searchFromHome();
-
-}
-
-});
-
-}
-
-}
+const searchButton=
+document.getElementById("homeSearchButton");
 
 
-/* =====================================================
-   HOME SEARCH
-===================================================== */
+function executeSearch(){
 
-function searchFromHome(){
-
-const input=
-document.getElementById("homeSearch");
-
-if(!input)return;
-
-const value=input.value.trim();
+const value=
+search.value.trim();
 
 if(!value){
 
@@ -2029,44 +1772,74 @@ encodeURIComponent(value);
 }
 
 
+searchButton.addEventListener(
+"click",
+executeSearch
+);
+
+
+search.addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter"){
+
+executeSearch();
+
+}
+
+});
+
+}
+
+
 /* =====================================================
    EXPLORE
 ===================================================== */
 
 function renderExplore(){
 
-const hash=location.hash;
+const hash=
+location.hash;
 
 let query="";
 
-if(hash.includes("?search=")){
+if(
+hash.includes("?search=")
+){
 
 query=
 decodeURIComponent(
 hash.split("?search=")[1]
-).trim().toLowerCase();
+).toLowerCase();
 
 }
 
 
-const results=query
-?shirts.filter(shirt=>{
+let list=shirts;
 
-const text=
-(`${shirt.club} ${shirt.name}`)
-.toLowerCase();
+if(query){
 
-return text.includes(query);
+list=
+shirts.filter(
+shirt=>
+(
+shirt.club+
+" "+
+shirt.name
+)
+.toLowerCase()
+.includes(query)
+);
 
-})
-:shirts;
+}
 
 
 app.innerHTML=`
 
 <div class="page">
 
-<section class="explore-top">
+<section class="explore-banner">
 
 <img
 src="ontdekken.png"
@@ -2088,14 +1861,13 @@ Ontdek<br>
 </section>
 
 
-<section>
+<section class="section">
 
-<div class="section-header">
+<div class="section-head">
 
 <h2 class="section-title">
 Alle <span>shirts</span>
 </h2>
-
 
 <a
 href="#/"
@@ -2107,43 +1879,18 @@ class="section-link"
 </div>
 
 
-${
-query
-?
-`
-<div
-style="
-color:#91a098;
-font-size:12px;
-margin-bottom:15px;
-"
->
-Zoekresultaten voor
-<strong style="color:var(--gold)">
-${safe(query)}
-</strong>
-</div>
-`
-:""
-}
-
-
 <div class="explore-grid">
 
 ${
-results.length
-?
-results.map(shirtCard).join("")
-:
-`
+list.length
+?list.map(makeShirt).join("")
+:`
 <div
 style="
 grid-column:1/-1;
-padding:60px 20px;
 text-align:center;
-color:#84928b;
-border:1px solid var(--border);
-border-radius:16px;
+padding:60px 20px;
+color:#8a9891;
 "
 >
 Geen shirts gevonden.
@@ -2174,7 +1921,7 @@ app.innerHTML=`
 
 <div class="sell-box">
 
-<div class="sell-box-icon">
+<div style="font-size:48px">
 👕
 </div>
 
@@ -2182,15 +1929,19 @@ app.innerHTML=`
 Verkoop je shirt
 </h1>
 
-<p>
-Binnenkort kun je hier je eigen voetbalshirts
-plaatsen en verkopen aan verzamelaars
-en voetbalfans van over de hele wereld.
+<p style="
+color:#a8b5ae;
+line-height:1.7;
+margin:15px 0 25px;
+">
+Binnenkort kun je hier je eigen
+voetbalshirts plaatsen en verkopen
+aan verzamelaars en voetbalfans.
 </p>
 
 <a
 href="#/"
-class="hero-btn green"
+class="hero-button green"
 >
 ← Terug naar Home
 </a>
@@ -2205,53 +1956,42 @@ class="hero-btn green"
 
 
 /* =====================================================
-   SHIRT
-===================================================== */
-
-function showShirt(id){
-
-const shirt=
-shirts.find(
-item=>item.id===id
-);
-
-if(!shirt)return;
-
-toast(
-`${shirt.club} – ${shirt.price}`
-);
-
-}
-
-
-/* =====================================================
    ROUTER
 ===================================================== */
 
-function updateNavigation(){
-
-document
-.querySelectorAll("nav a")
-.forEach(
-link=>link.classList.remove("active")
-);
+function route(){
 
 const hash=
 location.hash || "#/";
 
-if(hash.startsWith("#/explore")){
+document
+.querySelectorAll("nav a")
+.forEach(
+x=>x.classList.remove("active")
+);
+
+
+if(
+hash.startsWith("#/explore")
+){
 
 document
 .getElementById("navExplore")
-?.classList.add("active");
+.classList.add("active");
+
+renderExplore();
 
 }
 
-else if(hash.startsWith("#/sell")){
+else if(
+hash.startsWith("#/sell")
+){
 
 document
 .getElementById("navSell")
-?.classList.add("active");
+.classList.add("active");
+
+renderSell();
 
 }
 
@@ -2259,33 +1999,7 @@ else{
 
 document
 .getElementById("navHome")
-?.classList.add("active");
-
-}
-
-}
-
-
-function route(){
-
-updateNavigation();
-
-const hash=
-location.hash || "#/";
-
-if(hash.startsWith("#/explore")){
-
-renderExplore();
-
-}
-
-else if(hash.startsWith("#/sell")){
-
-renderSell();
-
-}
-
-else{
+.classList.add("active");
 
 renderHome();
 
@@ -2298,46 +2012,36 @@ renderHome();
    LANGUAGE
 ===================================================== */
 
-function getCurrentLanguage(){
+const languageModal=
+document.getElementById("languageModal");
 
-const cookie=
-document.cookie
-.split(";")
-.map(x=>x.trim())
-.find(
-x=>x.startsWith("googtrans=")
+const languageList=
+document.getElementById("languageList");
+
+const languageSearch=
+document.getElementById("languageSearch");
+
+
+function getLanguage(){
+
+const match=
+document.cookie.match(
+/googtrans=\/nl\/([^;]+)/
 );
 
-if(!cookie){
-
-return "nl";
+return match
+?match[1]
+:"nl";
 
 }
 
-const value=
-decodeURIComponent(
-cookie.substring(
-"googtrans=".length
-)
-);
-
-const parts=value.split("/");
-
-return parts[2] || "nl";
-
-}
-
-
-/* =====================================================
-   LANGUAGE BUTTON
-===================================================== */
 
 function updateLanguageButton(){
 
 const code=
-getCurrentLanguage();
+getLanguage();
 
-const language=
+const lang=
 languages.find(
 x=>x.code===code
 )
@@ -2346,41 +2050,35 @@ languages.find(
 x=>x.code==="nl"
 );
 
-if(!language)return;
+if(!lang)return;
 
-document
-.getElementById("currentFlag")
-.textContent=
-language.flag;
+document.getElementById(
+"currentFlag"
+).textContent=
+lang.flag;
 
-document
-.getElementById("currentLangCode")
-.textContent=
-language.code
+document.getElementById(
+"currentCode"
+).textContent=
+lang.code
 .split("-")[0]
 .toUpperCase();
 
 }
 
 
-/* =====================================================
-   LANGUAGE LIST
-===================================================== */
-
 function renderLanguages(search=""){
 
 const query=
-search
-.toLowerCase()
-.trim();
+search.toLowerCase().trim();
 
 const active=
-getCurrentLanguage();
+getLanguage();
 
-const results=
-languages.filter(language=>{
+const result=
+languages.filter(
+language=>
 
-return (
 language.name
 .toLowerCase()
 .includes(query)
@@ -2390,38 +2088,13 @@ language.name
 language.code
 .toLowerCase()
 .includes(query)
-
 );
-
-});
 
 
 languageList.innerHTML="";
 
 
-if(!results.length){
-
-languageList.innerHTML=`
-
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:30px;
-color:#819087;
-"
->
-Geen taal gevonden.
-</div>
-
-`;
-
-return;
-
-}
-
-
-results.forEach(language=>{
+result.forEach(language=>{
 
 const item=
 document.createElement("button");
@@ -2430,6 +2103,7 @@ item.type="button";
 
 item.className=
 "language-item";
+
 
 if(language.code===active){
 
@@ -2450,10 +2124,30 @@ ${language.name}
 
 `;
 
-
 item.addEventListener(
 "click",
-()=>changeLanguage(language.code)
+()=>{
+
+/* reset */
+
+document.cookie=
+"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+
+
+if(language.code!=="nl"){
+
+document.cookie=
+"googtrans=/nl/"+
+language.code+
+"; path=/; max-age=31536000";
+
+}
+
+languageModal.classList.remove("open");
+
+location.reload();
+
+}
 );
 
 
@@ -2464,72 +2158,7 @@ languageList.appendChild(item);
 }
 
 
-/* =====================================================
-   LANGUAGE CHANGE
-===================================================== */
-
-function clearGoogleTranslateCookie(){
-
-const expired=
-"expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-
-document.cookie=
-"googtrans=; "+expired;
-
-if(location.hostname){
-
-document.cookie=
-"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain="+
-location.hostname+
-";";
-
-}
-
-}
-
-
-/*
-  Deze functie gebruikt de standaard Google Translate-cookie.
-  Daardoor werkt de vertaling ook na navigeren.
-*/
-
-function changeLanguage(code){
-
-clearGoogleTranslateCookie();
-
-if(code!=="nl"){
-
-document.cookie=
-"googtrans=/nl/"+code+
-"; path=/; max-age=31536000";
-
-}
-
-localStorage.setItem(
-"fsm_language",
-code
-);
-
-languageModal.classList.remove("open");
-
-location.reload();
-
-}
-
-
-/* =====================================================
-   LANGUAGE MODAL
-===================================================== */
-
-const languageModal=
-document.getElementById("languageModal");
-
-const languageList=
-document.getElementById("languageList");
-
-const languageSearch=
-document.getElementById("languageSearch");
-
+/* language popup */
 
 document
 .getElementById("languageButton")
@@ -2537,16 +2166,14 @@ document
 "click",
 ()=>{
 
+languageModal.classList.add("open");
+
 languageSearch.value="";
 
 renderLanguages();
 
-languageModal.classList.add("open");
-
 setTimeout(
-()=>{
-languageSearch.focus();
-},
+()=>languageSearch.focus(),
 80
 );
 
@@ -2568,12 +2195,9 @@ languageModal.classList.remove("open");
 
 languageModal.addEventListener(
 "click",
-event=>{
+e=>{
 
-if(
-event.target===
-languageModal
-){
+if(e.target===languageModal){
 
 languageModal.classList.remove("open");
 
@@ -2585,35 +2209,19 @@ languageModal.classList.remove("open");
 
 languageSearch.addEventListener(
 "input",
-event=>{
+e=>{
 
 renderLanguages(
-event.target.value
+e.target.value
 );
 
 }
 );
 
 
-document.addEventListener(
-"keydown",
-event=>{
-
-if(
-event.key==="Escape"
-){
-
-languageModal.classList.remove("open");
-
-}
-
-}
-);
-
-
-/* =====================================================
+/* =========================================
    MOBILE MENU
-===================================================== */
+========================================= */
 
 document
 .getElementById("menuButton")
@@ -2630,7 +2238,7 @@ document
 
 
 document
-.querySelectorAll("#mobileNav a")
+.querySelectorAll(".mobile-nav a")
 .forEach(link=>{
 
 link.addEventListener(
@@ -2647,25 +2255,52 @@ document
 });
 
 
-/* =====================================================
-   ROUTING
-===================================================== */
+/* =========================================
+   SHIRT MESSAGE
+========================================= */
+
+function shirtMessage(club,price){
+
+const message=
+club+
+" • "+
+price;
+
+const toast=
+document.getElementById("toast");
+
+toast.textContent=message;
+
+toast.classList.add("show");
+
+setTimeout(
+()=>toast.classList.remove("show"),
+2000
+);
+
+}
+
+
+/* =========================================
+   START
+========================================= */
 
 window.addEventListener(
 "hashchange",
 route
 );
 
-
-/* =====================================================
-   START
-===================================================== */
-
 updateLanguageButton();
 
 route();
 
 </script>
+
+
+<div
+id="toast"
+class="toast"
+></div>
 
 </body>
 </html>
