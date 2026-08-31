@@ -176,7 +176,7 @@ nav a:hover, nav a.active{ color:#fff; background:rgba(255,255,255,.07); }
 }
 .explore-search-overlay input{
     position:absolute; inset:0; width:100%; height:100%;
-    padding-left:9%; padding-right:14%; background:transparent; border:0; outline:0;
+    padding-left:14%; padding-right:14%; background:transparent; border:0; outline:0;
     color:#fff; font-size:clamp(12px,1.5vw,15px);
 }
 .explore-search-overlay input::placeholder{ color:rgba(255,255,255,.4); }
@@ -528,6 +528,15 @@ function renderSell(){
       <h1>Verkoop je shirt</h1>
       <p class="sell-intro">Vul de gegevens in, voeg foto's toe en zet je shirt te koop op de marketplace.</p>
       <form id="sellForm" novalidate>
+        
+        <div class="form-group">
+          <label>Foto's *</label>
+          <div class="photo-dropzone" id="photoDropzone">📷 Tik om foto's te uploaden (max 5)</div>
+          <input type="file" id="photoInput" accept="image/*" multiple style="display:none;">
+          <div class="photo-grid" id="photoGrid"></div>
+          <div class="form-error" id="photoError">Voeg minstens 1 foto toe.</div>
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label for="sellClub">Club *</label>
@@ -558,7 +567,22 @@ function renderSell(){
             <label for="sellMaat">Maat</label>
             <select id="sellMaat">
               <option value="">Onbekend</option>
-              <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+              <optgroup label="Kindermaten">
+                <option>104</option>
+                <option>116</option>
+                <option>128</option>
+                <option>140</option>
+                <option>152</option>
+                <option>164</option>
+                <option>176</option>
+              </optgroup>
+              <optgroup label="Volwassen maten">
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+              </optgroup>
             </select>
           </div>
         </div>
@@ -566,13 +590,7 @@ function renderSell(){
           <label for="sellDescription">Beschrijving</label>
           <textarea id="sellDescription" rows="4" placeholder="Vertel meer over het shirt, staat, geschiedenis..."></textarea>
         </div>
-        <div class="form-group">
-          <label>Foto's *</label>
-          <div class="photo-dropzone" id="photoDropzone">📷 Tik om foto's te uploaden (max 5)</div>
-          <input type="file" id="photoInput" accept="image/*" multiple style="display:none;">
-          <div class="photo-grid" id="photoGrid"></div>
-          <div class="form-error" id="photoError">Voeg minstens 1 foto toe.</div>
-        </div>
+        
         <div class="form-group">
           <label>Boost je advertentie (optioneel)</label>
           <div class="boost-options">
@@ -588,12 +606,22 @@ function renderSell(){
             <label class="boost-option">
               <input type="radio" name="boostOption" value="week">
               <div class="boost-option-text"><strong>1 week bovenaan</strong><span>Verschijnt 7 dagen lang bovenaan bij Ontdekken.</span></div>
-              <div class="boost-option-price">€ 5</div>
+              <div class="boost-option-price">€ 4</div>
             </label>
             <label class="boost-option">
               <input type="radio" name="boostOption" value="month">
               <div class="boost-option-text"><strong>1 maand bovenaan</strong><span>Verschijnt 30 dagen lang bovenaan bij Ontdekken.</span></div>
+              <div class="boost-option-price">€ 8</div>
+            </label>
+            <label class="boost-option">
+              <input type="radio" name="boostOption" value="year">
+              <div class="boost-option-text"><strong>1 jaar bovenaan</strong><span>Verschijnt 365 dagen lang bovenaan bij Ontdekken.</span></div>
               <div class="boost-option-price">€ 10</div>
+            </label>
+            <label class="boost-option">
+              <input type="radio" name="boostOption" value="until_sold">
+              <div class="boost-option-text"><strong>Tot het shirt verkocht is</strong><span>Blijft permanent bovenaan staan tot verkoop.</span></div>
+              <div class="boost-option-price">€ 7</div>
             </label>
           </div>
         </div>
@@ -656,10 +684,14 @@ function renderSell(){
     const maat = document.getElementById("sellMaat").value;
     const description = document.getElementById("sellDescription").value.trim();
     const boostOption = (document.querySelector('input[name="boostOption"]:checked') || {}).value || "none";
+    
+    // Aangepaste Boost Duren en Prijzen
     const BOOST_DURATIONS = {
       "24h": { ms: 24*60*60*1000, price: "€ 1" },
-      "week": { ms: 7*24*60*60*1000, price: "€ 5" },
-      "month": { ms: 30*24*60*60*1000, price: "€ 10" }
+      "week": { ms: 7*24*60*60*1000, price: "€ 4" },
+      "month": { ms: 30*24*60*60*1000, price: "€ 8" },
+      "year": { ms: 365*24*60*60*1000, price: "€ 10" },
+      "until_sold": { ms: 36500*24*60*60*1000, price: "€ 7" } // Bijna 100 jaar (tot verkocht)
     };
     const boostInfo = BOOST_DURATIONS[boostOption] || null;
 
