@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-
 <title>Football-Shirt-Market</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,2284 +21,470 @@
     --line:rgba(239,210,143,.2);
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html, body{
+    margin:0; padding:0; background:var(--bg); color:#fff;
+    font-family:Inter,Arial,sans-serif; overflow-x:hidden; min-height:100vh;
 }
 
-html,
-body{
-    margin:0;
-    padding:0;
-    background:var(--bg);
-    color:#fff;
-    font-family:Inter,Arial,sans-serif;
-    overflow-x:hidden;
-}
+a{ color:inherit; text-decoration:none; }
+button, input{ font-family:inherit; }
 
-body{
-    min-height:100vh;
-}
+.goog-te-banner-frame, .skiptranslate iframe, #google_translate_element{ display:none!important; }
+body{ top:0!important; }
+.goog-text-highlight{ background:transparent!important; box-shadow:none!important; }
 
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-button,
-input{
-    font-family:inherit;
-}
-
-/* ================================
-   GOOGLE TRANSLATE
-================================ */
-
-.goog-te-banner-frame,
-.skiptranslate iframe,
-#google_translate_element{
-    display:none!important;
-}
-
-body{
-    top:0!important;
-}
-
-.goog-text-highlight{
-    background:transparent!important;
-    box-shadow:none!important;
-}
-
-/* ================================
-   HEADER
-================================ */
-
+/* HEADER */
 .site-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:rgba(2,6,4,.94);
-    backdrop-filter:blur(18px);
+    position:sticky; top:0; z-index:1000;
+    background:rgba(2,6,4,.94); backdrop-filter:blur(18px);
     border-bottom:1px solid var(--line);
 }
-
 .header-inner{
-    width:min(1400px,100%);
-    min-height:78px;
-    margin:auto;
-    padding:9px 22px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
+    width:min(1400px,100%); min-height:78px; margin:auto; padding:9px 22px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
 }
+.logo-area{ display:flex; align-items:center; gap:11px; }
+.header-logo{ width:54px; height:54px; object-fit:contain; }
+.brand{ display:flex; flex-direction:column; }
+.brand-title{ font-family:Montserrat,sans-serif; font-size:14px; font-weight:900; letter-spacing:.5px; }
+.brand-since{ margin-top:3px; color:var(--gold); font-size:9px; letter-spacing:2px; font-weight:800; }
 
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:11px;
-}
+nav{ display:flex; gap:5px; }
+nav a{ color:#adbbb4; padding:10px 15px; border-radius:10px; font-size:13px; font-weight:800; transition:.2s; }
+nav a:hover, nav a.active{ color:#fff; background:rgba(255,255,255,.07); }
 
-.header-logo{
-    width:54px;
-    height:54px;
-    object-fit:contain;
-}
-
-.brand{
-    display:flex;
-    flex-direction:column;
-}
-
-.brand-title{
-    font-family:Montserrat,sans-serif;
-    font-size:14px;
-    font-weight:900;
-    letter-spacing:.5px;
-}
-
-.brand-since{
-    margin-top:3px;
-    color:var(--gold);
-    font-size:9px;
-    letter-spacing:2px;
-    font-weight:800;
-}
-
-nav{
-    display:flex;
-    gap:5px;
-}
-
-nav a{
-    color:#adbbb4;
-    padding:10px 15px;
-    border-radius:10px;
-    font-size:13px;
-    font-weight:800;
-    transition:.2s;
-}
-
-nav a:hover,
-nav a.active{
-    color:#fff;
-    background:rgba(255,255,255,.07);
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
+.header-right{ display:flex; align-items:center; gap:8px; }
 .language-button{
-    min-height:40px;
-    border:1px solid rgba(239,210,143,.32);
-    background:#07130e;
-    color:var(--gold);
-    border-radius:10px;
-    padding:0 12px;
-
-    display:flex;
-    align-items:center;
-    gap:6px;
-
-    font-size:11px;
-    font-weight:800;
-    cursor:pointer;
+    min-height:40px; border:1px solid rgba(239,210,143,.32); background:#07130e;
+    color:var(--gold); border-radius:10px; padding:0 12px; display:flex; align-items:center; gap:6px;
+    font-size:11px; font-weight:800; cursor:pointer;
 }
+.menu-button{ display:none; width:42px; height:42px; border:1px solid var(--line); border-radius:10px; background:#07130e; color:#fff; font-size:20px; }
 
-.menu-button{
-    display:none;
-    width:42px;
-    height:42px;
-    border:1px solid var(--line);
-    border-radius:10px;
-    background:#07130e;
-    color:#fff;
-    font-size:20px;
-}
+/* MOBILE NAV */
+.mobile-nav{ display:none; border-top:1px solid rgba(239,210,143,.1); background:#030806; padding:10px 12px; }
+.mobile-nav.open{ display:block; }
+.mobile-nav a{ display:block; padding:13px; border-radius:9px; color:#dbe3df; font-weight:800; }
 
-/* ================================
-   MOBILE NAV
-================================ */
-
-.mobile-nav{
-    display:none;
-    border-top:1px solid rgba(239,210,143,.1);
-    background:#030806;
-    padding:10px 12px;
-}
-
-.mobile-nav.open{
-    display:block;
-}
-
-.mobile-nav a{
-    display:block;
-    padding:13px;
-    border-radius:9px;
-    color:#dbe3df;
-    font-weight:800;
-}
-
-.mobile-nav a:hover{
-    background:rgba(255,255,255,.06);
-}
-
-/* ================================
-   PAGE
-================================ */
-
-.page{
-    width:min(1400px,100%);
-    margin:auto;
-    padding:25px 22px 75px;
-}
-
-/* ==================================================
-   HERO
-================================================== */
-
+/* PAGE & HERO */
+.page{ width:min(1400px,100%); margin:auto; padding:25px 22px 75px; }
 .hero{
-    position:relative;
-    width:100%;
-    height:clamp(500px,51vw,700px);
-
-    overflow:hidden;
-    border-radius:22px;
-
-    border:1px solid rgba(239,210,143,.22);
-
-    background:#020504;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.6);
+    position:relative; width:100%; min-height:520px; height:clamp(520px,51vw,680px);
+    overflow:hidden; border-radius:22px; border:1px solid rgba(239,210,143,.22);
+    background:#020504; box-shadow:0 25px 70px rgba(0,0,0,.6);
 }
-
-/*
-   BELANGRIJK:
-   de afbeelding is maar één laag.
-   Er wordt niets van de afbeelding vervangen.
-*/
-
-.hero-image{
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-    object-position:center;
-
-    display:block;
-
-    z-index:1;
-}
-
-/*
-   Deze overlay maakt alleen links iets donkerder.
-   Hierdoor blijven het logo en de rechterkant volledig zichtbaar.
-*/
-
+.hero-image{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:1; }
 .hero-shade{
-    position:absolute;
-    inset:0;
-    z-index:2;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(2,5,4,.98) 0%,
-            rgba(2,5,4,.86) 27%,
-            rgba(2,5,4,.52) 46%,
-            rgba(2,5,4,.12) 65%,
-            rgba(2,5,4,0) 100%
-        );
-
+    position:absolute; inset:0; z-index:2;
+    background:linear-gradient(90deg, #020504 0%, rgba(2,5,4,.85) 40%, transparent 100%);
     pointer-events:none;
 }
-
-/*
-   CONTENT IS NU ÉÉN ENKELE LAAG.
-*/
-
-.hero-content{
-    position:absolute;
-    z-index:5;
-
-    left:5.5%;
-    top:50%;
-
-    transform:translateY(-50%);
-
-    width:min(530px,43%);
-
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-/* VERWIJDEREN VAN DUBBELE DONKERE TITEL:
-   de HTML-content wordt onder een extra donkere
-   zone gezet, zodat eventuele ingebakken oude tekst
-   in de afbeelding niet opvalt.
-*/
-
 .hero-clean-mask{
-    position:absolute;
-    z-index:3;
-    left:0;
-    top:0;
-    bottom:0;
-    width:47%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #020504 0%,
-            rgba(2,5,4,.99) 68%,
-            rgba(2,5,4,.50) 90%,
-            transparent 100%
-        );
-
+    position:absolute; z-index:3; left:0; top:0; bottom:0; width:55%;
+    background:linear-gradient(90deg, #020504 0%, #020504 70%, transparent 100%);
     pointer-events:none;
 }
-
-.hero-kicker{
-    color:var(--gold);
-
-    font-family:Montserrat,sans-serif;
-
-    font-size:11px;
-    font-weight:900;
-
-    letter-spacing:2px;
-    text-transform:uppercase;
-
-    margin-bottom:17px;
+.hero-content{
+    position:absolute; z-index:5; left:5.5%; top:50%; transform:translateY(-50%);
+    width:min(530px,90%); display:flex; flex-direction:column; align-items:flex-start;
 }
+.hero-kicker{ color:var(--gold); font-family:Montserrat,sans-serif; font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+.hero-title{ font-family:Montserrat,sans-serif; color:#fff; font-size:clamp(36px,4.5vw,68px); line-height:1; font-weight:900; text-transform:uppercase; }
+.hero-title span{ color:var(--gold); }
+.hero-description{ max-width:470px; color:#d1dbd6; margin-top:16px; font-size:14px; line-height:1.55; }
 
-.hero-title{
-    font-family:Montserrat,sans-serif;
-
-    color:#fff;
-
-    font-size:clamp(40px,5vw,75px);
-
-    line-height:.94;
-
-    letter-spacing:-2px;
-
-    font-weight:900;
-
-    text-transform:uppercase;
-
-    text-shadow:
-        0 5px 25px rgba(0,0,0,.65);
-}
-
-.hero-title span{
-    color:var(--gold);
-}
-
-.hero-description{
-    max-width:470px;
-
-    color:#d1dbd6;
-
-    margin-top:20px;
-
-    font-size:14px;
-
-    line-height:1.55;
-}
-
-.hero-buttons{
-    display:flex;
-    gap:10px;
-
-    margin-top:24px;
-}
-
-/*
-   Geen grijze achtergrond!
-*/
-
+.hero-buttons{ display:flex; gap:10px; margin-top:22px; z-index:6; }
 .hero-button{
-    min-height:45px;
-
-    padding:0 18px;
-
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:9px;
-
-    font-size:11px;
-    font-weight:900;
-
-    transition:.22s;
-
-    border:1px solid transparent;
+    min-height:45px; padding:0 20px; display:inline-flex; align-items:center; justify-content:center;
+    border-radius:9px; font-size:12px; font-weight:900; transition:.22s; border:none; cursor:pointer;
 }
-
-.hero-button.green{
-    color:#fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #19c982,
-            #0a8955
-        );
-
-    box-shadow:
-        0 8px 25px rgba(25,201,130,.22);
-}
-
-.hero-button.green:hover{
-    transform:translateY(-2px);
-}
-
-.hero-button.white{
-    background:#fff;
-    color:#111;
-}
-
-.hero-button.white:hover{
-    transform:translateY(-2px);
-}
-
-/* ================================
-   SEARCH BAR
-================================ */
+.hero-button.green{ color:#fff; background:linear-gradient(135deg, #19c982, #0a8955); box-shadow:0 8px 25px rgba(25,201,130,.22); }
+.hero-button.white{ background:#fff; color:#111; }
+.hero-button:hover{ transform:translateY(-2px); }
 
 .hero-search{
-    width:min(430px,100%);
-    height:50px;
-
-    margin-top:22px;
-
-    display:flex;
-    align-items:center;
-
-    background:rgba(0,0,0,.80);
-
-    border:1px solid rgba(239,210,143,.48);
-
-    border-radius:11px;
-
-    overflow:hidden;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.4);
+    width:min(430px,100%); height:50px; margin-top:20px; display:flex; align-items:center;
+    background:rgba(8,20,15,.95); border:1px solid rgba(239,210,143,.48); border-radius:11px; overflow:hidden; z-index:6;
 }
-
-.hero-search-icon{
-    width:47px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    color:#fff;
-    font-size:21px;
-}
-
-.hero-search input{
-    flex:1;
-    min-width:0;
-
-    height:100%;
-
-    border:0;
-    outline:0;
-
-    background:transparent;
-
-    color:#fff;
-
-    font-size:12px;
-}
-
-.hero-search input::placeholder{
-    color:#8e9b95;
-}
-
-.hero-search button{
-    width:43px;
-    height:38px;
-
-    margin-right:5px;
-
-    border:0;
-    border-radius:8px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--gold),
-            var(--gold-dark)
-        );
-
-    color:#0a0d0b;
-
-    font-size:19px;
-    font-weight:900;
-}
-
-/* ================================
-   SECTIONS
-================================ */
-
-.section{
-    margin-top:45px;
-}
-
-.section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-
-    padding-bottom:13px;
-    margin-bottom:18px;
-
-    border-bottom:1px solid rgba(239,210,143,.14);
-}
-
-.section-title{
-    font-family:Montserrat,sans-serif;
-    font-size:25px;
-    font-weight:900;
-    text-transform:uppercase;
-}
-
-.section-title span{
-    color:var(--gold);
-}
-
-.section-link{
-    color:var(--gold);
-    font-size:12px;
-    font-weight:900;
-}
-
-/* ================================
-   HOME SHIRTS
-================================ */
-
-.home-shirt-row{
-    display:grid;
-
-    grid-auto-flow:column;
-    grid-auto-columns:245px;
-
-    gap:15px;
-
-    overflow-x:auto;
-
-    padding:4px 3px 12px;
-}
-
-.home-shirt-row::-webkit-scrollbar{
-    height:5px;
-}
-
-.home-shirt-row::-webkit-scrollbar-thumb{
-    background:rgba(239,210,143,.3);
-    border-radius:10px;
-}
-
-/* ================================
-   EXPLORE GRID
-================================ */
-
-.explore-grid{
-    display:grid;
-
-    grid-template-columns:
-        repeat(auto-fill,minmax(235px,1fr));
-
-    gap:18px;
-}
-
-/* ================================
-   SHIRT CARD
-================================ */
-
-.shirt-card{
-    overflow:hidden;
-
-    background:
-        linear-gradient(
-            180deg,
-            #0b1913,
-            #06100c
-        );
-
-    border:1px solid var(--line);
-
-    border-radius:15px;
-
-    transition:.28s;
-}
-
-.shirt-card:hover{
-    transform:translateY(-6px);
-
-    border-color:var(--gold);
-
-    box-shadow:
-        0 16px 35px rgba(0,0,0,.45);
-}
-
-.shirt-visual{
-    position:relative;
-
-    width:100%;
-    aspect-ratio:1/1;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        radial-gradient(
-            circle,
-            #183c2a,
-            #08150f 60%,
-            #030805
-        );
-
-    font-size:72px;
-}
-
-.shirt-condition{
-    position:absolute;
-    top:9px;
-    left:9px;
-
-    color:var(--gold-light);
-
-    padding:4px 8px;
-
-    background:rgba(0,0,0,.72);
-
-    border:1px solid rgba(239,210,143,.3);
-
-    border-radius:15px;
-
-    font-size:8px;
-    font-weight:900;
-}
-
-.shirt-info{
-    padding:14px;
-}
-
-.shirt-club{
-    color:#83948c;
-
-    font-size:9px;
-
-    font-weight:900;
-
-    text-transform:uppercase;
-
-    letter-spacing:.5px;
-}
-
-.shirt-name{
-    color:#fff;
-
-    font-size:13px;
-
-    line-height:1.4;
-
-    font-weight:900;
-
-    margin-top:5px;
-
-    min-height:37px;
-}
-
-.shirt-footer{
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    margin-top:13px;
-
-    gap:7px;
-}
-
-.shirt-price{
-    color:var(--green);
-
-    font-size:14px;
-
-    font-weight:900;
-}
-
-.shirt-view{
-    color:var(--gold);
-
-    background:rgba(239,210,143,.07);
-
-    border:1px solid rgba(239,210,143,.27);
-
-    border-radius:7px;
-
-    padding:7px 9px;
-
-    font-size:9px;
-
-    font-weight:900;
-
-    cursor:pointer;
-}
-
-/* ================================
-   EXPLORE BANNER
-================================ */
-
-.explore-banner{
-    position:relative;
-
-    height:340px;
-
-    overflow:hidden;
-
-    border-radius:20px;
-
-    border:1px solid var(--line);
-}
-
-.explore-banner img{
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-}
-
-.explore-overlay{
-    position:absolute;
-    inset:0;
-
-    display:flex;
-    align-items:center;
-
-    padding-left:55px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(2,5,4,.91),
-            rgba(2,5,4,.4),
-            transparent
-        );
-}
-
-.explore-title{
-    font-family:Montserrat,sans-serif;
-
-    font-size:clamp(35px,5vw,62px);
-
-    line-height:.95;
-
-    text-transform:uppercase;
-}
-
-.explore-title span{
-    color:var(--gold);
-}
-
-/* ================================
-   SELL
-================================ */
-
-.sell-box{
-    max-width:650px;
-
-    margin:70px auto;
-
-    padding:45px;
-
-    text-align:center;
-
-    background:
-        radial-gradient(
-            circle at top,
-            rgba(239,210,143,.09),
-            transparent 55%
-        ),
-        #07130e;
-
-    border:1px solid var(--line);
-
-    border-radius:20px;
-
-    box-shadow:var(--shadow);
-}
-
-.sell-box h1{
-    color:var(--gold);
-
-    font-family:Montserrat,sans-serif;
-
-    font-size:36px;
-}
-
-/* ================================
-   LANGUAGE MODAL
-================================ */
-
-.language-modal{
-    position:fixed;
-    inset:0;
-    z-index:4000;
-
-    background:rgba(0,0,0,.82);
-
-    backdrop-filter:blur(12px);
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-}
-
-.language-modal.open{
-    display:flex;
-}
-
-.language-box{
-    width:min(650px,100%);
-    max-height:85vh;
-
-    background:#09160f;
-
-    border:1px solid rgba(239,210,143,.27);
-
-    border-radius:20px;
-
-    padding:22px;
-
-    display:flex;
-    flex-direction:column;
-
-    box-shadow:0 30px 80px rgba(0,0,0,.8);
-}
-
-.language-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    margin-bottom:15px;
-}
-
-.language-title{
-    color:var(--gold);
-
-    font-family:Montserrat,sans-serif;
-
-    font-size:18px;
-    font-weight:900;
-}
-
-.language-close{
-    width:37px;
-    height:37px;
-
-    border:0;
-    border-radius:9px;
-
-    background:rgba(255,255,255,.05);
-
-    color:#aaa;
-
-    font-size:24px;
-
-    cursor:pointer;
-}
-
-.language-search{
-    width:100%;
-    height:46px;
-
-    padding:0 14px;
-
-    border:1px solid rgba(239,210,143,.23);
-
-    border-radius:10px;
-
-    outline:0;
-
-    background:#030806;
-
-    color:#fff;
-
-    margin-bottom:13px;
-}
-
-.language-list{
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:7px;
-
-    overflow-y:auto;
-}
-
-.language-item{
-    min-height:42px;
-
-    border:1px solid transparent;
-
-    border-radius:9px;
-
-    background:rgba(255,255,255,.03);
-
-    color:#d6dfda;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:9px;
-
-    padding:8px 10px;
-
-    cursor:pointer;
-
-    font-size:12px;
-    font-weight:700;
-
-    text-align:left;
-}
-
-.language-item:hover{
-    background:rgba(239,210,143,.1);
-}
-
-.language-item.active{
-    background:var(--gold-dark);
-    color:#000;
-}
-
-/* ================================
-   FOOTER
-================================ */
-
-footer{
-    padding:40px 20px;
-
-    text-align:center;
-
-    background:#010302;
-
-    border-top:1px solid var(--line);
-
-    color:#7e8c85;
-
-    font-size:12px;
-}
-
-footer strong{
-    color:#fff;
-
-    font-family:Montserrat,sans-serif;
-}
-
-/* ================================
-   MOBILE
-================================ */
-
+.hero-search-icon{ width:45px; display:flex; justify-content:center; align-items:center; color:#fff; font-size:18px; }
+.hero-search input{ flex:1; height:100%; border:0; outline:0; background:transparent; color:#fff; font-size:13px; }
+.hero-search button{ width:43px; height:38px; margin-right:5px; border:0; border-radius:8px; background:linear-gradient(135deg, var(--gold), var(--gold-dark)); color:#0a0d0b; font-weight:900; cursor:pointer; }
+
+/* SECTIONS & SHIRTS */
+.section{ margin-top:45px; }
+.section-head{ display:flex; justify-content:space-between; align-items:flex-end; padding-bottom:13px; margin-bottom:18px; border-bottom:1px solid rgba(239,210,143,.14); }
+.section-title{ font-family:Montserrat,sans-serif; font-size:24px; font-weight:900; text-transform:uppercase; }
+.section-title span{ color:var(--gold); }
+.section-link{ color:var(--gold); font-size:12px; font-weight:900; }
+
+.home-shirt-row{ display:grid; grid-auto-flow:column; grid-auto-columns:245px; gap:15px; overflow-x:auto; padding-bottom:12px; }
+.explore-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(235px,1fr)); gap:18px; }
+
+.shirt-card{ background:linear-gradient(180deg,#0b1913,#06100c); border:1px solid var(--line); border-radius:15px; overflow:hidden; transition:.28s; }
+.shirt-card:hover{ transform:translateY(-5px); border-color:var(--gold); }
+.shirt-visual{ position:relative; width:100%; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle,#183c2a,#08150f 60%,#030805); font-size:64px; }
+.shirt-condition{ position:absolute; top:9px; left:9px; color:var(--gold); padding:4px 8px; background:rgba(0,0,0,.75); border:1px solid rgba(239,210,143,.3); border-radius:15px; font-size:8px; font-weight:900; }
+.shirt-info{ padding:14px; }
+.shirt-club{ color:#83948c; font-size:9px; font-weight:900; text-transform:uppercase; }
+.shirt-name{ color:#fff; font-size:13px; font-weight:900; margin-top:4px; min-height:36px; line-height:1.3; }
+.shirt-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+.shirt-price{ color:var(--green); font-size:14px; font-weight:900; }
+.shirt-view{ color:var(--gold); background:rgba(239,210,143,.07); border:1px solid rgba(239,210,143,.27); border-radius:7px; padding:6px 10px; font-size:9px; font-weight:900; cursor:pointer; }
+
+/* EXPLORE & SELL */
+.explore-banner{ position:relative; height:280px; overflow:hidden; border-radius:20px; border:1px solid var(--line); }
+.explore-banner img{ width:100%; height:100%; object-fit:cover; }
+.explore-overlay{ position:absolute; inset:0; display:flex; align-items:center; padding-left:45px; background:linear-gradient(90deg, rgba(2,5,4,.9), transparent); }
+.explore-title{ font-family:Montserrat,sans-serif; font-size:clamp(32px,5vw,55px); text-transform:uppercase; }
+.explore-title span{ color:var(--gold); }
+
+.sell-box{ max-width:650px; margin:50px auto; padding:40px 20px; text-align:center; background:#07130e; border:1px solid var(--line); border-radius:20px; }
+.sell-box h1{ color:var(--gold); font-family:Montserrat,sans-serif; font-size:32px; }
+
+/* LANGUAGE MODAL */
+.language-modal{ position:fixed; inset:0; z-index:4000; background:rgba(0,0,0,.85); backdrop-filter:blur(10px); display:none; align-items:center; justify-content:center; padding:20px; }
+.language-modal.open{ display:flex; }
+.language-box{ width:min(600px,100%); max-height:80vh; background:#09160f; border:1px solid rgba(239,210,143,.3); border-radius:18px; padding:20px; display:flex; flex-direction:column; }
+.language-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.language-title{ color:var(--gold); font-family:Montserrat,sans-serif; font-size:16px; font-weight:900; }
+.language-close{ width:32px; height:32px; border:0; border-radius:8px; background:rgba(255,255,255,.1); color:#fff; font-size:20px; cursor:pointer; }
+.language-search{ width:100%; height:42px; padding:0 12px; border:1px solid rgba(239,210,143,.25); border-radius:8px; outline:0; background:#030806; color:#fff; margin-bottom:12px; }
+.language-list{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; overflow-y:auto; }
+.language-item{ min-height:40px; border:0; border-radius:8px; background:rgba(255,255,255,.03); color:#d6dfda; display:flex; align-items:center; gap:8px; padding:6px 10px; cursor:pointer; font-size:12px; }
+.language-item:hover, .language-item.active{ background:var(--gold-dark); color:#000; }
+
+footer{ padding:35px 20px; text-align:center; background:#010302; border-top:1px solid var(--line); color:#7e8c85; font-size:12px; }
+.toast{ position:fixed; left:50%; bottom:25px; transform:translate(-50%,120px); background:#07130e; border:1px solid var(--gold); color:#fff; border-radius:8px; padding:10px 16px; font-size:12px; font-weight:800; transition:.3s; z-index:5000; }
+.toast.show{ transform:translate(-50%,0); }
+
+/* RESPONSIVE */
 @media(max-width:900px){
-
-    .header-inner{
-        min-height:68px;
-        padding:8px 12px;
-    }
-
-    .brand{
-        display:none;
-    }
-
-    nav{
-        display:none;
-    }
-
-    .menu-button{
-        display:block;
-    }
-
-    .hero{
-        height:620px;
-        border-radius:16px;
-    }
-
-    .hero-image{
-        object-position:68% center;
-    }
-
-    .hero-shade{
-        background:
-            linear-gradient(
-                180deg,
-                rgba(2,5,4,.9),
-                rgba(2,5,4,.72) 48%,
-                rgba(2,5,4,.28),
-                rgba(2,5,4,.65)
-            );
-    }
-
-    .hero-clean-mask{
-        width:100%;
-        height:56%;
-        bottom:auto;
-
-        background:
-            linear-gradient(
-                180deg,
-                #020504 0%,
-                rgba(2,5,4,.96) 72%,
-                transparent 100%
-            );
-    }
-
-    .hero-content{
-        top:34px;
-        left:20px;
-        right:20px;
-
-        transform:none;
-
-        width:auto;
-
-        max-width:none;
-    }
-
-    .hero-kicker{
-        font-size:8px;
-        letter-spacing:1.5px;
-        margin-bottom:13px;
-    }
-
-    .hero-title{
-        font-size:clamp(38px,11vw,54px);
-        letter-spacing:-1px;
-    }
-
-    .hero-description{
-        max-width:350px;
-        margin-top:15px;
-        font-size:11px;
-    }
-
-    .hero-buttons{
-        margin-top:17px;
-    }
-
-    .hero-button{
-        min-height:39px;
-        padding:0 12px;
-        font-size:9px;
-    }
-
-    .hero-search{
-        margin-top:18px;
-        width:100%;
-        max-width:390px;
-    }
-
-    .home-shirt-row{
-        grid-auto-columns:220px;
-    }
-
-    .language-list{
-        grid-template-columns:1fr;
-    }
-
+    .brand, nav{ display:none; }
+    .menu-button{ display:block; }
+    .hero{ height:auto; min-height:560px; padding:40px 0; }
+    .hero-clean-mask{ width:100%; background:linear-gradient(180deg, #020504 0%, rgba(2,5,4,.9) 70%, transparent 100%); }
+    .hero-content{ top:40px; left:20px; transform:none; width:calc(100% - 40px); }
+    .hero-title{ font-size:38px; }
+    .language-list{ grid-template-columns:1fr; }
 }
-
 @media(max-width:520px){
-
-    .page{
-        padding:12px 10px 55px;
-    }
-
-    .header-logo{
-        width:43px;
-        height:43px;
-    }
-
-    .hero{
-        height:600px;
-    }
-
-    .hero-image{
-        object-position:70% center;
-    }
-
-    .hero-content{
-        left:17px;
-        right:17px;
-        top:29px;
-    }
-
-    .hero-title{
-        font-size:40px;
-    }
-
-    .hero-description{
-        max-width:300px;
-        font-size:10px;
-    }
-
-    .hero-buttons{
-        width:100%;
-    }
-
-    .hero-button{
-        flex:1;
-    }
-
-    .hero-search{
-        width:100%;
-    }
-
-    .section-title{
-        font-size:19px;
-    }
-
-    .section-link{
-        font-size:9px;
-    }
-
-    .explore-banner{
-        height:300px;
-    }
-
-    .explore-overlay{
-        padding-left:25px;
-    }
-
+    .page{ padding:15px 12px 50px; }
+    .hero-title{ font-size:32px; }
+    .hero-buttons{ flex-direction:column; width:100%; }
+    .hero-button{ width:100%; }
 }
-
-@media(max-width:380px){
-
-    .hero{
-        height:570px;
-    }
-
-    .hero-title{
-        font-size:35px;
-    }
-
-    .hero-description{
-        display:none;
-    }
-
-}
-
 </style>
 </head>
 
 <body>
-
-<!-- Google Translate -->
 <div id="google_translate_element"></div>
-
 <script>
 function googleTranslateElementInit(){
-
-    new google.translate.TranslateElement(
-        {
-            pageLanguage:"nl",
-            autoDisplay:false
-        },
-        "google_translate_element"
-    );
-
+    new google.translate.TranslateElement({ pageLanguage:"nl", autoDisplay:false }, "google_translate_element");
 }
 </script>
-
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-
-<!-- =========================================
-     HEADER
-========================================= -->
-
 <header class="site-header">
-
-<div class="header-inner">
-
-<a href="#/" class="logo-area">
-
-<img
-src="logo.png"
-class="header-logo"
-alt="Football-Shirt-Market"
->
-
-<div class="brand">
-
-<div class="brand-title">
-FOOTBALL-SHIRT-MARKET
-</div>
-
-<div class="brand-since">
-SINCE 2026
-</div>
-
-</div>
-
-</a>
-
-
-<nav>
-
-<a href="#/" id="navHome">
-Home
-</a>
-
-<a href="#/explore" id="navExplore">
-Ontdekken
-</a>
-
-<a href="#/sell" id="navSell">
-Verkopen
-</a>
-
-</nav>
-
-
-<div class="header-right">
-
-<button
-class="language-button"
-id="languageButton"
->
-<span id="currentFlag">🇳🇱</span>
-<span id="currentCode">NL</span>
-▼
-</button>
-
-<button
-class="menu-button"
-id="menuButton"
->
-☰
-</button>
-
-</div>
-
-</div>
-
-
-<div
-class="mobile-nav"
-id="mobileNav"
->
-
-<a href="#/">
-Home
-</a>
-
-<a href="#/explore">
-Ontdekken
-</a>
-
-<a href="#/sell">
-Verkopen
-</a>
-
-</div>
-
+  <div class="header-inner">
+    <a href="#/" class="logo-area">
+      <img src="logo.png" class="header-logo" alt="Football-Shirt-Market">
+      <div class="brand">
+        <div class="brand-title">FOOTBALL-SHIRT-MARKET</div>
+        <div class="brand-since">SINCE 2026</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#/" id="navHome">Home</a>
+      <a href="#/explore" id="navExplore">Ontdekken</a>
+      <a href="#/sell" id="navSell">Verkopen</a>
+    </nav>
+    <div class="header-right">
+      <button class="language-button" id="languageButton">
+        <span id="currentFlag">🇳🇱</span>
+        <span id="currentCode">NL</span> ▼
+      </button>
+      <button class="menu-button" id="menuButton">☰</button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#/">Home</a>
+    <a href="#/explore">Ontdekken</a>
+    <a href="#/sell">Verkopen</a>
+  </div>
 </header>
 
-
-<!-- =========================================
-     LANGUAGE MODAL
-========================================= -->
-
-<div
-class="language-modal"
-id="languageModal"
->
-
-<div class="language-box">
-
-<div class="language-head">
-
-<div class="language-title">
-Kies je taal
+<div class="language-modal" id="languageModal">
+  <div class="language-box">
+    <div class="language-head">
+      <div class="language-title">Kies je taal</div>
+      <button class="language-close" id="languageClose">×</button>
+    </div>
+    <input id="languageSearch" class="language-search" type="search" placeholder="Zoek een taal..." autocomplete="off">
+    <div id="languageList" class="language-list"></div>
+  </div>
 </div>
-
-<button
-class="language-close"
-id="languageClose"
->
-×
-</button>
-
-</div>
-
-
-<input
-id="languageSearch"
-class="language-search"
-type="search"
-placeholder="Zoek een taal..."
-autocomplete="off"
->
-
-
-<div
-id="languageList"
-class="language-list"
-></div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================
-     APP
-========================================= -->
 
 <main id="app"></main>
 
-
-<!-- =========================================
-     FOOTER
-========================================= -->
-
 <footer>
-
-<strong>
-⚽ Football-Shirt-Market
-</strong>
-
-<br><br>
-
-De marketplace voor voetbalshirts,
-verzamelaars en echte voetbalfans.
-
-<br><br>
-
-<span style="color:var(--gold)">
-SINCE 2026
-</span>
-
+  <strong>⚽ Football-Shirt-Market</strong><br><br>
+  De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.<br><br>
+  <span style="color:var(--gold)">SINCE 2026</span>
 </footer>
 
+<div id="toast" class="toast"></div>
 
 <script>
-
-/* =====================================================
-   TALEN
-===================================================== */
-
 const languages=[
-
-{code:"nl",name:"Nederlands",flag:"🇳🇱"},
-{code:"en",name:"English",flag:"🇬🇧"},
-{code:"fr",name:"Français",flag:"🇫🇷"},
-{code:"de",name:"Deutsch",flag:"🇩🇪"},
-{code:"es",name:"Español",flag:"🇪🇸"},
-{code:"it",name:"Italiano",flag:"🇮🇹"},
-{code:"pt",name:"Português",flag:"🇵🇹"},
-{code:"af",name:"Afrikaans",flag:"🇿🇦"},
-{code:"sq",name:"Albanian",flag:"🇦🇱"},
-{code:"am",name:"Amharic",flag:"🇪🇹"},
-{code:"ar",name:"Arabic",flag:"🇸🇦"},
-{code:"hy",name:"Armenian",flag:"🇦🇲"},
-{code:"az",name:"Azerbaijani",flag:"🇦🇿"},
-{code:"eu",name:"Basque",flag:"🇪🇸"},
-{code:"be",name:"Belarusian",flag:"🇧🇾"},
-{code:"bn",name:"Bengali",flag:"🇧🇩"},
-{code:"bs",name:"Bosnian",flag:"🇧🇦"},
-{code:"bg",name:"Bulgarian",flag:"🇧🇬"},
-{code:"ca",name:"Catalan",flag:"🇪🇸"},
-{code:"ceb",name:"Cebuano",flag:"🇵🇭"},
-{code:"zh-CN",name:"Chinese Simplified",flag:"🇨🇳"},
-{code:"zh-TW",name:"Chinese Traditional",flag:"🇹🇼"},
-{code:"co",name:"Corsican",flag:"🇫🇷"},
-{code:"hr",name:"Croatian",flag:"🇭🇷"},
-{code:"cs",name:"Czech",flag:"🇨🇿"},
-{code:"da",name:"Danish",flag:"🇩🇰"},
-{code:"eo",name:"Esperanto",flag:"🌍"},
-{code:"et",name:"Estonian",flag:"🇪🇪"},
-{code:"fi",name:"Finnish",flag:"🇫🇮"},
-{code:"fy",name:"Frisian",flag:"🇳🇱"},
-{code:"gl",name:"Galician",flag:"🇪🇸"},
-{code:"ka",name:"Georgian",flag:"🇬🇪"},
-{code:"el",name:"Greek",flag:"🇬🇷"},
-{code:"gu",name:"Gujarati",flag:"🇮🇳"},
-{code:"ht",name:"Haitian Creole",flag:"🇭🇹"},
-{code:"ha",name:"Hausa",flag:"🌍"},
-{code:"haw",name:"Hawaiian",flag:"🇺🇸"},
-{code:"he",name:"Hebrew",flag:"🇮🇱"},
-{code:"hi",name:"Hindi",flag:"🇮🇳"},
-{code:"hmn",name:"Hmong",flag:"🌏"},
-{code:"hu",name:"Hungarian",flag:"🇭🇺"},
-{code:"is",name:"Icelandic",flag:"🇮🇸"},
-{code:"ig",name:"Igbo",flag:"🇳🇬"},
-{code:"id",name:"Indonesian",flag:"🇮🇩"},
-{code:"ga",name:"Irish",flag:"🇮🇪"},
-{code:"ja",name:"Japanese",flag:"🇯🇵"},
-{code:"jv",name:"Javanese",flag:"🇮🇩"},
-{code:"kn",name:"Kannada",flag:"🇮🇳"},
-{code:"kk",name:"Kazakh",flag:"🇰🇿"},
-{code:"km",name:"Khmer",flag:"🇰🇭"},
-{code:"rw",name:"Kinyarwanda",flag:"🇷🇼"},
-{code:"ko",name:"Korean",flag:"🇰🇷"},
-{code:"ku",name:"Kurdish",flag:"🌍"},
-{code:"ky",name:"Kyrgyz",flag:"🇰🇬"},
-{code:"lo",name:"Lao",flag:"🇱🇦"},
-{code:"la",name:"Latin",flag:"🌍"},
-{code:"lv",name:"Latvian",flag:"🇱🇻"},
-{code:"lt",name:"Lithuanian",flag:"🇱🇹"},
-{code:"lb",name:"Luxembourgish",flag:"🇱🇺"},
-{code:"mk",name:"Macedonian",flag:"🇲🇰"},
-{code:"mg",name:"Malagasy",flag:"🇲🇬"},
-{code:"ms",name:"Malay",flag:"🇲🇾"},
-{code:"ml",name:"Malayalam",flag:"🇮🇳"},
-{code:"mt",name:"Maltese",flag:"🇲🇹"},
-{code:"mi",name:"Maori",flag:"🇳🇿"},
-{code:"mr",name:"Marathi",flag:"🇮🇳"},
-{code:"mn",name:"Mongolian",flag:"🇲🇳"},
-{code:"my",name:"Myanmar",flag:"🇲🇲"},
-{code:"ne",name:"Nepali",flag:"🇳🇵"},
-{code:"no",name:"Norwegian",flag:"🇳🇴"},
-{code:"ny",name:"Chichewa",flag:"🌍"},
-{code:"or",name:"Odia",flag:"🇮🇳"},
-{code:"ps",name:"Pashto",flag:"🇦🇫"},
-{code:"fa",name:"Persian",flag:"🇮🇷"},
-{code:"pl",name:"Polish",flag:"🇵🇱"},
-{code:"pa",name:"Punjabi",flag:"🇮🇳"},
-{code:"ro",name:"Romanian",flag:"🇷🇴"},
-{code:"ru",name:"Russian",flag:"🇷🇺"},
-{code:"sm",name:"Samoan",flag:"🇼🇸"},
-{code:"gd",name:"Scots Gaelic",flag:"🏴"},
-{code:"sr",name:"Serbian",flag:"🇷🇸"},
-{code:"st",name:"Sesotho",flag:"🌍"},
-{code:"sn",name:"Shona",flag:"🌍"},
-{code:"sd",name:"Sindhi",flag:"🌍"},
-{code:"si",name:"Sinhala",flag:"🇱🇰"},
-{code:"sk",name:"Slovak",flag:"🇸🇰"},
-{code:"sl",name:"Slovenian",flag:"🇸🇮"},
-{code:"so",name:"Somali",flag:"🇸🇴"},
-{code:"su",name:"Sundanese",flag:"🇮🇩"},
-{code:"sw",name:"Swahili",flag:"🌍"},
-{code:"sv",name:"Swedish",flag:"🇸🇪"},
-{code:"tg",name:"Tajik",flag:"🇹🇯"},
-{code:"ta",name:"Tamil",flag:"🇮🇳"},
-{code:"tt",name:"Tatar",flag:"🇷🇺"},
-{code:"te",name:"Telugu",flag:"🇮🇳"},
-{code:"th",name:"Thai",flag:"🇹🇭"},
-{code:"tr",name:"Turkish",flag:"🇹🇷"},
-{code:"tk",name:"Turkmen",flag:"🇹🇲"},
-{code:"uk",name:"Ukrainian",flag:"🇺🇦"},
-{code:"ur",name:"Urdu",flag:"🇵🇰"},
-{code:"ug",name:"Uyghur",flag:"🇨🇳"},
-{code:"uz",name:"Uzbek",flag:"🇺🇿"},
-{code:"vi",name:"Vietnamese",flag:"🇻🇳"},
-{code:"cy",name:"Welsh",flag:"🏴"},
-{code:"xh",name:"Xhosa",flag:"🌍"},
-{code:"yi",name:"Yiddish",flag:"🌍"},
-{code:"yo",name:"Yoruba",flag:"🇳🇬"},
-{code:"zu",name:"Zulu",flag:"🇿🇦"}
-
+  {code:"nl",name:"Nederlands",flag:"🇳🇱"},{code:"en",name:"English",flag:"🇬🇧"},
+  {code:"fr",name:"Français",flag:"🇫🇷"},{code:"de",name:"Deutsch",flag:"🇩🇪"},
+  {code:"es",name:"Español",flag:"🇪🇸"},{code:"it",name:"Italiano",flag:"🇮🇹"},
+  {code:"pt",name:"Português",flag:"🇵🇹"},{code:"af",name:"Afrikaans",flag:"🇿🇦"},
+  {code:"sq",name:"Albanian",flag:"🇦🇱"},{code:"am",name:"Amharic",flag:"🇪🇹"},
+  {code:"ar",name:"Arabic",flag:"🇸🇦"},{code:"hy",name:"Armenian",flag:"🇦🇲"},
+  {code:"az",name:"Azerbaijani",flag:"🇦🇿"},{code:"eu",name:"Basque",flag:"🇪🇸"},
+  {code:"be",name:"Belarusian",flag:"🇧🇾"},{code:"bn",name:"Bengali",flag:"🇧🇩"},
+  {code:"bs",name:"Bosnian",flag:"🇧🇦"},{code:"bg",name:"Bulgarian",flag:"🇧🇬"},
+  {code:"ca",name:"Catalan",flag:"🇪🇸"},{code:"ceb",name:"Cebuano",flag:"🇵🇭"},
+  {code:"zh-CN",name:"Chinese Simplified",flag:"🇨🇳"},{code:"zh-TW",name:"Chinese Traditional",flag:"🇹🇼"},
+  {code:"co",name:"Corsican",flag:"🇫🇷"},{code:"hr",name:"Croatian",flag:"🇭🇷"},
+  {code:"cs",name:"Czech",flag:"🇨🇿"},{code:"da",name:"Danish",flag:"🇩🇰"},
+  {code:"eo",name:"Esperanto",flag:"🌍"},{code:"et",name:"Estonian",flag:"🇪🇪"},
+  {code:"fi",name:"Finnish",flag:"🇫🇮"},{code:"fy",name:"Frisian",flag:"🇳🇱"},
+  {code:"gl",name:"Galician",flag:"🇪🇸"},{code:"ka",name:"Georgian",flag:"🇬🇪"},
+  {code:"el",name:"Greek",flag:"🇬🇷"},{code:"gu",name:"Gujarati",flag:"🇮🇳"},
+  {code:"ht",name:"Haitian Creole",flag:"🇭🇹"},{code:"ha",name:"Hausa",flag:"🌍"},
+  {code:"haw",name:"Hawaiian",flag:"🇺🇸"},{code:"he",name:"Hebrew",flag:"🇮🇱"},
+  {code:"hi",name:"Hindi",flag:"🇮🇳"},{code:"hmn",name:"Hmong",flag:"🌏"},
+  {code:"hu",name:"Hungarian",flag:"🇭🇺"},{code:"is",name:"Icelandic",flag:"🇮🇸"},
+  {code:"ig",name:"Igbo",flag:"🇳🇬"},{code:"id",name:"Indonesian",flag:"🇮🇩"},
+  {code:"ga",name:"Irish",flag:"🇮🇪"},{code:"ja",name:"Japanese",flag:"🇯🇵"},
+  {code:"jv",name:"Javanese",flag:"🇮🇩"},{code:"kn",name:"Kannada",flag:"🇮🇳"},
+  {code:"kk",name:"Kazakh",flag:"🇰🇿"},{code:"km",name:"Khmer",flag:"🇰🇭"},
+  {code:"rw",name:"Kinyarwanda",flag:"🇷🇼"},{code:"ko",name:"Korean",flag:"🇰🇷"},
+  {code:"ku",name:"Kurdish",flag:"🌍"},{code:"ky",name:"Kyrgyz",flag:"🇰🇬"},
+  {code:"lo",name:"Lao",flag:"🇱🇦"},{code:"la",name:"Latin",flag:"🌍"},
+  {code:"lv",name:"Latvian",flag:"🇱🇻"},{code:"lt",name:"Lithuanian",flag:"🇱🇹"},
+  {code:"lb",name:"Luxembourgish",flag:"🇱🇺"},{code:"mk",name:"Macedonian",flag:"🇲🇰"},
+  {code:"mg",name:"Malagasy",flag:"🇲🇬"},{code:"ms",name:"Malay",flag:"🇲🇾"},
+  {code:"ml",name:"Malayalam",flag:"🇮🇳"},{code:"mt",name:"Maltese",flag:"🇲🇹"},
+  {code:"mi",name:"Maori",flag:"🇳🇿"},{code:"mr",name:"Marathi",flag:"🇮🇳"},
+  {code:"mn",name:"Mongolian",flag:"🇲🇳"},{code:"my",name:"Myanmar",flag:"🇲🇲"},
+  {code:"ne",name:"Nepali",flag:"🇳🇵"},{code:"no",name:"Norwegian",flag:"🇳🇴"},
+  {code:"ny",name:"Chichewa",flag:"🌍"},{code:"or",name:"Odia",flag:"🇮🇳"},
+  {code:"ps",name:"Pashto",flag:"🇦🇫"},{code:"fa",name:"Persian",flag:"🇮🇷"},
+  {code:"pl",name:"Polish",flag:"🇵🇱"},{code:"pa",name:"Punjabi",flag:"🇮🇳"},
+  {code:"ro",name:"Romanian",flag:"🇷🇴"},{code:"ru",name:"Russian",flag:"🇷🇺"},
+  {code:"sm",name:"Samoan",flag:"🇼🇸"},{code:"gd",name:"Scots Gaelic",flag:"🏴"},
+  {code:"sr",name:"Serbian",flag:"🇷🇸"},{code:"st",name:"Sesotho",flag:"🌍"},
+  {code:"sn",name:"Shona",flag:"🌍"},{code:"sd",name:"Sindhi",flag:"🌍"},
+  {code:"si",name:"Sinhala",flag:"🇱🇰"},{code:"sk",name:"Slovak",flag:"🇸🇰"},
+  {code:"sl",name:"Slovenian",flag:"🇸🇮"},{code:"so",name:"Somali",flag:"🇸🇴"},
+  {code:"su",name:"Sundanese",flag:"🇮🇩"},{code:"sw",name:"Swahili",flag:"🌍"},
+  {code:"sv",name:"Swedish",flag:"🇸🇪"},{code:"tg",name:"Tajik",flag:"🇹🇯"},
+  {code:"ta",name:"Tamil",flag:"🇮🇳"},{code:"tt",name:"Tatar",flag:"🇷🇺"},
+  {code:"te",name:"Telugu",flag:"🇮🇳"},{code:"th",name:"Thai",flag:"🇹🇭"},
+  {code:"tr",name:"Turkish",flag:"🇹🇷"},{code:"tk",name:"Turkmen",flag:"🇹🇲"},
+  {code:"uk",name:"Ukrainian",flag:"🇺🇦"},{code:"ur",name:"Urdu",flag:"🇵🇰"},
+  {code:"ug",name:"Uyghur",flag:"🇨🇳"},{code:"uz",name:"Uzbek",flag:"🇺🇿"},
+  {code:"vi",name:"Vietnamese",flag:"🇻🇳"},{code:"cy",name:"Welsh",flag:"🏴"},
+  {code:"xh",name:"Xhosa",flag:"🌍"},{code:"yi",name:"Yiddish",flag:"🌍"},
+  {code:"yo",name:"Yoruba",flag:"🇳🇬"},{code:"zu",name:"Zulu",flag:"🇿🇦"}
 ];
-
-
-/* =====================================================
-   SHIRTS
-===================================================== */
 
 const shirts=[
-
-{
-id:1,
-club:"AC Milan",
-name:"AC Milan 1994-1995 Home #3 Maldini",
-price:"€ 149,95",
-condition:"Mint Condition",
-icon:"🔴⚫"
-},
-
-{
-id:2,
-club:"Real Madrid",
-name:"Real Madrid 2001-2002 Centenary #5 Zidane",
-price:"€ 179,95",
-condition:"Nieuwstaat",
-icon:"⚪👑"
-},
-
-{
-id:3,
-club:"FC Barcelona",
-name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
-price:"€ 169,95",
-condition:"Mint Condition",
-icon:"🔵🔴"
-},
-
-{
-id:4,
-club:"Manchester United",
-name:"Manchester United 1998-1999 Treble #7 Beckham",
-price:"€ 159,95",
-condition:"Nieuwstaat",
-icon:"🔴⚪"
-},
-
-{
-id:5,
-club:"Arsenal",
-name:"Arsenal 2003-2004 Invincibles #14 Henry",
-price:"€ 189,95",
-condition:"Mint Condition",
-icon:"🔴⚪"
-},
-
-{
-id:6,
-club:"Juventus",
-name:"Juventus 1997-1998 Centenary #10 Del Piero",
-price:"€ 139,95",
-condition:"Nieuwstaat",
-icon:"⚪⚫"
-},
-
-{
-id:7,
-club:"Chelsea",
-name:"Chelsea 2004-2005 Home #8 Lampard",
-price:"€ 129,95",
-condition:"Zeer goed",
-icon:"🔵"
-},
-
-{
-id:8,
-club:"Liverpool",
-name:"Liverpool 2005-2006 Home",
-price:"€ 119,95",
-condition:"Vintage",
-icon:"🔴"
-}
-
+  {id:1,club:"AC Milan",name:"AC Milan 1994-1995 Home #3 Maldini",price:"€ 149,95",condition:"Mint Condition",icon:"🔴⚫"},
+  {id:2,club:"Real Madrid",name:"Real Madrid 2001-2002 Centenary #5 Zidane",price:"€ 179,95",condition:"Nieuwstaat",icon:"⚪👑"},
+  {id:3,club:"FC Barcelona",name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",price:"€ 169,95",condition:"Mint Condition",icon:"🔵🔴"},
+  {id:4,club:"Manchester United",name:"Manchester United 1998-1999 Treble #7 Beckham",price:"€ 159,95",condition:"Nieuwstaat",icon:"🔴⚪"},
+  {id:5,club:"Arsenal",name:"Arsenal 2003-2004 Invincibles #14 Henry",price:"€ 189,95",condition:"Mint Condition",icon:"🔴⚪"},
+  {id:6,club:"Juventus",name:"Juventus 1997-1998 Centenary #10 Del Piero",price:"€ 139,95",condition:"Nieuwstaat",icon:"⚪⚫"},
+  {id:7,club:"Chelsea",name:"Chelsea 2004-2005 Home #8 Lampard",price:"€ 129,95",condition:"Zeer goed",icon:"🔵"},
+  {id:8,club:"Liverpool",name:"Liverpool 2005-2006 Home",price:"€ 119,95",condition:"Vintage",icon:"🔴"}
 ];
 
-
-/* =====================================================
-   SHIRT CARD
-===================================================== */
+const app = document.getElementById("app");
 
 function makeShirt(shirt){
-
-return `
-
-<article class="shirt-card">
-
-<div class="shirt-visual">
-
-<div class="shirt-condition">
-${shirt.condition}
-</div>
-
-<div>
-👕
-</div>
-
-</div>
-
-<div class="shirt-info">
-
-<div class="shirt-club">
-${shirt.icon} ${shirt.club}
-</div>
-
-<div class="shirt-name">
-${shirt.name}
-</div>
-
-<div class="shirt-footer">
-
-<div class="shirt-price">
-${shirt.price}
-</div>
-
-<button
-class="shirt-view"
-onclick="shirtMessage('${shirt.club.replace(/'/g,"\\'")}', '${shirt.price}')"
->
-Bekijken
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-`;
-
+  return `
+  <article class="shirt-card">
+    <div class="shirt-visual">
+      <div class="shirt-condition">${shirt.condition}</div>
+      <div>👕</div>
+    </div>
+    <div class="shirt-info">
+      <div class="shirt-club">${shirt.icon} ${shirt.club}</div>
+      <div class="shirt-name">${shirt.name}</div>
+      <div class="shirt-footer">
+        <div class="shirt-price">${shirt.price}</div>
+        <button class="shirt-view" onclick="shirtMessage('${shirt.club.replace(/'/g,"\\'")}', '${shirt.price}')">Bekijken</button>
+      </div>
+    </div>
+  </article>`;
 }
-
-
-/* =====================================================
-   HOME
-===================================================== */
 
 function renderHome(){
+  app.innerHTML=`
+  <div class="page">
+    <section class="hero">
+      <img src="hero.png" class="hero-image" alt="Football-Shirt-Market">
+      <div class="hero-shade"></div>
+      <div class="hero-clean-mask"></div>
+      <div class="hero-content">
+        <div class="hero-kicker">FOOTBALL-SHIRT-MARKET • SINCE 2026</div>
+        <h1 class="hero-title">Koop.<br>Verkoop.<br><span>Verzamel.</span></h1>
+        <p class="hero-description">De marketplace voor voetbalshirts, verzamelaars en echte voetbalfans.</p>
+        <div class="hero-buttons">
+          <a href="#/explore" class="hero-button green">Ontdek shirts</a>
+          <a href="#/sell" class="hero-button white">Verkoop een shirt</a>
+        </div>
+        <div class="hero-search">
+          <div class="hero-search-icon">⌕</div>
+          <input id="homeSearch" type="search" placeholder="Zoek shirts, clubs, spelers...">
+          <button id="homeSearchButton">→</button>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Uitgelichte <span>shirts</span></h2>
+        <a href="#/explore" class="section-link">Alle shirts →</a>
+      </div>
+      <div class="home-shirt-row">${shirts.slice(0,6).map(makeShirt).join("")}</div>
+    </section>
+  </div>`;
 
-app.innerHTML=`
-
-<div class="page">
-
-<section class="hero">
-
-<img
-src="hero.png"
-class="hero-image"
-alt="Football-Shirt-Market"
->
-
-<div class="hero-shade"></div>
-
-<div class="hero-clean-mask"></div>
-
-
-<div class="hero-content">
-
-<div class="hero-kicker">
-FOOTBALL-SHIRT-MARKET • SINCE 2026
-</div>
-
-
-<h1 class="hero-title">
-Koop.<br>
-Verkoop.<br>
-<span>Verzamel.</span>
-</h1>
-
-
-<p class="hero-description">
-De marketplace voor voetbalshirts,
-verzamelaars en echte voetbalfans.
-</p>
-
-
-<div class="hero-buttons">
-
-<a
-href="#/explore"
-class="hero-button green"
->
-Ontdek shirts
-</a>
-
-<a
-href="#/sell"
-class="hero-button white"
->
-Verkoop een shirt
-</a>
-
-</div>
-
-
-<div class="hero-search">
-
-<div class="hero-search-icon">
-⌕
-</div>
-
-<input
-id="homeSearch"
-type="search"
-placeholder="Zoek shirts, clubs, spelers..."
->
-
-<button
-id="homeSearchButton"
->
-→
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="section">
-
-<div class="section-head">
-
-<h2 class="section-title">
-Uitgelichte <span>shirts</span>
-</h2>
-
-<a
-href="#/explore"
-class="section-link"
->
-Alle shirts →
-</a>
-
-</div>
-
-
-<div class="home-shirt-row">
-
-${shirts.slice(0,6).map(makeShirt).join("")}
-
-</div>
-
-</section>
-
-</div>
-
-`;
-
-
-const search=
-document.getElementById("homeSearch");
-
-const searchButton=
-document.getElementById("homeSearchButton");
-
-
-function executeSearch(){
-
-const value=
-search.value.trim();
-
-if(!value){
-
-location.hash="#/explore";
-
-return;
-
+  const search = document.getElementById("homeSearch");
+  const searchButton = document.getElementById("homeSearchButton");
+  function executeSearch(){
+    const value = search.value.trim();
+    location.hash = value ? "#/explore?search=" + encodeURIComponent(value) : "#/explore";
+  }
+  searchButton.addEventListener("click", executeSearch);
+  search.addEventListener("keydown", e => { if(e.key==="Enter") executeSearch(); });
 }
-
-location.hash=
-"#/explore?search="+
-encodeURIComponent(value);
-
-}
-
-
-searchButton.addEventListener(
-"click",
-executeSearch
-);
-
-
-search.addEventListener(
-"keydown",
-e=>{
-
-if(e.key==="Enter"){
-
-executeSearch();
-
-}
-
-});
-
-}
-
-
-/* =====================================================
-   EXPLORE
-===================================================== */
 
 function renderExplore(){
+  const hash = location.hash;
+  let query = hash.includes("?search=") ? decodeURIComponent(hash.split("?search=")[1]).toLowerCase() : "";
+  let list = query ? shirts.filter(s => (s.club + " " + s.name).toLowerCase().includes(query)) : shirts;
 
-const hash=
-location.hash;
-
-let query="";
-
-if(
-hash.includes("?search=")
-){
-
-query=
-decodeURIComponent(
-hash.split("?search=")[1]
-).toLowerCase();
-
+  app.innerHTML=`
+  <div class="page">
+    <section class="explore-banner">
+      <img src="ontdekken.png" alt="Ontdekken" onerror="this.src='hero.png'">
+      <div class="explore-overlay">
+        <h1 class="explore-title">Ontdek<br><span>shirts.</span></h1>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Alle <span>shirts</span></h2>
+        <a href="#/" class="section-link">← Home</a>
+      </div>
+      <div class="explore-grid">
+        ${list.length ? list.map(makeShirt).join("") : '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#8a9891;">Geen shirts gevonden.</div>'}
+      </div>
+    </section>
+  </div>`;
 }
-
-
-let list=shirts;
-
-if(query){
-
-list=
-shirts.filter(
-shirt=>
-(
-shirt.club+
-" "+
-shirt.name
-)
-.toLowerCase()
-.includes(query)
-);
-
-}
-
-
-app.innerHTML=`
-
-<div class="page">
-
-<section class="explore-banner">
-
-<img
-src="ontdekken.png"
-alt="Ontdekken"
-onerror="this.src='hero.png'"
->
-
-<div class="explore-overlay">
-
-<h1 class="explore-title">
-
-Ontdek<br>
-<span>shirts.</span>
-
-</h1>
-
-</div>
-
-</section>
-
-
-<section class="section">
-
-<div class="section-head">
-
-<h2 class="section-title">
-Alle <span>shirts</span>
-</h2>
-
-<a
-href="#/"
-class="section-link"
->
-← Home
-</a>
-
-</div>
-
-
-<div class="explore-grid">
-
-${
-list.length
-?list.map(makeShirt).join("")
-:`
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:60px 20px;
-color:#8a9891;
-"
->
-Geen shirts gevonden.
-</div>
-`
-}
-
-</div>
-
-</section>
-
-</div>
-
-`;
-
-}
-
-
-/* =====================================================
-   SELL
-===================================================== */
 
 function renderSell(){
-
-app.innerHTML=`
-
-<div class="page">
-
-<div class="sell-box">
-
-<div style="font-size:48px">
-👕
-</div>
-
-<h1>
-Verkoop je shirt
-</h1>
-
-<p style="
-color:#a8b5ae;
-line-height:1.7;
-margin:15px 0 25px;
-">
-Binnenkort kun je hier je eigen
-voetbalshirts plaatsen en verkopen
-aan verzamelaars en voetbalfans.
-</p>
-
-<a
-href="#/"
-class="hero-button green"
->
-← Terug naar Home
-</a>
-
-</div>
-
-</div>
-
-`;
-
+  app.innerHTML=`
+  <div class="page">
+    <div class="sell-box">
+      <div style="font-size:48px;margin-bottom:10px;">👕</div>
+      <h1>Verkoop je shirt</h1>
+      <p style="color:#a8b5ae;line-height:1.7;margin:15px 0 25px;">Binnenkort kun je hier je eigen voetbalshirts plaatsen en verkopen aan verzamelaars en voetbalfans.</p>
+      <a href="#/" class="hero-button green">← Terug naar Home</a>
+    </div>
+  </div>`;
 }
-
-
-/* =====================================================
-   ROUTER
-===================================================== */
 
 function route(){
-
-const hash=
-location.hash || "#/";
-
-document
-.querySelectorAll("nav a")
-.forEach(
-x=>x.classList.remove("active")
-);
-
-
-if(
-hash.startsWith("#/explore")
-){
-
-document
-.getElementById("navExplore")
-.classList.add("active");
-
-renderExplore();
-
+  const hash = location.hash || "#/";
+  document.querySelectorAll("nav a").forEach(x=>x.classList.remove("active"));
+  if(hash.startsWith("#/explore")){
+    document.getElementById("navExplore").classList.add("active");
+    renderExplore();
+  } else if(hash.startsWith("#/sell")){
+    document.getElementById("navSell").classList.add("active");
+    renderSell();
+  } else {
+    document.getElementById("navHome").classList.add("active");
+    renderHome();
+  }
 }
 
-else if(
-hash.startsWith("#/sell")
-){
-
-document
-.getElementById("navSell")
-.classList.add("active");
-
-renderSell();
-
-}
-
-else{
-
-document
-.getElementById("navHome")
-.classList.add("active");
-
-renderHome();
-
-}
-
-}
-
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
-const languageModal=
-document.getElementById("languageModal");
-
-const languageList=
-document.getElementById("languageList");
-
-const languageSearch=
-document.getElementById("languageSearch");
-
+const languageModal = document.getElementById("languageModal");
+const languageList = document.getElementById("languageList");
+const languageSearch = document.getElementById("languageSearch");
 
 function getLanguage(){
-
-const match=
-document.cookie.match(
-/googtrans=\/nl\/([^;]+)/
-);
-
-return match
-?match[1]
-:"nl";
-
+  const match = document.cookie.match(/googtrans=\/nl\/([^;]+)/);
+  return match ? match[1] : "nl";
 }
-
 
 function updateLanguageButton(){
-
-const code=
-getLanguage();
-
-const lang=
-languages.find(
-x=>x.code===code
-)
-||
-languages.find(
-x=>x.code==="nl"
-);
-
-if(!lang)return;
-
-document.getElementById(
-"currentFlag"
-).textContent=
-lang.flag;
-
-document.getElementById(
-"currentCode"
-).textContent=
-lang.code
-.split("-")[0]
-.toUpperCase();
-
+  const code = getLanguage();
+  const lang = languages.find(x=>x.code===code) || languages.find(x=>x.code==="nl");
+  if(!lang) return;
+  document.getElementById("currentFlag").textContent = lang.flag;
+  document.getElementById("currentCode").textContent = lang.code.split("-")[0].toUpperCase();
 }
-
 
 function renderLanguages(search=""){
-
-const query=
-search.toLowerCase().trim();
-
-const active=
-getLanguage();
-
-const result=
-languages.filter(
-language=>
-
-language.name
-.toLowerCase()
-.includes(query)
-
-||
-
-language.code
-.toLowerCase()
-.includes(query)
-);
-
-
-languageList.innerHTML="";
-
-
-result.forEach(language=>{
-
-const item=
-document.createElement("button");
-
-item.type="button";
-
-item.className=
-"language-item";
-
-
-if(language.code===active){
-
-item.classList.add("active");
-
+  const query = search.toLowerCase().trim();
+  const active = getLanguage();
+  const result = languages.filter(l => l.name.toLowerCase().includes(query) || l.code.toLowerCase().includes(query));
+  languageList.innerHTML="";
+  result.forEach(language=>{
+    const item = document.createElement("button");
+    item.type="button";
+    item.className = "language-item" + (language.code === active ? " active" : "");
+    item.innerHTML = `<span>${language.flag}</span><span>${language.name}</span>`;
+    item.addEventListener("click", ()=>{
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+      if(language.code!=="nl"){
+        document.cookie = "googtrans=/nl/"+language.code+"; path=/; max-age=31536000";
+      }
+      languageModal.classList.remove("open");
+      location.reload();
+    });
+    languageList.appendChild(item);
+  });
 }
 
-
-item.innerHTML=`
-
-<span class="language-flag">
-${language.flag}
-</span>
-
-<span>
-${language.name}
-</span>
-
-`;
-
-item.addEventListener(
-"click",
-()=>{
-
-/* reset */
-
-document.cookie=
-"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-
-
-if(language.code!=="nl"){
-
-document.cookie=
-"googtrans=/nl/"+
-language.code+
-"; path=/; max-age=31536000";
-
-}
-
-languageModal.classList.remove("open");
-
-location.reload();
-
-}
-);
-
-
-languageList.appendChild(item);
-
+document.getElementById("languageButton").addEventListener("click", ()=>{
+  languageModal.classList.add("open");
+  languageSearch.value="";
+  renderLanguages();
+  setTimeout(()=>languageSearch.focus(), 80);
 });
+document.getElementById("languageClose").addEventListener("click", ()=>languageModal.classList.remove("open"));
+languageModal.addEventListener("click", e=>{ if(e.target===languageModal) languageModal.classList.remove("open"); });
+languageSearch.addEventListener("input", e=>renderLanguages(e.target.value));
 
-}
-
-
-/* language popup */
-
-document
-.getElementById("languageButton")
-.addEventListener(
-"click",
-()=>{
-
-languageModal.classList.add("open");
-
-languageSearch.value="";
-
-renderLanguages();
-
-setTimeout(
-()=>languageSearch.focus(),
-80
-);
-
-}
-);
-
-
-document
-.getElementById("languageClose")
-.addEventListener(
-"click",
-()=>{
-
-languageModal.classList.remove("open");
-
-}
-);
-
-
-languageModal.addEventListener(
-"click",
-e=>{
-
-if(e.target===languageModal){
-
-languageModal.classList.remove("open");
-
-}
-
-}
-);
-
-
-languageSearch.addEventListener(
-"input",
-e=>{
-
-renderLanguages(
-e.target.value
-);
-
-}
-);
-
-
-/* =========================================
-   MOBILE MENU
-========================================= */
-
-document
-.getElementById("menuButton")
-.addEventListener(
-"click",
-()=>{
-
-document
-.getElementById("mobileNav")
-.classList.toggle("open");
-
-}
-);
-
-
-document
-.querySelectorAll(".mobile-nav a")
-.forEach(link=>{
-
-link.addEventListener(
-"click",
-()=>{
-
-document
-.getElementById("mobileNav")
-.classList.remove("open");
-
-}
-);
-
+document.getElementById("menuButton").addEventListener("click", ()=>{
+  document.getElementById("mobileNav").classList.toggle("open");
 });
-
-
-/* =========================================
-   SHIRT MESSAGE
-========================================= */
+document.querySelectorAll(".mobile-nav a").forEach(link=>{
+  link.addEventListener("click", ()=>document.getElementById("mobileNav").classList.remove("open"));
+});
 
 function shirtMessage(club,price){
-
-const message=
-club+
-" • "+
-price;
-
-const toast=
-document.getElementById("toast");
-
-toast.textContent=message;
-
-toast.classList.add("show");
-
-setTimeout(
-()=>toast.classList.remove("show"),
-2000
-);
-
+  const toast = document.getElementById("toast");
+  toast.textContent = club + " • " + price;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"), 2000);
 }
 
-
-/* =========================================
-   START
-========================================= */
-
-window.addEventListener(
-"hashchange",
-route
-);
-
+window.addEventListener("hashchange", route);
 updateLanguageButton();
-
 route();
-
 </script>
-
-
-<div
-id="toast"
-class="toast"
-></div>
-
 </body>
 </html>
