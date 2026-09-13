@@ -6318,5 +6318,37 @@ router();
 }
 </style>
 
+
+<style>
+@media (max-width:900px){
+  /* Slightly enlarge the hero text again */
+  .hero-kicker{font-size:clamp(5.5px,1.35vw,7.5px)!important}
+  .hero-title{font-size:clamp(22px,5.8vw,32px)!important}
+  .hero-description{
+    max-width:50vw!important;
+    font-size:clamp(8px,1.9vw,10px)!important;
+    line-height:1.25!important;
+  }
+  .hero-button{font-size:7.5px!important}
+  .hero-search input{font-size:8.5px!important}
+
+  /* Remove the large black area below the hero image */
+  .hero{
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:16/10!important;
+    margin-bottom:0!important;
+  }
+  .hero + *{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+}
+@media (max-width:390px){
+  .hero-title{font-size:clamp(20px,5.5vw,29px)!important}
+  .hero-description{font-size:clamp(7.5px,1.8vw,9px)!important}
+}
+</style>
+
 </body>
 </html>
