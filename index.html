@@ -58,6 +58,18 @@ textarea{
 img{
     max-width:100%;
 }
+
+.goog-te-banner-frame,
+.skiptranslate iframe,
+#google_translate_element{
+    display:none!important;
+}
+
+.goog-text-highlight{
+    background:transparent!important;
+    box-shadow:none!important;
+}
+
 /* ======================================================
    HEADER
 ====================================================== */
@@ -3115,9 +3127,76 @@ footer strong{
 }
 </style>
 
+
+<style id="language-native-label-polish">
+.language-item{
+  text-align:left;
+}
+#currentCode{
+  text-transform:none;
+}
+</style>
+
 </head>
 
 <body>
+
+<!-- ======================================================
+     GOOGLE TRANSLATE
+====================================================== -->
+
+<div id="google_translate_element"></div>
+
+<script>
+/*
+   The site's own text is written in Dutch (nl).
+   English is the default language shown to visitors,
+   so on first visit (no saved preference yet) we
+   translate straight to English before Google's
+   widget even loads. On every load we make sure the
+   googtrans cookie matches the saved preference,
+   since that cookie is what the widget reads.
+*/
+
+(function(){
+
+    var savedLang=
+        localStorage.getItem("fsm_language");
+
+    if(!savedLang){
+        savedLang="en";
+        localStorage.setItem(
+            "fsm_language",
+            savedLang
+        );
+    }
+
+    document.cookie=
+        "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+
+    if(savedLang!=="nl"){
+        document.cookie=
+            "googtrans=/nl/"+savedLang+"; path=/;";
+    }
+
+})();
+
+function googleTranslateElementInit(){
+
+    new google.translate.TranslateElement(
+        {
+            pageLanguage:"nl",
+            autoDisplay:false
+        },
+        "google_translate_element"
+    );
+
+}
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
 <!-- ======================================================
      HEADER
 ====================================================== -->
@@ -3315,21 +3394,117 @@ class="toast"
 ====================================================== */
 
 const languages = [
-    {code:"nl",name:"Nederlands",flag:"🇳🇱"},
-    {code:"en",name:"English",flag:"🇬🇧"},
-    {code:"fr",name:"Français",flag:"🇫🇷"},
-    {code:"de",name:"Deutsch",flag:"🇩🇪"},
-    {code:"es",name:"Español",flag:"🇪🇸"},
-    {code:"it",name:"Italiano",flag:"🇮🇹"},
-    {code:"pt",name:"Português",flag:"🇵🇹"},
-    {code:"pl",name:"Polski",flag:"🇵🇱"},
-    {code:"tr",name:"Türkçe",flag:"🇹🇷"},
-    {code:"da",name:"Dansk",flag:"🇩🇰"},
-    {code:"sv",name:"Svenska",flag:"🇸🇪"},
-    {code:"no",name:"Norsk",flag:"🇳🇴"},
-    {code:"fi",name:"Suomi",flag:"🇫🇮"},
-    {code:"cs",name:"Čeština",flag:"🇨🇿"},
-    {code:"ro",name:"Română",flag:"🇷🇴"}
+
+{code:"nl",name:"Nederlands",flag:"🇳🇱"},
+{code:"en",name:"English",flag:"🇬🇧"},
+{code:"fr",name:"Français",flag:"🇫🇷"},
+{code:"de",name:"Deutsch",flag:"🇩🇪"},
+{code:"es",name:"Español",flag:"🇪🇸"},
+{code:"it",name:"Italiano",flag:"🇮🇹"},
+{code:"pt",name:"Português",flag:"🇵🇹"},
+{code:"af",name:"Afrikaans",flag:"🇿🇦"},
+{code:"sq",name:"Shqip",flag:"🇦🇱"},
+{code:"am",name:"አማርኛ",flag:"🇪🇹"},
+{code:"ar",name:"العربية",flag:"🇸🇦"},
+{code:"hy",name:"Հայերեն",flag:"🇦🇲"},
+{code:"az",name:"Azərbaycanca",flag:"🇦🇿"},
+{code:"eu",name:"Euskara",flag:"🇪🇸"},
+{code:"be",name:"Беларуская",flag:"🇧🇾"},
+{code:"bn",name:"বাংলা",flag:"🇧🇩"},
+{code:"bs",name:"Bosanski",flag:"🇧🇦"},
+{code:"bg",name:"Български",flag:"🇧🇬"},
+{code:"ca",name:"Català",flag:"🇪🇸"},
+{code:"ceb",name:"Cebuano",flag:"🇵🇭"},
+{code:"zh-CN",name:"简体中文",flag:"🇨🇳"},
+{code:"zh-TW",name:"繁體中文",flag:"🇹🇼"},
+{code:"co",name:"Corsu",flag:"🇫🇷"},
+{code:"hr",name:"Hrvatski",flag:"🇭🇷"},
+{code:"cs",name:"Čeština",flag:"🇨🇿"},
+{code:"da",name:"Dansk",flag:"🇩🇰"},
+{code:"eo",name:"Esperanto",flag:"🌍"},
+{code:"et",name:"Eesti",flag:"🇪🇪"},
+{code:"fi",name:"Suomi",flag:"🇫🇮"},
+{code:"fy",name:"Frysk",flag:"🇳🇱"},
+{code:"gl",name:"Galego",flag:"🇪🇸"},
+{code:"ka",name:"ქართული",flag:"🇬🇪"},
+{code:"el",name:"Ελληνικά",flag:"🇬🇷"},
+{code:"gu",name:"ગુજરાતી",flag:"🇮🇳"},
+{code:"ht",name:"Kreyòl Ayisyen",flag:"🇭🇹"},
+{code:"ha",name:"Hausa",flag:"🇳🇬"},
+{code:"haw",name:"Hawaiian",flag:"🇺🇸"},
+{code:"he",name:"עברית",flag:"🇮🇱"},
+{code:"hi",name:"हिन्दी",flag:"🇮🇳"},
+{code:"hmn",name:"Hmong",flag:"🌏"},
+{code:"hu",name:"Magyar",flag:"🇭🇺"},
+{code:"is",name:"Íslenska",flag:"🇮🇸"},
+{code:"ig",name:"Igbo",flag:"🇳🇬"},
+{code:"id",name:"Bahasa Indonesia",flag:"🇮🇩"},
+{code:"ga",name:"Gaeilge",flag:"🇮🇪"},
+{code:"ja",name:"日本語",flag:"🇯🇵"},
+{code:"jv",name:"Basa Jawa",flag:"🇮🇩"},
+{code:"kn",name:"Kannada",flag:"🇮🇳"},
+{code:"kk",name:"Қазақша",flag:"🇰🇿"},
+{code:"km",name:"ខ្មែរ",flag:"🇰🇭"},
+{code:"rw",name:"Kinyarwanda",flag:"🇷🇼"},
+{code:"ko",name:"한국어",flag:"🇰🇷"},
+{code:"ku",name:"Kurdish",flag:"🌍"},
+{code:"ky",name:"Кыргызча",flag:"🇰🇬"},
+{code:"lo",name:"ລາວ",flag:"🇱🇦"},
+{code:"la",name:"Latina",flag:"🌍"},
+{code:"lv",name:"Latviešu",flag:"🇱🇻"},
+{code:"lt",name:"Lietuvių",flag:"🇱🇹"},
+{code:"lb",name:"Lëtzebuergesch",flag:"🇱🇺"},
+{code:"mk",name:"Македонски",flag:"🇲🇰"},
+{code:"mg",name:"Malagasy",flag:"🇲🇬"},
+{code:"ms",name:"Bahasa Melayu",flag:"🇲🇾"},
+{code:"ml",name:"മലയാളം",flag:"🇮🇳"},
+{code:"mt",name:"Malti",flag:"🇲🇹"},
+{code:"mi",name:"Māori",flag:"🇳🇿"},
+{code:"mr",name:"मराठी",flag:"🇮🇳"},
+{code:"mn",name:"Монгол",flag:"🇲🇳"},
+{code:"my",name:"မြန်မာ",flag:"🇲🇲"},
+{code:"ne",name:"नेपाली",flag:"🇳🇵"},
+{code:"no",name:"Norsk",flag:"🇳🇴"},
+{code:"ny",name:"Chichewa",flag:"🇲🇼"},
+{code:"or",name:"ଓଡ଼ିଆ",flag:"🇮🇳"},
+{code:"ps",name:"پښتو",flag:"🇦🇫"},
+{code:"fa",name:"فارسی",flag:"🇮🇷"},
+{code:"pl",name:"Polski",flag:"🇵🇱"},
+{code:"pa",name:"ਪੰਜਾਬੀ",flag:"🇮🇳"},
+{code:"ro",name:"Română",flag:"🇷🇴"},
+{code:"ru",name:"Русский",flag:"🇷🇺"},
+{code:"sm",name:"Samoan",flag:"🇼🇸"},
+{code:"gd",name:"Gàidhlig",flag:"🏴"},
+{code:"sr",name:"Српски",flag:"🇷🇸"},
+{code:"st",name:"Sesotho",flag:"🇱🇸"},
+{code:"sn",name:"Shona",flag:"🇿🇼"},
+{code:"sd",name:"Sindhi",flag:"🌍"},
+{code:"si",name:"සිංහල",flag:"🇱🇰"},
+{code:"sk",name:"Slovenčina",flag:"🇸🇰"},
+{code:"sl",name:"Slovenščina",flag:"🇸🇮"},
+{code:"so",name:"Soomaali",flag:"🇸🇴"},
+{code:"su",name:"Basa Sunda",flag:"🇮🇩"},
+{code:"sw",name:"Kiswahili",flag:"🌍"},
+{code:"sv",name:"Svenska",flag:"🇸🇪"},
+{code:"tl",name:"Tagalog",flag:"🇵🇭"},
+{code:"tg",name:"Тоҷикӣ",flag:"🇹🇯"},
+{code:"ta",name:"தமிழ்",flag:"🇮🇳"},
+{code:"tt",name:"Татарча",flag:"🇷🇺"},
+{code:"te",name:"తెలుగు",flag:"🇮🇳"},
+{code:"th",name:"ไทย",flag:"🇹🇭"},
+{code:"tr",name:"Türkçe",flag:"🇹🇷"},
+{code:"tk",name:"Türkmençe",flag:"🇹🇲"},
+{code:"uk",name:"Українська",flag:"🇺🇦"},
+{code:"ur",name:"اردو",flag:"🇵🇰"},
+{code:"ug",name:"ئۇيغۇرچە",flag:"🇨🇳"},
+{code:"uz",name:"O‘zbek",flag:"🇺🇿"},
+{code:"vi",name:"Tiếng Việt",flag:"🇻🇳"},
+{code:"cy",name:"Cymraeg",flag:"🏴"},
+{code:"xh",name:"Xhosa",flag:"🌍"},
+{code:"yi",name:"ייִדיש",flag:"🌍"},
+{code:"yo",name:"Yorùbá",flag:"🇳🇬"},
+{code:"zu",name:"isiZulu",flag:"🇿🇦"}
+
 ];
 
 
@@ -5726,34 +5901,63 @@ langSearch.addEventListener(
 langList.addEventListener(
     "click",
     event=>{
-        const button =
-            event.target.closest(".language-item");
+
+        const button=
+            event.target.closest(
+                ".language-item"
+            );
+
 
         if(!button){
             return;
         }
 
-        activeLang = button.dataset.code;
+
+        activeLang=
+            button.dataset.code;
+
 
         localStorage.setItem(
             "fsm_language",
             activeLang
         );
 
-        langModal.classList.remove("open");
 
-        updateLanguageButton();
-        applyTranslations(activeLang);
-        renderLanguages();
+        /*
+           Google Translate cookie
+           (site's own text is Dutch, so we always
+           translate FROM nl)
+        */
+
+        document.cookie=
+            "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+
+
+        if(
+            activeLang!=="nl"
+        ){
+
+            document.cookie=
+                "googtrans=/nl/"+
+                activeLang+
+                "; path=/;";
+
+        }
+
+
+        langModal.classList.remove(
+            "open"
+        );
+
+
+        location.reload();
+
     }
 );
 
 
 /* ======================================================
    CURRENT LANGUAGE BUTTON
-====================================================== */
-
-
 ====================================================== */
 
 function updateLanguageButton(){
@@ -5857,443 +6061,6 @@ document.addEventListener(
     }
 );
 
-
-
-/* ======================================================
-   INGEBOUWDE TAALFUNCTIE
-   Geen Google Translate nodig.
-   De gekozen taal wordt lokaal opgeslagen.
-====================================================== */
-
-const UI_TRANSLATIONS = {
-    nl:{
-        "Home":"Home","Ontdekken":"Ontdekken","Verkopen":"Verkopen",
-        "Kies je taal":"Kies je taal","Zoek een taal...":"Zoek een taal...",
-        "Verzamel.":"Verzamel.","Uitgelichte ":"Uitgelichte ",
-        "Ontdek":"Ontdek","Iconische":"Iconische","Shirts.":"Shirts.",
-        "Een marketplace waar":"Een marketplace waar",
-        "voetbalfans en":"voetbalfans en",
-        "verzamelaars zelf shirts":"verzamelaars zelf shirts",
-        "kopen en verkopen.":"kopen en verkopen.",
-        "Alle ":"Alle ","Type":"Type","Maat":"Maat","Conditie":"Conditie",
-        "Filters wissen":"Filters wissen","Club":"Club","Land":"Land",
-        "Replica":"Replica","Seizoen":"Seizoen","Speler":"Speler","Prijs":"Prijs",
-        "Verkoop een shirt":"Verkoop een shirt",
-        "Club / Land *":"Club / Land *","Prijs (€) *":"Prijs (€) *",
-        "Type shirt (meerdere mogelijk)":"Type shirt (meerdere mogelijk)",
-        "Conditie *":"Conditie *",
-        "Zoek shirts, clubs, spelers...":"Zoek shirts, clubs, spelers...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Verschijnt 24 uur lang bovenaan bij Ontdekken.",
-        "Koop.":"Koop.","Verkoop.":"Verkoop."
-    },
-    en:{
-        "Home":"Home","Ontdekken":"Discover","Verkopen":"Sell",
-        "Kies je taal":"Choose your language","Zoek een taal...":"Search a language...",
-        "Verzamel.":"Collect.","Uitgelichte ":"Featured ",
-        "Ontdek":"Discover","Iconische":"Iconic","Shirts.":"Shirts.",
-        "Een marketplace waar":"A marketplace where",
-        "voetbalfans en":"football fans and",
-        "verzamelaars zelf shirts":"collectors buy shirts",
-        "kopen en verkopen.":"and sell them.",
-        "Alle ":"All ","Type":"Type","Maat":"Size","Conditie":"Condition",
-        "Filters wissen":"Clear filters","Club":"Club","Land":"Country",
-        "Replica":"Replica","Seizoen":"Season","Speler":"Player","Prijs":"Price",
-        "Verkoop een shirt":"Sell a shirt",
-        "Club / Land *":"Club / Country *","Prijs (€) *":"Price (€) *",
-        "Type shirt (meerdere mogelijk)":"Shirt type (multiple allowed)",
-        "Conditie *":"Condition *",
-        "Zoek shirts, clubs, spelers...":"Search shirts, clubs, players...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"E.g. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Appears at the top of Discover for 24 hours.",
-        "Koop.":"Buy.","Verkoop.":"Sell."
-    },
-    fr:{
-        "Home":"Accueil","Ontdekken":"Découvrir","Verkopen":"Vendre",
-        "Kies je taal":"Choisissez votre langue","Zoek een taal...":"Rechercher une langue...",
-        "Verzamel.":"Collectionnez.","Uitgelichte ":"En vedette ",
-        "Ontdek":"Découvrez","Iconische":"Iconiques","Shirts.":"Maillots.",
-        "Een marketplace waar":"Une marketplace où",
-        "voetbalfans en":"les fans de football et",
-        "verzamelaars zelf shirts":"les collectionneurs achètent des maillots",
-        "kopen en verkopen.":"et les vendent.",
-        "Alle ":"Tous les ","Type":"Type","Maat":"Taille","Conditie":"État",
-        "Filters wissen":"Effacer les filtres","Club":"Club","Land":"Pays",
-        "Replica":"Réplique","Seizoen":"Saison","Speler":"Joueur","Prijs":"Prix",
-        "Verkoop een shirt":"Vendre un maillot",
-        "Club / Land *":"Club / Pays *","Prijs (€) *":"Prix (€) *",
-        "Type shirt (meerdere mogelijk)":"Type de maillot (plusieurs choix)",
-        "Conditie *":"État *",
-        "Zoek shirts, clubs, spelers...":"Rechercher des maillots, clubs, joueurs...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Ex. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Apparaît en haut de Découvrir pendant 24 heures.",
-        "Koop.":"Acheter.","Verkoop.":"Vendre."
-    },
-    de:{
-        "Home":"Startseite","Ontdekken":"Entdecken","Verkopen":"Verkaufen",
-        "Kies je taal":"Sprache wählen","Zoek een taal...":"Sprache suchen...",
-        "Verzamel.":"Sammeln.","Uitgelichte ":"Ausgewählte ",
-        "Ontdek":"Entdecke","Iconische":"Ikonische","Shirts.":"Trikots.",
-        "Een marketplace waar":"Ein Marktplatz, auf dem",
-        "voetbalfans en":"Fußballfans und",
-        "verzamelaars zelf shirts":"Sammler Trikots",
-        "kopen en verkopen.":"kaufen und verkaufen.",
-        "Alle ":"Alle ","Type":"Typ","Maat":"Größe","Conditie":"Zustand",
-        "Filters wissen":"Filter löschen","Club":"Verein","Land":"Land",
-        "Replica":"Replik","Seizoen":"Saison","Speler":"Spieler","Prijs":"Preis",
-        "Verkoop een shirt":"Trikot verkaufen",
-        "Club / Land *":"Verein / Land *","Prijs (€) *":"Preis (€) *",
-        "Type shirt (meerdere mogelijk)":"Trikotart (mehrere möglich)",
-        "Conditie *":"Zustand *",
-        "Zoek shirts, clubs, spelers...":"Trikots, Vereine, Spieler suchen...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Z. B. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Erscheint 24 Stunden lang oben bei Entdecken.",
-        "Koop.":"Kaufen.","Verkoop.":"Verkaufen."
-    },
-    es:{
-        "Home":"Inicio","Ontdekken":"Descubrir","Verkopen":"Vender",
-        "Kies je taal":"Elige tu idioma","Zoek een taal...":"Buscar un idioma...",
-        "Verzamel.":"Colecciona.","Uitgelichte ":"Destacadas ",
-        "Ontdek":"Descubre","Iconische":"Icónicas","Shirts.":"Camisetas.",
-        "Een marketplace waar":"Un marketplace donde",
-        "voetbalfans en":"los aficionados al fútbol y",
-        "verzamelaars zelf shirts":"los coleccionistas compran camisetas",
-        "kopen en verkopen.":"y las venden.",
-        "Alle ":"Todas las ","Type":"Tipo","Maat":"Talla","Conditie":"Estado",
-        "Filters wissen":"Borrar filtros","Club":"Club","Land":"País",
-        "Replica":"Réplica","Seizoen":"Temporada","Speler":"Jugador","Prijs":"Precio",
-        "Verkoop een shirt":"Vender una camiseta",
-        "Club / Land *":"Club / País *","Prijs (€) *":"Precio (€) *",
-        "Type shirt (meerdere mogelijk)":"Tipo de camiseta (varios posibles)",
-        "Conditie *":"Estado *",
-        "Zoek shirts, clubs, spelers...":"Buscar camisetas, clubes, jugadores...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Ej. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Aparece arriba en Descubrir durante 24 horas.",
-        "Koop.":"Comprar.","Verkoop.":"Vender."
-    },
-    it:{
-        "Home":"Home","Ontdekken":"Scopri","Verkopen":"Vendi",
-        "Kies je taal":"Scegli la lingua","Zoek een taal...":"Cerca una lingua...",
-        "Verzamel.":"Colleziona.","Uitgelichte ":"In evidenza ",
-        "Ontdek":"Scopri","Iconische":"Iconiche","Shirts.":"Maglie.",
-        "Een marketplace waar":"Un marketplace dove",
-        "voetbalfans en":"i tifosi di calcio e",
-        "verzamelaars zelf shirts":"i collezionisti comprano maglie",
-        "kopen en verkopen.":"e le vendono.",
-        "Alle ":"Tutte le ","Type":"Tipo","Maat":"Taglia","Conditie":"Condizione",
-        "Filters wissen":"Cancella filtri","Club":"Club","Land":"Paese",
-        "Replica":"Replica","Seizoen":"Stagione","Speler":"Giocatore","Prijs":"Prezzo",
-        "Verkoop een shirt":"Vendi una maglia",
-        "Club / Land *":"Club / Paese *","Prijs (€) *":"Prezzo (€) *",
-        "Type shirt (meerdere mogelijk)":"Tipo di maglia (più scelte)",
-        "Conditie *":"Condizione *",
-        "Zoek shirts, clubs, spelers...":"Cerca maglie, club, giocatori...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Es. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Appare in cima a Scopri per 24 ore.",
-        "Koop.":"Compra.","Verkoop.":"Vendi."
-    },
-    pt:{
-        "Home":"Início","Ontdekken":"Descobrir","Verkopen":"Vender",
-        "Kies je taal":"Escolha o idioma","Zoek een taal...":"Pesquisar idioma...",
-        "Verzamel.":"Colecione.","Uitgelichte ":"Em destaque ",
-        "Ontdek":"Descubra","Iconische":"Icónicas","Shirts.":"Camisolas.",
-        "Een marketplace waar":"Um marketplace onde",
-        "voetbalfans en":"os fãs de futebol e",
-        "verzamelaars zelf shirts":"os colecionadores compram camisolas",
-        "kopen en verkopen.":"e vendem-nas.",
-        "Alle ":"Todas as ","Type":"Tipo","Maat":"Tamanho","Conditie":"Estado",
-        "Filters wissen":"Limpar filtros","Club":"Clube","Land":"País",
-        "Replica":"Réplica","Seizoen":"Temporada","Speler":"Jogador","Prijs":"Preço",
-        "Verkoop een shirt":"Vender uma camisola",
-        "Club / Land *":"Clube / País *","Prijs (€) *":"Preço (€) *",
-        "Type shirt (meerdere mogelijk)":"Tipo de camisola (várias opções)",
-        "Conditie *":"Estado *",
-        "Zoek shirts, clubs, spelers...":"Pesquisar camisolas, clubes, jogadores...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Ex. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Aparece no topo de Descobrir durante 24 horas.",
-        "Koop.":"Comprar.","Verkoop.":"Vender."
-    },
-    pl:{
-        "Home":"Strona główna","Ontdekken":"Odkrywaj","Verkopen":"Sprzedaj",
-        "Kies je taal":"Wybierz język","Zoek een taal...":"Szukaj języka...",
-        "Verzamel.":"Kolekcjonuj.","Uitgelichte ":"Polecane ",
-        "Ontdek":"Odkryj","Iconische":"Ikoniczne","Shirts.":"Koszulki.",
-        "Een marketplace waar":"Marketplace, gdzie",
-        "voetbalfans en":"fani piłki nożnej i",
-        "verzamelaars zelf shirts":"kolekcjonerzy kupują koszulki",
-        "kopen en verkopen.":"i je sprzedają.",
-        "Alle ":"Wszystkie ","Type":"Typ","Maat":"Rozmiar","Conditie":"Stan",
-        "Filters wissen":"Wyczyść filtry","Club":"Klub","Land":"Kraj",
-        "Replica":"Replika","Seizoen":"Sezon","Speler":"Zawodnik","Prijs":"Cena",
-        "Verkoop een shirt":"Sprzedaj koszulkę",
-        "Club / Land *":"Klub / Kraj *","Prijs (€) *":"Cena (€) *",
-        "Type shirt (meerdere mogelijk)":"Typ koszulki (wiele opcji)",
-        "Conditie *":"Stan *",
-        "Zoek shirts, clubs, spelers...":"Szukaj koszulek, klubów, zawodników...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Np. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Pojawia się na górze Odkrywaj przez 24 godziny.",
-        "Koop.":"Kup.","Verkoop.":"Sprzedaj."
-    },
-    tr:{
-        "Home":"Ana Sayfa","Ontdekken":"Keşfet","Verkopen":"Sat",
-        "Kies je taal":"Dilinizi seçin","Zoek een taal...":"Dil ara...",
-        "Verzamel.":"Koleksiyon yap.","Uitgelichte ":"Öne çıkan ",
-        "Ontdek":"Keşfet","Iconische":"İkonik","Shirts.":"Formalar.",
-        "Een marketplace waar":"Futbolseverlerin ve",
-        "voetbalfans en":"koleksiyoncuların",
-        "verzamelaars zelf shirts":"formaları alıp",
-        "kopen en verkopen.":"satabildiği bir pazar yeri.",
-        "Alle ":"Tüm ","Type":"Tür","Maat":"Beden","Conditie":"Durum",
-        "Filters wissen":"Filtreleri temizle","Club":"Kulüp","Land":"Ülke",
-        "Replica":"Replika","Seizoen":"Sezon","Speler":"Oyuncu","Prijs":"Fiyat",
-        "Verkoop een shirt":"Forma sat",
-        "Club / Land *":"Kulüp / Ülke *","Prijs (€) *":"Fiyat (€) *",
-        "Type shirt (meerdere mogelijk)":"Forma türü (birden fazla seçilebilir)",
-        "Conditie *":"Durum *",
-        "Zoek shirts, clubs, spelers...":"Forma, kulüp, oyuncu ara...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Örn. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Keşfet bölümünün üstünde 24 saat görünür.",
-        "Koop.":"Satın al.","Verkoop.":"Sat."
-    },
-    da:{
-        "Home":"Hjem","Ontdekken":"Udforsk","Verkopen":"Sælg",
-        "Kies je taal":"Vælg sprog","Zoek een taal...":"Søg efter et sprog...",
-        "Verzamel.":"Saml.","Uitgelichte ":"Fremhævede ",
-        "Ontdek":"Udforsk","Iconische":"Ikoniske","Shirts.":"Trøjer.",
-        "Een marketplace waar":"En markedsplads hvor",
-        "voetbalfans en":"fodboldfans og",
-        "verzamelaars zelf shirts":"samlere køber trøjer",
-        "kopen en verkopen.":"og sælger dem.",
-        "Alle ":"Alle ","Type":"Type","Maat":"Størrelse","Conditie":"Stand",
-        "Filters wissen":"Ryd filtre","Club":"Klub","Land":"Land",
-        "Replica":"Replika","Seizoen":"Sæson","Speler":"Spiller","Prijs":"Pris",
-        "Verkoop een shirt":"Sælg en trøje",
-        "Club / Land *":"Klub / Land *","Prijs (€) *":"Pris (€) *",
-        "Type shirt (meerdere mogelijk)":"Trøjtype (flere mulige)",
-        "Conditie *":"Stand *",
-        "Zoek shirts, clubs, spelers...":"Søg efter trøjer, klubber, spillere...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"F.eks. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Vises øverst i Udforsk i 24 timer.",
-        "Koop.":"Køb.","Verkoop.":"Sælg."
-    },
-    sv:{
-        "Home":"Hem","Ontdekken":"Upptäck","Verkopen":"Sälj",
-        "Kies je taal":"Välj språk","Zoek een taal...":"Sök språk...",
-        "Verzamel.":"Samla.","Uitgelichte ":"Utvalda ",
-        "Ontdek":"Upptäck","Iconische":"Ikoniska","Shirts.":"Tröjor.",
-        "Een marketplace waar":"En marknadsplats där",
-        "voetbalfans en":"fotbollsfans och",
-        "verzamelaars zelf shirts":"samlare köper tröjor",
-        "kopen en verkopen.":"och säljer dem.",
-        "Alle ":"Alla ","Type":"Typ","Maat":"Storlek","Conditie":"Skick",
-        "Filters wissen":"Rensa filter","Club":"Klubb","Land":"Land",
-        "Replica":"Replika","Seizoen":"Säsong","Speler":"Spelare","Prijs":"Pris",
-        "Verkoop een shirt":"Sälj en tröja",
-        "Club / Land *":"Klubb / Land *","Prijs (€) *":"Pris (€) *",
-        "Type shirt (meerdere mogelijk)":"Tröjtyp (flera möjliga)",
-        "Conditie *":"Skick *",
-        "Zoek shirts, clubs, spelers...":"Sök tröjor, klubbar, spelare...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"T.ex. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Visas högst upp i Upptäck i 24 timmar.",
-        "Koop.":"Köp.","Verkoop.":"Sälj."
-    },
-    no:{
-        "Home":"Hjem","Ontdekken":"Utforsk","Verkopen":"Selg",
-        "Kies je taal":"Velg språk","Zoek een taal...":"Søk etter et språk...",
-        "Verzamel.":"Samle.","Uitgelichte ":"Utvalgte ",
-        "Ontdek":"Utforsk","Iconische":"Ikoniske","Shirts.":"Drakter.",
-        "Een marketplace waar":"En markedsplass der",
-        "voetbalfans en":"fotballfans og",
-        "verzamelaars zelf shirts":"samlere kjøper drakter",
-        "kopen en verkopen.":"og selger dem.",
-        "Alle ":"Alle ","Type":"Type","Maat":"Størrelse","Conditie":"Tilstand",
-        "Filters wissen":"Tøm filtre","Club":"Klubb","Land":"Land",
-        "Replica":"Replika","Seizoen":"Sesong","Speler":"Spiller","Prijs":"Pris",
-        "Verkoop een shirt":"Selg en drakt",
-        "Club / Land *":"Klubb / Land *","Prijs (€) *":"Pris (€) *",
-        "Type shirt (meerdere mogelijk)":"Drakttype (flere mulige)",
-        "Conditie *":"Tilstand *",
-        "Zoek shirts, clubs, spelers...":"Søk etter drakter, klubber, spillere...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"F.eks. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Vises øverst i Utforsk i 24 timer.",
-        "Koop.":"Kjøp.","Verkoop.":"Selg."
-    },
-    fi:{
-        "Home":"Etusivu","Ontdekken":"Tutustu","Verkopen":"Myy",
-        "Kies je taal":"Valitse kieli","Zoek een taal...":"Hae kieltä...",
-        "Verzamel.":"Kerää.","Uitgelichte ":"Esittelyssä ",
-        "Ontdek":"Tutustu","Iconische":"Ikoniset","Shirts.":"Paidat.",
-        "Een marketplace waar":"Markkinapaikka, jossa",
-        "voetbalfans en":"jalkapallofanit ja",
-        "verzamelaars zelf shirts":"keräilijät ostavat paitoja",
-        "kopen en verkopen.":"ja myyvät niitä.",
-        "Alle ":"Kaikki ","Type":"Tyyppi","Maat":"Koko","Conditie":"Kunto",
-        "Filters wissen":"Tyhjennä suodattimet","Club":"Seura","Land":"Maa",
-        "Replica":"Jäljennös","Seizoen":"Kausi","Speler":"Pelaaja","Prijs":"Hinta",
-        "Verkoop een shirt":"Myy paita",
-        "Club / Land *":"Seura / Maa *","Prijs (€) *":"Hinta (€) *",
-        "Type shirt (meerdere mogelijk)":"Paidan tyyppi (useita)",
-        "Conditie *":"Kunto *",
-        "Zoek shirts, clubs, spelers...":"Hae paitoja, seuroja, pelaajia...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Esim. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Näkyy Tutustu-osiossa ylhäällä 24 tuntia.",
-        "Koop.":"Osta.","Verkoop.":"Myy."
-    },
-    cs:{
-        "Home":"Domů","Ontdekken":"Objevovat","Verkopen":"Prodat",
-        "Kies je taal":"Vyberte jazyk","Zoek een taal...":"Hledat jazyk...",
-        "Verzamel.":"Sbírej.","Uitgelichte ":"Doporučené ",
-        "Ontdek":"Objev","Iconische":"Ikonické","Shirts.":"Dresy.",
-        "Een marketplace waar":"Marketplace, kde",
-        "voetbalfans en":"fotbaloví fanoušci a",
-        "verzamelaars zelf shirts":"sběratelé kupují dresy",
-        "kopen en verkopen.":"a prodávají je.",
-        "Alle ":"Všechny ","Type":"Typ","Maat":"Velikost","Conditie":"Stav",
-        "Filters wissen":"Vymazat filtry","Club":"Klub","Land":"Země",
-        "Replica":"Replika","Seizoen":"Sezóna","Speler":"Hráč","Prijs":"Cena",
-        "Verkoop een shirt":"Prodat dres",
-        "Club / Land *":"Klub / Země *","Prijs (€) *":"Cena (€) *",
-        "Type shirt (meerdere mogelijk)":"Typ dresu (více možností)",
-        "Conditie *":"Stav *",
-        "Zoek shirts, clubs, spelers...":"Hledat dresy, kluby, hráče...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"Např. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Zobrazuje se nahoře v Objevovat 24 hodin.",
-        "Koop.":"Koupit.","Verkoop.":"Prodat."
-    },
-    ro:{
-        "Home":"Acasă","Ontdekken":"Descoperă","Verkopen":"Vinde",
-        "Kies je taal":"Alege limba","Zoek een taal...":"Caută o limbă...",
-        "Verzamel.":"Colecționează.","Uitgelichte ":"Recomandate ",
-        "Ontdek":"Descoperă","Iconische":"Iconice","Shirts.":"Tricouri.",
-        "Een marketplace waar":"Un marketplace unde",
-        "voetbalfans en":"fanii fotbalului și",
-        "verzamelaars zelf shirts":"colecționarii cumpără tricouri",
-        "kopen en verkopen.":"și le vând.",
-        "Alle ":"Toate ","Type":"Tip","Maat":"Mărime","Conditie":"Condiție",
-        "Filters wissen":"Șterge filtrele","Club":"Club","Land":"Țară",
-        "Replica":"Replică","Seizoen":"Sezon","Speler":"Jucător","Prijs":"Preț",
-        "Verkoop een shirt":"Vinde un tricou",
-        "Club / Land *":"Club / Țară *","Prijs (€) *":"Preț (€) *",
-        "Type shirt (meerdere mogelijk)":"Tip de tricou (mai multe opțiuni)",
-        "Conditie *":"Condiție *",
-        "Zoek shirts, clubs, spelers...":"Caută tricouri, cluburi, jucători...",
-        "Bijv. FC Barcelona 2005-2006 Home #10 Ronaldinho":"De ex. FC Barcelona 2005-2006 Home #10 Ronaldinho",
-        "Verschijnt 24 uur lang bovenaan bij Ontdekken.":"Apare în partea de sus la Descoperă timp de 24 de ore.",
-        "Koop.":"Cumpără.","Verkoop.":"Vinde."
-    }
-};
-
-const originalTextNodes = new WeakMap();
-const originalAttributes = new WeakMap();
-
-function rememberText(node){
-    if(!originalTextNodes.has(node)){
-        originalTextNodes.set(node,node.nodeValue);
-    }
-    return originalTextNodes.get(node);
-}
-
-function rememberAttribute(element,attr){
-    let data=originalAttributes.get(element);
-    if(!data){
-        data={};
-        originalAttributes.set(element,data);
-    }
-    if(!(attr in data)){
-        data[attr]=element.getAttribute(attr);
-    }
-    return data[attr];
-}
-
-function restoreAndTranslateText(node,lang){
-    const original=rememberText(node);
-    const trimmed=original.trim();
-    if(!trimmed){
-        return;
-    }
-
-    // Extra whitespace around normal text is preserved.
-    const leading=(original.match(/^\s*/)||[""])[0];
-    const trailing=(original.match(/\s*$/)||[""])[0];
-    const dict=UI_TRANSLATIONS[lang]||UI_TRANSLATIONS.en;
-    const translated=Object.prototype.hasOwnProperty.call(dict,trimmed)
-        ? dict[trimmed]
-        : trimmed;
-
-    node.nodeValue=leading+translated+trailing;
-}
-
-function applyTranslations(lang){
-    if(!UI_TRANSLATIONS[lang]){
-        lang="en";
-    }
-
-    activeLang=lang;
-    document.documentElement.lang=lang;
-
-    const dict=UI_TRANSLATIONS[lang];
-
-    document.querySelectorAll("body *").forEach(element=>{
-        if(element.tagName==="SCRIPT" || element.tagName==="STYLE"){
-            return;
-        }
-
-        ["placeholder","title","aria-label"].forEach(attr=>{
-            if(element.hasAttribute(attr)){
-                const original=rememberAttribute(element,attr);
-                if(Object.prototype.hasOwnProperty.call(dict,original)){
-                    element.setAttribute(attr,dict[original]);
-                }else{
-                    element.setAttribute(attr,original);
-                }
-            }
-        });
-
-        element.childNodes.forEach(node=>{
-            if(node.nodeType===Node.TEXT_NODE){
-                restoreAndTranslateText(node,lang);
-            }
-        });
-    });
-
-    const modalTitle=document.querySelector(".language-title");
-    if(modalTitle){
-        const original="Kies je taal";
-        modalTitle.textContent=dict[original]||original;
-    }
-
-    const search=document.getElementById("languageSearch");
-    if(search){
-        const original="Zoek een taal...";
-        search.placeholder=dict[original]||original;
-    }
-
-    updateLanguageButton();
-}
-
-// Translate initial page and newly rendered content.
-const translationObserver=new MutationObserver(mutations=>{
-    if(!activeLang){
-        return;
-    }
-
-    let needsUpdate=false;
-    for(const mutation of mutations){
-        if(mutation.type==="childList" && mutation.addedNodes.length){
-            needsUpdate=true;
-            break;
-        }
-    }
-
-    if(needsUpdate){
-        applyTranslations(activeLang);
-    }
-});
-
-translationObserver.observe(document.body,{
-    childList:true,
-    subtree:true
-});
 
 /* ======================================================
    INIT
