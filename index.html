@@ -2869,6 +2869,29 @@ footer strong{
 }
 </style>
 
+
+<style id="explore-title-3-lines">
+.explore-title{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:0!important;
+}
+.explore-title-line{
+  display:block!important;
+  white-space:nowrap!important;
+}
+.explore-title-line.white{
+  color:#fff!important;
+}
+.explore-title-line.gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark))!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+}
+</style>
+
 </head>
 
 <body>
@@ -3802,11 +3825,9 @@ Volledige collectie
 
 
 <h1 class="explore-title">
-Ontdek
-<span>
-iconische
-shirts.
-</span>
+  <span class="explore-title-line white">Ontdek</span>
+  <span class="explore-title-line gold">Iconische</span>
+  <span class="explore-title-line gold">Shirts.</span>
 </h1>
 
 
