@@ -2946,6 +2946,51 @@ footer strong{
 }
 </style>
 
+
+<style id="explore-subtitle-4-lines-final">
+/* Alleen de kleine tekst van ONTDEKKEN aanpassen. HOME BLIJFT ONGEMOEID. */
+
+.explore-subtitle{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:0!important;
+}
+
+.explore-subtitle span{
+  display:block!important;
+  white-space:nowrap!important;
+}
+
+/* COMPUTER — duidelijk groter */
+@media (min-width:901px){
+  .explore-subtitle{
+    font-size:19px!important;
+    line-height:1.48!important;
+    max-width:none!important;
+    margin-top:22px!important;
+  }
+}
+
+/* MOBIEL — ook groter, maar passend op het scherm */
+@media (max-width:900px){
+  .explore-subtitle{
+    font-size:12.4px!important;
+    line-height:1.34!important;
+    max-width:none!important;
+    margin-top:10px!important;
+  }
+}
+
+/* KLEINE GSM */
+@media (max-width:390px){
+  .explore-subtitle{
+    font-size:11.8px!important;
+    line-height:1.32!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -3886,8 +3931,9 @@ Volledige collectie
 
 
 <p class="explore-subtitle">
-  <span>Een marketplace waar voetbalfans</span>
-  <span>en verzamelaars zelf shirts kopen</span>
+  <span>Een marketplace waar</span>
+  <span>voetbalfans en verzamelaars</span>
+  <span>zelf shirts kopen</span>
   <span>en verkopen.</span>
 </p>
 
