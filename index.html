@@ -3022,6 +3022,70 @@ footer strong{
   .explore-subtitle{font-size:14px!important;}
 }
 </style>
+
+<style id="explore-mobile-final-fix">
+/* Alleen ONTDEKKEN op mobiel */
+@media (max-width:900px){
+  .explore-subtitle{
+    font-size:10px!important;
+    line-height:1.32!important;
+    max-width:215px!important;
+  }
+
+  /* De rand loopt nu volledig en mooi rond rond de zoekbalk + pijl */
+  .explore-search-overlay{
+    box-sizing:border-box!important;
+    border:1px solid rgba(239,210,143,.48)!important;
+    border-radius:13px!important;
+    background:rgba(8,20,15,.96)!important;
+    overflow:hidden!important;
+    padding:3px!important;
+  }
+
+  .explore-search-overlay input{
+    height:37px!important;
+    padding:0 10px 0 39px!important;
+    border:0!important;
+    border-radius:9px!important;
+    background:transparent!important;
+    min-width:0!important;
+  }
+
+  .explore-search-overlay button{
+    flex:0 0 43px!important;
+    width:43px!important;
+    height:35px!important;
+    margin-right:0!important;
+    border-radius:10px!important;
+  }
+}
+
+@media (max-width:390px){
+  .explore-subtitle{
+    font-size:9.3px!important;
+    line-height:1.30!important;
+    max-width:200px!important;
+  }
+
+  .explore-search-overlay{
+    border-radius:12px!important;
+    padding:3px!important;
+  }
+
+  .explore-search-overlay button{
+    flex-basis:40px!important;
+    width:40px!important;
+    height:33px!important;
+    border-radius:9px!important;
+  }
+
+  .explore-search-overlay input{
+    height:33px!important;
+    padding-left:37px!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
