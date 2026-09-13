@@ -1966,6 +1966,130 @@ footer strong{
 }
 </style>
 
+<style>
+/* ======================================================
+   FINAL REQUESTED FIXES
+====================================================== */
+
+/* ----- DESKTOP (Computer) ----- */
+@media (min-width: 901px) {
+  .explore-banner {
+    min-height: 520px !important;
+    display: flex !important;
+    position: relative !important;
+  }
+  .explore-banner img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .explore-overlay {
+    position: relative !important;
+    z-index: 2 !important;
+    padding-top: 130px !important; /* "tekst mag allemaal ook zakken" */
+    height: 100% !important;
+  }
+  .explore-subtitle {
+    font-size: 19px !important; /* "kleine tekst eronder mag wat groter" */
+    line-height: 1.5 !important;
+  }
+  .explore-search-overlay {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 45px !important; /* Zoekbalk ziet er veel beter uit */
+    left: 5.5% !important;
+    width: 430px !important;
+    height: 50px !important;
+    background: rgba(8,20,15,.95) !important;
+    border: 1px solid rgba(239,210,143,.48) !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    z-index: 3 !important;
+  }
+  .explore-search-overlay input {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 15px 0 45px !important;
+    color: #fff !important;
+  }
+  .explore-search-overlay button {
+    position: relative !important;
+    right: 0 !important;
+    margin-right: 5px !important;
+    width: 43px !important;
+    height: 38px !important;
+  }
+}
+
+/* ----- MOBILE (GSM) ----- */
+@media (max-width: 900px) {
+  .explore-title {
+    font-size: clamp(24px, 8vw, 32px) !important; /* "kleiner" */
+    line-height: 1.05 !important;
+  }
+  .explore-subtitle {
+    font-size: 14.5px !important; /* "groter" */
+    line-height: 1.4 !important;
+  }
+  .explore-overlay {
+    padding-top: 15px !important; /* "een beetje hoger" */
+    justify-content: flex-start !important;
+  }
+  .hero-buttons {
+    display: flex !important;
+    flex-direction: column !important; /* "onder elkaar" */
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .hero-button {
+    width: 100% !important;
+  }
+  .hero-title {
+    font-size: clamp(42px, 11vw, 55px) !important; /* "groter" */
+    line-height: 1 !important;
+  }
+  .hero-description {
+    font-size: 13.5px !important;
+    line-height: 1.4 !important;
+  }
+  /* "wit streepje vanboven" fix */
+  .hero {
+    border-top: 0 !important;
+    background: transparent !important;
+    overflow: hidden !important;
+  }
+  .hero-image {
+    position: relative !important;
+    margin-top: -2px !important; /* Pull up to hide gap */
+    height: calc(100% + 2px) !important;
+    border-radius: 18px 18px 0 0 !important;
+  }
+}
+
+/* ----- GENERAL / SHARED ----- */
+/* "het pijltje in de zoekbalk moet beter passen" */
+.hero-search button, .explore-search-overlay button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #0a0d0b !important;
+}
+.hero-search button::after, .explore-search-overlay button::after {
+  content: "➔" !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -2706,8 +2830,9 @@ Verkoop.<br>
 
 
 <p class="hero-description">
-De marketplace voor voetbalshirts,
-verzamelaars en echte voetbalfans.
+De marketplace voor voetbalshirts,<br>
+verzamelaars en echte<br>
+voetbalfans.
 </p>
 
 
@@ -2742,8 +2867,7 @@ type="search"
 placeholder="Zoek shirts, clubs, spelers..."
 >
 
-<button id="homeSearchButton">
-→
+<button id="homeSearchButton" aria-label="Zoeken">
 </button>
 
 </div>
@@ -2902,7 +3026,8 @@ Volledige collectie
 Ontdek<br>
 
 <span>
-iconische shirts.
+iconische<br>
+shirts.
 </span>
 
 </h1>
@@ -2910,9 +3035,9 @@ iconische shirts.
 
 <p class="explore-subtitle">
 
-Een marketplace waar voetbalfans
-en verzamelaars zelf shirts kopen
-en verkopen.
+Een marketplace waar voetbalfans<br>
+en verzamelaars zelf shirts<br>
+kopen en verkopen.
 
 </p>
 
@@ -4157,755 +4282,3 @@ data-photo-index="${index}"
 >
 ×
 </button>
-
-</div>
-
-`
-                )
-                .join("");
-
-
-        photoGrid
-            .querySelectorAll(
-                "[data-photo-index]"
-            )
-            .forEach(button=>{
-
-                button.addEventListener(
-                    "click",
-                    ()=>{
-
-                        selectedImages.splice(
-                            Number(
-                                button.dataset.photoIndex
-                            ),
-                            1
-                        );
-
-                        renderPhotos();
-
-                    }
-                );
-
-            });
-
-    }
-
-
-    /* ======================================
-       FORM
-    ====================================== */
-
-    const form=
-        document.getElementById(
-            "sellForm"
-        );
-
-
-    form.addEventListener(
-        "submit",
-        event=>{
-
-            event.preventDefault();
-
-
-            const club=
-                document.getElementById(
-                    "sellClub"
-                ).value.trim();
-
-
-            const priceRaw=
-                document.getElementById(
-                    "sellPrice"
-                ).value;
-
-
-            const name=
-                document.getElementById(
-                    "sellName"
-                ).value.trim();
-
-
-            const condition=
-                document.getElementById(
-                    "sellCondition"
-                ).value;
-
-
-            const size=
-                document.getElementById(
-                    "sellMaat"
-                ).value;
-
-
-            const description=
-                document.getElementById(
-                    "sellDescription"
-                ).value.trim();
-
-
-            if(
-                !club ||
-                !priceRaw ||
-                !name ||
-                !condition
-            ){
-
-                alert(
-                    "Vul alle verplichte velden in."
-                );
-
-                return;
-
-            }
-
-
-            if(
-                selectedImages.length===0
-            ){
-
-                document
-                    .getElementById(
-                        "photoError"
-                    )
-                    .classList.add("show");
-
-                return;
-
-            }
-
-
-            document
-                .getElementById(
-                    "photoError"
-                )
-                .classList.remove("show");
-
-
-            const boost=
-                document
-                    .querySelector(
-                        'input[name="boostOption"]:checked'
-                    );
-
-
-            let boosted=false;
-            let boostExpiresAt=null;
-
-
-            if(
-                boost &&
-                boost.value!=="none"
-            ){
-
-                boosted=true;
-
-
-                boostExpiresAt=
-                    Date.now()+
-                    (
-                        boost.value==="24h"
-                        ?24*60*60*1000
-                        :7*24*60*60*1000
-                    );
-
-            }
-
-
-            const selectedTypes=
-                Array.from(
-                    document.querySelectorAll(
-                        'input[name="sellType"]:checked'
-                    )
-                )
-                .map(
-                    checkbox=>checkbox.value
-                );
-
-
-            const newShirt={
-
-                id:Date.now(),
-
-                club:club,
-
-                price:
-                    "€ "+
-                    parseFloat(priceRaw)
-                    .toFixed(2)
-                    .replace(".",","),
-
-                name:name,
-
-                condition:condition,
-
-                size:size,
-
-                type:
-                    selectedTypes.length
-                    ?selectedTypes
-                    :["Club"],
-
-                description:description,
-
-                boosted:boosted,
-
-                boostExpiresAt:boostExpiresAt,
-
-                images:selectedImages
-
-            };
-
-
-            const listings=
-                getListings();
-
-
-            listings.push(
-                newShirt
-            );
-
-
-            saveListings(
-                listings
-            );
-
-
-            showToast(
-                "Shirt succesvol geplaatst!"
-            );
-
-
-            setTimeout(
-                ()=>{
-                    location.hash="#/explore";
-                },
-                400
-            );
-
-        }
-    );
-
-}
-
-
-/* ======================================================
-   TOAST
-====================================================== */
-
-function showToast(message){
-
-    const element=
-        document.getElementById(
-            "toast"
-        );
-
-
-    element.textContent=
-        message;
-
-
-    element.classList.add("show");
-
-
-    clearTimeout(
-        window.toastTimeout
-    );
-
-
-    window.toastTimeout=
-        setTimeout(
-            ()=>{
-                element.classList.remove("show");
-            },
-            2500
-        );
-
-}
-
-
-/* ======================================================
-   BUTTON HANDLING
-====================================================== */
-
-app.addEventListener(
-    "click",
-    event=>{
-
-        const button=
-            event.target.closest(
-                ".shirt-view"
-            );
-
-
-        if(!button){
-            return;
-        }
-
-
-        showToast(
-            button.dataset.club+
-            " • "+
-            button.dataset.price
-        );
-
-    }
-);
-
-
-/* ======================================================
-   NAVIGATION
-====================================================== */
-
-function updateNav(){
-
-    const hash=
-        location.hash || "#/";
-
-
-    document
-        .querySelectorAll("nav a")
-        .forEach(
-            link=>
-                link.classList.remove("active")
-        );
-
-
-    if(
-        hash.startsWith(
-            "#/explore"
-        )
-    ){
-
-        document
-            .getElementById("navExplore")
-            ?.classList.add("active");
-
-    }
-
-    else if(
-        hash.startsWith(
-            "#/sell"
-        )
-    ){
-
-        document
-            .getElementById("navSell")
-            ?.classList.add("active");
-
-    }
-
-    else{
-
-        document
-            .getElementById("navHome")
-            ?.classList.add("active");
-
-    }
-
-
-    document
-        .getElementById("mobileNav")
-        ?.classList.remove("open");
-
-}
-
-
-/* ======================================================
-   ROUTER
-====================================================== */
-
-function router(){
-
-    updateNav();
-
-
-    const hash=
-        location.hash || "#/";
-
-
-    if(
-        hash.startsWith("#/explore")
-    ){
-
-        renderExplore();
-
-    }
-
-    else if(
-        hash.startsWith("#/sell")
-    ){
-
-        renderSell();
-
-    }
-
-    else{
-
-        renderHome();
-
-    }
-
-}
-
-
-window.addEventListener(
-    "hashchange",
-    router
-);
-
-
-/* ======================================================
-   MOBILE MENU
-====================================================== */
-
-document
-    .getElementById("menuButton")
-    .addEventListener(
-        "click",
-        ()=>{
-            document
-                .getElementById("mobileNav")
-                .classList.toggle("open");
-        }
-    );
-
-
-document
-    .querySelectorAll(
-        "#mobileNav a"
-    )
-    .forEach(link=>{
-
-        link.addEventListener(
-            "click",
-            ()=>{
-                document
-                    .getElementById("mobileNav")
-                    .classList.remove("open");
-            }
-        );
-
-    });
-
-
-/* ======================================================
-   LANGUAGE
-====================================================== */
-
-const langBtn=
-    document.getElementById(
-        "languageButton"
-    );
-
-
-const langModal=
-    document.getElementById(
-        "languageModal"
-    );
-
-
-const langClose=
-    document.getElementById(
-        "languageClose"
-    );
-
-
-const langList=
-    document.getElementById(
-        "languageList"
-    );
-
-
-const langSearch=
-    document.getElementById(
-        "languageSearch"
-    );
-
-
-let activeLang=
-    localStorage.getItem(
-        "fsm_language"
-    ) || "en";
-
-
-function renderLanguages(
-    query=""
-){
-
-    const q=
-        query
-            .toLowerCase()
-            .trim();
-
-
-    const filtered=
-        languages.filter(
-            language=>
-                language.name
-                    .toLowerCase()
-                    .includes(q)
-                ||
-                language.code
-                    .toLowerCase()
-                    .includes(q)
-        );
-
-
-    langList.innerHTML=
-        filtered
-            .map(
-                language=>`
-
-<button
-type="button"
-class="language-item ${
-    language.code===activeLang
-    ?"active"
-    :""
-}"
-data-code="${language.code}"
->
-
-<span class="language-flag">
-${language.flag}
-</span>
-
-<span>
-${language.name}
-</span>
-
-</button>
-
-`
-            )
-            .join("");
-
-
-}
-
-
-langBtn.addEventListener(
-    "click",
-    ()=>{
-
-        renderLanguages();
-
-        langModal.classList.add(
-            "open"
-        );
-
-        setTimeout(
-            ()=>{
-                langSearch.focus();
-            },
-            100
-        );
-
-    }
-);
-
-
-langClose.addEventListener(
-    "click",
-    ()=>{
-
-        langModal.classList.remove(
-            "open"
-        );
-
-    }
-);
-
-
-langSearch.addEventListener(
-    "input",
-    event=>{
-
-        renderLanguages(
-            event.target.value
-        );
-
-    }
-);
-
-
-langList.addEventListener(
-    "click",
-    event=>{
-
-        const button=
-            event.target.closest(
-                ".language-item"
-            );
-
-
-        if(!button){
-            return;
-        }
-
-
-        activeLang=
-            button.dataset.code;
-
-
-        localStorage.setItem(
-            "fsm_language",
-            activeLang
-        );
-
-
-        /*
-           Google Translate cookie
-           (site's own text is Dutch, so we always
-           translate FROM nl)
-        */
-
-        document.cookie=
-            "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-
-
-        if(
-            activeLang!=="nl"
-        ){
-
-            document.cookie=
-                "googtrans=/nl/"+
-                activeLang+
-                "; path=/;";
-
-        }
-
-
-        langModal.classList.remove(
-            "open"
-        );
-
-
-        location.reload();
-
-    }
-);
-
-
-/* ======================================================
-   CURRENT LANGUAGE BUTTON
-====================================================== */
-
-function updateLanguageButton(){
-
-    const language=
-        languages.find(
-            item=>item.code===activeLang
-        )
-        ||
-        languages.find(
-            item=>item.code==="nl"
-        );
-
-
-    if(!language){
-        return;
-    }
-
-
-    document
-        .getElementById(
-            "currentFlag"
-        )
-        .textContent=
-            language.flag;
-
-
-    document
-        .getElementById(
-            "currentCode"
-        )
-        .textContent=
-            language.code
-                .split("-")[0]
-                .toUpperCase();
-
-}
-
-
-/* ======================================================
-   CLOSE LANGUAGE MODAL WHEN CLICKING OUTSIDE
-====================================================== */
-
-langModal.addEventListener(
-    "click",
-    event=>{
-
-        if(
-            event.target===
-            langModal
-        ){
-
-            langModal.classList.remove(
-                "open"
-            );
-
-        }
-
-    }
-);
-
-
-/* ======================================================
-   ESCAPE KEY
-====================================================== */
-
-document.addEventListener(
-    "keydown",
-    event=>{
-
-        if(
-            event.key==="Escape"
-        ){
-
-            langModal.classList.remove(
-                "open"
-            );
-
-
-            document
-                .querySelectorAll(
-                    ".filter-dropdown"
-                )
-                .forEach(
-                    menu=>
-                        menu.classList.remove("open")
-                );
-
-
-            document
-                .querySelectorAll(
-                    ".filter-trigger"
-                )
-                .forEach(
-                    button=>
-                        button.classList.remove("open")
-                );
-
-        }
-
-    }
-);
-
-
-/* ======================================================
-   INIT
-====================================================== */
-
-updateLanguageButton();
-
-renderLanguages();
-
-router();
-
-</script>
-
-</body>
-</html>
