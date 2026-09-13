@@ -3128,12 +3128,41 @@ footer strong{
 </style>
 
 
-<style id="language-native-label-polish">
-.language-item{
-  text-align:left;
-}
-#currentCode{
-  text-transform:none;
+<style id="home-mobile-full-image-fix">
+/* HOME MOBIEL: toon de volledige afbeelding zonder afsnijden */
+@media(max-width:900px){
+  .hero{
+    height:auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+
+  .hero-image{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-width:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    transform:none!important;
+  }
+
+  .hero-shade{
+    position:absolute!important;
+    inset:0!important;
+    height:100%!important;
+  }
+
+  .hero-content{
+    position:absolute!important;
+    left:0!important;
+    right:0!important;
+    top:auto!important;
+    bottom:0!important;
+    width:100%!important;
+  }
 }
 </style>
 
@@ -5794,7 +5823,7 @@ const langSearch=
 let activeLang=
     localStorage.getItem(
         "fsm_language"
-    ) || "nl";
+    ) || "en";
 
 
 function renderLanguages(
