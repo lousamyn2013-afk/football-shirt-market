@@ -2904,6 +2904,48 @@ footer strong{
   .explore-subtitle{font-size:9.6px!important;line-height:1.33!important;}
 }
 </style>
+
+<style id="explore-subtitle-larger">
+/* Alleen de kleine tekst bij ONTDEKKEN groter maken. Home blijft onaangeraakt. */
+
+/* COMPUTER */
+@media (min-width:901px){
+  .explore-subtitle{
+    font-size:18px!important;
+    line-height:1.5!important;
+    max-width:410px!important;
+    margin-top:22px!important;
+  }
+  .explore-subtitle span{
+    display:block!important;
+    white-space:nowrap!important;
+  }
+}
+
+/* MOBIEL */
+@media (max-width:900px){
+  .explore-subtitle{
+    font-size:11.8px!important;
+    line-height:1.34!important;
+    max-width:240px!important;
+    margin-top:10px!important;
+  }
+  .explore-subtitle span{
+    display:block!important;
+    white-space:nowrap!important;
+  }
+}
+
+/* KLEINE GSM */
+@media (max-width:390px){
+  .explore-subtitle{
+    font-size:11.2px!important;
+    line-height:1.32!important;
+    max-width:225px!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
