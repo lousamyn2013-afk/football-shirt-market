@@ -2737,6 +2737,138 @@ footer strong{
 }
 </style>
 
+
+<style id="explore-final-v2">
+/* =========================================================
+   EXPLORE V2 ONLY — based on previous version
+   Home remains untouched.
+========================================================= */
+
+/* DESKTOP */
+@media (min-width:901px){
+
+  /* Image 1/desktop: make the Explore text a little larger */
+  .explore-title{
+    font-size:clamp(48px,5.8vw,74px)!important;
+    line-height:.90!important;
+  }
+
+  /* Image 2: force every title word onto its own line */
+  .explore-title,
+  .explore-title span{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    gap:0!important;
+  }
+
+  /* Image 3/desktop positioning: move the whole text block slightly lower */
+  .explore-overlay{
+    padding-top:clamp(92px,10vw,145px)!important;
+  }
+
+  .explore-subtitle{
+    margin-top:22px!important;
+    font-size:16px!important;
+    line-height:1.55!important;
+  }
+
+  /* Full, clean Home-like search bar */
+  .explore-search-overlay{
+    left:4.7%!important;
+    top:auto!important;
+    bottom:8.5%!important;
+    width:min(470px,44%)!important;
+    height:52px!important;
+  }
+}
+
+
+/* MOBILE */
+@media (max-width:900px){
+
+  /* All Explore text slightly smaller */
+  .explore-kicker{
+    font-size:6.8px!important;
+    letter-spacing:1.1px!important;
+    margin-bottom:5px!important;
+  }
+
+  .explore-title{
+    font-size:clamp(21px,6.7vw,31px)!important;
+    line-height:.90!important;
+  }
+
+  .explore-subtitle{
+    max-width:220px!important;
+    font-size:11.2px!important;
+    line-height:1.34!important;
+    margin-top:9px!important;
+  }
+
+  /* Move all Explore text down a little on mobile */
+  .explore-overlay{
+    padding:24px 13px 78px!important;
+  }
+
+  /*
+    Search must be completely visible within the banner.
+    It is anchored to the banner edges instead of depending
+    on the text height.
+  */
+  .explore-search-overlay{
+    left:12px!important;
+    right:12px!important;
+    bottom:10px!important;
+    top:auto!important;
+    width:auto!important;
+    height:45px!important;
+    margin:0!important;
+  }
+
+  .explore-search-overlay input{
+    min-width:0!important;
+    width:auto!important;
+    flex:1 1 auto!important;
+    height:45px!important;
+    padding:0 8px 0 39px!important;
+    font-size:11px!important;
+  }
+
+  .explore-search-overlay button{
+    flex:0 0 43px!important;
+    width:43px!important;
+    height:35px!important;
+    margin-right:5px!important;
+  }
+}
+
+
+/* VERY SMALL MOBILE */
+@media (max-width:390px){
+
+  .explore-overlay{
+    padding:21px 12px 70px!important;
+  }
+
+  .explore-title{
+    font-size:clamp(19px,6.4vw,28px)!important;
+  }
+
+  .explore-subtitle{
+    max-width:205px!important;
+    font-size:10.8px!important;
+    line-height:1.32!important;
+  }
+
+  .explore-search-overlay{
+    left:11px!important;
+    right:11px!important;
+    bottom:9px!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
