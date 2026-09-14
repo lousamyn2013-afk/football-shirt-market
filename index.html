@@ -6119,97 +6119,11 @@ router();
 
 
 <style>
-/* ======================================================
-   FINAL MOBILE FIX — ONLY REQUESTED CHANGES
-====================================================== */
-
+/* Alleen: filters op mobiel boven de shirts en aanklikbaar */
 @media (max-width:900px){
-
-  /* FILTERS: always above the shirt cards and clickable */
-  .explore-filters{
-    position:relative!important;
-    z-index:10000!important;
-  }
-
-  .explore-filters .filter-group{
-    position:relative!important;
-    z-index:10001!important;
-  }
-
-  .explore-filters .filter-dropdown{
-    z-index:100000!important;
-    isolation:isolate;
-  }
-
-  /* HOME: scale the hero image and its text together on mobile */
-  .hero{
-    height:clamp(520px,125vw,650px)!important;
-    min-height:520px!important;
-  }
-
-  .hero-content{
-    padding:0 4.2vw 4.5vw!important;
-  }
-
-  .hero-kicker{
-    font-size:clamp(6px,1.9vw,8px)!important;
-    margin-bottom:clamp(5px,1.6vw,7px)!important;
-  }
-
-  .hero-title{
-    font-size:clamp(27px,7.8vw,42px)!important;
-    line-height:.92!important;
-  }
-
-  .hero-description{
-    max-width:58vw!important;
-    margin-top:clamp(7px,2.2vw,10px)!important;
-    font-size:clamp(10px,2.5vw,13px)!important;
-    line-height:1.38!important;
-  }
-
-  .hero-buttons{
-    gap:clamp(6px,2vw,8px)!important;
-    margin-top:clamp(10px,3vw,15px)!important;
-  }
-
-  .hero-button{
-    min-height:clamp(36px,8.5vw,43px)!important;
-    font-size:clamp(9px,2.2vw,11px)!important;
-  }
-
-  .hero-search{
-    height:clamp(38px,9vw,45px)!important;
-    margin-top:clamp(8px,2.5vw,12px)!important;
-  }
-
-  .hero-search input{
-    font-size:clamp(9px,2.4vw,12px)!important;
-  }
-}
-
-@media (max-width:390px){
-  .hero{
-    height:clamp(490px,125vw,590px)!important;
-    min-height:490px!important;
-  }
-
-  .hero-title{
-    font-size:clamp(25px,7.5vw,34px)!important;
-  }
-
-  .hero-description{
-    font-size:clamp(9px,2.3vw,11px)!important;
-  }
-
-  .hero-button{
-    min-height:clamp(34px,8.2vw,40px)!important;
-    font-size:clamp(8.5px,2.1vw,10.5px)!important;
-  }
-
-  .hero-search{
-    height:clamp(36px,8.5vw,43px)!important;
-  }
+  .explore-filters{position:relative!important;z-index:10000!important;}
+  .explore-filters .filter-group{position:relative!important;z-index:10001!important;}
+  .explore-filters .filter-dropdown{z-index:100000!important;isolation:isolate;}
 }
 </style>
 
