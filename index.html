@@ -4905,7 +4905,7 @@ class="photo-dropzone"
 id="photoDropzone"
 >
 📷 Tik om foto's te uploaden
-(max 15)
+(max 5)
 </div>
 
 
@@ -5118,15 +5118,7 @@ Onbekend
 
 <optgroup label="Volwassen maten">
 
-<option value="XS"
->
-XS
-</label>
-
-<label class="filter-option">
-<input type="checkbox"
-data-filter="size"
-value="S">S</option>
+<option value="S">S</option>
 <option value="M">M</option>
 <option value="L">L</option>
 <option value="XL">XL</option>
@@ -5314,7 +5306,7 @@ Plaats advertentie
     function processFiles(files){
 
         const remaining=
-            15-selectedImages.length;
+            5-selectedImages.length;
 
 
         if(remaining<=0){
@@ -6223,236 +6215,10 @@ router();
 
 
 <style>
-@media (max-width:900px){
-  /* Keep the complete hero text inside the image */
-  .hero{
-    position:relative!important;
-    overflow:hidden!important;
-  }
-  .hero-content{
-    position:absolute!important;
-    top:0!important;
-    left:0!important;
-    right:0!important;
-    bottom:auto!important;
-    z-index:10!important;
-    padding:4vw!important;
-  }
-
-  /* Make the complete text block slightly smaller */
-  .hero-kicker{
-    font-size:clamp(6px,1.5vw,8px)!important;
-  }
-  .hero-title{
-    font-size:clamp(24px,6.5vw,36px)!important;
-  }
-  .hero-description{
-    max-width:52vw!important;
-    font-size:clamp(9px,2.1vw,11px)!important;
-    line-height:1.3!important;
-  }
-  .hero-buttons{
-    margin-top:8px!important;
-    gap:5px!important;
-  }
-  .hero-button{
-    min-height:30px!important;
-    padding:0 9px!important;
-    font-size:8px!important;
-  }
-  .hero-search{
-    height:34px!important;
-    margin-top:7px!important;
-  }
-  .hero-search input{
-    font-size:9px!important;
-  }
-
-  /* Prevent a black section/bar from appearing directly underneath the image */
-  .hero + *{
-    margin-top:0!important;
-  }
-}
-</style>
-
-
-<style>
-@media (max-width:900px){
-  .hero-content{
-    padding:2.8vw!important;
-  }
-  .hero-kicker{
-    font-size:clamp(5px,1.2vw,7px)!important;
-    margin-bottom:3px!important;
-  }
-  .hero-title{
-    font-size:clamp(20px,5.4vw,30px)!important;
-    line-height:.9!important;
-  }
-  .hero-description{
-    max-width:46vw!important;
-    font-size:clamp(7px,1.7vw,9px)!important;
-    line-height:1.2!important;
-    margin-top:5px!important;
-  }
-  .hero-buttons{
-    margin-top:5px!important;
-    gap:4px!important;
-  }
-  .hero-button{
-    min-height:25px!important;
-    padding:0 7px!important;
-    font-size:7px!important;
-  }
-  .hero-search{
-    height:29px!important;
-    margin-top:5px!important;
-  }
-  .hero-search input{
-    font-size:8px!important;
-  }
-}
-@media (max-width:390px){
-  .hero-title{
-    font-size:clamp(18px,5vw,26px)!important;
-  }
-  .hero-description{
-    font-size:clamp(6.5px,1.6vw,8px)!important;
-  }
-  .hero-button{
-    min-height:23px!important;
-    font-size:6.5px!important;
-  }
-}
-</style>
-
-
-<style>
-@media (max-width:900px){
-  /* Slightly enlarge the hero text again */
-  .hero-kicker{font-size:clamp(5.5px,1.35vw,7.5px)!important}
-  .hero-title{font-size:clamp(22px,5.8vw,32px)!important}
-  .hero-description{
-    max-width:50vw!important;
-    font-size:clamp(8px,1.9vw,10px)!important;
-    line-height:1.25!important;
-  }
-  .hero-button{font-size:7.5px!important}
-  .hero-search input{font-size:8.5px!important}
-
-  /* Remove the large black area below the hero image */
-  .hero{
-    height:auto!important;
-    min-height:0!important;
-    aspect-ratio:16/10!important;
-    margin-bottom:0!important;
-  }
-  .hero + *{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
-}
-@media (max-width:390px){
-  .hero-title{font-size:clamp(20px,5.5vw,29px)!important}
-  .hero-description{font-size:clamp(7.5px,1.8vw,9px)!important}
-}
-</style>
-
-
-<style>
+/* Alleen gevraagd: home-zoekbalk iets lager op mobiel */
 @media (max-width:900px){
   .hero-search{
-    position:relative!important;
-    display:flex!important;
-    align-items:center!important;
-    box-sizing:border-box!important;
-    padding-right:6px!important;
-  }
-  .hero-search input{
-    min-width:0!important;
-    flex:1 1 auto!important;
-    height:100%!important;
-    box-sizing:border-box!important;
-  }
-  .hero-search button,
-  .hero-search .search-button,
-  .hero-search .search-icon{
-    flex:0 0 auto!important;
-    width:28px!important;
-    height:28px!important;
-    min-width:28px!important;
-    min-height:28px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    margin:0!important;
-    padding:0!important;
-    line-height:1!important;
-  }
-  .hero-search svg{
-    width:13px!important;
-    height:13px!important;
-    display:block!important;
-  }
-}
-</style>
-
-
-<style>
-@media (max-width:900px){
-  .hero-search{
-    transform:translateY(12px)!important;
-  }
-}
-</style>
-
-
-<style id="mobile-filter-final-fix">
-@media (max-width:650px){
-  .explore-filters{
-    position:relative!important;
-    z-index:100000!important;
-    overflow:visible!important;
-  }
-  .explore-filters .filter-group{
-    position:relative!important;
-    z-index:100001!important;
-    overflow:visible!important;
-  }
-  .explore-filters .filter-trigger{
-    position:relative!important;
-    z-index:100002!important;
-    pointer-events:auto!important;
-  }
-  .explore-filters .filter-dropdown{
-    position:fixed!important;
-    left:9px!important;
-    right:9px!important;
-    bottom:9px!important;
-    top:auto!important;
-    width:auto!important;
-    max-height:60vh!important;
-    overflow-y:auto!important;
-    z-index:2147483647!important;
-    pointer-events:auto!important;
-    touch-action:manipulation!important;
-  }
-  .explore-filters .filter-dropdown.open{
-    display:block!important;
-    visibility:visible!important;
-    opacity:1!important;
-  }
-  .explore-filters .filter-option,
-  .explore-filters .filter-option input,
-  .explore-filters .filter-option span{
-    pointer-events:auto!important;
-  }
-}
-@media (max-width:390px){
-  .explore-filters .filter-dropdown{
-    left:8px!important;
-    right:8px!important;
-    bottom:8px!important;
+    margin-top:clamp(20px,5vw,28px)!important;
   }
 }
 </style>
