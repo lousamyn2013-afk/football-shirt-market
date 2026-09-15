@@ -6813,8 +6813,25 @@ function enhancedRouter(){
  if(a==="offers"){renderOffers();return true}
  return false
 }
-const oldRouter=window.router;
-window.addEventListener("hashchange",()=>{setTimeout(()=>{if(!enhancedRouter()){}},0)});
+// FORCEER PROFIEL EN INBOX DIRECT, ZONDER DAT DE OUDE HOME-ROUTER ZE OVERSCHRIJFT
+window.addEventListener("click",function(event){
+ const link=event.target.closest("a[href]");
+ if(!link)return;
+ const href=link.getAttribute("href")||"";
+ if(href==="#/profile"){
+   event.preventDefault();
+   location.hash="#/profile";
+   profile();
+   return;
+ }
+ if(href==="#/inbox"){
+   event.preventDefault();
+   location.hash="#/inbox";
+   inbox();
+   return;
+ }
+});
+window.addEventListener("hashchange",()=>{setTimeout(()=>{enhancedRouter()},0)});
 setTimeout(()=>{enhancedRouter()},0);
 })();
 </script>
