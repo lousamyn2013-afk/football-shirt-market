@@ -3212,6 +3212,20 @@ footer strong{
 }
 </style>
 
+<style id="fsm-boost-chat-extra">
+.fsm-boost-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.fsm-boost-item{position:relative;display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.025);cursor:pointer;transition:.2s}
+.fsm-boost-item.selected{border-color:var(--gold);background:rgba(239,210,143,.07)}
+.fsm-boost-item input{position:absolute;opacity:0;pointer-events:none}
+.fsm-boost-thumb{width:58px;height:58px;border-radius:10px;background:#07130e;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:25px}
+.fsm-boost-thumb img{width:100%;height:100%;object-fit:contain}
+.fsm-boost-copy{min-width:0;flex:1}.fsm-boost-copy strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fsm-boost-check{width:23px;height:23px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:transparent;font-size:12px}.fsm-boost-item.selected .fsm-boost-check{background:var(--gold);color:#000;border-color:var(--gold)}
+.fsm-chat-item{display:flex;gap:9px;align-items:center;margin-bottom:9px;padding:8px;border:1px solid rgba(239,210,143,.16);border-radius:10px;background:rgba(239,210,143,.035)}
+.fsm-chat-item img,.fsm-chat-item-placeholder{width:52px;height:52px;border-radius:8px;object-fit:contain;background:#07130e;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.fsm-offer-card{margin-top:9px;padding:11px;border-radius:11px;border:1px solid rgba(239,210,143,.45);background:rgba(239,210,143,.07)}
+.fsm-offer-label{font-size:10px;font-weight:900;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+@media(max-width:650px){.fsm-boost-grid{grid-template-columns:1fr}.fsm-boost-item{padding:9px}.fsm-boost-thumb{width:52px;height:52px}}
+</style>
 </head>
 
 <body>
@@ -6588,17 +6602,41 @@ const demo=existing||{
   favorites:[],orders:[],messages:[],reviews:[],offers:[],wallet:{pending:0,balance:0},paymentMethod:null
 };
 if(logged && logged.username) demo.user={...demo.user,...logged,username:logged.username};
-if(!demo.messages || !demo.messages.length){
-  const me=demo.user.username;
-  demo.messages=[
-    {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is het Anderlecht-shirt nog beschikbaar?",system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
-    {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse. Kan je nog wat foto's sturen?",system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
-    {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Zou je €75 accepteren voor het shirt?",system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
-    {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
+function demoShirt(index=0){
+  try{
+    const arr=typeof combinedShirts==="function"?combinedShirts():[];
+    if(arr.length) return arr[index%arr.length];
+  }catch(e){}
+  const fallback=[
+    {id:"demo-shirt-1",name:"Anderlecht Retro Shirt",club:"RSC Anderlecht",price:75,size:"164",condition:"Zeer goed",image:""},
+    {id:"demo-shirt-2",name:"Manchester United Home Shirt",club:"Manchester United",price:90,size:"S",condition:"Goed",image:""},
+    {id:"demo-shirt-3",name:"FC Barcelona Home Shirt",club:"FC Barcelona",price:110,size:"XS",condition:"Zeer goed",image:""},
+    {id:"demo-shirt-4",name:"Belgium National Team Shirt",club:"België",price:80,size:"164",condition:"Nieuw",image:""}
   ];
+  return fallback[index%fallback.length];
 }
+function ensureDemoMarketplace(){
+  const me=demo.user.username;
+  const s1=demoShirt(0),s2=demoShirt(1),s3=demoShirt(2),s4=demoShirt(3);
+  if(!demo.messages || !demo.messages.length){
+    demo.messages=[
+      {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is dit shirt nog beschikbaar?",itemId:String(s1.id),system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
+      {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse in dit shirt. Kan je nog wat foto's sturen?",itemId:String(s2.id),system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
+      {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Ik wil graag een officieel bod doen.",itemId:String(s3.id),offerId:"demo-offer-1",offerAmount:75,system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
+      {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",itemId:String(s4.id),system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
+    ];
+  }
+  // Geef bestaande voorbeeldgesprekken ook een shirt-context als die nog ontbreekt.
+  const shirts=[s1,s2,s3,s4];
+  (demo.messages||[]).forEach((m,i)=>{if(!m.itemId)m.itemId=String(shirts[i%shirts.length].id)});
+  if(!Array.isArray(demo.offers)) demo.offers=[];
+  if(!demo.offers.some(o=>o.id==="demo-offer-1")){
+    demo.offers.push({id:"demo-offer-1",itemId:String(s3.id),itemName:s3.name||"Voetbalshirt",buyer:"FootballFan24",seller:me,originalPrice:Number(s3.price)||110,amount:75,currency:"EUR",status:"pending",createdAt:new Date(Date.now()-1000*60*75).toISOString()});
+  }
+}
+ensureDemoMarketplace();
 function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
-if(!existing || !existing.messages || !existing.messages.length) save()
+if(!existing || !existing.messages || !existing.messages.length || !existing.offers || !existing.offers.length) save()
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function money(n,c){
  const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
@@ -6700,15 +6738,46 @@ function orders(filter="all",tab="bought"){
  <div class="fsm-row" style="gap:6px;overflow:auto;margin-bottom:13px">${["all","pending","cancelled","completed"].map(f=>`<button class="fsm-pill" onclick="go('#/orders/${f}/${tab}')">${f==="all"?"Alles":f==="pending"?"In behandeling":f==="cancelled"?"Geannuleerd":"Voltooid"}</button>`).join("")}</div>
  ${shown.length?shown.map(o=>`<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="go('#/order/${o.id}')"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${money(o.finalPrice,o.currency)} · ${esc(o.status)}</div></div><span>›</span></div></div>`).join(""):`<div class="fsm-empty"><div class="ico">▣</div><strong>Je hebt nog geen bestellingen</strong><p class="fsm-muted">Als je iets verkoopt, zie je het hier staan</p></div>`}`);
 }
-function promote(){shell("Promoot je advertenties",`
-<div class="fsm-promote"><h2>Val op met Spotlights</h2><p class="fsm-muted">Geef al je advertenties meer zichtbaarheid.</p><button class="fsm-btn gold" style="margin-top:12px" onclick="toast('Spotlight geselecteerd — betaling wordt via backend gestart.')">Spotlight</button></div>
-<div class="fsm-promote"><h2>Boost je artikelen</h2><p class="fsm-muted">Zet een artikel bovenaan de feed. Bereik potentiële kopers en krijg inzichten in je verkopen.</p>
-<div class="fsm-list" style="margin-top:12px">${[
-["3 dagen · Lokaal","Alleen zichtbaar in je eigen land"],
-["3 dagen · Internationaal","Zichtbaarheid in meerdere landen"],
-["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
-["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
-].map(a=>`<button onclick="toast('${a[0]} geselecteerd — backend checkout nodig.')"><span>↗</span><div><strong>${a[0]}</strong><div class="fsm-muted">${a[1]}</div></div><span class="arrow">›</span></button>`).join("")}</div></div>`)}
+function promote(){
+ const mine=allListings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
+ const selected=new Set((demo.boosts||[]).map(b=>String(b.itemId)));
+ const cards=mine.length?mine.map(x=>{
+   const id=String(x.id), checked=selected.has(id);
+   const img=x.images?.[0]||x.image||"";
+   return `<label class="fsm-boost-item ${checked?"selected":""}">
+     <input type="checkbox" value="${esc(id)}" ${checked?"checked":""} onchange="toggleBoostShirt('${esc(id)}',this.checked)">
+     <div class="fsm-boost-thumb">${img?`<img src="${esc(img)}">`:`👕`}</div>
+     <div class="fsm-boost-copy"><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><div class="fsm-price">${money(x.price,currency())}</div></div>
+     <span class="fsm-boost-check">✓</span>
+   </label>`;
+ }).join(""):`<div class="fsm-empty"><strong>Nog geen advertenties</strong><p class="fsm-muted">Maak eerst een shirtadvertentie voordat je een boost kiest.</p><button class="fsm-btn gold" onclick="go('#/sell')">Nieuwe advertentie</button></div>`;
+ shell("Advertenties promoten",`
+ <div class="fsm-promote"><h2>Val op met Spotlights</h2><p class="fsm-muted">Spotlight is een aparte promotie voor een advertentie. Kies eerst welke shirts je wilt promoten.</p><button class="fsm-btn gold" style="margin-top:12px" onclick="toast('Selecteer eerst een shirt hieronder voor Spotlight.')">Spotlight</button></div>
+ <div class="fsm-promote"><h2>1. Kies je shirts</h2><p class="fsm-muted">Een boost wordt alleen toegepast op de shirts die je hier aanvinkt — niet automatisch op al je advertenties.</p><div class="fsm-boost-grid">${cards}</div></div>
+ <div class="fsm-promote"><h2>2. Kies je boost</h2><p class="fsm-muted">${selected.size?selected.size+" shirt"+(selected.size===1?"":"s")+" geselecteerd":"Selecteer eerst één of meer shirts"}</p>
+ <div class="fsm-list" style="margin-top:12px">${[
+ ["3 dagen · Lokaal","Alleen zichtbaar in je eigen land"],
+ ["3 dagen · Internationaal","Zichtbaarheid in meerdere landen"],
+ ["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
+ ["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
+ ].map(a=>`<button type="button" onclick="startBoost('${a[0]}')"><span>↗</span><div><strong>${a[0]}</strong><div class="fsm-muted">${a[1]}</div></div><span class="arrow">›</span></button>`).join("")}</div></div>
+ `);
+}
+window.toggleBoostShirt=(id,on)=>{
+ if(!Array.isArray(demo.boostSelection))demo.boostSelection=[];
+ id=String(id);
+ demo.boostSelection=on?[...new Set([...demo.boostSelection,id])]:demo.boostSelection.filter(x=>String(x)!==id);
+ save();
+ promote();
+};
+window.startBoost=(type)=>{
+ const ids=(demo.boostSelection||[]).map(String).filter(Boolean);
+ if(!ids.length){toast("Selecteer eerst minstens één shirt.");return}
+ if(!Array.isArray(demo.boosts))demo.boosts=[];
+ ids.forEach(id=>{const existing=demo.boosts.find(b=>String(b.itemId)===id); if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString()}else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString()})});
+ demo.boostSelection=[]; save(); toast(type+" geactiveerd voor "+ids.length+" geselecteerd(e) shirt"+(ids.length===1?"":"s")+" (demo)"); promote();
+};
+
 function inbox(){
  const chats=[...new Set(demo.messages.map(m=>m.chat).filter(Boolean))];
  ["ShirtCollector","VintageKits","FootballFan24","RetroJerseys"].forEach(n=>{if(!chats.includes(n))chats.push(n)});
@@ -6723,12 +6792,19 @@ function inbox(){
 function chat(user){
  user=String(user||"verkoper");
  let msgs=demo.messages.filter(m=>m.chat===user);
- if(!msgs.length) msgs=[{id:"seed-"+Date.now(),chat:user,from:user,to:demo.user.username,text:"Hallo! 👋 Leuk dat je een bericht stuurt.",system:false,date:new Date().toISOString()}];
+ if(!msgs.length) msgs=[{id:"seed-"+Date.now(),chat:user,from:user,to:demo.user.username,text:"Hallo! 👋 Leuk dat je een bericht stuurt.",itemId:String(demoShirt(0).id),system:false,date:new Date().toISOString()}];
  msgs.forEach(m=>{if(m.to===demo.user.username)m.read=true});
  save();
- const html=msgs.map(m=>`<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div><small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`).join("");
- shell(user,`<div class="fsm-chat"><div class="fsm-chat-user">${avatar(user,true)}<div><strong>${esc(user)}</strong><div class="fsm-muted">Gesprek</div></div></div><div class="fsm-messages">${html}</div><div class="fsm-chatbar"><input id="chatInput" autocomplete="off" placeholder="Typ een bericht..." onkeydown="if(event.key==='Enter')sendChat('${esc(user)}')"><button class="fsm-btn green" type="button" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>`,"inbox",true);
+ const html=msgs.map(m=>{
+   const item=m.itemId?(itemFromId(m.itemId)||[0,1,2,3].map(i=>demoShirt(i)).find(x=>String(x.id)===String(m.itemId))):null;
+   const offer=m.offerId?demo.offers.find(o=>o.id===m.offerId):null;
+   const itemHtml=item?`<div class="fsm-chat-item">${item.image?`<img src="${esc(item.image)}">`:`<div class="fsm-chat-item-placeholder">👕</div>`}<div><strong>${esc(item.name||"Voetbalshirt")}</strong><div class="fsm-muted">${esc(item.club||"Shirt")} · ${esc(item.size||"")}</div><span class="fsm-price">${money(item.price,currency())}</span></div></div>`:"";
+   const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status||"pending")}</span></div>${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
+   return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}">${itemHtml}<div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
+ }).join("");
+ shell(user,`<div class="fsm-chat"><div class="fsm-chat-user">${avatar(user,true)}<div><strong>${esc(user)}</strong><div class="fsm-muted">Privégesprek</div></div></div><div class="fsm-messages">${html}</div><div class="fsm-chatbar"><input id="chatInput" autocomplete="off" placeholder="Typ een bericht..." onkeydown="if(event.key==='Enter')sendChat('${esc(user)}')"><button class="fsm-btn green" type="button" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>` ,"inbox",true);
 }
+
 window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,read:true,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
 window.translateMsg=(id,b)=>{b.textContent="Vertalen…";setTimeout(()=>{b.textContent="Vertaling beschikbaar via de vertaalservice.";},250)}
 window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
