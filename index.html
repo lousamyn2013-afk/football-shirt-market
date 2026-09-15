@@ -5753,6 +5753,12 @@ function updateNav(){
             ?.classList.add("active");
 
     }
+    else if(hash.startsWith("#/inbox") || hash.startsWith("#/chat")){
+        document.getElementById("navInbox")?.classList.add("active");
+    }
+    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
+        document.getElementById("navProfile")?.classList.add("active");
+    }
 
     else{
 
@@ -5797,6 +5803,25 @@ function router(){
 
         renderSell();
 
+    }
+
+    else if(
+        hash.startsWith("#/inbox") ||
+        hash.startsWith("#/profile") ||
+        hash.startsWith("#/badges") ||
+        hash.startsWith("#/favorites") ||
+        hash.startsWith("#/wallet") ||
+        hash.startsWith("#/orders") ||
+        hash.startsWith("#/promote") ||
+        hash.startsWith("#/chat") ||
+        hash.startsWith("#/product") ||
+        hash.startsWith("#/checkout") ||
+        hash.startsWith("#/order") ||
+        hash.startsWith("#/track") ||
+        hash.startsWith("#/offers")
+    ){
+        // Deze routes worden door de marketplace-router gerenderd.
+        return;
     }
 
     else{
