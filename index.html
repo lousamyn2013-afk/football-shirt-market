@@ -6390,115 +6390,6 @@ router();
 }
 </style>
 
-
-<style id="fsm-marketplace-extension">
-.fsm-page{max-width:1100px;margin:0 auto;padding:26px 0 90px}
-.fsm-card{background:linear-gradient(180deg,#0b1913,#06100c);border:1px solid var(--line);border-radius:18px;padding:20px}
-.fsm-top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.fsm-back,.fsm-icon-btn{border:1px solid var(--line);background:#07130e;color:#fff;border-radius:11px;min-width:40px;height:40px;cursor:pointer}
-.fsm-top h1{font-family:Montserrat,sans-serif;font-size:25px}
-.fsm-sub{color:var(--muted);font-size:13px;line-height:1.6}
-.fsm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.fsm-menu{display:flex;align-items:center;justify-content:space-between;padding:16px;border:1px solid rgba(239,210,143,.14);border-radius:14px;background:#07120d;color:#fff;cursor:pointer}
-.fsm-menu strong{font-size:13px}.fsm-menu span{color:var(--gold)}
-.fsm-avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),var(--green-dark));font-family:Montserrat;font-size:25px;font-weight:900}
-.fsm-profile-head{display:flex;align-items:center;gap:15px}
-.fsm-progress{height:9px;border-radius:99px;background:#14231c;overflow:hidden;margin-top:10px}.fsm-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold))}
-.fsm-tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px}.fsm-tab{border:0;background:transparent;color:#94a39c;padding:12px 14px;font-weight:800;cursor:pointer}.fsm-tab.active{color:#fff;border-bottom:2px solid var(--gold)}
-.fsm-empty{text-align:center;padding:45px 15px;color:#9baaa3}.fsm-stars{color:var(--gold);letter-spacing:2px}
-.fsm-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.fsm-product{background:#07120d;border:1px solid var(--line);border-radius:14px;overflow:hidden}.fsm-product-img{height:180px;display:grid;place-items:center;background:radial-gradient(circle,#183c2a,#08150f 65%,#030805);font-size:65px}.fsm-product-info{padding:12px}.fsm-price{color:var(--green);font-weight:900;font-size:15px}
-.fsm-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.fsm-btn{border:0;border-radius:11px;padding:12px 16px;font-weight:900;cursor:pointer}.fsm-btn.green{background:linear-gradient(135deg,#19c982,#0a8955);color:#fff}.fsm-btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#080b09}.fsm-btn.dark{background:#07130e;color:#fff;border:1px solid var(--line)}
-.fsm-form{display:grid;gap:12px}.fsm-form input,.fsm-form textarea,.fsm-form select{width:100%;padding:13px;background:#030806;border:1px solid rgba(239,210,143,.25);border-radius:10px;color:#fff;outline:0}.fsm-form input:focus,.fsm-form textarea:focus{border-color:var(--gold)}
-.fsm-order{display:grid;gap:10px;padding:15px;border:1px solid rgba(239,210,143,.16);border-radius:14px;background:#07120d;margin-bottom:12px}.fsm-status{display:inline-flex;width:max-content;padding:5px 9px;border-radius:99px;background:rgba(24,191,119,.12);color:#5ee6aa;font-size:10px;font-weight:900}
-.fsm-chat-list{display:grid;gap:8px}.fsm-chat-row{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid rgba(239,210,143,.12);border-radius:14px;background:#07120d;cursor:pointer}.fsm-mini-avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#123624;color:var(--gold);font-weight:900}
-.fsm-chat{display:flex;flex-direction:column;gap:10px;min-height:55vh}.fsm-messages{display:flex;flex-direction:column;gap:8px;flex:1}.fsm-msg{max-width:78%;padding:10px 12px;border-radius:14px;background:#10231a;color:#eaf1ed}.fsm-msg.mine{align-self:flex-end;background:linear-gradient(135deg,#128b59,#0b6f49)}.fsm-system{align-self:center;max-width:90%;text-align:center;background:#0b1711;border:1px solid rgba(239,210,143,.18);color:#cfd9d4;font-size:11px}.fsm-msg-tools{margin-top:7px;display:flex;gap:10px;font-size:10px;color:var(--gold)}.fsm-msg-tools button{border:0;background:none;color:var(--gold);padding:0;cursor:pointer}.fsm-chat-input{display:flex;gap:8px}.fsm-chat-input input{flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);background:#030806;color:#fff}
-.fsm-pay-method{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:13px;background:#07120d}.fsm-card-logo{font-weight:900;color:var(--gold)}
-.fsm-note{padding:11px 13px;border-radius:11px;background:rgba(239,210,143,.06);border:1px solid rgba(239,210,143,.15);color:#cbd5d0;font-size:11px;line-height:1.5}
-.fsm-review{padding:15px;border:1px solid rgba(239,210,143,.12);border-radius:14px;margin-top:10px;background:#07120d}
-.fsm-bottom-nav{display:none}
-@media(max-width:650px){
- .fsm-page{padding:16px 10px 88px}.fsm-card{padding:15px}.fsm-grid{grid-template-columns:1fr}.fsm-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.fsm-product-img{height:135px;font-size:50px}.fsm-top h1{font-size:20px}.fsm-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:3500;display:grid;grid-template-columns:repeat(5,1fr);background:#030806;border-top:1px solid rgba(239,210,143,.16);padding:7px 5px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -12px 35px rgba(0,0,0,.45)}.fsm-bottom-nav a{color:#8c9b94;text-align:center;font-size:9px;font-weight:800;padding:5px 2px}.fsm-bottom-nav a.active{color:#20d894}.fsm-bottom-nav b{display:block;font-size:16px;margin-bottom:2px}.fsm-msg{max-width:88%}
-}
-</style>
-
-<script id="fsm-marketplace-extension-script">
-(function(){
-  const FSM_KEY="fsm_marketplace_demo_v1";
-  const CURRENCIES={EUR:{locale:"nl-BE"},GBP:{locale:"en-GB"},USD:{locale:"en-US"}};
-  let demoState;
-  try{demoState=JSON.parse(localStorage.getItem(FSM_KEY)||"{}")}catch(e){demoState={}}
-  Object.assign(demoState,{wallet:demoState.wallet||0,orders:demoState.orders||[],favorites:demoState.favorites||[],messages:demoState.messages||[],reviews:demoState.reviews||[],paymentMethods:demoState.paymentMethods||[],offers:demoState.offers||[]});
-  function save(){localStorage.setItem(FSM_KEY,JSON.stringify(demoState))}
-  function esc(s){return typeof escapeHtml==="function"?escapeHtml(String(s??"")):String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-  function money(v,c){return new Intl.NumberFormat((CURRENCIES[c]||CURRENCIES.EUR).locale,{style:"currency",currency:c||"EUR"}).format(Number(v)||0)}
-  function toast(m){if(typeof showToast==="function")showToast(m);else alert(m)}
-  function api(path,options={}){return fetch(path,{credentials:"include",headers:{"Content-Type":"application/json"},...options}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})}
-  function currencyFor(){return localStorage.getItem("fsm_currency")||"EUR"}
-  function shirtById(id){return typeof combinedShirts==="function"?combinedShirts().find(x=>String(x.id)===String(id)):null}
-  function parsePrice(p){return Number(String(p).replace(/[^\d,.-]/g,"").replace(/\./g,"").replace(",", "."))||0}
-  function shell(title,body){
-    app.innerHTML=`<div class="page"><div class="fsm-page"><div class="fsm-top"><button class="fsm-back" onclick="history.back()">←</button><h1>${esc(title)}</h1></div>${body}</div></div>`;
-    if(!document.querySelector(".fsm-bottom-nav"))document.body.insertAdjacentHTML("beforeend",`<nav class="fsm-bottom-nav"><a href="#/"><b>⌂</b>Home</a><a href="#/explore"><b>⌕</b>Bladeren</a><a href="#/sell"><b>＋</b>Verkopen</a><a href="#/inbox"><b>✉</b>Inbox</a><a href="#/profile"><b>●</b>Profiel</a></nav>`);
-  }
-  function renderProfile(){
-    shell("Profiel",`<div class="fsm-card"><div class="fsm-profile-head"><div class="fsm-avatar">L</div><div><strong style="font-size:20px">lousamyn</strong><div class="fsm-sub">Actief op Football-Shirt-Market</div></div></div><div class="fsm-actions"><a class="fsm-btn dark" href="#/profile/public">Mijn advertenties bekijken</a></div></div>
-    <div class="fsm-card" style="margin-top:14px"><strong>Verdiende badges</strong><div class="fsm-sub" style="margin-top:5px">0 van 2</div><div class="fsm-progress"><i></i></div></div>
-    <div class="fsm-grid" style="margin-top:14px"><button class="fsm-menu" data-go="#/favorites"><strong>♡ Mijn favorieten</strong><span>→</span></button><button class="fsm-menu" data-go="#/wallet"><strong>€ Mijn portemonnee</strong><span>→</span></button><button class="fsm-menu" data-go="#/orders"><strong>▣ Mijn bestellingen</strong><span>→</span></button><button class="fsm-menu" data-go="#/promote"><strong>✦ Advertenties promoten</strong><span>→</span></button></div>
-    <div class="fsm-actions"><a class="fsm-btn dark" href="#/badges">◉ Badges</a></div>`);
-  }
-  function renderPublic(tab="items"){
-    const reviews=demoState.reviews.filter(r=>r.user==="lousamyn");
-    shell("lousamyn",`<div class="fsm-card"><div class="fsm-profile-head"><div class="fsm-avatar">L</div><div><strong style="font-size:20px">lousamyn</strong><div class="fsm-sub">Football-Shirt-Market</div></div></div>
-      <div class="fsm-tabs"><button class="fsm-tab ${tab==="items"?"active":""}" data-tab="items">Advertenties</button><button class="fsm-tab ${tab==="reviews"?"active":""}" data-tab="reviews">Reviews</button><button class="fsm-tab ${tab==="about"?"active":""}" data-tab="about">Over mij</button></div>
-      ${tab==="items"?`<div class="fsm-note"><strong>Verhoog je zichtbaarheid</strong><br>Promoot je items. Vergroot je verkoopkansen.</div><p class="fsm-sub" style="margin:15px 0 8px">${typeof getListings==="function"?getListings().length:0} advertenties</p><div class="fsm-products">${(typeof getListings==="function"?getListings():[]).map(x=>`<article class="fsm-product"><div class="fsm-product-img">${x.images?.[0]?`<img src="${esc(x.images[0])}" style="width:100%;height:100%;object-fit:contain">`:"👕"}</div><div class="fsm-product-info"><strong>${esc(x.name)}</strong><div class="fsm-price">${esc(x.price)}</div><button class="fsm-btn gold" style="margin-top:8px;padding:8px 10px">Boosten</button></div></article>`).join("")||`<div class="fsm-empty" style="grid-column:1/-1">Nog geen advertenties.</div>`}</div>`:
-      tab==="reviews"?(reviews.length?reviews.map(r=>`<div class="fsm-review"><strong>${esc(r.author)}</strong> <span class="fsm-stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</span><div class="fsm-sub">${esc(r.text)}</div></div>`).join(""):`<div class="fsm-empty"><strong>Nog geen reviews</strong><br>Reviews verschijnen na een afgeronde bestelling.</div>`):
-      `<div class="fsm-card"><strong>Over mij</strong><p class="fsm-sub" style="margin-top:8px">Verzamelaar van voetbalshirts.</p><p class="fsm-sub">✓ E-mail geverifieerd</p></div>`}</div>`);
-    document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>renderPublic(b.dataset.tab));
-  }
-  function renderBadges(){shell("Badges",`<div class="fsm-card"><h2 style="color:var(--gold);font-family:Montserrat">Goed bezig! 1 artikel geüpload</h2><p class="fsm-sub" style="margin-top:8px">Ga zo door om je badge te verdienen.</p><div class="fsm-progress"><i style="width:50%"></i></div><div class="fsm-actions"><a href="#/sell" class="fsm-btn green">Nieuwe advertentie maken</a></div></div><div class="fsm-card" style="margin-top:12px"><h2 style="color:var(--gold);font-family:Montserrat">Best snel: je verzendt binnen 3 dagen</h2><p class="fsm-sub" style="margin-top:8px">Verzend je bestellingen iets sneller om deze badge te verdienen.</p><div class="fsm-progress"><i></i></div></div>`)}
-  function renderFavorites(){const fav=demoState.favorites.map(shirtById).filter(Boolean);shell("Mijn favorieten",`<div class="fsm-products">${fav.map(x=>`<article class="fsm-product"><div class="fsm-product-img">${x.icon||"👕"}</div><div class="fsm-product-info"><strong>${esc(x.club)}</strong><div class="fsm-sub">${esc(x.name)}</div><div class="fsm-price">${esc(x.price)}</div></div></article>`).join("")||`<div class="fsm-empty" style="grid-column:1/-1">Je hebt nog geen favorieten.</div>`}</div>`)}
-  function renderWallet(){shell("Mijn portemonnee",`<div class="fsm-card"><div class="fsm-sub">Saldo in behandeling</div><div style="font-size:30px;font-weight:900;margin:7px 0">${money(0,currencyFor())}</div></div><div class="fsm-card" style="margin-top:12px"><div class="fsm-sub">Beschikbaar saldo</div><div style="font-size:30px;font-weight:900;color:var(--green);margin:7px 0">${money(demoState.wallet,currencyFor())}</div><div class="fsm-actions"><button class="fsm-btn green" id="withdrawBtn">Uitbetalen</button><a class="fsm-btn gold" href="#/explore">Shoppen</a></div></div><div class="fsm-card" style="margin-top:12px"><strong>Betaalmethode</strong><div style="margin-top:10px">${demoState.paymentMethods.length?`<div class="fsm-pay-method"><span class="fsm-card-logo">CARD</span>•••• ${esc(demoState.paymentMethods[0].last4)}</div>`:`<div class="fsm-sub">Nog geen kaart toegevoegd.</div>`}</div><div class="fsm-actions"><a href="#/payment-method" class="fsm-btn gold">Kaart toevoegen</a></div></div>`);document.getElementById("withdrawBtn").onclick=()=>toast("Uitbetaling wordt via de backend gestart.")}
-  function renderPaymentMethod(){shell("Kaart toevoegen",`<div class="fsm-card"><p class="fsm-note">Voor echte betalingen worden kaartgegevens door een beveiligde betaalprovider verwerkt. F-S-M bewaart alleen een gemaskeerd kaartkenmerk, zoals de laatste 4 cijfers.</p><form class="fsm-form" id="cardForm" style="margin-top:15px"><input required inputmode="numeric" maxlength="19" placeholder="Kaartnummer" autocomplete="cc-number"><div class="fsm-grid"><input required maxlength="5" placeholder="MM/YY" autocomplete="cc-exp"><input required maxlength="4" placeholder="CVC" autocomplete="cc-csc"></div><input required placeholder="Naam op kaart" autocomplete="cc-name"><button class="fsm-btn gold">Kaart veilig koppelen</button></form></div>`);document.getElementById("cardForm").onsubmit=e=>{e.preventDefault();const n=e.target.elements[0].value.replace(/\D/g,"");if(n.length<12)return toast("Vul een geldige kaart in.");demoState.paymentMethods=[{last4:n.slice(-4)}];save();toast("Kaart gekoppeld.");location.hash="#/wallet"}}
-  function renderOrders(){shell("Mijn bestellingen",`<div class="fsm-tabs"><button class="fsm-tab active">Verkocht</button><button class="fsm-tab">Gekocht</button></div><div class="fsm-actions" style="margin-bottom:14px"><span class="fsm-status">Alles</span><span class="fsm-status">In behandeling</span><span class="fsm-status">Geannuleerd</span><span class="fsm-status">Voltooid</span></div>${demoState.orders.length?demoState.orders.map(o=>`<div class="fsm-order"><strong>${esc(o.itemName)}</strong><span>${money(o.amount,o.currency)}</span><span class="fsm-status">${esc(o.status)}</span><a class="fsm-btn dark" href="#/order/${esc(o.id)}">Bestelling bekijken</a></div>`).join(""):`<div class="fsm-empty">📦<br><strong>Je hebt nog geen bestellingen</strong><br>Als je iets verkoopt, zie je het hier staan.</div>`}`)}
-  function renderPromote(){shell("Promoot je advertenties",`<div class="fsm-card"><h2 style="color:var(--gold);font-family:Montserrat">Val op met Spotlights</h2><p class="fsm-sub" style="margin-top:7px">Geef al je advertenties meer zichtbaarheid.</p><div class="fsm-actions"><button class="fsm-btn gold" data-promo="spotlight">Spotlight kiezen</button></div></div><div class="fsm-card" style="margin-top:12px"><h2 style="color:var(--gold);font-family:Montserrat">Boost je artikelen</h2><p class="fsm-sub" style="margin-top:7px">Zet een artikel bovenaan de feed. Bereik potentiële kopers en krijg inzichten in je verkopen.</p><div class="fsm-actions"><button class="fsm-btn dark" data-promo="3-local">3 dagen lokaal</button><button class="fsm-btn dark" data-promo="3-int">3 dagen internationaal</button><button class="fsm-btn dark" data-promo="7-local">7 dagen lokaal</button><button class="fsm-btn dark" data-promo="7-int">7 dagen internationaal</button></div></div>`);document.querySelectorAll("[data-promo]").forEach(b=>b.onclick=()=>toast(b.textContent+" geselecteerd — betaling wordt via de backend gestart."))}
-  function renderProduct(id){const s=shirtById(id);if(!s){location.hash="#/explore";return}const amount=parsePrice(s.price),cur=currencyFor();shell(s.club,`<div class="fsm-card"><div class="fsm-product-img" style="height:300px">${s.image?`<img src="${esc(s.image)}" style="width:100%;height:100%;object-fit:contain">`:esc(s.icon||"👕")}</div><h2 style="margin-top:15px">${esc(s.name)}</h2><p class="fsm-sub">${esc(s.condition)} • maat ${esc(s.size||"—")}</p><div class="fsm-price" style="font-size:24px;margin-top:10px">${money(amount,cur)}</div><div class="fsm-actions"><button class="fsm-btn green" id="buyNow">Koop nu</button><button class="fsm-btn gold" id="offerBtn">Bod doen</button><button class="fsm-btn dark" id="favBtn">♡ Favoriet</button></div><div class="fsm-note" style="margin-top:15px">Bij een geaccepteerd bod wordt de geaccepteerde biedprijs de aankoopprijs.</div></div>`);document.getElementById("buyNow").onclick=()=>renderCheckout({shirt:s,amount,currency:cur,source:"buy"});document.getElementById("offerBtn").onclick=()=>{const v=prompt("Jouw bod ("+cur+")");if(v&&Number(v)>0)submitOffer(s,Number(v),cur)};document.getElementById("favBtn").onclick=()=>{demoState.favorites=demoState.favorites.includes(s.id)?demoState.favorites.filter(x=>x!==s.id):[...demoState.favorites,s.id];save();toast("Favorieten bijgewerkt.")}}
-  function submitOffer(s,amount,currency){const o={id:"offer_"+Date.now(),shirtId:s.id,amount,currency,status:"pending",seller:"lousamyn"};demoState.offers.push(o);save();api("/api/offers",{method:"POST",body:JSON.stringify(o)}).catch(()=>null);toast("Bod verzonden.")}
-  function renderCheckout(d){shell("Betaling",`<div class="fsm-card"><div class="fsm-sub">Bestelling</div><h2 style="margin-top:5px">${esc(d.shirt.name)}</h2><div class="fsm-price" style="font-size:25px;margin-top:8px">${money(d.amount,d.currency)}</div>${d.source==="offer"?`<div class="fsm-note" style="margin-top:12px">Dit is de geaccepteerde biedprijs. De oorspronkelijke prijs wordt niet gebruikt.</div>`:""}<div class="fsm-pay-method" style="margin-top:15px"><span class="fsm-card-logo">CARD</span>${demoState.paymentMethods.length?"•••• "+esc(demoState.paymentMethods[0].last4):"Nog geen kaart"}<a href="#/payment-method" style="margin-left:auto;color:var(--gold);font-weight:900">Wijzigen</a></div><div class="fsm-actions"><button class="fsm-btn green" id="payBtn">Betalen ${money(d.amount,d.currency)}</button></div><p class="fsm-note" style="margin-top:12px">Voor echte betalingen opent de backend hier een beveiligde checkout van de betaalprovider.</p></div>`);document.getElementById("payBtn").onclick=()=>completePurchase(d)}
-  function completePurchase(d){const o={id:"order_"+Date.now(),itemId:d.shirt.id,itemName:d.shirt.name,amount:d.amount,currency:d.currency,status:"In behandeling",trackingUrl:"/track?orderId=",seller:"lousamyn",buyer:localStorage.getItem("fsm_user")||"lousamyn",createdAt:new Date().toISOString()};o.trackingUrl="/track?orderId="+encodeURIComponent(o.id);demoState.orders.unshift(o);save();api("/api/payments/create-checkout",{method:"POST",body:JSON.stringify({orderId:o.id,amount:o.amount,currency:o.currency,itemId:o.itemId})}).then(r=>{if(r?.checkoutUrl)location.href=r.checkoutUrl}).catch(()=>{toast("Demo-bestelling aangemaakt. Koppel de backend voor echte betaling.");location.hash="#/order/"+o.id})}
-  function renderOrder(id){const o=demoState.orders.find(x=>x.id===id);if(!o){location.hash="#/orders";return}shell("Bestelling",`<div class="fsm-order"><strong>${esc(o.itemName)}</strong><div class="fsm-price">${money(o.amount,o.currency)}</div><span class="fsm-status">${esc(o.status)}</span><a class="fsm-btn dark" href="${esc(o.trackingUrl)}">📦 Track je pakket</a>${o.status==="In behandeling"?`<button class="fsm-btn green" id="ship">Markeer als verzonden</button>`:""}${o.status==="Afgeleverd"?`<button class="fsm-btn green" id="received">Bestelling ontvangen</button><button class="fsm-btn dark" id="issue">Er is een probleem</button>`:""}${o.status==="Voltooid"?`<button class="fsm-btn gold" id="review">Feedback geven</button>`:""}</div>`);const s=document.getElementById("ship");if(s)s.onclick=()=>setStatus(o,"Verzonden");const r=document.getElementById("received");if(r)r.onclick=()=>setStatus(o,"Voltooid");const i=document.getElementById("issue");if(i)i.onclick=()=>{toast("Probleem gemeld.");api("/api/orders/"+o.id+"/issue",{method:"POST"}).catch(()=>null)};const v=document.getElementById("review");if(v)v.onclick=()=>renderReview(o)}
-  function setStatus(o,status){o.status=status;save();api("/api/orders/"+o.id+"/status",{method:"POST",body:JSON.stringify({status})}).catch(()=>null);toast(status==="Verzonden"?"📦 Je bestelling is verzonden.":status==="Voltooid"?"✅ Bestelling afgerond.":"Status bijgewerkt.");renderOrder(o.id)}
-  function renderReview(o){shell("Feedback geven",`<div class="fsm-card"><h2>Beoordeel ${esc(o.seller)}</h2><form class="fsm-form" id="reviewForm"><select required><option value="">Aantal sterren</option><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select><textarea required placeholder="Schrijf je beoordeling..."></textarea><button class="fsm-btn gold">Review plaatsen</button></form></div>`);document.getElementById("reviewForm").onsubmit=e=>{e.preventDefault();const r={id:"review_"+Date.now(),user:o.seller,author:localStorage.getItem("fsm_user")||"lousamyn",stars:Number(e.target.elements[0].value),text:e.target.elements[1].value};demoState.reviews.push(r);save();api("/api/reviews",{method:"POST",body:JSON.stringify({...r,orderId:o.id})}).catch(()=>null);toast("Review geplaatst.");location.hash="#/profile/public"}}
-  const tr={en:{"Hallo, is het shirt nog beschikbaar?":"Hi, is the shirt still available?","Je bestelling is verzonden.":"Your order has been shipped."},fr:{"Hallo, is het shirt nog beschikbaar?":"Bonjour, le maillot est-il toujours disponible ?","Je bestelling is verzonden.":"Votre commande a été expédiée."}};
-  function translated(t){const l=(localStorage.getItem("fsm_language")||"nl").split("-")[0];return tr[l]?.[t]||t}
-  function renderInbox(){shell("Inbox",`<div class="fsm-chat-list"><div class="fsm-chat-row" data-chat="seller"><div class="fsm-mini-avatar">M</div><div><strong>VintageCollector</strong><div class="fsm-sub">Hallo, is het shirt nog beschikbaar?</div></div></div><div class="fsm-chat-row" data-chat="order"><div class="fsm-mini-avatar">📦</div><div><strong>Bestelling</strong><div class="fsm-sub">Je bestelling is verzonden.</div></div></div></div>`);document.querySelectorAll("[data-chat]").forEach(x=>x.onclick=()=>renderChat(x.dataset.chat))}
-  function renderChat(kind){const msgs=kind==="seller"?["Hallo, is het shirt nog beschikbaar?"]:["🎉 Je hebt een artikel gekocht!","Je bestelling is verzonden."];shell("VintageCollector",`<div class="fsm-chat"><div class="fsm-messages">${msgs.map((m,i)=>`<div class="fsm-msg ${i===1?"fsm-system":""}" data-original="${esc(m)}">${esc(m)}<div class="fsm-msg-tools"><button data-t="${i}">Vertalen</button><button data-o="${i}" style="display:none">Origineel bekijken</button></div></div>`).join("")}</div><div class="fsm-chat-input"><input id="chatInput" placeholder="Schrijf een bericht..."><button class="fsm-btn green" id="sendChat">Stuur</button></div></div>`);document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const x=b.closest(".fsm-msg");x.firstChild.textContent=translated(x.dataset.original);b.style.display="none";x.querySelector("[data-o]").style.display="inline"});document.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{const x=b.closest(".fsm-msg");x.firstChild.textContent=x.dataset.original;b.style.display="none";x.querySelector("[data-t]").style.display="inline"});document.getElementById("sendChat").onclick=()=>{const v=document.getElementById("chatInput");if(!v.value.trim())return;api("/api/messages",{method:"POST",body:JSON.stringify({to:"VintageCollector",text:v.value,language:localStorage.getItem("fsm_language")||"nl"})}).catch(()=>null);toast("Bericht verzonden.");v.value=""}}
-  function enhancedRouter(){
-    const h=location.hash||"#/";
-    if(h==="#/profile")return renderProfile();
-    if(h.startsWith("#/profile/public"))return renderPublic();
-    if(h.startsWith("#/badges"))return renderBadges();
-    if(h.startsWith("#/favorites"))return renderFavorites();
-    if(h.startsWith("#/wallet"))return renderWallet();
-    if(h.startsWith("#/payment-method"))return renderPaymentMethod();
-    if(h.startsWith("#/orders"))return renderOrders();
-    if(h.startsWith("#/promote"))return renderPromote();
-    if(h.startsWith("#/inbox"))return renderInbox();
-    if(h.startsWith("#/chat/"))return renderChat(decodeURIComponent(h.split("/")[2]||"seller"));
-    if(h.startsWith("#/order/"))return renderOrder(decodeURIComponent(h.split("/")[2]||""));
-    if(h.startsWith("#/product/"))return renderProduct(decodeURIComponent(h.split("/")[2]||""));
-    if(h.startsWith("#/checkout/")){const s=shirtById(decodeURIComponent(h.split("/")[2]||""));if(s)return renderCheckout({shirt:s,amount:parsePrice(s.price),currency:currencyFor(),source:"buy"});return}
-    if(typeof router==="function")router();
-  }
-  document.addEventListener("click",function(e){const b=e.target.closest(".fsm-menu[data-go]");if(b){location.hash=b.dataset.go}},false);
-  document.addEventListener("click",function(e){const b=e.target.closest(".shirt-view");if(b){const card=b.closest(".shirt-card");const all=typeof combinedShirts==="function"?combinedShirts():[];const idx=[...document.querySelectorAll(".shirt-card")].indexOf(card);const s=all[idx];if(s){e.preventDefault();e.stopImmediatePropagation();location.hash="#/product/"+encodeURIComponent(s.id)}}},true);
-  window.addEventListener("hashchange",enhancedRouter);
-  setTimeout(enhancedRouter,0);
-})();
-</script>
-
-</body>
-</html>
 <style id="only-home-search-50px-down">
 .hero .hero-search{
   transform:translateY(50px)!important;
@@ -6522,3 +6413,298 @@ router();
   transform:translateY(30px)!important;
 }
 </style>
+
+<!-- =========================================================
+     FOOTBALL-SHIRT-MARKET — MARKETPLACE / PROFILE EXTENSION
+     Frontend-ready: all sensitive payment/order validation must
+     be performed by the backend.
+========================================================= -->
+<style id="fsm-marketplace-extension">
+#fsm-marketplace{
+  --fsm-card:#08140f;--fsm-card2:#0b1913;--fsm-line:rgba(239,210,143,.20);
+}
+.fsm-shell{width:min(1120px,100%);margin:0 auto;padding:18px 14px 90px}
+.fsm-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.fsm-topbar h1{font:900 25px Montserrat,sans-serif;margin:0}
+.fsm-back,.fsm-iconbtn{border:1px solid var(--fsm-line);background:#07130e;color:#fff;border-radius:11px;min-width:42px;height:42px;cursor:pointer}
+.fsm-back{padding:0 13px;font-weight:800}
+.fsm-card{background:linear-gradient(180deg,var(--fsm-card2),var(--fsm-card));border:1px solid var(--fsm-line);border-radius:17px;padding:17px}
+.fsm-row{display:flex;align-items:center;gap:12px}
+.fsm-between{justify-content:space-between}
+.fsm-avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#18bf77,#08784c);font:900 22px Montserrat;color:#fff;flex:none}
+.fsm-avatar.sm{width:40px;height:40px;font-size:15px}
+.fsm-muted{color:#91a29a;font-size:12px;line-height:1.5}
+.fsm-gold{color:var(--gold)}
+.fsm-green{color:var(--green)}
+.fsm-btn{border:0;border-radius:11px;min-height:42px;padding:0 15px;font-weight:900;cursor:pointer}
+.fsm-btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#080a08}
+.fsm-btn.green{background:linear-gradient(135deg,#19c982,#0a8955);color:#fff}
+.fsm-btn.dark{background:#07130e;border:1px solid var(--fsm-line);color:#fff}
+.fsm-btn.full{width:100%}
+.fsm-menu{display:grid;gap:8px;margin-top:12px}
+.fsm-menu button{display:flex;align-items:center;gap:12px;width:100%;padding:15px;background:#07130e;border:1px solid rgba(239,210,143,.12);border-radius:13px;color:#fff;text-align:left;cursor:pointer}
+.fsm-menu button:hover{border-color:var(--gold)}
+.fsm-menu .arrow{margin-left:auto;color:var(--gold)}
+.fsm-progress{height:9px;background:#17251f;border-radius:99px;overflow:hidden;margin-top:10px}
+.fsm-progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#18bf77,var(--gold));border-radius:99px}
+.fsm-tabs{display:flex;border-bottom:1px solid var(--fsm-line);margin-bottom:15px}
+.fsm-tab{flex:1;background:none;border:0;color:#829088;padding:13px 5px;font-weight:900;cursor:pointer}
+.fsm-tab.active{color:#fff;border-bottom:2px solid var(--gold)}
+.fsm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fsm-item{overflow:hidden;border:1px solid var(--fsm-line);border-radius:14px;background:#07130e}
+.fsm-item-img{aspect-ratio:1;display:grid;place-items:center;background:radial-gradient(circle,#183c2a,#06100c 68%);overflow:hidden}
+.fsm-item-img img{width:100%;height:100%;object-fit:contain;padding:7%}
+.fsm-item-body{padding:10px}
+.fsm-price{font-weight:900;color:var(--green)}
+.fsm-meta{font-size:10px;color:#87958e;margin-top:3px}
+.fsm-promote{border:1px solid rgba(239,210,143,.25);border-radius:15px;padding:15px;background:linear-gradient(135deg,rgba(239,210,143,.09),rgba(24,191,119,.05));margin-bottom:14px}
+.fsm-review{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.fsm-stars{color:var(--gold);letter-spacing:2px}
+.fsm-empty{text-align:center;padding:48px 15px;color:#8b9992}
+.fsm-empty .ico{font-size:42px;margin-bottom:10px}
+.fsm-list{display:grid;gap:9px}
+.fsm-list button{display:flex;align-items:center;gap:12px;width:100%;padding:15px;border:1px solid rgba(239,210,143,.12);background:#07130e;color:#fff;border-radius:13px;text-align:left;cursor:pointer}
+.fsm-bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:3500;display:none;background:rgba(3,8,6,.97);border-top:1px solid rgba(239,210,143,.16);padding:7px 8px calc(7px + env(safe-area-inset-bottom));grid-template-columns:repeat(5,1fr)}
+.fsm-bottomnav a{display:flex;flex-direction:column;align-items:center;gap:3px;color:#8d9b94;font-size:10px;font-weight:800;padding:6px 2px;border-radius:9px}
+.fsm-bottomnav a.active{color:#18bf77;background:rgba(24,191,119,.08)}
+.fsm-chat{display:flex;flex-direction:column;min-height:62vh}
+.fsm-messages{display:flex;flex-direction:column;gap:8px;overflow:auto;padding:8px 0 15px;flex:1}
+.fsm-msg{max-width:78%;padding:10px 12px;border-radius:13px;background:#0b1913;border:1px solid rgba(255,255,255,.07)}
+.fsm-msg.mine{align-self:flex-end;background:#08784c}
+.fsm-msg.system{align-self:center;max-width:94%;background:#171d1a;border-color:rgba(239,210,143,.22);text-align:center}
+.fsm-msg small{display:block;color:#91a29a;font-size:9px;margin-top:4px}
+.fsm-chatbar{display:flex;gap:7px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
+.fsm-chatbar input,.fsm-input{flex:1;min-height:43px;border:1px solid rgba(239,210,143,.24);border-radius:10px;background:#030806;color:#fff;padding:0 12px;outline:0}
+.fsm-translate{display:flex;gap:6px;margin-top:6px}
+.fsm-translate button{font-size:9px;background:none;border:0;color:var(--gold);cursor:pointer;padding:0}
+.fsm-order-status{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.fsm-pill{padding:7px 10px;border-radius:99px;background:#07130e;border:1px solid var(--fsm-line);font-size:10px}
+.fsm-form{display:grid;gap:11px}
+.fsm-form label{font-size:10px;font-weight:900;color:var(--gold);text-transform:uppercase}
+.fsm-form textarea,.fsm-form input,.fsm-form select{width:100%;min-height:43px;background:#030806;color:#fff;border:1px solid rgba(239,210,143,.24);border-radius:10px;padding:10px;outline:0}
+.fsm-offer{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+.fsm-amount{font-size:24px;font-weight:900;color:var(--green)}
+.fsm-note{font-size:10px;color:#83918b;line-height:1.5}
+@media(max-width:650px){
+ .fsm-shell{padding:12px 10px 90px}.fsm-topbar h1{font-size:21px}.fsm-grid{gap:9px}.fsm-bottomnav{display:grid}
+}
+@media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+<script>
+(function(){
+"use strict";
+const API_BASE = window.FSM_API_BASE || "/api";
+const STORE="fsm_marketplace_v2";
+const demo=JSON.parse(localStorage.getItem(STORE)||"null")||{
+  user:{username:"lousamyn",verified:["email"],bio:"Voetbalshirt-verzamelaar"},
+  favorites:[],orders:[],messages:[],reviews:[],offers:[],wallet:{pending:0,balance:0},paymentMethod:null
+};
+function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function money(n,c){
+ const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
+}
+function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpperCase()}
+function app(){return document.getElementById("app")}
+function hash(){return location.hash||"#/"}
+function go(h){location.hash=h}
+async function api(path,opts={}){
+ try{const r=await fetch(API_BASE+path,{credentials:"include",headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}catch(e){return null}
+}
+function initials(name){return (name||"?").slice(0,1).toUpperCase()}
+function avatar(name,sm=false){return `<div class="fsm-avatar ${sm?"sm":""}">${esc(initials(name))}</div>`}
+function nav(active="profile"){
+ return `<nav class="fsm-bottomnav">
+ <a href="#/" class="${active==="home"?"active":""}">⌂<span>Home</span></a>
+ <a href="#/explore" class="${active==="browse"?"active":""}">◉<span>Bladeren</span></a>
+ <a href="#/sell" class="${active==="sell"?"active":""}">＋<span>Verkopen</span></a>
+ <a href="#/inbox" class="${active==="inbox"?"active":""}">✉<span>Inbox</span></a>
+ <a href="#/profile" class="${active==="profile"?"active":""}">●<span>Profiel</span></a>
+ </nav>`;
+}
+function shell(title,body,active="profile",back=true){
+ app().innerHTML=`<div id="fsm-marketplace"><div class="fsm-shell">
+ <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="history.back()">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${nav(active)}</div>`;
+}
+function listings(){
+ try{return typeof getListings==="function"?getListings():[]}catch(e){return []}
+}
+function allListings(){
+ const base=typeof combinedShirts==="function"?combinedShirts():[];
+ return base.map((x,i)=>({...x,_idx:i}));
+}
+function itemFromId(id){
+ const arr=allListings(); return arr.find(x=>String(x.id)===String(id)||String(x._idx)===String(id))||arr[0];
+}
+function profile(){
+ const reviews=demo.reviews.filter(r=>r.to===demo.user.username||r.from===demo.user.username);
+ shell("Profiel",`
+ <section class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}
+ <div style="flex:1"><h2>${esc(demo.user.username)}</h2><div class="fsm-muted">Mijn account</div></div>
+ <button class="fsm-btn dark" onclick="go('#/profile/public')">Mijn advertenties bekijken</button></div></section>
+ <section class="fsm-card" style="margin-top:12px;cursor:pointer" onclick="go('#/badges')">
+ <div class="fsm-row fsm-between"><strong>Verdiende badges</strong><span class="fsm-gold">0 van 2 ›</span></div>
+ <div class="fsm-progress"><i style="width:0%"></i></div>
+ </section>
+ <div class="fsm-menu">
+ <button onclick="go('#/favorites')">♡ <strong>Mijn favorieten</strong><span class="arrow">›</span></button>
+ <button onclick="go('#/wallet')">€ <strong>Mijn portemonnee</strong><span class="arrow">›</span></button>
+ <button onclick="go('#/orders')">▣ <strong>Mijn bestellingen</strong><span class="arrow">›</span></button>
+ <button onclick="go('#/promote')">↗ <strong>Advertenties promoten</strong><span class="arrow">›</span></button>
+ </div>
+ <section class="fsm-card" style="margin-top:12px"><div class="fsm-muted">Reviews</div><strong>${reviews.length?reviews.length+" ontvangen":"Nog geen reviews"}</strong></section>
+ `,"profile",false);
+}
+function publicProfile(tab="items"){
+ const mine=listings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
+ const reviews=demo.reviews.filter(r=>r.to===demo.user.username);
+ let content="";
+ if(tab==="reviews"){
+   content=reviews.length?reviews.map(r=>`<div class="fsm-review"><div class="fsm-row">${avatar(r.from,true)}<div><strong>${esc(r.from)}</strong><div class="fsm-stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</div></div></div><div style="margin-top:8px">${esc(r.text)}</div><div class="fsm-muted">${esc(r.date||"Vandaag")}</div></div>`).join(""):`<div class="fsm-empty"><div class="ico">☆</div><strong>Nog geen reviews</strong><p class="fsm-muted">Na een voltooide bestelling kunnen kopers en verkopers elkaar beoordelen.</p></div>`;
+ }else if(tab==="about"){
+   content=`<div class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}<div><strong>${esc(demo.user.username)}</strong><div class="fsm-muted">✓ E-mail geverifieerd</div></div></div><hr style="border:0;border-top:1px solid rgba(255,255,255,.08);margin:15px 0"><div class="fsm-muted">${esc(demo.user.bio||"Nog geen beschrijving.")}</div></div>`;
+ }else{
+   content=`<div class="fsm-promote"><strong>Verhoog je zichtbaarheid</strong><div class="fsm-muted">Promoot je items. Vergroot je verkoopkansen.</div><button class="fsm-btn gold" style="margin-top:10px" onclick="go('#/promote')">Promoot</button></div>
+   <div class="fsm-row fsm-between" style="margin-bottom:10px"><strong>${mine.length} advertenties</strong><span class="fsm-muted">Actief · Verkocht</span></div>
+   ${mine.length?`<div class="fsm-grid">${mine.map(x=>listingCard(x)).join("")}</div>`:`<div class="fsm-empty">Nog geen advertenties.</div>`}`;
+ }
+ shell("lousamyn",`<div class="fsm-tabs">
+ <button class="fsm-tab ${tab==="items"?"active":""}" onclick="go('#/profile/public/items')">Advertenties</button>
+ <button class="fsm-tab ${tab==="reviews"?"active":""}" onclick="go('#/profile/public/reviews')">Reviews</button>
+ <button class="fsm-tab ${tab==="about"?"active":""}" onclick="go('#/profile/public/about')">Over mij</button>
+ </div>${content}`,"profile",true);
+}
+function listingCard(x){
+ const img=x.images?.[0]||x.image||"";
+ return `<article class="fsm-item"><div class="fsm-item-img">${img?`<img src="${esc(img)}">`:"👕"}</div><div class="fsm-item-body"><div class="fsm-meta">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-row fsm-between" style="margin-top:7px"><span class="fsm-price">${money(x.price,currency())}</span><button class="fsm-btn dark" style="min-height:32px;padding:0 9px;font-size:9px" onclick="openProduct('${esc(x.id)}')">Bekijken</button></div></div></article>`
+}
+window.openProduct=id=>go("#/product/"+encodeURIComponent(id));
+function badges(){shell("Badges",`
+<div class="fsm-list">
+<div class="fsm-card"><div class="fsm-row fsm-between"><div><h3>Goed bezig! 1 artikel geüpload</h3><p class="fsm-muted">Ga zo door om je badge te verdienen.</p></div><strong class="fsm-gold">0%</strong></div><div class="fsm-progress"><i style="width:20%"></i></div><button class="fsm-btn gold" style="margin-top:12px" onclick="go('#/sell')">Nieuwe advertentie maken</button></div>
+<div class="fsm-card"><div class="fsm-row fsm-between"><div><h3>Best snel: je verzendt binnen 3 dagen</h3><p class="fsm-muted">Verzend je bestellingen iets sneller om deze badge te verdienen.</p></div><strong class="fsm-gold">0%</strong></div><div class="fsm-progress"><i style="width:0%"></i></div></div>
+</div>`)}
+function favorites(){
+ const fav=allListings().filter(x=>demo.favorites.includes(String(x.id)));
+ shell("Mijn favorieten",fav.length?`<div class="fsm-grid">${fav.map(x=>listingCard(x)).join("")}</div>`:`<div class="fsm-empty"><div class="ico">♡</div><strong>Nog geen favorieten</strong><p class="fsm-muted">Favoriete shirts verschijnen hier.</p></div>`);
+}
+function wallet(){shell("Mijn portemonnee",`
+<div class="fsm-card"><div class="fsm-muted">Saldo in behandeling</div><div class="fsm-amount">${money(demo.wallet.pending,currency())}</div></div>
+<div class="fsm-card" style="margin-top:12px"><div class="fsm-row fsm-between"><div><div class="fsm-muted">Beschikbaar saldo</div><div class="fsm-amount">${money(demo.wallet.balance,currency())}</div></div><button class="fsm-btn gold" onclick="toast('Uitbetaling wordt via de backend afgehandeld.')">Uitbetalen</button></div><div style="margin-top:12px"><button class="fsm-btn dark" onclick="go('#/explore')">Shoppen</button></div></div>
+<div class="fsm-card" style="margin-top:12px"><strong>Transacties</strong><div class="fsm-empty" style="padding:25px 10px">Nog geen transacties.</div></div>
+`)}
+function orders(filter="all",tab="bought"){
+ const mine=demo.orders.filter(o=>tab==="bought"?o.buyer===demo.user.username:o.seller===demo.user.username);
+ const shown=mine.filter(o=>filter==="all"||o.status===filter);
+ shell("Mijn bestellingen",`<div class="fsm-tabs"><button class="fsm-tab ${tab==="sold"?"active":""}" onclick="go('#/orders/all/sold')">Verkocht</button><button class="fsm-tab ${tab==="bought"?"active":""}" onclick="go('#/orders/all/bought')">Gekocht</button></div>
+ <div class="fsm-row" style="gap:6px;overflow:auto;margin-bottom:13px">${["all","pending","cancelled","completed"].map(f=>`<button class="fsm-pill" onclick="go('#/orders/${f}/${tab}')">${f==="all"?"Alles":f==="pending"?"In behandeling":f==="cancelled"?"Geannuleerd":"Voltooid"}</button>`).join("")}</div>
+ ${shown.length?shown.map(o=>`<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="go('#/order/${o.id}')"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${money(o.finalPrice,o.currency)} · ${esc(o.status)}</div></div><span>›</span></div></div>`).join(""):`<div class="fsm-empty"><div class="ico">▣</div><strong>Je hebt nog geen bestellingen</strong><p class="fsm-muted">Als je iets verkoopt, zie je het hier staan</p></div>`}`);
+}
+function promote(){shell("Promoot je advertenties",`
+<div class="fsm-promote"><h2>Val op met Spotlights</h2><p class="fsm-muted">Geef al je advertenties meer zichtbaarheid.</p><button class="fsm-btn gold" style="margin-top:12px" onclick="toast('Spotlight geselecteerd — betaling wordt via backend gestart.')">Spotlight</button></div>
+<div class="fsm-promote"><h2>Boost je artikelen</h2><p class="fsm-muted">Zet een artikel bovenaan de feed. Bereik potentiële kopers en krijg inzichten in je verkopen.</p>
+<div class="fsm-list" style="margin-top:12px">${[
+["3 dagen · Lokaal","Alleen zichtbaar in je eigen land"],
+["3 dagen · Internationaal","Zichtbaarheid in meerdere landen"],
+["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
+["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
+].map(a=>`<button onclick="toast('${a[0]} geselecteerd — backend checkout nodig.')"><span>↗</span><div><strong>${a[0]}</strong><div class="fsm-muted">${a[1]}</div></div><span class="arrow">›</span></button>`).join("")}</div></div>`)}
+function inbox(){
+ const chats=[...new Set(demo.messages.map(m=>m.chat))];
+ shell("Inbox",chats.length?`<div class="fsm-list">${chats.map(c=>`<button onclick="go('#/chat/${encodeURIComponent(c)}')">${avatar(c,true)}<div><strong>${esc(c)}</strong><div class="fsm-muted">Open gesprek</div></div><span class="arrow">›</span></button>`).join("")}</div>`:`<div class="fsm-empty"><div class="ico">✉</div><strong>Je inbox is leeg</strong><p class="fsm-muted">Berichten met kopers en verkopers verschijnen hier.</p></div>`,"inbox");
+}
+function chat(user){
+ let msgs=demo.messages.filter(m=>m.chat===user);
+ if(!msgs.length) msgs=[{chat:user,from:user,to:demo.user.username,text:"Hallo! 👋",system:false,date:new Date().toISOString()}];
+ shell(user,`<div class="fsm-chat"><div class="fsm-messages">${msgs.map(m=>`<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}">${esc(m.text)}${m.translation?`<div class="fsm-muted" id="tr-${m.id}">${esc(m.translation)}</div>`:""}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button onclick="translateMsg('${m.id||""}',this)">Vertalen</button><button onclick="originalMsg('${m.id||""}',this)">Origineel bekijken</button></div>`:""}</div>`).join("")}</div>
+ <div class="fsm-chatbar"><input id="chatInput" placeholder="Typ een bericht..."><button class="fsm-btn green" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>`,"inbox");
+}
+window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
+window.translateMsg=(id,b)=>{b.textContent="Vertalen…";setTimeout(()=>{b.textContent="Vertaling beschikbaar via de vertaalservice.";},250)}
+window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
+function product(id){
+ const x=itemFromId(decodeURIComponent(id));
+ if(!x){shell("Shirt",`<div class="fsm-empty">Shirt niet gevonden.</div>`);return}
+ const price=Number(x.price)||0;
+ shell("Shirt",`<div class="fsm-card"><div class="fsm-item-img" style="border-radius:12px">${x.image?`<img src="${esc(x.image)}">`:"👕"}</div><div style="padding-top:14px"><div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><h2>${esc(x.name)}</h2><div class="fsm-amount">${money(price,currency())}</div>
+ <div class="fsm-row" style="margin-top:13px"><button class="fsm-btn green" onclick="checkout('${esc(x.id)}','buy')">Kopen</button><button class="fsm-btn gold" onclick="offer('${esc(x.id)}')">Bod doen</button></div>
+ <button class="fsm-btn dark full" style="margin-top:8px" onclick="toggleFav('${esc(x.id)}')">♡ Favoriet</button></div></div>`,"browse");
+}
+window.toggleFav=id=>{id=String(id);demo.favorites=demo.favorites.includes(id)?demo.favorites.filter(x=>x!==id):[...demo.favorites,id];save();toast(demo.favorites.includes(id)?"Toegevoegd aan favorieten":"Verwijderd uit favorieten")}
+window.offer=id=>{const x=itemFromId(id);const v=prompt("Jouw bod (€):",Number(x?.price||0).toFixed(2));const n=Number(v);if(!Number.isFinite(n)||n<=0)return;const o={id:"of"+Date.now(),itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller:x?.seller||x?.username||"verkoper",originalPrice:Number(x?.price||0),amount:n,currency:currency(),status:"pending"};demo.offers.push(o);save();api("/offers",{method:"POST",body:JSON.stringify(o)});toast("Bod verstuurd")}
+async function checkout(id,source){
+ const x=itemFromId(id);if(!x)return;
+ let accepted=null;
+ if(source==="offer") accepted=demo.offers.find(o=>String(o.itemId)===String(id)&&o.buyer===demo.user.username&&o.status==="accepted");
+ const price=accepted?accepted.amount:Number(x.price)||0;
+ const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:Number(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
+ demo.orders.push(order);save();
+ const result=await api("/checkout/session",{method:"POST",body:JSON.stringify({orderId:order.id,itemId:order.itemId,price:order.finalPrice,currency:order.currency,source:order.source})});
+ if(result?.url){location.href=result.url;return}
+ go("#/checkout/"+order.id);
+}
+window.checkout=checkout;
+function checkoutPage(id){
+ const o=demo.orders.find(x=>x.id===id);
+ if(!o){shell("Betaling",`<div class="fsm-empty">Bestelling niet gevonden.</div>`);return}
+ shell("Betaling",`<div class="fsm-card"><div class="fsm-muted">Je betaalt voor</div><h2>${esc(o.itemName)}</h2><div class="fsm-amount">${money(o.finalPrice,o.currency)}</div>${o.source==="accepted_offer"?`<div class="fsm-note" style="margin-top:8px">Dit is de door de verkoper geaccepteerde bodprijs.</div>`:""}
+ <div class="fsm-form" style="margin-top:16px"><label>Betaalmethode</label><button class="fsm-btn dark" onclick="addPaymentMethod('${o.id}')">${demo.paymentMethod?"💳 Kaart •••• "+demo.paymentMethod.last4:"＋ Kaart toevoegen"}</button><button class="fsm-btn green" onclick="payOrder('${o.id}')">Betalen ${money(o.finalPrice,o.currency)}</button><div class="fsm-note">De echte kaartgegevens horen rechtstreeks bij een betaalprovider te worden ingevoerd. De website bewaart geen volledig kaartnummer of CVC.</div></div></div>`);
+}
+window.addPaymentMethod=async id=>{const r=await api("/payments/setup-session",{method:"POST",body:JSON.stringify({returnUrl:location.href})});if(r?.url){location.href=r.url;return}const last=prompt("Demo: laatste 4 cijfers van je kaart:");if(/^\d{4}$/.test(last)){demo.paymentMethod={last4:last};save();checkoutPage(id)}}
+window.payOrder=async id=>{const o=demo.orders.find(x=>x.id===id);if(!o)return;const r=await api("/orders/"+id+"/pay",{method:"POST",body:JSON.stringify({})});if(r?.success||!r){o.status="paid";systemMessage(o,"paid");save();go("#/order/"+id)}}
+function systemMessage(o,event){
+ const texts={paid:`Je bestelling is bevestigd. ${o.itemName} wordt klaargemaakt voor verzending.`,shipped:`Je bestelling is verzonden 📦. Track pakket: ${location.origin+location.pathname+"#/track/"+o.id}`,delivered:`Je pakket is afgeleverd 🎉. Bevestig de ontvangst of meld een probleem.`,completed:`Bestelling afgerond. Je kunt nu een beoordeling achterlaten.`};
+ demo.messages.push({id:"m"+Date.now(),chat:o.seller,from:"SYSTEM",to:demo.user.username,text:texts[event]||"Orderupdate",system:true,event,date:new Date().toISOString(),orderId:o.id,trackingUrl:location.origin+location.pathname+"#/track/"+o.id});save();
+}
+function order(id){
+ const o=demo.orders.find(x=>x.id===id);if(!o){shell("Bestelling",`<div class="fsm-empty">Bestelling niet gevonden.</div>`);return}
+ const canReview=o.status==="completed";
+ shell("Bestelling",`<div class="fsm-card"><div class="fsm-muted">Bestelling ${esc(o.id)}</div><h2>${esc(o.itemName)}</h2><div class="fsm-amount">${money(o.finalPrice,o.currency)}</div><div class="fsm-order-status">${["pending","paid","shipped","delivered","completed"].map(s=>`<span class="fsm-pill" style="${o.status===s?"border-color:var(--green);color:var(--green)":""}">${s}</span>`).join("")}</div>
+ <button class="fsm-btn dark" onclick="go('#/track/${o.id}')">📦 Tracking bekijken</button>
+ ${o.status==="paid"?`<button class="fsm-btn green" style="margin-top:8px" onclick="changeOrder('${o.id}','shipped')">Markeer als verzonden</button>`:""}
+ ${o.status==="shipped"?`<button class="fsm-btn green" style="margin-top:8px" onclick="changeOrder('${o.id}','delivered')">Markeer als afgeleverd</button>`:""}
+ ${o.status==="delivered"?`<div class="fsm-row" style="margin-top:8px"><button class="fsm-btn green" onclick="changeOrder('${o.id}','completed')">Bestelling ontvangen</button><button class="fsm-btn dark" onclick="issueOrder('${o.id}')">Er is een probleem</button></div>`:""}
+ ${canReview?`<button class="fsm-btn gold full" style="margin-top:10px" onclick="review('${o.id}')">⭐ Feedback geven</button>`:""}
+ </div>`)}
+window.changeOrder=async(id,status)=>{const o=demo.orders.find(x=>x.id===id);if(!o)return;const r=await api("/orders/"+id+"/status",{method:"POST",body:JSON.stringify({status})});if(r===null||r?.success){o.status=status;systemMessage(o,status);save();order(id)}}
+window.issueOrder=async id=>{await api("/orders/"+id+"/issue",{method:"POST",body:JSON.stringify({reason:"buyer_reported_issue"})});toast("Probleem gemeld")}
+function track(id){
+ const o=demo.orders.find(x=>x.id===id);if(!o){shell("Tracking",`<div class="fsm-empty">Bestelling niet gevonden.</div>`);return}
+ shell("Tracking",`<div class="fsm-card"><div class="fsm-muted">Bestelling</div><h2>${esc(o.itemName)}</h2><div class="fsm-pill" style="display:inline-block;margin:10px 0">Tracking: ${esc(o.trackingId)}</div><div class="fsm-order-status"><span class="fsm-pill">✓ Bestelling geplaatst</span><span class="fsm-pill">${o.status==="pending"?"○":"✓"} Betaling</span><span class="fsm-pill">${["shipped","delivered","completed"].includes(o.status)?"✓":"○"} Verzonden</span><span class="fsm-pill">${["delivered","completed"].includes(o.status)?"✓":"○"} Afgeleverd</span></div><p class="fsm-muted">Deze trackingpagina is gekoppeld aan bestelling ${esc(o.id)}.</p></div>`)}
+function review(id){
+ const o=demo.orders.find(x=>x.id===id);if(!o)return;
+ shell("Feedback",`<div class="fsm-card"><h2>Beoordeel ${esc(o.seller)}</h2><div class="fsm-form"><label>Sterren</label><select id="reviewRating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select><label>Review</label><textarea id="reviewText" placeholder="Schrijf je ervaring..."></textarea><button class="fsm-btn gold" onclick="submitReview('${o.id}')">Feedback plaatsen</button></div></div>`)}
+window.submitReview=async id=>{const o=demo.orders.find(x=>x.id===id);const r={id:"rv"+Date.now(),orderId:id,from:demo.user.username,to:o.seller,rating:Number(document.getElementById("reviewRating").value),text:document.getElementById("reviewText").value.trim(),date:new Date().toLocaleDateString()};if(!r.text)return;demo.reviews.push(r);save();await api("/reviews",{method:"POST",body:JSON.stringify(r)});toast("Feedback geplaatst");go("#/profile/public/reviews")}
+function toast(t){const el=document.getElementById("toast");if(el){el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}}
+window.toast=toast;
+function renderOffers(){
+ const offers=demo.offers.filter(o=>o.seller===demo.user.username);
+ shell("Biedingen",offers.length?offers.map(o=>`<div class="fsm-card" style="margin-bottom:9px"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${esc(o.buyer)} bood ${money(o.amount,o.currency)}</div></div><span class="fsm-pill">${esc(o.status)}</span></div>${o.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${o.id}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${o.id}')">Weigeren</button></div>`:""}</div>`).join(""):`<div class="fsm-empty">Nog geen biedingen.</div>`)
+}
+window.acceptOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="accepted";save();await api("/offers/"+id+"/accept",{method:"POST",body:JSON.stringify({})});toast("Bod geaccepteerd");renderOffers()}
+window.rejectOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="rejected";save();await api("/offers/"+id+"/reject",{method:"POST",body:JSON.stringify({})});renderOffers()}
+function enhancedRouter(){
+ const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
+ if(!m)return false;
+ const a=m[1],b=m[2],c=m[3];
+ if(a==="profile"&&!b){profile();return true}
+ if(a==="profile"&&b==="public"){publicProfile(c||"items");return true}
+ if(a==="badges"){badges();return true}
+ if(a==="favorites"){favorites();return true}
+ if(a==="wallet"){wallet();return true}
+ if(a==="orders"){orders(b||"all",c||"bought");return true}
+ if(a==="promote"){promote();return true}
+ if(a==="inbox"){inbox();return true}
+ if(a==="chat"){chat(decodeURIComponent(b||"verkoper"));return true}
+ if(a==="product"){product(b);return true}
+ if(a==="checkout"){checkoutPage(b);return true}
+ if(a==="order"){order(b);return true}
+ if(a==="track"){track(b);return true}
+ if(a==="offers"){renderOffers();return true}
+ return false
+}
+const oldRouter=window.router;
+window.addEventListener("hashchange",()=>{setTimeout(()=>{if(!enhancedRouter()){}},0)});
+setTimeout(()=>{enhancedRouter()},0);
+})();
+</script>
