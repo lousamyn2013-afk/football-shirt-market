@@ -6447,3 +6447,86 @@ router();
   }
 }
 </style>
+
+
+<style id="home-mobile-search-inside-image-bottom-final">
+@media (max-width:900px){
+  /* Everything stays inside the hero image */
+  .hero{
+    position:relative!important;
+    overflow:hidden!important;
+    display:block!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+
+  .hero .hero-image{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    display:block!important;
+  }
+
+  .hero .hero-shade{
+    position:absolute!important;
+    inset:0!important;
+    display:block!important;
+    z-index:2!important;
+  }
+
+  /* Text stays over the image */
+  .hero .hero-content{
+    position:absolute!important;
+    left:0!important;
+    right:0!important;
+    top:auto!important;
+    bottom:0!important;
+    inset-inline:0!important;
+    width:100%!important;
+    transform:none!important;
+    padding:16px 16px 18px!important;
+    background:transparent!important;
+    z-index:5!important;
+  }
+
+  .hero .hero-kicker,
+  .hero .hero-title,
+  .hero .hero-description,
+  .hero .hero-buttons{
+    position:relative!important;
+    z-index:6!important;
+  }
+
+  /*
+    Search remains INSIDE the image, but is anchored just above
+    the bottom edge so it does not cover the logo at the very bottom.
+  */
+  .hero .hero-search{
+    position:relative!important;
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    width:100%!important;
+    height:45px!important;
+    margin-top:12px!important;
+    margin-bottom:72px!important;
+    z-index:7!important;
+  }
+}
+
+@media (max-width:390px){
+  .hero .hero-content{
+    padding:13px 13px 15px!important;
+  }
+
+  .hero .hero-search{
+    height:43px!important;
+    margin-top:9px!important;
+    margin-bottom:60px!important;
+  }
+}
+</style>
