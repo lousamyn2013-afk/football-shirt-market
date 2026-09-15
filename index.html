@@ -6505,6 +6505,18 @@ router();
  .fsm-shell{padding:12px 10px 90px}.fsm-topbar h1{font-size:21px}.fsm-grid{gap:9px}.fsm-bottomnav{display:grid}
 }
 @media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.fsm-inbox-row{width:100%;display:flex!important;align-items:center;gap:11px;text-align:left;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.07);color:#fff;padding:13px 4px;cursor:pointer}
+.fsm-inbox-row:last-child{border-bottom:0}
+.fsm-inbox-copy{min-width:0;flex:1}
+.fsm-inbox-copy strong,.fsm-inbox-copy .fsm-muted{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fsm-inbox-side{display:flex;align-items:center;gap:7px}
+.fsm-unread{min-width:20px;height:20px;border-radius:999px;background:var(--gold);color:#06100b;display:grid;place-items:center;font-size:10px;font-weight:900}
+.fsm-chat-user{display:flex;align-items:center;gap:10px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.fsm-msg-text{white-space:pre-wrap;word-break:break-word}
+.fsm-msg small{display:block;margin-top:5px;opacity:.55}
+.fsm-translate{display:flex;gap:6px;margin-top:7px}
+.fsm-translate button{background:transparent;border:0;color:var(--gold);font-size:9px;padding:0;cursor:pointer}
+@media(max-width:650px){.fsm-inbox-row{padding:12px 2px}.fsm-chatbar{position:sticky;bottom:75px}}
 </style>
 <style id="fsm-integrated-profile-chat">
 .market-nav-link{
@@ -6522,12 +6534,45 @@ router();
 (function(){
 "use strict";
 const API_BASE = window.FSM_API_BASE || "/api";
-const STORE="fsm_marketplace_v2";
-const demo=JSON.parse(localStorage.getItem(STORE)||"null")||{
-  user:{username:"lousamyn",verified:["email"],bio:"Voetbalshirt-verzamelaar"},
+const STORE="fsm_marketplace_v3";
+function readLoggedInUser(){
+  const keys=["fsm_user","currentUser","loggedInUser","user","account"];
+  for(const key of keys){
+    try{
+      const raw=localStorage.getItem(key);
+      if(!raw) continue;
+      const v=JSON.parse(raw);
+      const name=typeof v==="string"?v:(v?.username||v?.name||v?.user?.username);
+      if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
+    }catch(e){
+      const raw=localStorage.getItem(key);
+      if(raw && raw.trim()) return {username:raw.trim()};
+    }
+  }
+  if(window.currentUser){
+    const v=window.currentUser;
+    const name=typeof v==="string"?v:(v?.username||v?.name);
+    if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
+  }
+  return null;
+}
+const existing=JSON.parse(localStorage.getItem(STORE)||"null");
+const logged=readLoggedInUser();
+const demo=existing||{
+  user:logged||{username:"Gebruiker",verified:[],bio:""},
   favorites:[],orders:[],messages:[],reviews:[],offers:[],wallet:{pending:0,balance:0},paymentMethod:null
 };
-function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
+if(logged && logged.username) demo.user={...demo.user,...logged,username:logged.username};
+if(!demo.messages || !demo.messages.length){
+  const me=demo.user.username;
+  demo.messages=[
+    {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is het Anderlecht-shirt nog beschikbaar?",system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
+    {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse. Kan je nog wat foto's sturen?",system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
+    {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Zou je €75 accepteren voor het shirt?",system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
+    {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
+  ];
+}
+function save(){localStorage.setItem(STORE,JSON.stringify(demo))}\nif(!existing || !existing.messages || !existing.messages.length) save()
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function money(n,c){
  const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
@@ -6552,7 +6597,7 @@ function nav(active="profile"){
 }
 function shell(title,body,active="profile",back=true){
  app().innerHTML=`<div id="fsm-marketplace"><div class="fsm-shell">
- <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="history.length>1?history.back():go('#/profile')">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${nav(active)}</div>`;
+ <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="go('#/profile')">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${nav(active)}</div>`;
 }
 function listings(){
  try{return typeof getListings==="function"?getListings():[]}catch(e){return []}
@@ -6597,7 +6642,7 @@ function publicProfile(tab="items"){
    <div class="fsm-row fsm-between" style="margin-bottom:10px"><strong>${mine.length} advertenties</strong><span class="fsm-muted">Actief · Verkocht</span></div>
    ${mine.length?`<div class="fsm-grid">${mine.map(x=>listingCard(x)).join("")}</div>`:`<div class="fsm-empty">Nog geen advertenties.</div>`}`;
  }
- shell("lousamyn",`<div class="fsm-tabs">
+ shell(demo.user.username,`<div class="fsm-tabs">
  <button class="fsm-tab ${tab==="items"?"active":""}" onclick="go('#/profile/public/items')">Advertenties</button>
  <button class="fsm-tab ${tab==="reviews"?"active":""}" onclick="go('#/profile/public/reviews')">Reviews</button>
  <button class="fsm-tab ${tab==="about"?"active":""}" onclick="go('#/profile/public/about')">Over mij</button>
@@ -6639,16 +6684,26 @@ function promote(){shell("Promoot je advertenties",`
 ["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
 ].map(a=>`<button onclick="toast('${a[0]} geselecteerd — backend checkout nodig.')"><span>↗</span><div><strong>${a[0]}</strong><div class="fsm-muted">${a[1]}</div></div><span class="arrow">›</span></button>`).join("")}</div></div>`)}
 function inbox(){
- const chats=[...new Set(demo.messages.map(m=>m.chat))];
- shell("Inbox",chats.length?`<div class="fsm-list">${chats.map(c=>`<button onclick="go('#/chat/${encodeURIComponent(c)}')">${avatar(c,true)}<div><strong>${esc(c)}</strong><div class="fsm-muted">Open gesprek</div></div><span class="arrow">›</span></button>`).join("")}</div>`:`<div class="fsm-empty"><div class="ico">✉</div><strong>Je inbox is leeg</strong><p class="fsm-muted">Berichten met kopers en verkopers verschijnen hier.</p></div>`,"inbox");
+ const chats=[...new Set(demo.messages.map(m=>m.chat).filter(Boolean))];
+ ["ShirtCollector","VintageKits","FootballFan24","RetroJerseys"].forEach(n=>{if(!chats.includes(n))chats.push(n)});
+ const rows=chats.map(c=>{
+   const msgs=demo.messages.filter(m=>m.chat===c);
+   const last=msgs[msgs.length-1]||{text:"Start een gesprek",date:new Date().toISOString()};
+   const unread=msgs.filter(m=>m.to===demo.user.username && !m.read).length;
+   return `<button class="fsm-inbox-row" type="button" onclick="go('#/chat/${encodeURIComponent(c)}')">${avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></button>`;
+ }).join("");
+ shell("Inbox",`<div class="fsm-card"><div class="fsm-muted" style="margin-bottom:8px">Berichten</div><div class="fsm-list">${rows}</div></div>`,"inbox",false);
 }
 function chat(user){
+ user=String(user||"verkoper");
  let msgs=demo.messages.filter(m=>m.chat===user);
- if(!msgs.length) msgs=[{chat:user,from:user,to:demo.user.username,text:"Hallo! 👋",system:false,date:new Date().toISOString()}];
- shell(user,`<div class="fsm-chat"><div class="fsm-messages">${msgs.map(m=>`<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}">${esc(m.text)}${m.translation?`<div class="fsm-muted" id="tr-${m.id}">${esc(m.translation)}</div>`:""}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button onclick="translateMsg('${m.id||""}',this)">Vertalen</button><button onclick="originalMsg('${m.id||""}',this)">Origineel bekijken</button></div>`:""}</div>`).join("")}</div>
- <div class="fsm-chatbar"><input id="chatInput" placeholder="Typ een bericht..."><button class="fsm-btn green" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>`,"inbox");
+ if(!msgs.length) msgs=[{id:"seed-"+Date.now(),chat:user,from:user,to:demo.user.username,text:"Hallo! 👋 Leuk dat je een bericht stuurt.",system:false,date:new Date().toISOString()}];
+ msgs.forEach(m=>{if(m.to===demo.user.username)m.read=true});
+ save();
+ const html=msgs.map(m=>`<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div><small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`).join("");
+ shell(user,`<div class="fsm-chat"><div class="fsm-chat-user">${avatar(user,true)}<div><strong>${esc(user)}</strong><div class="fsm-muted">Gesprek</div></div></div><div class="fsm-messages">${html}</div><div class="fsm-chatbar"><input id="chatInput" autocomplete="off" placeholder="Typ een bericht..." onkeydown="if(event.key==='Enter')sendChat('${esc(user)}')"><button class="fsm-btn green" type="button" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>`,"inbox",true);
 }
-window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
+window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,read:true,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
 window.translateMsg=(id,b)=>{b.textContent="Vertalen…";setTimeout(()=>{b.textContent="Vertaling beschikbaar via de vertaalservice.";},250)}
 window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
 function product(id){
