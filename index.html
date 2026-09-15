@@ -6394,8 +6394,20 @@ router();
 </html>
 
 <style id="home-search-move-100px">
-/* Home: move the search bar 100px lower */
+/* Home desktop: move the search bar 100px lower */
 .hero .hero-search{
   transform:translateY(100px)!important;
+}
+
+/* Home mobile: keep the search bar visible */
+@media (max-width:900px){
+  .hero .hero-search{
+    transform:none!important;
+    position:relative!important;
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    z-index:20!important;
+  }
 }
 </style>
