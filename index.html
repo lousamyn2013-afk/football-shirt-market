@@ -5753,13 +5753,86 @@ function updateNav(){
             ?.classList.add("active");
 
     }
-    else if(hash.startsWith("#/inbox") || hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/chat") || hash.startsWith("#/product") || hash.startsWith("#/checkout") || hash.startsWith("#/order") || hash.startsWith("#/track") || hash.startsWith("#/offers")){
-         if(window.__fsmRoute) window.__fsmRoute(hash);
-         else renderHome();
-      }
-      else{
-         renderHome();
-      }
+    else if(hash.startsWith("#/inbox") || hash.startsWith("#/chat")){
+        document.getElementById("navInbox")?.classList.add("active");
+    }
+    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
+        document.getElementById("navProfile")?.classList.add("active");
+    }
+
+    else{
+
+        document
+            .getElementById("navHome")
+            ?.classList.add("active");
+
+    }
+
+
+    document
+        .getElementById("mobileNav")
+        ?.classList.remove("open");
+
+}
+
+
+/* ======================================================
+   ROUTER
+====================================================== */
+
+function router(){
+
+    updateNav();
+
+
+    const hash=
+        location.hash || "#/";
+
+
+    if(
+        hash.startsWith("#/explore")
+    ){
+
+        renderExplore();
+
+    }
+
+    else if(
+        hash.startsWith("#/sell")
+    ){
+
+        renderSell();
+
+    }
+
+    else if(
+        hash.startsWith("#/inbox") ||
+        hash.startsWith("#/profile") ||
+        hash.startsWith("#/badges") ||
+        hash.startsWith("#/favorites") ||
+        hash.startsWith("#/wallet") ||
+        hash.startsWith("#/orders") ||
+        hash.startsWith("#/promote") ||
+        hash.startsWith("#/chat") ||
+        hash.startsWith("#/product") ||
+        hash.startsWith("#/checkout") ||
+        hash.startsWith("#/order") ||
+        hash.startsWith("#/track") ||
+        hash.startsWith("#/offers")
+    ){
+        // Alle marketplace-pagina's worden via dezelfde index.html gerenderd.
+        // De marketplace-router wordt hieronder na het laden beschikbaar.
+        if(typeof window.__fsmRoute === "function"){
+            window.__fsmRoute();
+        }
+        return;
+    }
+
+    else{
+
+        renderHome();
+
+    }
 
 }
 
@@ -6528,7 +6601,8 @@ if(!demo.messages || !demo.messages.length){
     {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
   ];
 }
-function save(){localStorage.setItem(STORE,JSON.stringify(demo))}\nif(!existing || !existing.messages || !existing.messages.length) save()
+function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
+if(!existing || !existing.messages || !existing.messages.length) save()
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function money(n,c){
  const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
@@ -6724,8 +6798,8 @@ function renderOffers(){
 }
 window.acceptOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="accepted";save();await api("/offers/"+id+"/accept",{method:"POST",body:JSON.stringify({})});toast("Bod geaccepteerd");renderOffers()}
 window.rejectOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="rejected";save();await api("/offers/"+id+"/reject",{method:"POST",body:JSON.stringify({})});renderOffers()}
-function enhancedRouter(routeHash){
- const h=routeHash || hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
+function enhancedRouter(){
+ const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
  if(!m)return false;
  const a=m[1],b=m[2],c=m[3];
  if(a==="profile"&&!b){profile();return true}
@@ -6744,26 +6818,17 @@ function enhancedRouter(routeHash){
  if(a==="offers"){renderOffers();return true}
  return false
 }
+// Maak de marketplace-router beschikbaar voor de hoofdrouter.
+// Zo kan de bestaande navigatie naar Profiel/Inbox niet meer terugvallen op Home.
 window.__fsmRoute = enhancedRouter;
-// Zorg dat alle hash-routes via dezelfde index.html werken.
-window.addEventListener("click",function(event){
- const link=event.target.closest("a[href]");
- if(!link)return;
- const href=link.getAttribute("href")||"";
- if(href==="#/profile"){
-   event.preventDefault();
-   location.hash="#/profile";
-   profile();
-   return;
- }
- if(href==="#/inbox"){
-   event.preventDefault();
-   location.hash="#/inbox";
-   inbox();
-   return;
- }
+
+window.addEventListener("hashchange",()=>{
+    enhancedRouter();
 });
-window.addEventListener("hashchange",()=>{setTimeout(()=>{enhancedRouter()},0)});
-setTimeout(()=>{enhancedRouter()},0);
+
+// Ook bij rechtstreeks openen van bijvoorbeeld #/profile of #/inbox.
+setTimeout(()=>{
+    if(location.hash && location.hash !== "#/") enhancedRouter();
+},0);
 })();
 </script>
