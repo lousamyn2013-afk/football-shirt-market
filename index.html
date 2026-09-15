@@ -3317,6 +3317,14 @@ Ontdekken
 Verkopen
 </a>
 
+<a href="#/inbox" id="navInbox" class="market-nav-link">
+Inbox
+</a>
+
+<a href="#/profile" id="navProfile" class="market-nav-link">
+Profiel
+</a>
+
 </nav>
 
 
@@ -3371,6 +3379,14 @@ Ontdekken
 
 <a href="#/sell">
 Verkopen
+</a>
+
+<a href="#/inbox">
+Inbox
+</a>
+
+<a href="#/profile">
+Profiel
 </a>
 
 </div>
@@ -6490,6 +6506,18 @@ router();
 }
 @media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
+<style id="fsm-integrated-profile-chat">
+.market-nav-link{
+  color:#dfe8e3!important;
+  text-decoration:none;
+  font-weight:800;
+  transition:.2s;
+}
+.market-nav-link:hover{color:var(--gold)!important}
+@media(max-width:900px){
+  .mobile-nav a{min-width:72px;text-align:center}
+}
+</style>
 <script>
 (function(){
 "use strict";
@@ -6524,7 +6552,7 @@ function nav(active="profile"){
 }
 function shell(title,body,active="profile",back=true){
  app().innerHTML=`<div id="fsm-marketplace"><div class="fsm-shell">
- <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="history.back()">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${nav(active)}</div>`;
+ <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="history.length>1?history.back():go('#/profile')">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${nav(active)}</div>`;
 }
 function listings(){
  try{return typeof getListings==="function"?getListings():[]}catch(e){return []}
@@ -6551,6 +6579,7 @@ function profile(){
  <button onclick="go('#/wallet')">€ <strong>Mijn portemonnee</strong><span class="arrow">›</span></button>
  <button onclick="go('#/orders')">▣ <strong>Mijn bestellingen</strong><span class="arrow">›</span></button>
  <button onclick="go('#/promote')">↗ <strong>Advertenties promoten</strong><span class="arrow">›</span></button>
+ <button onclick="go('#/offers')">⌁ <strong>Biedingen</strong><span class="arrow">›</span></button>
  </div>
  <section class="fsm-card" style="margin-top:12px"><div class="fsm-muted">Reviews</div><strong>${reviews.length?reviews.length+" ontvangen":"Nog geen reviews"}</strong></section>
  `,"profile",false);
@@ -6628,7 +6657,8 @@ function product(id){
  const price=Number(x.price)||0;
  shell("Shirt",`<div class="fsm-card"><div class="fsm-item-img" style="border-radius:12px">${x.image?`<img src="${esc(x.image)}">`:"👕"}</div><div style="padding-top:14px"><div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><h2>${esc(x.name)}</h2><div class="fsm-amount">${money(price,currency())}</div>
  <div class="fsm-row" style="margin-top:13px"><button class="fsm-btn green" onclick="checkout('${esc(x.id)}','buy')">Kopen</button><button class="fsm-btn gold" onclick="offer('${esc(x.id)}')">Bod doen</button></div>
- <button class="fsm-btn dark full" style="margin-top:8px" onclick="toggleFav('${esc(x.id)}')">♡ Favoriet</button></div></div>`,"browse");
+ <button class="fsm-btn dark full" style="margin-top:8px" onclick="toggleFav('${esc(x.id)}')">♡ Favoriet</button>
+ <button class="fsm-btn dark full" style="margin-top:8px" onclick="go('#/chat/'+encodeURIComponent('${esc(x.seller||x.username||'verkoper')}'))">💬 Bericht sturen</button></div></div>`,"browse");
 }
 window.toggleFav=id=>{id=String(id);demo.favorites=demo.favorites.includes(id)?demo.favorites.filter(x=>x!==id):[...demo.favorites,id];save();toast(demo.favorites.includes(id)?"Toegevoegd aan favorieten":"Verwijderd uit favorieten")}
 window.offer=id=>{const x=itemFromId(id);const v=prompt("Jouw bod (€):",Number(x?.price||0).toFixed(2));const n=Number(v);if(!Number.isFinite(n)||n<=0)return;const o={id:"of"+Date.now(),itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller:x?.seller||x?.username||"verkoper",originalPrice:Number(x?.price||0),amount:n,currency:currency(),status:"pending"};demo.offers.push(o);save();api("/offers",{method:"POST",body:JSON.stringify(o)});toast("Bod verstuurd")}
