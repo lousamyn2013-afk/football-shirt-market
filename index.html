@@ -5753,82 +5753,13 @@ function updateNav(){
             ?.classList.add("active");
 
     }
-    else if(hash.startsWith("#/inbox") || hash.startsWith("#/chat")){
-        document.getElementById("navInbox")?.classList.add("active");
-    }
-    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
-        document.getElementById("navProfile")?.classList.add("active");
-    }
-
-    else{
-
-        document
-            .getElementById("navHome")
-            ?.classList.add("active");
-
-    }
-
-
-    document
-        .getElementById("mobileNav")
-        ?.classList.remove("open");
-
-}
-
-
-/* ======================================================
-   ROUTER
-====================================================== */
-
-function router(){
-
-    updateNav();
-
-
-    const hash=
-        location.hash || "#/";
-
-
-    if(
-        hash.startsWith("#/explore")
-    ){
-
-        renderExplore();
-
-    }
-
-    else if(
-        hash.startsWith("#/sell")
-    ){
-
-        renderSell();
-
-    }
-
-    else if(
-        hash.startsWith("#/inbox") ||
-        hash.startsWith("#/profile") ||
-        hash.startsWith("#/badges") ||
-        hash.startsWith("#/favorites") ||
-        hash.startsWith("#/wallet") ||
-        hash.startsWith("#/orders") ||
-        hash.startsWith("#/promote") ||
-        hash.startsWith("#/chat") ||
-        hash.startsWith("#/product") ||
-        hash.startsWith("#/checkout") ||
-        hash.startsWith("#/order") ||
-        hash.startsWith("#/track") ||
-        hash.startsWith("#/offers")
-    ){
-        // Deze routes worden door de marketplace-router gerenderd.
-        return;
-    }
-
-    else{
-
-        renderHome();
-
-    }
+    else if(hash.startsWith("#/inbox") || hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/chat") || hash.startsWith("#/product") || hash.startsWith("#/checkout") || hash.startsWith("#/order") || hash.startsWith("#/track") || hash.startsWith("#/offers")){
+         if(window.__fsmRoute) window.__fsmRoute(hash);
+         else renderHome();
+      }
+      else{
+         renderHome();
+      }
 
 }
 
@@ -6793,8 +6724,8 @@ function renderOffers(){
 }
 window.acceptOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="accepted";save();await api("/offers/"+id+"/accept",{method:"POST",body:JSON.stringify({})});toast("Bod geaccepteerd");renderOffers()}
 window.rejectOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="rejected";save();await api("/offers/"+id+"/reject",{method:"POST",body:JSON.stringify({})});renderOffers()}
-function enhancedRouter(){
- const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
+function enhancedRouter(routeHash){
+ const h=routeHash || hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
  if(!m)return false;
  const a=m[1],b=m[2],c=m[3];
  if(a==="profile"&&!b){profile();return true}
@@ -6813,7 +6744,8 @@ function enhancedRouter(){
  if(a==="offers"){renderOffers();return true}
  return false
 }
-// FORCEER PROFIEL EN INBOX DIRECT, ZONDER DAT DE OUDE HOME-ROUTER ZE OVERSCHRIJFT
+window.__fsmRoute = enhancedRouter;
+// Zorg dat alle hash-routes via dezelfde index.html werken.
 window.addEventListener("click",function(event){
  const link=event.target.closest("a[href]");
  if(!link)return;
