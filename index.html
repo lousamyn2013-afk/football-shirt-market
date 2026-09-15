@@ -5820,11 +5820,7 @@ function router(){
         hash.startsWith("#/track") ||
         hash.startsWith("#/offers")
     ){
-        // Alle marketplace-pagina's worden via dezelfde index.html gerenderd.
-        // De marketplace-router wordt hieronder na het laden beschikbaar.
-        if(typeof window.__fsmRoute === "function"){
-            window.__fsmRoute();
-        }
+        // Deze routes worden door de marketplace-router gerenderd.
         return;
     }
 
@@ -6818,17 +6814,45 @@ function enhancedRouter(){
  if(a==="offers"){renderOffers();return true}
  return false
 }
-// Maak de marketplace-router beschikbaar voor de hoofdrouter.
-// Zo kan de bestaande navigatie naar Profiel/Inbox niet meer terugvallen op Home.
+// Koppel alle marketplace-routes aan deze router.
 window.__fsmRoute = enhancedRouter;
 
-window.addEventListener("hashchange",()=>{
-    enhancedRouter();
+// Eén betrouwbare hash-router: Home/Explore/Sell blijven door de bestaande router lopen,
+// alle profiel-, inbox- en chatpagina's worden hier gerenderd.
+function fsmNavigate(){
+  const h=location.hash||"#/";
+  if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
+    setTimeout(()=>enhancedRouter(),0);
+  }
+}
+window.addEventListener("hashchange", fsmNavigate);
+
+// Klikken op Profiel/Inbox/chat/menu-knoppen mag nooit door een andere render worden overschreven.
+document.addEventListener("click", function(event){
+  const el=event.target.closest('a[href],button[onclick]');
+  if(!el) return;
+  const href=el.getAttribute('href')||'';
+  const onclick=el.getAttribute('onclick')||'';
+  const route=(href.match(/^#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track)(?:[^']*)/)||[])[0];
+  if(route){
+    event.preventDefault();
+    location.hash=route;
+    setTimeout(()=>enhancedRouter(),0);
+    return;
+  }
+  // onclick="go('#/...')" op de profielknoppen
+  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track)[^'"]*)['"]\)/);
+  if(m){
+    event.preventDefault();
+    location.hash=m[1];
+    setTimeout(()=>enhancedRouter(),0);
+  }
 });
 
-// Ook bij rechtstreeks openen van bijvoorbeeld #/profile of #/inbox.
 setTimeout(()=>{
-    if(location.hash && location.hash !== "#/") enhancedRouter();
+  if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
+    enhancedRouter();
+  }
 },0);
 })();
 </script>
