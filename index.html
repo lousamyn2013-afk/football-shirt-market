@@ -6686,6 +6686,14 @@ function ensureDemoMarketplace(){
       {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",itemId:String(s4.id),system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
     ];
   }
+  // Het automatische voorbeeldbericht is zelf een officieel bod.
+  const demoOfferMsg=demo.messages.find(m=>m.id==="demo3");
+  if(demoOfferMsg){
+    demoOfferMsg.text="Ik bied €75 voor dit shirt.";
+    demoOfferMsg.itemId=String(s3.id);
+    demoOfferMsg.offerId="demo-offer-1";
+    demoOfferMsg.offerAmount=75;
+  }
   // Geef bestaande voorbeeldgesprekken ook een shirt-context als die nog ontbreekt.
   const shirts=[s1,s2,s3,s4];
   (demo.messages||[]).forEach((m,i)=>{if(!m.itemId)m.itemId=String(shirts[i%shirts.length].id)});
