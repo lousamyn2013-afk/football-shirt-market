@@ -6681,10 +6681,10 @@ function ensureDemoMarketplace(){
   const s1=demoShirt(0),s2=demoShirt(1),s3=demoShirt(2),s4=demoShirt(3);
   if(!demo.messages || !demo.messages.length){
     demo.messages=[
-      {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is dit shirt nog beschikbaar?",itemId:String(s1.id),itemSnapshot:{...s1,price:Number(s1.price)||149.95},system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
-      {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse in dit shirt. Kan je nog wat foto's sturen?",itemId:String(s2.id),itemSnapshot:{...s2,price:Number(s2.price)||179.95},system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
-      {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Ik bied €75 voor dit shirt.",itemId:String(s3.id),itemSnapshot:{...s3,price:Number(s3.price)||149.95},offerId:"demo-offer-1",offerAmount:75,system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
-      {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",itemId:String(s4.id),itemSnapshot:{...s4,price:Number(s4.price)||89.95},system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
+      {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is dit shirt nog beschikbaar?",itemId:String(s1.id),itemSnapshot:{...s1,price:priceNumber(s1.price)||149.95},system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
+      {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse in dit shirt. Kan je nog wat foto's sturen?",itemId:String(s2.id),itemSnapshot:{...s2,price:priceNumber(s2.price)||179.95},system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
+      {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Ik bied €75 voor dit shirt.",itemId:String(s3.id),itemSnapshot:{...s3,price:priceNumber(s3.price)||149.95},offerId:"demo-offer-1",offerAmount:75,system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
+      {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",itemId:String(s4.id),itemSnapshot:{...s4,price:priceNumber(s4.price)||89.95},system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
     ];
   }
   // Het automatische voorbeeldbericht is zelf een officieel bod.
@@ -6694,14 +6694,14 @@ function ensureDemoMarketplace(){
     demoOfferMsg.itemId=String(s3.id);
     demoOfferMsg.offerId="demo-offer-1";
     demoOfferMsg.offerAmount=75;
-    demoOfferMsg.itemSnapshot={...s3,price:Number(s3.price)||149.95};
+    demoOfferMsg.itemSnapshot={...s3,price:priceNumber(s3.price)||149.95};
   }
   // Geef bestaande voorbeeldgesprekken ook een shirt-context als die nog ontbreekt.
   const shirts=[s1,s2,s3,s4];
   (demo.messages||[]).forEach((m,i)=>{if(!m.itemId)m.itemId=String(shirts[i%shirts.length].id)});
   if(!Array.isArray(demo.offers)) demo.offers=[];
   if(!demo.offers.some(o=>o.id==="demo-offer-1")){
-    demo.offers.push({id:"demo-offer-1",itemId:String(s3.id),itemName:s3.name||"Voetbalshirt",buyer:"FootballFan24",seller:me,originalPrice:Number(s3.price)||110,amount:75,currency:"EUR",status:"pending",createdAt:new Date(Date.now()-1000*60*75).toISOString()});
+    demo.offers.push({id:"demo-offer-1",itemId:String(s3.id),itemName:s3.name||"Voetbalshirt",buyer:"FootballFan24",seller:me,originalPrice:priceNumber(s3.price)||149.95,amount:75,currency:"EUR",status:"pending",createdAt:new Date(Date.now()-1000*60*75).toISOString()});
   }
 }
 ensureDemoMarketplace();
@@ -6740,6 +6740,15 @@ function listings(){
 function allListings(){
  const base=typeof combinedShirts==="function"?combinedShirts():[];
  return base.map((x,i)=>({...x,_idx:i}));
+}
+function priceNumber(value){
+ const n=Number(value);
+ if(Number.isFinite(n)) return n;
+ const raw=String(value??"").trim().replace(/[^0-9,.-]/g,"");
+ if(!raw) return 0;
+ const normalized=raw.includes(",") ? raw.replace(/\./g,"").replace(",",".") : raw;
+ const parsed=Number(normalized);
+ return Number.isFinite(parsed)?parsed:0;
 }
 function itemFromId(id){
  const arr=allListings();
@@ -6874,7 +6883,7 @@ function chat(user){
  const seller=user;
  const listingImg=firstItem?.images?.[0]||firstItem?.image||"";
  const listingName=firstItem?.name||"Voetbalshirt";
- const listingPrice=Number(firstItem?.price)||0;
+ const listingPrice=priceNumber(firstItem?.price)||0;
  const sellerCard=`<div class="fsm-seller-card">${avatar(seller,true)}<div class="fsm-seller-card-copy"><strong>Hoi, ik ben ${esc(seller)}</strong><div class="fsm-seller-meta"><span>⌖ Nederland, Utrecht</span><span>◷ Laatst gezien 40 min. geleden</span></div></div></div>`;
  const listing=`<div class="fsm-chat-listing">
    <div class="fsm-chat-listing-main">
@@ -6899,7 +6908,7 @@ window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
 function product(id){
  const x=itemFromId(decodeURIComponent(id));
  if(!x){shell("Shirt",`<div class="fsm-empty">Shirt niet gevonden.</div>`);return}
- const price=Number(x.price)||0;
+ const price=pricepricepriceNumber(x.price)||0;
  shell("Shirt",`<div class="fsm-card"><div class="fsm-item-img" style="border-radius:12px">${x.image?`<img src="${esc(x.image)}">`:"👕"}</div><div style="padding-top:14px"><div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><h2>${esc(x.name)}</h2><div class="fsm-amount">${money(price,currency())}</div>
  <div class="fsm-row" style="margin-top:13px"><button class="fsm-btn green" onclick="checkout('${esc(x.id)}','buy')">Kopen</button><button class="fsm-btn gold" onclick="offer('${esc(x.id)}')">Bod doen</button></div>
  <button class="fsm-btn dark full" style="margin-top:8px" onclick="toggleFav('${esc(x.id)}')">♡ Favoriet</button>
@@ -6911,7 +6920,7 @@ window.offer=id=>{
  if(!x){toast("Shirt niet gevonden.");return}
  const existing=document.getElementById("fsmOfferModal"); if(existing) existing.remove();
  const price=Number(x.price);
- const suggested=Number.isFinite(price)&&price>0?price.toFixed(2):"";
+ const suggested=Number.isFinite(price)&&price>0?Math.max(price*0.5,0.01).toFixed(2):"";
  const modal=document.createElement("div");
  modal.id="fsmOfferModal";
  modal.className="fsm-offer-modal";
@@ -6933,7 +6942,7 @@ window.submitOffer=id=>{
  if(!x||!input)return;
  const n=Number(String(input.value||"").replace(",","."));
  if(!Number.isFinite(n)||n<=0){input.focus();toast("Vul een geldig bedrag in.");return}
- const askingPrice=Number(x?.price)||0;
+ const askingPrice=pricepricepriceNumber(x?.price)||0;
  const minOffer=askingPrice>0?Math.round(askingPrice*0.5*100)/100:0;
  if(minOffer>0 && n<minOffer){
    input.focus();
@@ -6944,7 +6953,7 @@ window.submitOffer=id=>{
  input.setCustomValidity("");
  const seller=x?.seller||x?.username||"verkoper";
  const offerId="of"+Date.now();
- const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:Number(x?.price)||0,amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString(),itemSnapshot:{...x}};
+ const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:pricepricepriceNumber(x?.price)||0,amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString(),itemSnapshot:{...x}};
  if(!Array.isArray(demo.offers))demo.offers=[];
  demo.offers.push(o);
  const msg={id:"msg"+Date.now(),chat:seller,from:demo.user.username,to:seller,text:"Ik wil graag een bod doen op dit shirt.",itemId:String(id),itemSnapshot:{...x},offerId,offerAmount:n,system:false,read:true,date:new Date().toISOString()};
@@ -6960,8 +6969,8 @@ async function checkout(id,source){
  const x=itemFromId(id);if(!x)return;
  let accepted=null;
  if(source==="offer") accepted=demo.offers.find(o=>String(o.itemId)===String(id)&&o.buyer===demo.user.username&&o.status==="accepted");
- const price=accepted?accepted.amount:Number(x.price)||0;
- const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:Number(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
+ const price=accepted?accepted.amount:pricepricepriceNumber(x.price)||0;
+ const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:pricepricepriceNumber(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
  demo.orders.push(order);save();
  const result=await api("/checkout/session",{method:"POST",body:JSON.stringify({orderId:order.id,itemId:order.itemId,price:order.finalPrice,currency:order.currency,source:order.source})});
  if(result?.url){location.href=result.url;return}
