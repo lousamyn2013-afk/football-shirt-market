@@ -6908,7 +6908,7 @@ window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
 function product(id){
  const x=itemFromId(decodeURIComponent(id));
  if(!x){shell("Shirt",`<div class="fsm-empty">Shirt niet gevonden.</div>`);return}
- const price=pricepricepriceNumber(x.price)||0;
+ const price=priceNumber(x.price)||0;
  shell("Shirt",`<div class="fsm-card"><div class="fsm-item-img" style="border-radius:12px">${x.image?`<img src="${esc(x.image)}">`:"👕"}</div><div style="padding-top:14px"><div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><h2>${esc(x.name)}</h2><div class="fsm-amount">${money(price,currency())}</div>
  <div class="fsm-row" style="margin-top:13px"><button class="fsm-btn green" onclick="checkout('${esc(x.id)}','buy')">Kopen</button><button class="fsm-btn gold" onclick="offer('${esc(x.id)}')">Bod doen</button></div>
  <button class="fsm-btn dark full" style="margin-top:8px" onclick="toggleFav('${esc(x.id)}')">♡ Favoriet</button>
@@ -6919,7 +6919,7 @@ window.offer=id=>{
  const x=itemFromId(id);
  if(!x){toast("Shirt niet gevonden.");return}
  const existing=document.getElementById("fsmOfferModal"); if(existing) existing.remove();
- const price=Number(x.price);
+ const price=priceNumber(x.price);
  const suggested=Number.isFinite(price)&&price>0?Math.max(price*0.5,0.01).toFixed(2):"";
  const modal=document.createElement("div");
  modal.id="fsmOfferModal";
@@ -6942,7 +6942,7 @@ window.submitOffer=id=>{
  if(!x||!input)return;
  const n=Number(String(input.value||"").replace(",","."));
  if(!Number.isFinite(n)||n<=0){input.focus();toast("Vul een geldig bedrag in.");return}
- const askingPrice=pricepricepriceNumber(x?.price)||0;
+ const askingPrice=priceNumber(x?.price)||0;
  const minOffer=askingPrice>0?Math.round(askingPrice*0.5*100)/100:0;
  if(minOffer>0 && n<minOffer){
    input.focus();
@@ -6953,7 +6953,7 @@ window.submitOffer=id=>{
  input.setCustomValidity("");
  const seller=x?.seller||x?.username||"verkoper";
  const offerId="of"+Date.now();
- const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:pricepricepriceNumber(x?.price)||0,amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString(),itemSnapshot:{...x}};
+ const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:priceNumber(x?.price)||0,amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString(),itemSnapshot:{...x}};
  if(!Array.isArray(demo.offers))demo.offers=[];
  demo.offers.push(o);
  const msg={id:"msg"+Date.now(),chat:seller,from:demo.user.username,to:seller,text:"Ik wil graag een bod doen op dit shirt.",itemId:String(id),itemSnapshot:{...x},offerId,offerAmount:n,system:false,read:true,date:new Date().toISOString()};
@@ -6969,8 +6969,8 @@ async function checkout(id,source){
  const x=itemFromId(id);if(!x)return;
  let accepted=null;
  if(source==="offer") accepted=demo.offers.find(o=>String(o.itemId)===String(id)&&o.buyer===demo.user.username&&o.status==="accepted");
- const price=accepted?accepted.amount:pricepricepriceNumber(x.price)||0;
- const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:pricepricepriceNumber(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
+ const price=accepted?accepted.amount:priceNumber(x.price)||0;
+ const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:priceNumber(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
  demo.orders.push(order);save();
  const result=await api("/checkout/session",{method:"POST",body:JSON.stringify({orderId:order.id,itemId:order.itemId,price:order.finalPrice,currency:order.currency,source:order.source})});
  if(result?.url){location.href=result.url;return}
