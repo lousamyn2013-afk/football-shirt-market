@@ -6709,6 +6709,15 @@ function ensureDemoMarketplace(){
   if(!demo.offers.some(o=>o.id==="demo-offer-1")){
     demo.offers.push({id:"demo-offer-1",itemId:String(s3.id),itemName:s3.name||"Voetbalshirt",buyer:"FootballFan24",seller:me,originalPrice:priceNumber(s3.price)||149.95,amount:75,currency:"EUR",status:"pending",createdAt:new Date(Date.now()-1000*60*75).toISOString()});
   }
+  // Extra voorbeeldchat: een bod dat al geaccepteerd is.
+  const acceptedSeller="JerseyDealz";
+  const acceptedItem={...s4,price:120};
+  if(!demo.offers.some(o=>o.id==="demo-offer-accepted")){
+    demo.offers.push({id:"demo-offer-accepted",itemId:String(acceptedItem.id),itemName:acceptedItem.name||"Voetbalshirt",buyer:me,seller:acceptedSeller,originalPrice:120,amount:80,currency:"EUR",status:"accepted",createdAt:new Date(Date.now()-1000*60*35).toISOString()});
+  }
+  if(!demo.messages.some(m=>m.id==="demo-accepted")){
+    demo.messages.push({id:"demo-accepted",chat:acceptedSeller,from:acceptedSeller,to:me,text:"Je bod van €80 is geaccepteerd! 🎉",itemId:String(acceptedItem.id),itemSnapshot:acceptedItem,offerId:"demo-offer-accepted",system:true,read:false,date:new Date(Date.now()-1000*60*35).toISOString()});
+  }
 }
 ensureDemoMarketplace();
 function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
