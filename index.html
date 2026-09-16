@@ -6856,14 +6856,14 @@ function chat(user){
  const listing=`<div class="fsm-chat-listing">
    <div class="fsm-chat-listing-main">
     <div class="fsm-chat-listing-thumb">${listingImg?`<img src="${esc(listingImg)}" alt="">`:`👕`}</div>
-    <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${money(listingPrice,currency())}</div><div class="fsm-chat-total">${money(listingPrice+1,currency())} incl. Vinted-kosten ✓</div></div>
+    <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${money(listingPrice,currency())}</div></div>
    </div>
    <div class="fsm-chat-actions"><button type="button" class="outline" onclick="offer('${esc(firstItem?.id||"")}')">Een bod doen</button><button type="button" class="buy" onclick="checkout('${esc(firstItem?.id||"")}','buy')">Kopen</button></div>
   </div>`;
  const html=msgs.map(m=>{
    const item=m.itemId?(itemFromId(m.itemId)||[0,1,2,3].map(i=>demoShirt(i)).find(x=>String(x.id)===String(m.itemId))):null;
    const offer=m.offerId?demo.offers.find(o=>o.id===m.offerId):null;
-   const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status||"pending")}</span></div>${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
+   const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
    return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
  }).join("");
  const safety=`<div class="fsm-safety"><div class="fsm-safety-icon">✓</div><div>Blijf veilig op Football-Shirt-Market. Deel geen persoonlijke gegevens, klik niet op externe links en scan geen QR-codes. <a href="#/profile">Meer veiligheidstips</a></div></div>`;
@@ -6883,7 +6883,25 @@ function product(id){
  <button class="fsm-btn dark full" style="margin-top:8px" onclick="go('#/chat/'+encodeURIComponent('${esc(x.seller||x.username||'verkoper')}'))">💬 Bericht sturen</button></div></div>`,"browse");
 }
 window.toggleFav=id=>{id=String(id);demo.favorites=demo.favorites.includes(id)?demo.favorites.filter(x=>x!==id):[...demo.favorites,id];save();toast(demo.favorites.includes(id)?"Toegevoegd aan favorieten":"Verwijderd uit favorieten")}
-window.offer=id=>{const x=itemFromId(id);const v=prompt("Jouw bod (€):",Number(x?.price||0).toFixed(2));const n=Number(v);if(!Number.isFinite(n)||n<=0)return;const o={id:"of"+Date.now(),itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller:x?.seller||x?.username||"verkoper",originalPrice:Number(x?.price||0),amount:n,currency:currency(),status:"pending"};demo.offers.push(o);save();api("/offers",{method:"POST",body:JSON.stringify(o)});toast("Bod verstuurd")}
+window.offer=id=>{
+ const x=itemFromId(id);
+ if(!x)return;
+ const v=prompt("Vul je bod in (€):",Number(x?.price||0).toFixed(2));
+ if(v===null)return;
+ const n=Number(String(v).replace(",","."));
+ if(!Number.isFinite(n)||n<=0){toast("Vul een geldig bedrag in.");return}
+ const seller=x?.seller||x?.username||"verkoper";
+ const offerId="of"+Date.now();
+ const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:Number(x?.price||0),amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString()};
+ demo.offers.push(o);
+ const msg={id:"msg"+Date.now(),chat:seller,from:demo.user.username,to:seller,text:"Ik wil graag een bod doen op dit shirt.",itemId:String(id),offerId,offerAmount:n,system:false,read:true,date:new Date().toISOString()};
+ demo.messages.push(msg);
+ save();
+ api("/offers",{method:"POST",body:JSON.stringify(o)});
+ api("/messages",{method:"POST",body:JSON.stringify(msg)});
+ toast("Bod verstuurd: "+money(n,currency()));
+ go("#/chat/"+encodeURIComponent(seller));
+}
 async function checkout(id,source){
  const x=itemFromId(id);if(!x)return;
  let accepted=null;
@@ -6933,8 +6951,30 @@ function renderOffers(){
  const offers=demo.offers.filter(o=>o.seller===demo.user.username);
  shell("Biedingen",offers.length?offers.map(o=>`<div class="fsm-card" style="margin-bottom:9px"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${esc(o.buyer)} bood ${money(o.amount,o.currency)}</div></div><span class="fsm-pill">${esc(o.status)}</span></div>${o.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${o.id}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${o.id}')">Weigeren</button></div>`:""}</div>`).join(""):`<div class="fsm-empty">Nog geen biedingen.</div>`)
 }
-window.acceptOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="accepted";save();await api("/offers/"+id+"/accept",{method:"POST",body:JSON.stringify({})});toast("Bod geaccepteerd");renderOffers()}
-window.rejectOffer=async id=>{const o=demo.offers.find(x=>x.id===id);if(!o)return;o.status="rejected";save();await api("/offers/"+id+"/reject",{method:"POST",body:JSON.stringify({})});renderOffers()}
+window.acceptOffer=async id=>{
+ const o=demo.offers.find(x=>x.id===id);
+ if(!o||o.status!=="pending")return;
+ o.status="accepted";
+ const text="Je bod van "+money(o.amount,o.currency||currency())+" is geaccepteerd! 🎉";
+ demo.messages.push({id:"offer-accept-"+Date.now(),chat:o.buyer===demo.user.username?o.seller:o.buyer,from:demo.user.username,to:o.buyer===demo.user.username?o.seller:o.buyer,text,itemId:String(o.itemId),offerId:o.id,system:true,read:false,date:new Date().toISOString()});
+ save();
+ await api("/offers/"+id+"/accept",{method:"POST",body:JSON.stringify({})});
+ await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});
+ toast("Bod geaccepteerd");
+ if(location.hash.startsWith("#/chat/")){chat(decodeURIComponent(location.hash.split("/")[2]||o.buyer));}else renderOffers();
+}
+window.rejectOffer=async id=>{
+ const o=demo.offers.find(x=>x.id===id);
+ if(!o||o.status!=="pending")return;
+ o.status="rejected";
+ const text="Je bod van "+money(o.amount,o.currency||currency())+" is geweigerd.";
+ demo.messages.push({id:"offer-reject-"+Date.now(),chat:o.buyer===demo.user.username?o.seller:o.buyer,from:demo.user.username,to:o.buyer===demo.user.username?o.seller:o.buyer,text,itemId:String(o.itemId),offerId:o.id,system:true,read:false,date:new Date().toISOString()});
+ save();
+ await api("/offers/"+id+"/reject",{method:"POST",body:JSON.stringify({})});
+ await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});
+ toast("Bod geweigerd");
+ if(location.hash.startsWith("#/chat/")){chat(decodeURIComponent(location.hash.split("/")[2]||o.buyer));}else renderOffers();
+}
 function enhancedRouter(){
  const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
  if(!m)return false;
