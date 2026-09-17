@@ -1487,25 +1487,7 @@ footer strong{
     }
 
 }
-
-.fsm-offer-modal{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:99999;display:flex;align-items:flex-end;justify-content:center;padding:16px}
-.fsm-offer-box{width:min(520px,100%);background:#111a18;border:1px solid rgba(239,210,143,.3);border-radius:20px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.5)}
-.fsm-offer-box h2{margin:0 0 6px}.fsm-offer-box p{margin:0 0 15px;color:#aebbb6}
-.fsm-offer-input{width:100%;box-sizing:border-box;padding:14px 15px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:#07100e;color:#fff;font-size:18px;outline:none}
-.fsm-offer-input:focus{border-color:var(--gold)}
-.fsm-offer-modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.fsm-offer-modal-actions button{border:0;border-radius:12px;padding:13px;font-weight:800;cursor:pointer}
-.fsm-offer-cancel{background:#202b28;color:#fff}.fsm-offer-submit{background:var(--gold);color:#07100e}
-@media(max-width:650px){.fsm-offer-modal{padding:10px}.fsm-offer-box{border-radius:18px;padding:17px}}
 </style>
-
-<style id="home-search-only-final">
-/* ONLY: move Home search bar 15px further down */
-.hero-search{
-  transform:translateY(15px)!important;
-}
-</style>
-
 
 <style>
 @media (max-width:900px){
@@ -3184,60 +3166,6 @@ footer strong{
 }
 </style>
 
-
-<style id="final-home-mobile-request">
-@media(max-width:900px){
-  .hero{position:relative!important;}
-  .hero-content{position:absolute!important;top:0!important;bottom:auto!important;left:17px!important;width:calc(100% - 34px)!important;z-index:10!important;}
-  .hero-buttons{width:40%!important;gap:3px!important;margin-top:8px!important;}
-  .hero-button{width:100%!important;min-height:17px!important;height:auto!important;padding:5px 4px!important;font-size:7px!important;line-height:1.1!important;border-radius:6px!important;}
-}
-@media(max-width:390px){
-  .hero-buttons{width:40%!important;gap:3px!important;margin-top:7px!important;}
-  .hero-button{min-height:16px!important;padding:4px 3px!important;font-size:6.5px!important;}
-}
-</style>
-
-<style id="home-search-only-position-fix">
-/* ONLY: move the Home search bar slightly down on desktop and mobile */
-.hero-search{
-  margin-top:23px!important;
-}
-@media(max-width:900px){
-  .hero-search{
-    margin-top:18px!important;
-  }
-}
-@media(max-width:390px){
-  .hero-search{
-    margin-top:17px!important;
-  }
-}
-</style>
-
-<style id="home-search-only-lower">
-/* ONLY change: move the HOME search bar further down */
-.hero .hero-search{
-  transform:translateY(20px)!important;
-}
-</style>
-
-<style id="fsm-boost-chat-extra">
-.fsm-boost-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
-.fsm-boost-item{position:relative;display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.025);cursor:pointer;transition:.2s}
-.fsm-boost-item.selected{border-color:var(--gold);background:rgba(239,210,143,.07)}
-.fsm-boost-item input{position:absolute;opacity:0;pointer-events:none}
-.fsm-boost-thumb{width:58px;height:58px;border-radius:10px;background:#07130e;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;font-size:25px}
-.fsm-boost-thumb img{width:100%;height:100%;object-fit:contain}
-.fsm-boost-copy{min-width:0;flex:1}.fsm-boost-copy strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fsm-boost-check{width:23px;height:23px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:transparent;font-size:12px}.fsm-boost-item.selected .fsm-boost-check{background:var(--gold);color:#000;border-color:var(--gold)}
-.fsm-chat-item{display:flex;gap:9px;align-items:center;margin-bottom:9px;padding:8px;border:1px solid rgba(239,210,143,.16);border-radius:10px;background:rgba(239,210,143,.035)}
-.fsm-chat-item img,.fsm-chat-item-placeholder{width:52px;height:52px;border-radius:8px;object-fit:contain;background:#07130e;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.fsm-accepted-price{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);text-align:center}.fsm-accepted-new{font-size:22px;font-weight:900;color:var(--green)}.fsm-accepted-old{margin-top:3px;color:#9aa7a3;text-decoration:line-through;font-size:14px}.fsm-btn.full{width:100%;justify-content:center}
-.fsm-offer-card{margin-top:9px;padding:11px;border-radius:11px;border:1px solid rgba(239,210,143,.45);background:rgba(239,210,143,.07)}
-.fsm-offer-label{font-size:10px;font-weight:900;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
-.fsm-offer-limit{margin:8px 0 10px;font-size:12px;color:#b9c6c0}.fsm-offer-limit strong{color:var(--gold)}
-@media(max-width:650px){.fsm-boost-grid{grid-template-columns:1fr}.fsm-boost-item{padding:9px}.fsm-boost-thumb{width:52px;height:52px}}
-</style>
 </head>
 
 <body>
@@ -3343,14 +3271,6 @@ Ontdekken
 Verkopen
 </a>
 
-<a href="#/inbox" id="navInbox" class="market-nav-link">
-Inbox
-</a>
-
-<a href="#/profile" id="navProfile" class="market-nav-link">
-Profiel
-</a>
-
 </nav>
 
 
@@ -3405,14 +3325,6 @@ Ontdekken
 
 <a href="#/sell">
 Verkopen
-</a>
-
-<a href="#/inbox">
-Inbox
-</a>
-
-<a href="#/profile">
-Profiel
 </a>
 
 </div>
@@ -4980,7 +4892,7 @@ class="photo-dropzone"
 id="photoDropzone"
 >
 📷 Tik om foto's te uploaden
-(max 10)
+(max 5)
 </div>
 
 
@@ -5381,7 +5293,7 @@ Plaats advertentie
     function processFiles(files){
 
         const remaining=
-            10-selectedImages.length;
+            5-selectedImages.length;
 
 
         if(remaining<=0){
@@ -5779,12 +5691,6 @@ function updateNav(){
             ?.classList.add("active");
 
     }
-    else if(hash.startsWith("#/inbox") || hash.startsWith("#/chat")){
-        document.getElementById("navInbox")?.classList.add("active");
-    }
-    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
-        document.getElementById("navProfile")?.classList.add("active");
-    }
 
     else{
 
@@ -5829,25 +5735,6 @@ function router(){
 
         renderSell();
 
-    }
-
-    else if(
-        hash.startsWith("#/inbox") ||
-        hash.startsWith("#/profile") ||
-        hash.startsWith("#/badges") ||
-        hash.startsWith("#/favorites") ||
-        hash.startsWith("#/wallet") ||
-        hash.startsWith("#/orders") ||
-        hash.startsWith("#/promote") ||
-        hash.startsWith("#/chat") ||
-        hash.startsWith("#/product") ||
-        hash.startsWith("#/checkout") ||
-        hash.startsWith("#/order") ||
-        hash.startsWith("#/track") ||
-        hash.startsWith("#/offers")
-    ){
-        // Deze routes worden door de marketplace-router gerenderd.
-        return;
     }
 
     else{
@@ -6314,926 +6201,180 @@ router();
 </style>
 
 
-<style>
-@media (max-width:900px){
-  /* Keep the complete hero text inside the image */
-  .hero{
-    position:relative!important;
-    overflow:hidden!important;
-  }
-  .hero-content{
-    position:absolute!important;
-    top:0!important;
-    left:0!important;
-    right:0!important;
-    bottom:auto!important;
-    z-index:10!important;
-    padding:4vw!important;
-  }
 
-  /* Make the complete text block slightly smaller */
-  .hero-kicker{
-    font-size:clamp(6px,1.5vw,8px)!important;
-  }
-  .hero-title{
-    font-size:clamp(24px,6.5vw,36px)!important;
-  }
-  .hero-description{
-    max-width:52vw!important;
-    font-size:clamp(9px,2.1vw,11px)!important;
-    line-height:1.3!important;
-  }
-  .hero-buttons{
-    margin-top:8px!important;
-    gap:5px!important;
-  }
-  .hero-button{
-    min-height:30px!important;
-    padding:0 9px!important;
-    font-size:8px!important;
-  }
-  .hero-search{
-    height:34px!important;
-    margin-top:7px!important;
-  }
-  .hero-search input{
-    font-size:9px!important;
-  }
-
-  /* Prevent a black section/bar from appearing directly underneath the image */
-  .hero + *{
-    margin-top:0!important;
-  }
+<!-- ======================================================
+     SHIRT DESCRIPTION ONLY
+     Added without changing the existing app structure.
+====================================================== -->
+<style id="shirt-description-only-style">
+.shirt-description-modal{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding:30px 16px;
+    overflow-y:auto;
+    background:rgba(0,0,0,.78);
 }
-</style>
-
-
-<style>
-@media (max-width:900px){
-  .hero-content{
-    padding:2.8vw!important;
-  }
-  .hero-kicker{
-    font-size:clamp(5px,1.2vw,7px)!important;
-    margin-bottom:3px!important;
-  }
-  .hero-title{
-    font-size:clamp(20px,5.4vw,30px)!important;
-    line-height:.9!important;
-  }
-  .hero-description{
-    max-width:46vw!important;
-    font-size:clamp(7px,1.7vw,9px)!important;
-    line-height:1.2!important;
-    margin-top:5px!important;
-  }
-  .hero-buttons{
-    margin-top:5px!important;
-    gap:4px!important;
-  }
-  .hero-button{
-    min-height:25px!important;
-    padding:0 7px!important;
-    font-size:7px!important;
-  }
-  .hero-search{
-    height:29px!important;
-    margin-top:5px!important;
-  }
-  .hero-search input{
-    font-size:8px!important;
-  }
+.shirt-description-modal.open{display:flex}
+.shirt-description-box{
+    position:relative;
+    width:min(720px,100%);
+    margin:auto;
+    background:#151b19;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 25px 80px rgba(0,0,0,.65);
 }
-@media (max-width:390px){
-  .hero-title{
-    font-size:clamp(18px,5vw,26px)!important;
-  }
-  .hero-description{
-    font-size:clamp(6.5px,1.6vw,8px)!important;
-  }
-  .hero-button{
-    min-height:23px!important;
-    font-size:6.5px!important;
-  }
+.shirt-description-close{
+    position:absolute;
+    right:14px;
+    top:12px;
+    z-index:3;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.62);
+    color:#fff;
+    font-size:28px;
+    line-height:1;
+    cursor:pointer;
 }
-</style>
-
-
-<style>
-@media (max-width:900px){
-  /* Slightly enlarge the hero text again */
-  .hero-kicker{font-size:clamp(5.5px,1.35vw,7.5px)!important}
-  .hero-title{font-size:clamp(22px,5.8vw,32px)!important}
-  .hero-description{
-    max-width:50vw!important;
-    font-size:clamp(8px,1.9vw,10px)!important;
-    line-height:1.25!important;
-  }
-  .hero-button{font-size:7.5px!important}
-  .hero-search input{font-size:8.5px!important}
-
-  /* Remove the large black area below the hero image */
-  .hero{
-    height:auto!important;
-    min-height:0!important;
-    aspect-ratio:16/10!important;
-    margin-bottom:0!important;
-  }
-  .hero + *{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
+.shirt-description-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:contain;
+    display:block;
+    background:#fff;
 }
-@media (max-width:390px){
-  .hero-title{font-size:clamp(20px,5.5vw,29px)!important}
-  .hero-description{font-size:clamp(7.5px,1.8vw,9px)!important}
+.shirt-description-content{padding:24px}
+.shirt-description-title{
+    font-size:14px;
+    color:#aeb9b5;
+    margin-bottom:42px;
 }
-</style>
-
-
-<style id="home-search-only-v9">
-.hero-search{
-  transform:translateY(35px)!important;
+.shirt-description-text{
+    font-size:18px;
+    line-height:1.55;
+    color:#aeb9b5;
+    white-space:pre-line;
+    margin:0 0 26px;
 }
-</style>
-
-<style id="only-home-search-50px-down">
-.hero .hero-search{
-  transform:translateY(50px)!important;
+.shirt-description-translate{
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.10);
+    color:#aeb9b5;
+    font-size:15px;
 }
-</style>
-
-<style id="only-home-search-25px-higher">
-.hero .hero-search{
-  transform:translateY(25px)!important;
+.shirt-description-translate span{color:#49aabd}
+.shirt-description-meta{
+    margin-top:24px;
+    border-top:1px solid rgba(255,255,255,.10);
 }
-</style>
-
-<style id="only-home-search-10px-down">
-.hero .hero-search{
-  transform:translateY(35px)!important;
+.shirt-description-row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:20px 0;
+    border-bottom:1px solid rgba(255,255,255,.10);
+    font-size:16px;
 }
-</style>
-
-<style id="only-home-search-5px-up">
-.hero .hero-search{
-  transform:translateY(30px)!important;
-}
-</style>
-
-<!-- =========================================================
-     FOOTBALL-SHIRT-MARKET — MARKETPLACE / PROFILE EXTENSION
-     Frontend-ready: all sensitive payment/order validation must
-     be performed by the backend.
-========================================================= -->
-<style id="fsm-marketplace-extension">
-#fsm-marketplace{
-  --fsm-card:#08140f;--fsm-card2:#0b1913;--fsm-line:rgba(239,210,143,.20);
-}
-.fsm-shell{width:min(1120px,100%);margin:0 auto;padding:18px 14px 90px}
-.fsm-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-.fsm-topbar h1{font:900 25px Montserrat,sans-serif;margin:0}
-.fsm-back,.fsm-iconbtn{border:1px solid var(--fsm-line);background:#07130e;color:#fff;border-radius:11px;min-width:42px;height:42px;cursor:pointer}
-.fsm-back{padding:0 13px;font-weight:800}
-.fsm-card{background:linear-gradient(180deg,var(--fsm-card2),var(--fsm-card));border:1px solid var(--fsm-line);border-radius:17px;padding:17px}
-.fsm-row{display:flex;align-items:center;gap:12px}
-.fsm-between{justify-content:space-between}
-.fsm-avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#18bf77,#08784c);font:900 22px Montserrat;color:#fff;flex:none}
-.fsm-avatar.sm{width:40px;height:40px;font-size:15px}
-.fsm-muted{color:#91a29a;font-size:12px;line-height:1.5}
-.fsm-gold{color:var(--gold)}
-.fsm-green{color:var(--green)}
-.fsm-btn{border:0;border-radius:11px;min-height:42px;padding:0 15px;font-weight:900;cursor:pointer}
-.fsm-btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#080a08}
-.fsm-btn.green{background:linear-gradient(135deg,#19c982,#0a8955);color:#fff}
-.fsm-btn.dark{background:#07130e;border:1px solid var(--fsm-line);color:#fff}
-.fsm-btn.full{width:100%}
-.fsm-menu{display:grid;gap:8px;margin-top:12px}
-.fsm-menu button{display:flex;align-items:center;gap:12px;width:100%;padding:15px;background:#07130e;border:1px solid rgba(239,210,143,.12);border-radius:13px;color:#fff;text-align:left;cursor:pointer}
-.fsm-menu button:hover{border-color:var(--gold)}
-.fsm-menu .arrow{margin-left:auto;color:var(--gold)}
-.fsm-progress{height:9px;background:#17251f;border-radius:99px;overflow:hidden;margin-top:10px}
-.fsm-progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#18bf77,var(--gold));border-radius:99px}
-.fsm-tabs{display:flex;border-bottom:1px solid var(--fsm-line);margin-bottom:15px}
-.fsm-tab{flex:1;background:none;border:0;color:#829088;padding:13px 5px;font-weight:900;cursor:pointer}
-.fsm-tab.active{color:#fff;border-bottom:2px solid var(--gold)}
-.fsm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.fsm-item{overflow:hidden;border:1px solid var(--fsm-line);border-radius:14px;background:#07130e}
-.fsm-item-img{aspect-ratio:1;display:grid;place-items:center;background:radial-gradient(circle,#183c2a,#06100c 68%);overflow:hidden}
-.fsm-item-img img{width:100%;height:100%;object-fit:contain;padding:7%}
-.fsm-item-body{padding:10px}
-.fsm-price{font-weight:900;color:var(--green)}.fsm-like-btn{width:100%;margin-top:8px;min-height:34px;border:1px solid rgba(239,210,143,.16);border-radius:9px;background:#0a1711;color:#fff;font-weight:800;cursor:pointer}.fsm-like-btn.liked{color:#18bf77;border-color:rgba(24,191,119,.35)}.fsm-product-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.fsm-product-photo{aspect-ratio:1;border-radius:12px;overflow:hidden;background:#07130e;border:1px solid rgba(255,255,255,.07)}.fsm-product-photo img{width:100%;height:100%;object-fit:contain;padding:4%}.fsm-product-description{margin-top:18px;padding-top:15px;border-top:1px solid rgba(255,255,255,.08)}.fsm-product-description h3{margin:0 0 7px}.fsm-product-description p{margin:0;white-space:pre-wrap;line-height:1.6;color:#d5dfda}.fsm-product-page{max-width:920px;margin:0 auto;padding-bottom:95px}
-.fsm-product-title{font-size:clamp(24px,4vw,38px);line-height:1.12;margin:8px 0 10px;overflow-wrap:anywhere}
-.fsm-product-seller{display:flex;align-items:center;gap:9px;margin:10px 0 4px;color:#d5dfda}
-.fsm-product-gallery{grid-template-columns:repeat(2,minmax(0,1fr));}
-.fsm-product-photo{cursor:zoom-in}
-.fsm-product-photo img{transition:transform .2s}
-.fsm-product-photo:hover img{transform:scale(1.02)}
-.fsm-product-actions{position:sticky;bottom:12px;z-index:20;margin-top:18px;padding:10px;background:rgba(2,5,4,.94);backdrop-filter:blur(10px);border:1px solid rgba(239,210,143,.16);border-radius:15px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.fsm-product-actions .fsm-btn{min-height:44px}
-.fsm-product-heart{font-size:22px;line-height:1}
-.fsm-product-gallery-wrap{position:relative}
-.fsm-product-fav-overlay{position:absolute;right:12px;bottom:12px;z-index:5;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(2,5,4,.88);color:#fff;font-size:27px;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(8px)}
-.fsm-product-fav-overlay.liked{color:#18bf77;border-color:rgba(24,191,119,.55)}
-.fsm-description-examples{margin-top:14px}
-.fsm-description-examples-title{font-size:12px;font-weight:900;color:#aebbb6;margin-bottom:8px}
-.fsm-description-example-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.fsm-description-example{overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:#07130e}
-.fsm-description-example img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
-.fsm-description-example span{display:block;padding:7px 8px;color:#9eaca6;font-size:9px;text-align:center}
-@media(max-width:620px){
- .fsm-description-example-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
- .fsm-product-fav-overlay{width:44px;height:44px;font-size:25px;right:9px;bottom:9px}
-}
-@media(max-width:620px){
- .fsm-product-page{padding-bottom:90px}
- .fsm-product-gallery{grid-template-columns:1fr 1fr}
- .fsm-product-actions{grid-template-columns:1fr 1fr;bottom:6px}
- .fsm-product-actions .message-action{grid-column:1/-1}
-}
-.fsm-meta{font-size:10px;color:#87958e;margin-top:3px}
-.fsm-promote{border:1px solid rgba(239,210,143,.25);border-radius:15px;padding:15px;background:linear-gradient(135deg,rgba(239,210,143,.09),rgba(24,191,119,.05));margin-bottom:14px}
-.fsm-review{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.fsm-stars{color:var(--gold);letter-spacing:2px}
-.fsm-empty{text-align:center;padding:48px 15px;color:#8b9992}
-.fsm-empty .ico{font-size:42px;margin-bottom:10px}
-.fsm-list{display:grid;gap:9px}
-.fsm-list button{display:flex;align-items:center;gap:12px;width:100%;padding:15px;border:1px solid rgba(239,210,143,.12);background:#07130e;color:#fff;border-radius:13px;text-align:left;cursor:pointer}
-.fsm-bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:3500;display:none;background:rgba(3,8,6,.97);border-top:1px solid rgba(239,210,143,.16);padding:7px 8px calc(7px + env(safe-area-inset-bottom));grid-template-columns:repeat(5,1fr)}
-.fsm-bottomnav a{display:flex;flex-direction:column;align-items:center;gap:3px;color:#8d9b94;font-size:10px;font-weight:800;padding:6px 2px;border-radius:9px}
-.fsm-bottomnav a.active{color:#18bf77;background:rgba(24,191,119,.08)}
-.fsm-chat{display:flex;flex-direction:column;min-height:62vh}
-.fsm-messages{display:flex;flex-direction:column;gap:8px;overflow:auto;padding:8px 0 15px;flex:1}
-.fsm-msg{max-width:78%;padding:10px 12px;border-radius:13px;background:#0b1913;border:1px solid rgba(255,255,255,.07)}
-.fsm-msg.mine{align-self:flex-end;background:#08784c}
-.fsm-msg.system{align-self:center;max-width:94%;background:#171d1a;border-color:rgba(239,210,143,.22);text-align:center}
-.fsm-msg small{display:block;color:#91a29a;font-size:9px;margin-top:4px}
-.fsm-chatbar{display:flex;gap:7px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
-.fsm-chatbar input,.fsm-input{flex:1;min-height:43px;border:1px solid rgba(239,210,143,.24);border-radius:10px;background:#030806;color:#fff;padding:0 12px;outline:0}
-/* Chatweergave in Vinted-stijl: advertentie bovenaan, verkoperkaart, berichten en vaste invoerbalk. */
-.fsm-chat-listing{border-bottom:1px solid rgba(255,255,255,.10);padding:2px 0 16px;margin:0 -2px 0}
-.fsm-chat-listing-main{display:flex;gap:12px;align-items:center;padding:9px 0 12px}
-.fsm-chat-listing-thumb{width:76px;height:76px;border-radius:10px;background:#07130e;overflow:hidden;display:grid;place-items:center;flex:none;font-size:30px}
-.fsm-chat-listing-thumb img{width:100%;height:100%;object-fit:cover}
-.fsm-chat-listing-copy{min-width:0;flex:1}
-.fsm-chat-listing-copy h2{font-size:16px;line-height:1.15;margin:0 0 7px;font-weight:900}
-.fsm-chat-listing-copy .fsm-chat-oldprice{font-size:15px;color:#dce5e1}
-.fsm-chat-listing-copy .fsm-chat-total{font-size:17px;color:#42c6dc;font-weight:700;margin-top:3px}
-.fsm-chat-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.fsm-chat-actions button{min-height:47px;border-radius:11px;font-size:15px}
-.fsm-chat-actions .outline{background:transparent;color:#42c6dc;border:2px solid #42aebe}
-.fsm-chat-actions .buy{background:#55b8c9;color:#07100d;border:0}
-.fsm-seller-card{display:flex;gap:12px;align-items:center;margin:16px auto 7px;max-width:620px;padding:13px 14px;border:1px solid rgba(255,255,255,.13);border-radius:13px;background:#111a17}
-.fsm-seller-card .fsm-avatar{width:52px;height:52px}
-.fsm-seller-card-copy{min-width:0}
-.fsm-seller-card-copy strong{display:block;font-size:17px;margin-bottom:7px}
-.fsm-seller-meta{color:#aab6b1;font-size:14px;line-height:1.55}
-.fsm-seller-meta span{display:block}
-.fsm-safety{display:flex;align-items:flex-start;gap:12px;padding:13px 2px 15px;border-bottom:1px solid rgba(255,255,255,.10);color:#b9c3bf;font-size:14px;line-height:1.45}
-.fsm-safety-icon{width:31px;height:31px;border-radius:50%;background:#48b6c6;color:#07100d;display:grid;place-items:center;font-weight:900;flex:none;margin-top:2px}
-.fsm-safety a{color:#45b6c7;text-decoration:underline}
-.fsm-chat-page{min-height:100dvh;background:#151c1a}
-.fsm-chat-page .fsm-shell{padding:0 0 94px;max-width:760px}
-.fsm-chat-page .fsm-topbar{height:62px;margin:0;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:20;background:#151c1a}
-.fsm-chat-page .fsm-topbar h1{font-size:20px;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fsm-chat-page .fsm-back{border:0;background:transparent;font-size:34px;font-weight:300;padding:0;min-width:42px;height:42px}
-.fsm-chat-page .fsm-chat{min-height:calc(100dvh - 62px)}
-.fsm-chat-page .fsm-messages{padding:8px 14px 18px}
-.fsm-chat-page .fsm-chat-listing{padding:9px 14px 15px}
-.fsm-chat-page .fsm-safety{padding-left:14px;padding-right:14px}
-.fsm-chat-page .fsm-chatbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(760px,100%);z-index:80;background:#151c1a;padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.10)}
-.fsm-chat-page .fsm-chatbar input{height:48px;border:0;background:#090f0d;border-radius:12px;font-size:17px}
-.fsm-chat-page .fsm-chatbar button{height:48px;border-radius:12px}
-.fsm-chat-page .fsm-bottomnav{display:none!important}
-.fsm-translate{display:flex;gap:6px;margin-top:6px}
-.fsm-translate button{font-size:9px;background:none;border:0;color:var(--gold);cursor:pointer;padding:0}
-.fsm-order-status{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.fsm-pill{padding:7px 10px;border-radius:99px;background:#07130e;border:1px solid var(--fsm-line);font-size:10px;color:#fff!important;font-weight:800;white-space:nowrap}.fsm-pill:hover{color:#fff!important;border-color:var(--gold)}
-.fsm-form{display:grid;gap:11px}
-.fsm-form label{font-size:10px;font-weight:900;color:var(--gold);text-transform:uppercase}
-.fsm-form textarea,.fsm-form input,.fsm-form select{width:100%;min-height:43px;background:#030806;color:#fff;border:1px solid rgba(239,210,143,.24);border-radius:10px;padding:10px;outline:0}
-.fsm-offer{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
-.fsm-amount{font-size:24px;font-weight:900;color:var(--green)}
-.fsm-note{font-size:10px;color:#83918b;line-height:1.5}
+.shirt-description-row strong{color:#fff}
+.shirt-description-row span{color:#aeb9b5;text-align:right}
 @media(max-width:650px){
- .fsm-shell{padding:12px 10px 90px}.fsm-topbar h1{font-size:21px}.fsm-grid{gap:9px}.fsm-bottomnav{display:grid}
-}
-@media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.fsm-inbox-row{width:100%;display:flex!important;align-items:center;gap:11px;text-align:left;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.07);color:#fff;padding:13px 4px;cursor:pointer}
-.fsm-inbox-row:last-child{border-bottom:0}
-.fsm-inbox-copy{min-width:0;flex:1}
-.fsm-inbox-copy strong,.fsm-inbox-copy .fsm-muted{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fsm-inbox-side{display:flex;align-items:center;gap:7px}
-.fsm-unread{min-width:20px;height:20px;border-radius:999px;background:var(--gold);color:#06100b;display:grid;place-items:center;font-size:10px;font-weight:900}
-.fsm-chat-user{display:flex;align-items:center;gap:10px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.08)}
-.fsm-msg-text{white-space:pre-wrap;word-break:break-word}
-.fsm-msg small{display:block;margin-top:5px;opacity:.55}
-.fsm-translate{display:flex;gap:6px;margin-top:7px}
-.fsm-translate button{background:transparent;border:0;color:var(--gold);font-size:9px;padding:0;cursor:pointer}
-@media(max-width:650px){.fsm-inbox-row{padding:12px 2px}.fsm-chatbar{position:sticky;bottom:75px}}
-@media(max-width:650px){
- .fsm-chat-page .fsm-topbar{height:60px}
- .fsm-chat-page .fsm-chat-listing-main{padding-top:7px}
- .fsm-chat-listing-thumb{width:76px;height:76px}
- .fsm-chat-listing-copy h2{font-size:15px}
- .fsm-chat-listing-copy .fsm-chat-total{font-size:16px}
- .fsm-seller-card{margin-top:14px}
- .fsm-seller-card-copy strong{font-size:16px}
- .fsm-seller-meta{font-size:13px}
- .fsm-safety{font-size:13px}
- .fsm-chat-page .fsm-messages{min-height:120px}
- .fsm-chat-page .fsm-msg{max-width:88%}
- .fsm-chat-page .fsm-chatbar button{display:none}
- .fsm-chat-page .fsm-chatbar input{width:100%}
+    .shirt-description-modal{padding:0}
+    .shirt-description-box{min-height:100%;border-radius:0;border:0}
+    .shirt-description-content{padding:24px 20px}
+    .shirt-description-text{font-size:17px}
 }
 </style>
-<style id="fsm-integrated-profile-chat">
-.market-nav-link{
-  color:#dfe8e3!important;
-  text-decoration:none;
-  font-weight:800;
-  transition:.2s;
-}
-.market-nav-link:hover{color:var(--gold)!important}
-@media(max-width:900px){
-  .mobile-nav a{min-width:72px;text-align:center}
-}
 
-.fsm-product-page .fsm-topbar{display:none!important;}
-.fsm-new-price{display:block;font-weight:800;}
-.fsm-old-price{display:block;text-decoration:line-through;opacity:.62;font-size:.82em;margin-top:2px;}
-.fsm-chat-oldprice .fsm-new-price{font-size:1.15em;}
-.fsm-chat-oldprice .fsm-old-price{font-size:.8em;}
-</style>
-<script>
+<div id="shirtDescriptionModal" class="shirt-description-modal" aria-hidden="true">
+    <div class="shirt-description-box" role="dialog" aria-modal="true">
+        <button id="shirtDescriptionClose" class="shirt-description-close" type="button" aria-label="Sluiten">×</button>
+        <img id="shirtDescriptionPhoto" class="shirt-description-photo" alt="">
+        <div class="shirt-description-content">
+            <div class="shirt-description-title">Beschrijving</div>
+            <p id="shirtDescriptionText" class="shirt-description-text"></p>
+            <div class="shirt-description-translate">🌐 &nbsp; Vertaald door Google · <span>Toon het origineel</span></div>
+            <div class="shirt-description-meta">
+                <div class="shirt-description-row"><strong>Categorie</strong><span>Voetbalshirts</span></div>
+                <div class="shirt-description-row"><strong>Club</strong><span id="shirtDescriptionClub"></span></div>
+                <div class="shirt-description-row"><strong>Staat</strong><span id="shirtDescriptionCondition"></span></div>
+                <div class="shirt-description-row"><strong>Maat</strong><span id="shirtDescriptionSize"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="shirt-description-only-script">
 (function(){
-"use strict";
-const API_BASE = window.FSM_API_BASE || "/api";
-const STORE="fsm_marketplace_v3";
-function readLoggedInUser(){
-  const keys=["fsm_user","currentUser","loggedInUser","user","account"];
-  for(const key of keys){
-    try{
-      const raw=localStorage.getItem(key);
-      if(!raw) continue;
-      const v=JSON.parse(raw);
-      const name=typeof v==="string"?v:(v?.username||v?.name||v?.user?.username);
-      if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
-    }catch(e){
-      const raw=localStorage.getItem(key);
-      if(raw && raw.trim()) return {username:raw.trim()};
+    const modal=document.getElementById('shirtDescriptionModal');
+    const close=document.getElementById('shirtDescriptionClose');
+    if(!modal) return;
+
+    function openDescription(card){
+        const img=card.querySelector('.shirt-visual img');
+        const name=card.querySelector('.shirt-name');
+        const club=card.querySelector('.shirt-club');
+        const condition=card.querySelector('.shirt-condition');
+        const view=card.querySelector('.shirt-view');
+
+        document.getElementById('shirtDescriptionPhoto').src=img ? img.src : '';
+        document.getElementById('shirtDescriptionPhoto').alt=name ? name.textContent.trim() : 'Voetbalshirt';
+        document.getElementById('shirtDescriptionClub').textContent=club ? club.textContent.trim().replace(/^👕\s*/, '') : '';
+        document.getElementById('shirtDescriptionCondition').textContent=condition ? condition.textContent.trim() : '';
+        document.getElementById('shirtDescriptionSize').textContent='Niet opgegeven';
+
+        let description='Dit voetbalshirt wordt aangeboden via Football-Shirt-Market. Bekijk de advertentiegegevens en informatie over het shirt hierboven.';
+        try{
+            const listings=JSON.parse(localStorage.getItem('fsm_user_listings')||'[]');
+            const found=listings.find(item=>{
+                const itemPrice='€ '+parseFloat(item.price).toFixed(2).replace('.',',');
+                return item.name=== (name ? name.textContent.trim() : '') &&
+                       item.club=== (club ? club.textContent.trim().replace(/^👕\s*/, '') : '') &&
+                       (itemPrice===(view?.dataset.price||''));
+            });
+            if(found && found.description) description=found.description;
+            if(found && found.size) document.getElementById('shirtDescriptionSize').textContent=found.size;
+        }catch(e){}
+
+        document.getElementById('shirtDescriptionText').textContent=description;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
     }
-  }
-  if(window.currentUser){
-    const v=window.currentUser;
-    const name=typeof v==="string"?v:(v?.username||v?.name);
-    if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
-  }
-  return null;
-}
-const existing=JSON.parse(localStorage.getItem(STORE)||"null");
-const logged=readLoggedInUser();
-const demo=existing||{
-  user:logged||{username:"Gebruiker",verified:[],bio:""},
-  favorites:[],orders:[],messages:[],reviews:[],offers:[],wallet:{pending:0,balance:0},paymentMethod:null
-};
-if(logged && logged.username) demo.user={...demo.user,...logged,username:logged.username};
-function demoShirt(index=0){
-  try{
-    const arr=typeof combinedShirts==="function"?combinedShirts():[];
-    if(arr.length) return arr[index%arr.length];
-  }catch(e){}
-  const fallback=[
-    {id:"demo-shirt-1",name:"Anderlecht Retro Shirt",club:"RSC Anderlecht",price:75,size:"164",condition:"Zeer goed",image:""},
-    {id:"demo-shirt-2",name:"Manchester United Home Shirt",club:"Manchester United",price:90,size:"S",condition:"Goed",image:""},
-    {id:"demo-shirt-3",name:"FC Barcelona Home Shirt",club:"FC Barcelona",price:110,size:"XS",condition:"Zeer goed",image:""},
-    {id:"demo-shirt-4",name:"Belgium National Team Shirt",club:"België",price:80,size:"164",condition:"Nieuw",image:""}
-  ];
-  return fallback[index%fallback.length];
-}
-function ensureDemoMarketplace(){
-  const me=demo.user.username;
-  const s1=demoShirt(0),s2=demoShirt(1),s3=demoShirt(2),s4=demoShirt(3);
-  if(!demo.messages || !demo.messages.length){
-    demo.messages=[
-      {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is dit shirt nog beschikbaar?",itemId:String(s1.id),itemSnapshot:{...s1,price:priceNumber(s1.price)||149.95},system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
-      {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse in dit shirt. Kan je nog wat foto's sturen?",itemId:String(s2.id),itemSnapshot:{...s2,price:priceNumber(s2.price)||179.95},system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
-      {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Ik bied €75 voor dit shirt.",itemId:String(s3.id),itemSnapshot:{...s3,price:priceNumber(s3.price)||149.95},offerId:"demo-offer-1",offerAmount:75,system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
-      {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",itemId:String(s4.id),itemSnapshot:{...s4,price:priceNumber(s4.price)||89.95},system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
-    ];
-  }
-  // Het automatische voorbeeldbericht is zelf een officieel bod.
-  const demoOfferMsg=demo.messages.find(m=>m.id==="demo3");
-  if(demoOfferMsg){
-    demoOfferMsg.text="Ik bied €75 voor dit shirt.";
-    demoOfferMsg.itemId=String(s3.id);
-    demoOfferMsg.offerId="demo-offer-1";
-    demoOfferMsg.offerAmount=75;
-    demoOfferMsg.itemSnapshot={...s3,price:priceNumber(s3.price)||149.95};
-  }
-  // Geef bestaande voorbeeldgesprekken ook een shirt-context als die nog ontbreekt.
-  const shirts=[s1,s2,s3,s4];
-  (demo.messages||[]).forEach((m,i)=>{if(!m.itemId)m.itemId=String(shirts[i%shirts.length].id)});
-  if(!Array.isArray(demo.offers)) demo.offers=[];
-  if(!demo.offers.some(o=>o.id==="demo-offer-1")){
-    demo.offers.push({id:"demo-offer-1",itemId:String(s3.id),itemName:s3.name||"Voetbalshirt",buyer:"FootballFan24",seller:me,originalPrice:priceNumber(s3.price)||149.95,amount:75,currency:"EUR",status:"pending",createdAt:new Date(Date.now()-1000*60*75).toISOString()});
-  }
-  // Extra voorbeeldchat: een bod dat al geaccepteerd is.
-  const acceptedSeller="JerseyDealz";
-  const acceptedItem={...s4,price:120};
-  if(!demo.offers.some(o=>o.id==="demo-offer-accepted")){
-    demo.offers.push({id:"demo-offer-accepted",itemId:String(acceptedItem.id),itemName:acceptedItem.name||"Voetbalshirt",buyer:me,seller:acceptedSeller,originalPrice:120,amount:80,currency:"EUR",status:"accepted",createdAt:new Date(Date.now()-1000*60*35).toISOString()});
-  }
-  if(!demo.messages.some(m=>m.id==="demo-accepted")){
-    demo.messages.push({id:"demo-accepted",chat:acceptedSeller,from:acceptedSeller,to:me,text:"Je bod van €80 is geaccepteerd! 🎉",itemId:String(acceptedItem.id),itemSnapshot:acceptedItem,offerId:"demo-offer-accepted",system:true,read:false,date:new Date(Date.now()-1000*60*35).toISOString()});
-  }
-}
-ensureDemoMarketplace();
-function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
-if(!existing || !existing.messages || !existing.messages.length || !existing.offers || !existing.offers.length) save()
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function money(n,c){
- const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
-}
-function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpperCase()}
-function app(){return document.getElementById("app")}
-function hash(){return location.hash||"#/"}
-function go(h){location.hash=h}
-async function api(path,opts={}){
- try{const r=await fetch(API_BASE+path,{credentials:"include",headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}catch(e){return null}
-}
-function initials(name){return (name||"?").slice(0,1).toUpperCase()}
-function avatar(name,sm=false){return `<div class="fsm-avatar ${sm?"sm":""}">${esc(initials(name))}</div>`}
-function nav(active="profile"){
- return `<nav class="fsm-bottomnav">
- <a href="#/" class="${active==="home"?"active":""}">⌂<span>Home</span></a>
- <a href="#/explore" class="${active==="browse"?"active":""}">◉<span>Bladeren</span></a>
- <a href="#/sell" class="${active==="sell"?"active":""}">＋<span>Verkopen</span></a>
- <a href="#/inbox" class="${active==="inbox"?"active":""}">✉<span>Inbox</span></a>
- <a href="#/profile" class="${active==="profile"?"active":""}">●<span>Profiel</span></a>
- </nav>`;
-}
-function shell(title,body,active="profile",back=true,kind=""){
- const pageClass=kind?` ${esc(kind)}-page`:"";
- app().innerHTML=`<div id="fsm-marketplace" class="${pageClass.trim()}"><div class="fsm-shell">
- <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="go('${kind==="chat"?"#/inbox":"#/profile"}')">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${kind==="chat"?"":nav(active)}</div>`;
-}
-function listings(){
- try{return typeof getListings==="function"?getListings():[]}catch(e){return []}
-}
-function allListings(){
- const base=typeof combinedShirts==="function"?combinedShirts():[];
- return base.map((x,i)=>({...x,_idx:i}));
-}
-function acceptedOfferForItem(itemId){
- const offers=Array.isArray(demo.offers)?demo.offers:[];
- return offers.find(o=>String(o.itemId)===String(itemId)&&o.status==="accepted")||null;
-}
-function effectivePrice(x){
- const accepted=acceptedOfferForItem(x?.id);
- return accepted?priceNumber(accepted.amount):priceNumber(x?.price);
-}
-function priceDisplay(x){
- const accepted=acceptedOfferForItem(x?.id);
- const current=accepted?priceNumber(accepted.amount):priceNumber(x?.price);
- if(accepted){
-   const original=priceNumber(accepted.originalPrice)||priceNumber(x?.price);
-   return `<span class="fsm-new-price">${money(current,accepted.currency||currency())}</span><span class="fsm-old-price">${money(original,accepted.currency||currency())}</span>`;
- }
- return `<span class="fsm-new-price">${money(current,currency())}</span>`;
-}
-function priceNumber(value){
- const n=Number(value);
- if(Number.isFinite(n)) return n;
- const raw=String(value??"").trim().replace(/[^0-9,.-]/g,"");
- if(!raw) return 0;
- const normalized=raw.includes(",") ? raw.replace(/\./g,"").replace(",",".") : raw;
- const parsed=Number(normalized);
- return Number.isFinite(parsed)?parsed:0;
-}
-function itemFromId(id){
- const arr=allListings();
- if(id===undefined||id===null||id==="") return null;
- return arr.find(x=>String(x.id)===String(id)||String(x._idx)===String(id))||null;
-}
-function profile(){
- const reviews=demo.reviews.filter(r=>r.to===demo.user.username||r.from===demo.user.username);
- shell("Profiel",`
- <section class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}
- <div style="flex:1"><h2>${esc(demo.user.username)}</h2><div class="fsm-muted">Mijn account</div></div>
- <button class="fsm-btn dark" onclick="go('#/profile/public')">Mijn advertenties bekijken</button></div></section>
- <section class="fsm-card" style="margin-top:12px;cursor:pointer" onclick="go('#/badges')">
- <div class="fsm-row fsm-between"><strong>Verdiende badges</strong><span class="fsm-gold">0 van 2 ›</span></div>
- <div class="fsm-progress"><i style="width:0%"></i></div>
- </section>
- <div class="fsm-menu">
- <button onclick="go('#/favorites')">♡ <strong>Mijn favorieten</strong><span class="arrow">›</span></button>
- <button onclick="go('#/wallet')">€ <strong>Mijn portemonnee</strong><span class="arrow">›</span></button>
- <button onclick="go('#/orders')">▣ <strong>Mijn bestellingen</strong><span class="arrow">›</span></button>
- <button onclick="go('#/promote')">↗ <strong>Advertenties promoten</strong><span class="arrow">›</span></button>
- <button onclick="go('#/offers')">⌁ <strong>Biedingen</strong><span class="arrow">›</span></button>
- </div>
- <section class="fsm-card" style="margin-top:12px"><div class="fsm-muted">Reviews</div><strong>${reviews.length?reviews.length+" ontvangen":"Nog geen reviews"}</strong></section>
- `,"profile",false);
-}
-function publicProfile(tab="items"){
- const mine=listings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
- const reviews=demo.reviews.filter(r=>r.to===demo.user.username);
- let content="";
- if(tab==="reviews"){
-   content=reviews.length?reviews.map(r=>`<div class="fsm-review"><div class="fsm-row">${avatar(r.from,true)}<div><strong>${esc(r.from)}</strong><div class="fsm-stars">${"★".repeat(r.rating)}${"☆".repeat(5-r.rating)}</div></div></div><div style="margin-top:8px">${esc(r.text)}</div><div class="fsm-muted">${esc(r.date||"Vandaag")}</div></div>`).join(""):`<div class="fsm-empty"><div class="ico">☆</div><strong>Nog geen reviews</strong><p class="fsm-muted">Na een voltooide bestelling kunnen kopers en verkopers elkaar beoordelen.</p></div>`;
- }else if(tab==="about"){
-   content=`<div class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}<div><strong>${esc(demo.user.username)}</strong><div class="fsm-muted">✓ E-mail geverifieerd</div></div></div><hr style="border:0;border-top:1px solid rgba(255,255,255,.08);margin:15px 0"><div class="fsm-muted">${esc(demo.user.bio||"Nog geen beschrijving.")}</div></div>`;
- }else{
-   content=`<div class="fsm-promote"><strong>Verhoog je zichtbaarheid</strong><div class="fsm-muted">Promoot je items. Vergroot je verkoopkansen.</div><button class="fsm-btn gold" style="margin-top:10px" onclick="go('#/promote')">Promoot</button></div>
-   <div class="fsm-row fsm-between" style="margin-bottom:10px"><strong>${mine.length} advertenties</strong><span class="fsm-muted">Actief · Verkocht</span></div>
-   ${mine.length?`<div class="fsm-grid">${mine.map(x=>listingCard(x)).join("")}</div>`:`<div class="fsm-empty">Nog geen advertenties.</div>`}`;
- }
- shell(demo.user.username,`<div class="fsm-tabs">
- <button class="fsm-tab ${tab==="items"?"active":""}" onclick="go('#/profile/public/items')">Advertenties</button>
- <button class="fsm-tab ${tab==="reviews"?"active":""}" onclick="go('#/profile/public/reviews')">Reviews</button>
- <button class="fsm-tab ${tab==="about"?"active":""}" onclick="go('#/profile/public/about')">Over mij</button>
- </div>${content}`,"profile",true);
-}
-function listingCard(x){
- const img=x.images?.[0]||x.image||"";
- const liked=demo.favorites.includes(String(x.id));
- return `<article class="fsm-item" role="button" tabindex="0" style="cursor:pointer" onclick="openProduct('${esc(x.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct('${esc(x.id)}')}"><div class="fsm-item-img">${img?`<img src="${esc(img)}" alt="${esc(x.name||"Voetbalshirt")}">`:"👕"}</div><div class="fsm-item-body"><div class="fsm-meta">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-row fsm-between" style="margin-top:7px"><span class="fsm-price">${priceDisplay(x)}</span><button class="fsm-btn dark" style="min-height:32px;padding:0 9px;font-size:9px" onclick="event.stopPropagation();openProduct('${esc(x.id)}')">Bekijken</button></div><button class="fsm-like-btn ${liked?"liked":""}" type="button" aria-label="${liked?"Verwijder uit favorieten":"Voeg toe aan favorieten"}" onclick="event.stopPropagation();toggleFav('${esc(x.id)}',this)">${liked?"♥":"♡"} <span>${liked?"Favoriet":"Vind ik leuk"}</span></button></div></article>`
-}
-window.openProduct=id=>go("#/product/"+encodeURIComponent(id));
-function badges(){shell("Badges",`
-<div class="fsm-list">
-<div class="fsm-card"><div class="fsm-row fsm-between"><div><h3>Goed bezig! 1 artikel geüpload</h3><p class="fsm-muted">Ga zo door om je badge te verdienen.</p></div><strong class="fsm-gold">0%</strong></div><div class="fsm-progress"><i style="width:20%"></i></div><button class="fsm-btn gold" style="margin-top:12px" onclick="go('#/sell')">Nieuwe advertentie maken</button></div>
-<div class="fsm-card"><div class="fsm-row fsm-between"><div><h3>Best snel: je verzendt binnen 3 dagen</h3><p class="fsm-muted">Verzend je bestellingen iets sneller om deze badge te verdienen.</p></div><strong class="fsm-gold">0%</strong></div><div class="fsm-progress"><i style="width:0%"></i></div></div>
-</div>`)}
-function favorites(){
- const fav=allListings().filter(x=>demo.favorites.includes(String(x.id)));
- shell("Mijn favorieten",fav.length?`<div class="fsm-grid">${fav.map(x=>listingCard(x)).join("")}</div>`:`<div class="fsm-empty"><div class="ico">♡</div><strong>Nog geen favorieten</strong><p class="fsm-muted">Favoriete shirts verschijnen hier.</p></div>`);
-}
-function wallet(){shell("Mijn portemonnee",`
-<div class="fsm-card"><div class="fsm-muted">Saldo in behandeling</div><div class="fsm-amount">${money(demo.wallet.pending,currency())}</div></div>
-<div class="fsm-card" style="margin-top:12px"><div class="fsm-row fsm-between"><div><div class="fsm-muted">Beschikbaar saldo</div><div class="fsm-amount">${money(demo.wallet.balance,currency())}</div></div><button class="fsm-btn gold" onclick="toast('Uitbetaling wordt via de backend afgehandeld.')">Uitbetalen</button></div><div style="margin-top:12px"><button class="fsm-btn dark" onclick="go('#/explore')">Shoppen</button></div></div>
-<div class="fsm-card" style="margin-top:12px"><strong>Transacties</strong><div class="fsm-empty" style="padding:25px 10px">Nog geen transacties.</div></div>
-`)}
-function orders(filter="all",tab="bought"){
- const mine=demo.orders.filter(o=>tab==="bought"?o.buyer===demo.user.username:o.seller===demo.user.username);
- const shown=mine.filter(o=>filter==="all"||o.status===filter);
- shell("Mijn bestellingen",`<div class="fsm-tabs"><button class="fsm-tab ${tab==="sold"?"active":""}" onclick="go('#/orders/all/sold')">Verkocht</button><button class="fsm-tab ${tab==="bought"?"active":""}" onclick="go('#/orders/all/bought')">Gekocht</button></div>
- <div class="fsm-row" style="gap:6px;overflow:auto;margin-bottom:13px">${["all","pending","cancelled","completed"].map(f=>`<button class="fsm-pill" onclick="go('#/orders/${f}/${tab}')">${f==="all"?"Alles":f==="pending"?"In behandeling":f==="cancelled"?"Geannuleerd":"Voltooid"}</button>`).join("")}</div>
- ${shown.length?shown.map(o=>`<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="go('#/order/${o.id}')"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${money(o.finalPrice,o.currency)} · ${esc(o.status)}</div></div><span>›</span></div></div>`).join(""):`<div class="fsm-empty"><div class="ico">▣</div><strong>Je hebt nog geen bestellingen</strong><p class="fsm-muted">Als je iets verkoopt, zie je het hier staan</p></div>`}`);
-}
-function promote(){
- const mine=allListings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
- const selected=new Set((demo.boosts||[]).map(b=>String(b.itemId)));
- const cards=mine.length?mine.map(x=>{
-   const id=String(x.id), checked=selected.has(id);
-   const img=x.images?.[0]||x.image||"";
-   return `<label class="fsm-boost-item ${checked?"selected":""}">
-     <input type="checkbox" value="${esc(id)}" ${checked?"checked":""} onchange="toggleBoostShirt('${esc(id)}',this.checked)">
-     <div class="fsm-boost-thumb">${img?`<img src="${esc(img)}">`:`👕`}</div>
-     <div class="fsm-boost-copy"><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><div class="fsm-price">${priceDisplay(x)}</div></div>
-     <span class="fsm-boost-check">✓</span>
-   </label>`;
- }).join(""):`<div class="fsm-empty"><strong>Nog geen advertenties</strong><p class="fsm-muted">Maak eerst een shirtadvertentie voordat je een boost kiest.</p><button class="fsm-btn gold" onclick="go('#/sell')">Nieuwe advertentie</button></div>`;
- shell("Advertenties promoten",`
- <div class="fsm-promote"><h2>Val op met Spotlights</h2><p class="fsm-muted">Spotlight is een aparte promotie voor een advertentie. Kies eerst welke shirts je wilt promoten.</p><button class="fsm-btn gold" style="margin-top:12px" onclick="toast('Selecteer eerst een shirt hieronder voor Spotlight.')">Spotlight</button></div>
- <div class="fsm-promote"><h2>1. Kies je shirts</h2><p class="fsm-muted">Een boost wordt alleen toegepast op de shirts die je hier aanvinkt — niet automatisch op al je advertenties.</p><div class="fsm-boost-grid">${cards}</div></div>
- <div class="fsm-promote"><h2>2. Kies je boost</h2><p class="fsm-muted">${selected.size?selected.size+" shirt"+(selected.size===1?"":"s")+" geselecteerd":"Selecteer eerst één of meer shirts"}</p>
- <div class="fsm-list" style="margin-top:12px">${[
- ["3 dagen · Lokaal","Alleen zichtbaar in je eigen land"],
- ["3 dagen · Internationaal","Zichtbaarheid in meerdere landen"],
- ["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
- ["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
- ].map(a=>`<button type="button" onclick="startBoost('${a[0]}')"><span>↗</span><div><strong>${a[0]}</strong><div class="fsm-muted">${a[1]}</div></div><span class="arrow">›</span></button>`).join("")}</div></div>
- `);
-}
-window.toggleBoostShirt=(id,on)=>{
- if(!Array.isArray(demo.boostSelection))demo.boostSelection=[];
- id=String(id);
- demo.boostSelection=on?[...new Set([...demo.boostSelection,id])]:demo.boostSelection.filter(x=>String(x)!==id);
- save();
- promote();
-};
-window.startBoost=(type)=>{
- const ids=(demo.boostSelection||[]).map(String).filter(Boolean);
- if(!ids.length){toast("Selecteer eerst minstens één shirt.");return}
- if(!Array.isArray(demo.boosts))demo.boosts=[];
- ids.forEach(id=>{const existing=demo.boosts.find(b=>String(b.itemId)===id); if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString()}else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString()})});
- demo.boostSelection=[]; save(); toast(type+" geactiveerd voor "+ids.length+" geselecteerd(e) shirt"+(ids.length===1?"":"s")+" (demo)"); promote();
-};
 
-function inbox(){
- const chats=[...new Set(demo.messages.map(m=>m.chat).filter(Boolean))];
- ["ShirtCollector","VintageKits","FootballFan24","RetroJerseys"].forEach(n=>{if(!chats.includes(n))chats.push(n)});
- const rows=chats.map(c=>{
-   const msgs=demo.messages.filter(m=>m.chat===c);
-   const last=msgs[msgs.length-1]||{text:"Start een gesprek",date:new Date().toISOString()};
-   const unread=msgs.filter(m=>m.to===demo.user.username && !m.read).length;
-   return `<button class="fsm-inbox-row" type="button" onclick="go('#/chat/${encodeURIComponent(c)}')">${avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></button>`;
- }).join("");
- shell("Inbox",`<div class="fsm-card"><div class="fsm-muted" style="margin-bottom:8px">Berichten</div><div class="fsm-list">${rows}</div></div>`,"inbox",false);
-}
-window.openSellerChat=(seller,itemId)=>{
- try{sessionStorage.setItem("fsmChatItem",String(itemId||""));}catch(e){}
- go("#/chat/"+encodeURIComponent(seller||"verkoper"));
-}
-function chat(user){
- user=String(user||"verkoper");
- let msgs=demo.messages.filter(m=>m.chat===user);
- if(!msgs.length) msgs=[{id:"seed-"+Date.now(),chat:user,from:user,to:demo.user.username,text:"Hallo! 👋 Leuk dat je een bericht stuurt.",itemId:String(demoShirt(0).id),system:false,date:new Date().toISOString()}];
- msgs.forEach(m=>{if(m.to===demo.user.username)m.read=true});
- save();
- let sessionItemId="";
- try{sessionItemId=sessionStorage.getItem("fsmChatItem")||"";sessionStorage.removeItem("fsmChatItem")}catch(e){}
- const firstItemId=msgs.find(m=>m.itemId)?.itemId||sessionItemId;
- const firstMsg=msgs.find(m=>m.itemId);
- const firstItem=firstItemId?(itemFromId(firstItemId)||firstMsg?.itemSnapshot||[0,1,2,3].map(i=>demoShirt(i)).find(x=>String(x.id)===String(firstItemId))||null):demoShirt(0);
- const seller=user;
- const listingImg=firstItem?.images?.[0]||firstItem?.image||"";
- const listingName=firstItem?.name||"Voetbalshirt";
- const listingPrice=effectivePrice(firstItem)||0;
- const sellerCard=`<div class="fsm-seller-card">${avatar(seller,true)}<div class="fsm-seller-card-copy"><strong>Hoi, ik ben ${esc(seller)}</strong><div class="fsm-seller-meta"><span>⌖ Nederland, Utrecht</span><span>◷ Laatst gezien 40 min. geleden</span></div></div></div>`;
- const listing=`<div class="fsm-chat-listing">
-   <div class="fsm-chat-listing-main">
-    <div class="fsm-chat-listing-thumb">${listingImg?`<img src="${esc(listingImg)}" alt="">`:`👕`}</div>
-    <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${priceDisplay(firstItem)}</div></div>
-   </div>
-   <div class="fsm-chat-actions"><button type="button" class="outline" onclick="offer('${esc(firstItem?.id||"")}')">Een bod doen</button><button type="button" class="buy" onclick="checkout('${esc(firstItem?.id||"")}','buy')">Kopen</button></div>
-  </div>`;
- const html=msgs.map(m=>{
-   const item=m.itemId?(m.itemSnapshot||itemFromId(m.itemId)||[0,1,2,3].map(i=>demoShirt(i)).find(x=>String(x.id)===String(m.itemId))||null):null;
-   const offer=m.offerId?demo.offers.find(o=>o.id===m.offerId):null;
-   const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.status==="accepted"?`<div class="fsm-accepted-price"><div class="fsm-accepted-new">${money(offer.amount,offer.currency||currency())}</div><div class="fsm-accepted-old">${money(priceNumber(offer.originalPrice)||priceNumber(item?.price)||0,offer.currency||currency())}</div></div>${offer?.buyer===demo.user.username?`<button type="button" class="fsm-btn green full" style="margin-top:10px" onclick="checkout('${esc(String(offer.itemId))}','offer')">Nu kopen</button>`:""}`:""}${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
-   return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
- }).join("");
- const safety=`<div class="fsm-safety"><div class="fsm-safety-icon">✓</div><div>Blijf veilig op Football-Shirt-Market. Deel geen persoonlijke gegevens, klik niet op externe links en scan geen QR-codes. <a href="#/profile">Meer veiligheidstips</a></div></div>`;
- shell(user,`<div class="fsm-chat"><div class="fsm-chat-page-inner">${listing}${sellerCard}${safety}<div class="fsm-messages">${html}</div></div><div class="fsm-chatbar"><span style="font-size:28px;display:grid;place-items:center;width:42px;color:#aebbb6">◉</span><input id="chatInput" autocomplete="off" placeholder="Verstuur een bericht" onkeydown="if(event.key==='Enter')sendChat('${esc(user)}')"><button class="fsm-btn green" type="button" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>` ,"inbox",true,"chat");
-}
+    document.addEventListener('click',function(event){
+        const card=event.target.closest('.shirt-card');
+        if(!card) return;
+        if(event.target.closest('button,a,input,select,label')) return;
+        openDescription(card);
+    });
 
-window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,read:true,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
-window.translateMsg=(id,b)=>{b.textContent="Vertalen…";setTimeout(()=>{b.textContent="Vertaling beschikbaar via de vertaalservice.";},250)}
-window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
-function product(id){
- const x=itemFromId(decodeURIComponent(id));
- if(!x){shell("Shirt",`<div class="fsm-empty">Shirt niet gevonden.</div>`);return}
- const liked=demo.favorites.includes(String(x.id));
- const imgs=Array.isArray(x.images)&&x.images.length?x.images:(x.image?[x.image]:[]);
- const gallery=imgs.length
-  ?`<div class="fsm-product-gallery">${imgs.slice(0,10).map((src,i)=>`<div class="fsm-product-photo" onclick="openImage('${esc(src)}')"><img src="${esc(src)}" alt="Afbeelding ${i+1}"></div>`).join("")}</div>`
-  :`<div class="fsm-item-img" style="border-radius:12px">👕</div>`;
- const exampleSvgs=[
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><rect width="500" height="500" fill="#111a18"/><path d="M175 92 235 55h30l60 37 75 35-45 82-35-20v175H180V189l-35 20-75-82z" fill="#18bf77" stroke="#efd28f" stroke-width="7"/><path d="M235 55c4 38 26 52 30 0" fill="none" stroke="#efd28f" stroke-width="7"/><text x="250" y="455" text-anchor="middle" fill="#d5dfda" font-family="Arial" font-size="28">VOORKANT</text></svg>`,
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><rect width="500" height="500" fill="#111a18"/><path d="M175 92 235 55h30l60 37 75 35-45 82-35-20v175H180V189l-35 20-75-82z" fill="#07130e" stroke="#efd28f" stroke-width="7"/><path d="M235 55c4 38 26 52 30 0" fill="none" stroke="#efd28f" stroke-width="7"/><text x="250" y="455" text-anchor="middle" fill="#d5dfda" font-family="Arial" font-size="28">ACHTERKANT</text></svg>`,
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><rect width="500" height="500" fill="#111a18"/><circle cx="250" cy="220" r="115" fill="#18bf77" stroke="#efd28f" stroke-width="7"/><circle cx="250" cy="220" r="48" fill="#07130e" stroke="#efd28f" stroke-width="6"/><path d="M205 220h90M250 175v90" stroke="#efd28f" stroke-width="8"/><text x="250" y="455" text-anchor="middle" fill="#d5dfda" font-family="Arial" font-size="28">DETAIL</text></svg>`
- ];
- const exampleImages=exampleSvgs.map(s=>"data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(s));
- const exampleHtml=`<div class="fsm-description-examples">
-   <div class="fsm-description-examples-title">Voorbeeld afbeeldingen</div>
-   <div class="fsm-description-example-grid">
-     ${exampleImages.map((src,i)=>`<div class="fsm-description-example"><img src="${src}" alt="Voorbeeld afbeelding ${i+1}"><span>${["Voorkant","Achterkant","Detail"][i]}</span></div>`).join("")}
-   </div>
- </div>`;
- const desc=x.description
-  ?`<div class="fsm-product-description"><h3>Beschrijving</h3><p>${esc(x.description)}</p>${exampleHtml}</div>`
-  :`<div class="fsm-product-description"><h3>Beschrijving</h3><p class="fsm-muted">De verkoper heeft geen beschrijving toegevoegd.</p>${exampleHtml}</div>`;
- const seller=x.seller||x.username||"verkoper";
- shell("Shirt",`
- <div class="fsm-product-page">
-  <div class="fsm-card">
-   <div class="fsm-product-gallery-wrap">
-    ${gallery}
-    <button id="productFavOverlay" data-id="${esc(x.id)}" class="fsm-product-fav-overlay ${liked?"liked":""}" type="button" aria-label="${liked?"Verwijder uit favorieten":"Voeg toe aan favorieten"}" onclick="toggleFav('${esc(x.id)}',this)">${liked?"♥":"♡"}</button>
-   </div>
-   <div style="padding-top:14px">
-    <div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")} · ${esc(x.condition||"")}</div>
-    <h1 class="fsm-product-title">${esc(x.name||"Voetbalshirt")}</h1>
-    <div class="fsm-product-seller">${avatar(seller,true)}<span>Verkocht door <strong>${esc(seller)}</strong></span></div>
-    <div class="fsm-amount">${priceDisplay(x)}</div>
-    ${desc}
-    <button id="productFavBtn" class="fsm-btn dark full ${liked?"liked":""}" style="margin-top:14px" onclick="toggleFav('${esc(x.id)}',this)" aria-label="${liked?"Verwijder uit favorieten":"Voeg toe aan favorieten"}">
-      <span class="fsm-product-heart">${liked?"♥":"♡"}</span> ${liked?"Favoriet":"Toevoegen aan favorieten"}
-    </button>
-   </div>
-  </div>
-  <div class="fsm-product-actions">
-   <button class="fsm-btn dark message-action" onclick="openSellerChat('${esc(seller)}','${esc(String(x.id))}')">💬 Bericht sturen</button>
-   <button class="fsm-btn gold" onclick="offer('${esc(x.id)}')">Een bod doen</button>
-   <button class="fsm-btn green" onclick="checkout('${esc(x.id)}','buy')">Kopen</button>
-  </div>
- </div>`,"browse");
-}
-window.openImage=src=>{
- const old=document.getElementById("fsmImageViewer"); if(old)old.remove();
- const d=document.createElement("div"); d.id="fsmImageViewer";
- d.style.cssText="position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out";
- d.innerHTML=`<img src="${esc(src)}" style="max-width:96vw;max-height:92vh;object-fit:contain;border-radius:12px"><button type="button" aria-label="Sluiten" style="position:absolute;top:18px;right:18px;border:0;background:#07130e;color:#fff;border-radius:50%;width:42px;height:42px;font-size:24px;cursor:pointer">×</button>`;
- d.onclick=()=>d.remove(); document.body.appendChild(d);
-};
-window.toggleFav=(id,btn)=>{
- id=String(id);
- const added=!demo.favorites.includes(id);
- demo.favorites=added?[...demo.favorites,id]:demo.favorites.filter(x=>x!==id);
- save();
- if(btn){
-  btn.classList.toggle("liked",added);
-  btn.innerHTML=btn.classList.contains("fsm-product-fav-overlay")?(added?"♥":"♡"):(added?"♥ Favoriet":"♡ Vind ik leuk");
-  btn.setAttribute("aria-label",added?"Verwijder uit favorieten":"Voeg toe aan favorieten");
- }
- const overlay=document.getElementById("productFavOverlay");
- if(overlay && overlay!==btn){
-  overlay.classList.toggle("liked",added);
-  overlay.innerHTML=added?"♥":"♡";
-  overlay.setAttribute("aria-label",added?"Verwijder uit favorieten":"Voeg toe aan favorieten");
- }
- const cardBtn=document.querySelector(`.fsm-like-btn[onclick*="${id.replace(/'/g,"\\'")}"]`);
- if(cardBtn){cardBtn.classList.toggle("liked",added);cardBtn.innerHTML=added?"♥ <span>Favoriet</span>":"♡ <span>Vind ik leuk</span>";}
- toast(added?"Toegevoegd aan favorieten":"Verwijderd uit favorieten");
-}
-window.offer=id=>{
- const x=itemFromId(id);
- if(!x){toast("Shirt niet gevonden.");return}
- const existing=document.getElementById("fsmOfferModal"); if(existing) existing.remove();
- const price=priceNumber(x.price);
- const suggested=Number.isFinite(price)&&price>0?Math.max(price*0.5,0.01).toFixed(2):"";
- const modal=document.createElement("div");
- modal.id="fsmOfferModal";
- modal.className="fsm-offer-modal";
- modal.innerHTML=`<div class="fsm-offer-box" role="dialog" aria-modal="true">
-   <h2>Een bod doen</h2>
-   <p>Vul het bedrag in dat je voor <strong>${esc(x.name||"dit shirt")}</strong> wilt bieden.</p>
-   <div class="fsm-offer-limit">Maximaal 50% korting · minimaal bod: <strong>${money(price*0.5,currency())}</strong></div>
-   <input id="fsmOfferInput" class="fsm-offer-input" inputmode="decimal" type="number" min="${Number.isFinite(price)&&price>0?(price*0.5).toFixed(2):"0.01"}" step="0.01" placeholder="Bedrag in €" value="${suggested}">
-   <div class="fsm-offer-modal-actions">
-    <button type="button" class="fsm-offer-cancel" onclick="document.getElementById('fsmOfferModal')?.remove()">Annuleren</button>
-    <button type="button" class="fsm-offer-submit" onclick="submitOffer('${esc(String(id))}')">Bod versturen</button>
-   </div>
- </div>`;
- document.body.appendChild(modal);
- setTimeout(()=>document.getElementById("fsmOfferInput")?.focus(),30);
-};
-window.submitOffer=id=>{
- const x=itemFromId(id); const input=document.getElementById("fsmOfferInput");
- if(!x||!input)return;
- const n=Number(String(input.value||"").replace(",","."));
- if(!Number.isFinite(n)||n<=0){input.focus();toast("Vul een geldig bedrag in.");return}
- const askingPrice=priceNumber(x?.price)||0;
- const minOffer=askingPrice>0?Math.round(askingPrice*0.5*100)/100:0;
- if(minOffer>0 && n<minOffer){
-   input.focus();
-   input.setCustomValidity("Je mag maximaal 50% korting vragen.");
-   toast("Je bod mag niet lager zijn dan "+money(minOffer,currency())+" (maximaal 50% korting).");
-   return;
- }
- input.setCustomValidity("");
- const seller=x?.seller||x?.username||"verkoper";
- const offerId="of"+Date.now();
- const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:priceNumber(x?.price)||0,amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString(),itemSnapshot:{...x}};
- if(!Array.isArray(demo.offers))demo.offers=[];
- demo.offers.push(o);
- const msg={id:"msg"+Date.now(),chat:seller,from:demo.user.username,to:seller,text:"Ik wil graag een bod doen op dit shirt.",itemId:String(id),itemSnapshot:{...x},offerId,offerAmount:n,system:false,read:true,date:new Date().toISOString()};
- demo.messages.push(msg);
- save();
- api("/offers",{method:"POST",body:JSON.stringify(o)});
- api("/messages",{method:"POST",body:JSON.stringify(msg)});
- document.getElementById("fsmOfferModal")?.remove();
- toast("Bod verstuurd: "+money(n,currency()));
- go("#/chat/"+encodeURIComponent(seller));
-}
-async function checkout(id,source){
- const x=itemFromId(id);if(!x)return;
- let accepted=null;
- if(source==="offer") accepted=demo.offers.find(o=>String(o.itemId)===String(id)&&o.buyer===demo.user.username&&o.status==="accepted");
- const price=accepted?accepted.amount:priceNumber(x.price)||0;
- const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:priceNumber(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
- demo.orders.push(order);save();
- const result=await api("/checkout/session",{method:"POST",body:JSON.stringify({orderId:order.id,itemId:order.itemId,price:order.finalPrice,currency:order.currency,source:order.source})});
- if(result?.url){location.href=result.url;return}
- go("#/checkout/"+order.id);
-}
-window.checkout=checkout;
-function checkoutPage(id){
- const o=demo.orders.find(x=>x.id===id);
- if(!o){shell("Betaling",`<div class="fsm-empty">Bestelling niet gevonden.</div>`);return}
- shell("Betaling",`<div class="fsm-card"><div class="fsm-muted">Je betaalt voor</div><h2>${esc(o.itemName)}</h2><div class="fsm-amount">${money(o.finalPrice,o.currency)}</div>${o.source==="accepted_offer"?`<div class="fsm-note" style="margin-top:8px">Dit is de door de verkoper geaccepteerde bodprijs.</div>`:""}
- <div class="fsm-form" style="margin-top:16px"><label>Betaalmethode</label><button class="fsm-btn dark" onclick="addPaymentMethod('${o.id}')">${demo.paymentMethod?"💳 Kaart •••• "+demo.paymentMethod.last4:"＋ Kaart toevoegen"}</button><button class="fsm-btn green" onclick="payOrder('${o.id}')">Betalen ${money(o.finalPrice,o.currency)}</button><div class="fsm-note">De echte kaartgegevens horen rechtstreeks bij een betaalprovider te worden ingevoerd. De website bewaart geen volledig kaartnummer of CVC.</div></div></div>`);
-}
-window.addPaymentMethod=async id=>{const r=await api("/payments/setup-session",{method:"POST",body:JSON.stringify({returnUrl:location.href})});if(r?.url){location.href=r.url;return}const last=prompt("Demo: laatste 4 cijfers van je kaart:");if(/^\d{4}$/.test(last)){demo.paymentMethod={last4:last};save();checkoutPage(id)}}
-window.payOrder=async id=>{const o=demo.orders.find(x=>x.id===id);if(!o)return;const r=await api("/orders/"+id+"/pay",{method:"POST",body:JSON.stringify({})});if(r?.success||!r){o.status="paid";systemMessage(o,"paid");save();go("#/order/"+id)}}
-function systemMessage(o,event){
- const texts={paid:`Je bestelling is bevestigd. ${o.itemName} wordt klaargemaakt voor verzending.`,shipped:`Je bestelling is verzonden 📦. Track pakket: ${location.origin+location.pathname+"#/track/"+o.id}`,delivered:`Je pakket is afgeleverd 🎉. Bevestig de ontvangst of meld een probleem.`,completed:`Bestelling afgerond. Je kunt nu een beoordeling achterlaten.`};
- demo.messages.push({id:"m"+Date.now(),chat:o.seller,from:"SYSTEM",to:demo.user.username,text:texts[event]||"Orderupdate",system:true,event,date:new Date().toISOString(),orderId:o.id,trackingUrl:location.origin+location.pathname+"#/track/"+o.id});save();
-}
-function order(id){
- const o=demo.orders.find(x=>x.id===id);if(!o){shell("Bestelling",`<div class="fsm-empty">Bestelling niet gevonden.</div>`);return}
- const canReview=o.status==="completed";
- shell("Bestelling",`<div class="fsm-card"><div class="fsm-muted">Bestelling ${esc(o.id)}</div><h2>${esc(o.itemName)}</h2><div class="fsm-amount">${money(o.finalPrice,o.currency)}</div><div class="fsm-order-status">${["pending","paid","shipped","delivered","completed"].map(s=>`<span class="fsm-pill" style="${o.status===s?"border-color:var(--green);color:var(--green)":""}">${s}</span>`).join("")}</div>
- <button class="fsm-btn dark" onclick="go('#/track/${o.id}')">📦 Tracking bekijken</button>
- ${o.status==="paid"?`<button class="fsm-btn green" style="margin-top:8px" onclick="changeOrder('${o.id}','shipped')">Markeer als verzonden</button>`:""}
- ${o.status==="shipped"?`<button class="fsm-btn green" style="margin-top:8px" onclick="changeOrder('${o.id}','delivered')">Markeer als afgeleverd</button>`:""}
- ${o.status==="delivered"?`<div class="fsm-row" style="margin-top:8px"><button class="fsm-btn green" onclick="changeOrder('${o.id}','completed')">Bestelling ontvangen</button><button class="fsm-btn dark" onclick="issueOrder('${o.id}')">Er is een probleem</button></div>`:""}
- ${canReview?`<button class="fsm-btn gold full" style="margin-top:10px" onclick="review('${o.id}')">⭐ Feedback geven</button>`:""}
- </div>`)}
-window.changeOrder=async(id,status)=>{const o=demo.orders.find(x=>x.id===id);if(!o)return;const r=await api("/orders/"+id+"/status",{method:"POST",body:JSON.stringify({status})});if(r===null||r?.success){o.status=status;systemMessage(o,status);save();order(id)}}
-window.issueOrder=async id=>{await api("/orders/"+id+"/issue",{method:"POST",body:JSON.stringify({reason:"buyer_reported_issue"})});toast("Probleem gemeld")}
-function track(id){
- const o=demo.orders.find(x=>x.id===id);if(!o){shell("Tracking",`<div class="fsm-empty">Bestelling niet gevonden.</div>`);return}
- shell("Tracking",`<div class="fsm-card"><div class="fsm-muted">Bestelling</div><h2>${esc(o.itemName)}</h2><div class="fsm-pill" style="display:inline-block;margin:10px 0">Tracking: ${esc(o.trackingId)}</div><div class="fsm-order-status"><span class="fsm-pill">✓ Bestelling geplaatst</span><span class="fsm-pill">${o.status==="pending"?"○":"✓"} Betaling</span><span class="fsm-pill">${["shipped","delivered","completed"].includes(o.status)?"✓":"○"} Verzonden</span><span class="fsm-pill">${["delivered","completed"].includes(o.status)?"✓":"○"} Afgeleverd</span></div><p class="fsm-muted">Deze trackingpagina is gekoppeld aan bestelling ${esc(o.id)}.</p></div>`)}
-function review(id){
- const o=demo.orders.find(x=>x.id===id);if(!o)return;
- shell("Feedback",`<div class="fsm-card"><h2>Beoordeel ${esc(o.seller)}</h2><div class="fsm-form"><label>Sterren</label><select id="reviewRating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select><label>Review</label><textarea id="reviewText" placeholder="Schrijf je ervaring..."></textarea><button class="fsm-btn gold" onclick="submitReview('${o.id}')">Feedback plaatsen</button></div></div>`)}
-window.submitReview=async id=>{const o=demo.orders.find(x=>x.id===id);const r={id:"rv"+Date.now(),orderId:id,from:demo.user.username,to:o.seller,rating:Number(document.getElementById("reviewRating").value),text:document.getElementById("reviewText").value.trim(),date:new Date().toLocaleDateString()};if(!r.text)return;demo.reviews.push(r);save();await api("/reviews",{method:"POST",body:JSON.stringify(r)});toast("Feedback geplaatst");go("#/profile/public/reviews")}
-function toast(t){const el=document.getElementById("toast");if(el){el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}}
-window.toast=toast;
-function renderOffers(){
- const offers=demo.offers.filter(o=>o.seller===demo.user.username);
- shell("Biedingen",offers.length?offers.map(o=>`<div class="fsm-card" style="margin-bottom:9px"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${esc(o.buyer)} bood ${money(o.amount,o.currency)}</div></div><span class="fsm-pill">${esc(o.status)}</span></div>${o.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${o.id}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${o.id}')">Weigeren</button></div>`:""}</div>`).join(""):`<div class="fsm-empty">Nog geen biedingen.</div>`)
-}
-window.acceptOffer=async id=>{
- const o=demo.offers.find(x=>x.id===id);
- if(!o||o.status!=="pending")return;
- o.status="accepted";
- if(o.itemSnapshot){o.itemSnapshot.price=o.amount;}
- const text="Het bod van "+money(o.amount,o.currency||currency())+" is geaccepteerd! 🎉";
- demo.messages.push({id:"offer-accept-"+Date.now(),chat:o.buyer===demo.user.username?o.seller:o.buyer,from:demo.user.username,to:o.buyer===demo.user.username?o.seller:o.buyer,text,itemId:String(o.itemId),offerId:o.id,system:true,read:false,date:new Date().toISOString()});
- save();
- await api("/offers/"+id+"/accept",{method:"POST",body:JSON.stringify({})});
- await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});
- toast("Bod geaccepteerd");
- if(location.hash.startsWith("#/chat/")){chat(decodeURIComponent(location.hash.split("/")[2]||o.buyer));}else renderOffers();
-}
-window.rejectOffer=async id=>{
- const o=demo.offers.find(x=>x.id===id);
- if(!o||o.status!=="pending")return;
- o.status="rejected";
- const text="Het bod van "+money(o.amount,o.currency||currency())+" is geweigerd.";
- demo.messages.push({id:"offer-reject-"+Date.now(),chat:o.buyer===demo.user.username?o.seller:o.buyer,from:demo.user.username,to:o.buyer===demo.user.username?o.seller:o.buyer,text,itemId:String(o.itemId),offerId:o.id,system:true,read:false,date:new Date().toISOString()});
- save();
- await api("/offers/"+id+"/reject",{method:"POST",body:JSON.stringify({})});
- await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});
- toast("Bod geweigerd");
- if(location.hash.startsWith("#/chat/")){chat(decodeURIComponent(location.hash.split("/")[2]||o.buyer));}else renderOffers();
-}
-function enhancedRouter(){
- const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
- if(!m)return false;
- const a=m[1],b=m[2],c=m[3];
- if(a==="profile"&&!b){profile();return true}
- if(a==="profile"&&b==="public"){publicProfile(c||"items");return true}
- if(a==="badges"){badges();return true}
- if(a==="favorites"){favorites();return true}
- if(a==="wallet"){wallet();return true}
- if(a==="orders"){orders(b||"all",c||"bought");return true}
- if(a==="promote"){promote();return true}
- if(a==="inbox"){inbox();return true}
- if(a==="chat"){chat(decodeURIComponent(b||"verkoper"));return true}
- if(a==="product"){product(b);return true}
- if(a==="checkout"){checkoutPage(b);return true}
- if(a==="order"){order(b);return true}
- if(a==="track"){track(b);return true}
- if(a==="offers"){renderOffers();return true}
- return false
-}
-// Koppel alle marketplace-routes aan deze router.
-window.__fsmRoute = enhancedRouter;
+    close.addEventListener('click',function(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+    });
 
-// Eén betrouwbare hash-router: Home/Explore/Sell blijven door de bestaande router lopen,
-// alle profiel-, inbox- en chatpagina's worden hier gerenderd.
-function fsmNavigate(){
-  const h=location.hash||"#/";
-  if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
-    setTimeout(()=>enhancedRouter(),0);
-  }
-}
-window.addEventListener("hashchange", fsmNavigate);
+    modal.addEventListener('click',function(event){
+        if(event.target===modal){
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden','true');
+        }
+    });
 
-// Klikken op Profiel/Inbox/chat/menu-knoppen mag nooit door een andere render worden overschreven.
-document.addEventListener("click", function(event){
-  const el=event.target.closest('a[href],button[onclick]');
-  if(!el) return;
-  const href=el.getAttribute('href')||'';
-  const onclick=el.getAttribute('onclick')||'';
-  const route=(href.match(/^#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track)(?:[^']*)/)||[])[0];
-  if(route){
-    event.preventDefault();
-    location.hash=route;
-    setTimeout(()=>enhancedRouter(),0);
-    return;
-  }
-  // onclick="go('#/...')" op de profielknoppen
-  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track)[^'"]*)['"]\)/);
-  if(m){
-    event.preventDefault();
-    location.hash=m[1];
-    setTimeout(()=>enhancedRouter(),0);
-  }
-});
-
-setTimeout(()=>{
-  if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
-    enhancedRouter();
-  }
-},0);
+    document.addEventListener('keydown',function(event){
+        if(event.key==='Escape'){
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden','true');
+        }
+    });
 })();
 </script>
+
 </body>
 </html>
