@@ -1489,6 +1489,14 @@ footer strong{
 }
 </style>
 
+<style id="home-search-only-final">
+/* ONLY: move Home search bar 15px further down */
+.hero-search{
+  transform:translateY(15px)!important;
+}
+</style>
+
+
 <style>
 @media (max-width:900px){
   .header-inner{min-height:62px;padding:7px 10px}
@@ -3163,6 +3171,44 @@ footer strong{
     bottom:0!important;
     width:100%!important;
   }
+}
+</style>
+
+
+<style id="final-home-mobile-request">
+@media(max-width:900px){
+  .hero{position:relative!important;}
+  .hero-content{position:absolute!important;top:0!important;bottom:auto!important;left:17px!important;width:calc(100% - 34px)!important;z-index:10!important;}
+  .hero-buttons{width:40%!important;gap:3px!important;margin-top:8px!important;}
+  .hero-button{width:100%!important;min-height:17px!important;height:auto!important;padding:5px 4px!important;font-size:7px!important;line-height:1.1!important;border-radius:6px!important;}
+}
+@media(max-width:390px){
+  .hero-buttons{width:40%!important;gap:3px!important;margin-top:7px!important;}
+  .hero-button{min-height:16px!important;padding:4px 3px!important;font-size:6.5px!important;}
+}
+</style>
+
+<style id="home-search-only-position-fix">
+/* ONLY: move the Home search bar slightly down on desktop and mobile */
+.hero-search{
+  margin-top:23px!important;
+}
+@media(max-width:900px){
+  .hero-search{
+    margin-top:18px!important;
+  }
+}
+@media(max-width:390px){
+  .hero-search{
+    margin-top:17px!important;
+  }
+}
+</style>
+
+<style id="home-search-only-lower">
+/* ONLY change: move the HOME search bar further down */
+.hero .hero-search{
+  transform:translateY(20px)!important;
 }
 </style>
 
@@ -4892,7 +4938,7 @@ class="photo-dropzone"
 id="photoDropzone"
 >
 📷 Tik om foto's te uploaden
-(max 5)
+(max 15)
 </div>
 
 
@@ -5293,7 +5339,7 @@ Plaats advertentie
     function processFiles(files){
 
         const remaining=
-            5-selectedImages.length;
+            15-selectedImages.length;
 
 
         if(remaining<=0){
@@ -6201,180 +6247,155 @@ router();
 </style>
 
 
+<style>
+@media (max-width:900px){
+  /* Keep the complete hero text inside the image */
+  .hero{
+    position:relative!important;
+    overflow:hidden!important;
+  }
+  .hero-content{
+    position:absolute!important;
+    top:0!important;
+    left:0!important;
+    right:0!important;
+    bottom:auto!important;
+    z-index:10!important;
+    padding:4vw!important;
+  }
 
-<!-- ======================================================
-     SHIRT DESCRIPTION ONLY
-     Added without changing the existing app structure.
-====================================================== -->
-<style id="shirt-description-only-style">
-.shirt-description-modal{
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    display:none;
-    align-items:flex-start;
-    justify-content:center;
-    padding:30px 16px;
-    overflow-y:auto;
-    background:rgba(0,0,0,.78);
-}
-.shirt-description-modal.open{display:flex}
-.shirt-description-box{
-    position:relative;
-    width:min(720px,100%);
-    margin:auto;
-    background:#151b19;
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 25px 80px rgba(0,0,0,.65);
-}
-.shirt-description-close{
-    position:absolute;
-    right:14px;
-    top:12px;
-    z-index:3;
-    width:42px;
-    height:42px;
-    border:0;
-    border-radius:50%;
-    background:rgba(0,0,0,.62);
-    color:#fff;
-    font-size:28px;
-    line-height:1;
-    cursor:pointer;
-}
-.shirt-description-photo{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:contain;
-    display:block;
-    background:#fff;
-}
-.shirt-description-content{padding:24px}
-.shirt-description-title{
-    font-size:14px;
-    color:#aeb9b5;
-    margin-bottom:42px;
-}
-.shirt-description-text{
-    font-size:18px;
-    line-height:1.55;
-    color:#aeb9b5;
-    white-space:pre-line;
-    margin:0 0 26px;
-}
-.shirt-description-translate{
-    padding-top:18px;
-    border-top:1px solid rgba(255,255,255,.10);
-    color:#aeb9b5;
-    font-size:15px;
-}
-.shirt-description-translate span{color:#49aabd}
-.shirt-description-meta{
-    margin-top:24px;
-    border-top:1px solid rgba(255,255,255,.10);
-}
-.shirt-description-row{
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    padding:20px 0;
-    border-bottom:1px solid rgba(255,255,255,.10);
-    font-size:16px;
-}
-.shirt-description-row strong{color:#fff}
-.shirt-description-row span{color:#aeb9b5;text-align:right}
-@media(max-width:650px){
-    .shirt-description-modal{padding:0}
-    .shirt-description-box{min-height:100%;border-radius:0;border:0}
-    .shirt-description-content{padding:24px 20px}
-    .shirt-description-text{font-size:17px}
+  /* Make the complete text block slightly smaller */
+  .hero-kicker{
+    font-size:clamp(6px,1.5vw,8px)!important;
+  }
+  .hero-title{
+    font-size:clamp(24px,6.5vw,36px)!important;
+  }
+  .hero-description{
+    max-width:52vw!important;
+    font-size:clamp(9px,2.1vw,11px)!important;
+    line-height:1.3!important;
+  }
+  .hero-buttons{
+    margin-top:8px!important;
+    gap:5px!important;
+  }
+  .hero-button{
+    min-height:30px!important;
+    padding:0 9px!important;
+    font-size:8px!important;
+  }
+  .hero-search{
+    height:34px!important;
+    margin-top:7px!important;
+  }
+  .hero-search input{
+    font-size:9px!important;
+  }
+
+  /* Prevent a black section/bar from appearing directly underneath the image */
+  .hero + *{
+    margin-top:0!important;
+  }
 }
 </style>
 
-<div id="shirtDescriptionModal" class="shirt-description-modal" aria-hidden="true">
-    <div class="shirt-description-box" role="dialog" aria-modal="true">
-        <button id="shirtDescriptionClose" class="shirt-description-close" type="button" aria-label="Sluiten">×</button>
-        <img id="shirtDescriptionPhoto" class="shirt-description-photo" alt="">
-        <div class="shirt-description-content">
-            <div class="shirt-description-title">Beschrijving</div>
-            <p id="shirtDescriptionText" class="shirt-description-text"></p>
-            <div class="shirt-description-translate">🌐 &nbsp; Vertaald door Google · <span>Toon het origineel</span></div>
-            <div class="shirt-description-meta">
-                <div class="shirt-description-row"><strong>Categorie</strong><span>Voetbalshirts</span></div>
-                <div class="shirt-description-row"><strong>Club</strong><span id="shirtDescriptionClub"></span></div>
-                <div class="shirt-description-row"><strong>Staat</strong><span id="shirtDescriptionCondition"></span></div>
-                <div class="shirt-description-row"><strong>Maat</strong><span id="shirtDescriptionSize"></span></div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script id="shirt-description-only-script">
-(function(){
-    const modal=document.getElementById('shirtDescriptionModal');
-    const close=document.getElementById('shirtDescriptionClose');
-    if(!modal) return;
+<style>
+@media (max-width:900px){
+  .hero-content{
+    padding:2.8vw!important;
+  }
+  .hero-kicker{
+    font-size:clamp(5px,1.2vw,7px)!important;
+    margin-bottom:3px!important;
+  }
+  .hero-title{
+    font-size:clamp(20px,5.4vw,30px)!important;
+    line-height:.9!important;
+  }
+  .hero-description{
+    max-width:46vw!important;
+    font-size:clamp(7px,1.7vw,9px)!important;
+    line-height:1.2!important;
+    margin-top:5px!important;
+  }
+  .hero-buttons{
+    margin-top:5px!important;
+    gap:4px!important;
+  }
+  .hero-button{
+    min-height:25px!important;
+    padding:0 7px!important;
+    font-size:7px!important;
+  }
+  .hero-search{
+    height:29px!important;
+    margin-top:5px!important;
+  }
+  .hero-search input{
+    font-size:8px!important;
+  }
+}
+@media (max-width:390px){
+  .hero-title{
+    font-size:clamp(18px,5vw,26px)!important;
+  }
+  .hero-description{
+    font-size:clamp(6.5px,1.6vw,8px)!important;
+  }
+  .hero-button{
+    min-height:23px!important;
+    font-size:6.5px!important;
+  }
+}
+</style>
 
-    function openDescription(card){
-        const img=card.querySelector('.shirt-visual img');
-        const name=card.querySelector('.shirt-name');
-        const club=card.querySelector('.shirt-club');
-        const condition=card.querySelector('.shirt-condition');
-        const view=card.querySelector('.shirt-view');
 
-        document.getElementById('shirtDescriptionPhoto').src=img ? img.src : '';
-        document.getElementById('shirtDescriptionPhoto').alt=name ? name.textContent.trim() : 'Voetbalshirt';
-        document.getElementById('shirtDescriptionClub').textContent=club ? club.textContent.trim().replace(/^👕\s*/, '') : '';
-        document.getElementById('shirtDescriptionCondition').textContent=condition ? condition.textContent.trim() : '';
-        document.getElementById('shirtDescriptionSize').textContent='Niet opgegeven';
+<style>
+@media (max-width:900px){
+  /* Slightly enlarge the hero text again */
+  .hero-kicker{font-size:clamp(5.5px,1.35vw,7.5px)!important}
+  .hero-title{font-size:clamp(22px,5.8vw,32px)!important}
+  .hero-description{
+    max-width:50vw!important;
+    font-size:clamp(8px,1.9vw,10px)!important;
+    line-height:1.25!important;
+  }
+  .hero-button{font-size:7.5px!important}
+  .hero-search input{font-size:8.5px!important}
 
-        let description='Dit voetbalshirt wordt aangeboden via Football-Shirt-Market. Bekijk de advertentiegegevens en informatie over het shirt hierboven.';
-        try{
-            const listings=JSON.parse(localStorage.getItem('fsm_user_listings')||'[]');
-            const found=listings.find(item=>{
-                const itemPrice='€ '+parseFloat(item.price).toFixed(2).replace('.',',');
-                return item.name=== (name ? name.textContent.trim() : '') &&
-                       item.club=== (club ? club.textContent.trim().replace(/^👕\s*/, '') : '') &&
-                       (itemPrice===(view?.dataset.price||''));
-            });
-            if(found && found.description) description=found.description;
-            if(found && found.size) document.getElementById('shirtDescriptionSize').textContent=found.size;
-        }catch(e){}
+  /* Remove the large black area below the hero image */
+  .hero{
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:16/10!important;
+    margin-bottom:0!important;
+  }
+  .hero + *{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+}
+@media (max-width:390px){
+  .hero-title{font-size:clamp(20px,5.5vw,29px)!important}
+  .hero-description{font-size:clamp(7.5px,1.8vw,9px)!important}
+}
+</style>
 
-        document.getElementById('shirtDescriptionText').textContent=description;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden','false');
-    }
 
-    document.addEventListener('click',function(event){
-        const card=event.target.closest('.shirt-card');
-        if(!card) return;
-        if(event.target.closest('button,a,input,select,label')) return;
-        openDescription(card);
-    });
+<style id="home-search-only-v9">
+.hero-search{
+  transform:translateY(35px)!important;
+}
+</style>
 
-    close.addEventListener('click',function(){
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden','true');
-    });
 
-    modal.addEventListener('click',function(event){
-        if(event.target===modal){
-            modal.classList.remove('open');
-            modal.setAttribute('aria-hidden','true');
-        }
-    });
-
-    document.addEventListener('keydown',function(event){
-        if(event.key==='Escape'){
-            modal.classList.remove('open');
-            modal.setAttribute('aria-hidden','true');
-        }
-    });
-})();
-</script>
+<style id="home-search-only-40px">
+.hero-search{
+  transform:translateY(80px)!important;
+}
+</style>
 
 </body>
 </html>
