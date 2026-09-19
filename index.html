@@ -5789,7 +5789,7 @@ function updateNav(){
     else if(hash.startsWith("#/inbox") || hash.startsWith("#/chat")){
         document.getElementById("navInbox")?.classList.add("active");
     }
-    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/wallet") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
+    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
         document.getElementById("navProfile")?.classList.add("active");
     }
 
@@ -6658,6 +6658,8 @@ router();
 .fsm-old-price{display:block;text-decoration:line-through;opacity:.62;font-size:.82em;margin-top:2px;}
 .fsm-chat-oldprice .fsm-new-price{font-size:1.15em;}
 .fsm-chat-oldprice .fsm-old-price{font-size:.8em;}
+
+.fsm-inbox-switch{display:flex;gap:8px;margin-bottom:12px}.fsm-inbox-switch button{flex:1;position:relative}.fsm-notif-badge{position:absolute;top:-6px;right:-4px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#e6b84a;color:#071019;font-size:11px;font-weight:800;display:grid;place-items:center}.fsm-notif-row{display:flex;gap:12px;align-items:flex-start;padding:13px 4px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer}.fsm-notif-row:last-child{border-bottom:0}.fsm-notif-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(230,184,74,.14);color:#e6b84a;font-size:20px;flex:0 0 40px}.fsm-notif-unread{background:rgba(230,184,74,.07)}.fsm-notif-time{font-size:11px;color:#8d9b96;margin-top:4px}.fsm-notif-thumb{width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,.06);flex:0 0 52px}.fsm-notif-thumb img{width:100%;height:100%;object-fit:cover}
 </style>
 <script>
 (function(){
@@ -6742,6 +6744,14 @@ function ensureDemoMarketplace(){
     demo.messages.push({id:"demo-accepted",chat:acceptedSeller,from:acceptedSeller,to:me,text:"Je bod van €80 is geaccepteerd! 🎉",itemId:String(acceptedItem.id),itemSnapshot:acceptedItem,offerId:"demo-offer-accepted",system:true,read:false,date:new Date(Date.now()-1000*60*35).toISOString()});
   }
 }
+function ensureNotifications(){
+ if(!Array.isArray(demo.notifications)) demo.notifications=[];
+ const demoItem=demoShirt(0);
+ if(!demo.notifications.some(n=>n.id==="demo-like-1")){
+  demo.notifications.push({id:"demo-like-1",type:"like",from:"ShirtCollector",itemId:String(demoItem.id),itemSnapshot:{...demoItem},text:"ShirtCollector vindt je shirt leuk.",read:false,date:new Date(Date.now()-1000*60*12).toISOString()});
+ }
+}
+ensureNotifications();
 ensureDemoMarketplace();
 function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
 if(!existing || !existing.messages || !existing.messages.length || !existing.offers || !existing.offers.length) save()
@@ -6816,13 +6826,13 @@ function profile(){
  <section class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}
  <div style="flex:1"><h2>${esc(demo.user.username)}</h2><div class="fsm-muted">Mijn account</div></div>
  <button class="fsm-btn dark" onclick="go('#/profile/public')">Mijn advertenties bekijken</button></div></section>
- <section class="fsm-card" style="margin-top:12px;cursor:pointer" onclick="go('#/badges')">
+ <section class="fsm-card" style="margin-top:12px;cursor:pointer" role="button" tabindex="0" onclick="openBadges()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openBadges()}">
  <div class="fsm-row fsm-between"><strong>Verdiende badges</strong><span class="fsm-gold">0 van 2 ›</span></div>
  <div class="fsm-progress"><i style="width:0%"></i></div>
  </section>
  <div class="fsm-menu">
  <button onclick="go('#/favorites')">♡ <strong>Mijn favorieten</strong><span class="arrow">›</span></button>
- <button onclick="go('#/wallet')">€ <strong>Mijn portemonnee</strong><span class="arrow">›</span></button>
+ 
  <button onclick="go('#/orders')">▣ <strong>Mijn bestellingen</strong><span class="arrow">›</span></button>
  <button onclick="go('#/promote')">↗ <strong>Advertenties promoten</strong><span class="arrow">›</span></button>
  <button onclick="go('#/offers')">⌁ <strong>Biedingen</strong><span class="arrow">›</span></button>
@@ -6855,6 +6865,7 @@ function listingCard(x){
  return `<article class="fsm-item" role="button" tabindex="0" style="cursor:pointer" onclick="openProduct('${esc(x.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct('${esc(x.id)}')}"><div class="fsm-item-img">${img?`<img src="${esc(img)}" alt="${esc(x.name||"Voetbalshirt")}">`:"👕"}</div><div class="fsm-item-body"><div class="fsm-meta">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-row fsm-between" style="margin-top:7px"><span class="fsm-price">${priceDisplay(x)}</span><button class="fsm-btn dark" style="min-height:32px;padding:0 9px;font-size:9px" onclick="event.stopPropagation();openProduct('${esc(x.id)}')">Bekijken</button></div><button class="fsm-like-btn ${liked?"liked":""}" type="button" aria-label="${liked?"Verwijder uit favorieten":"Voeg toe aan favorieten"}" onclick="event.stopPropagation();toggleFav('${esc(x.id)}',this)">${liked?"♥":"♡"} <span>${liked?"Favoriet":"Vind ik leuk"}</span></button></div></article>`
 }
 window.openProduct=id=>go("#/product/"+encodeURIComponent(id));
+window.openBadges=function(){ location.hash="#/badges"; enhancedRouter(); };
 function badges(){shell("Badges",`
 <div class="fsm-list">
 <div class="fsm-card"><div class="fsm-row fsm-between"><div><h3>Goed bezig! 1 artikel geüpload</h3><p class="fsm-muted">Ga zo door om je badge te verdienen.</p></div><strong class="fsm-gold">0%</strong></div><div class="fsm-progress"><i style="width:20%"></i></div><button class="fsm-btn gold" style="margin-top:12px" onclick="go('#/sell')">Nieuwe advertentie maken</button></div>
@@ -6864,17 +6875,12 @@ function favorites(){
  const fav=allListings().filter(x=>demo.favorites.includes(String(x.id)));
  shell("Mijn favorieten",fav.length?`<div class="fsm-grid">${fav.map(x=>listingCard(x)).join("")}</div>`:`<div class="fsm-empty"><div class="ico">♡</div><strong>Nog geen favorieten</strong><p class="fsm-muted">Favoriete shirts verschijnen hier.</p></div>`);
 }
-function wallet(){shell("Mijn portemonnee",`
-<div class="fsm-card"><div class="fsm-muted">Saldo in behandeling</div><div class="fsm-amount">${money(demo.wallet.pending,currency())}</div></div>
-<div class="fsm-card" style="margin-top:12px"><div class="fsm-row fsm-between"><div><div class="fsm-muted">Beschikbaar saldo</div><div class="fsm-amount">${money(demo.wallet.balance,currency())}</div></div><button class="fsm-btn gold" onclick="toast('Uitbetaling wordt via de backend afgehandeld.')">Uitbetalen</button></div><div style="margin-top:12px"><button class="fsm-btn dark" onclick="go('#/explore')">Shoppen</button></div></div>
-<div class="fsm-card" style="margin-top:12px"><strong>Transacties</strong><div class="fsm-empty" style="padding:25px 10px">Nog geen transacties.</div></div>
-`)}
 function orders(filter="all",tab="bought"){
  const mine=demo.orders.filter(o=>tab==="bought"?o.buyer===demo.user.username:o.seller===demo.user.username);
  const shown=mine.filter(o=>filter==="all"||o.status===filter);
  shell("Mijn bestellingen",`<div class="fsm-tabs"><button class="fsm-tab ${tab==="sold"?"active":""}" onclick="go('#/orders/all/sold')">Verkocht</button><button class="fsm-tab ${tab==="bought"?"active":""}" onclick="go('#/orders/all/bought')">Gekocht</button></div>
  <div class="fsm-row" style="gap:6px;overflow:auto;margin-bottom:13px">${["all","pending","cancelled","completed"].map(f=>`<button class="fsm-pill" onclick="go('#/orders/${f}/${tab}')">${f==="all"?"Alles":f==="pending"?"In behandeling":f==="cancelled"?"Geannuleerd":"Voltooid"}</button>`).join("")}</div>
- ${shown.length?shown.map(o=>`<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="go('#/order/${o.id}')"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${money(o.finalPrice,o.currency)} · ${esc(o.status)}</div></div><span>›</span></div></div>`).join(""):`<div class="fsm-empty"><div class="ico">▣</div><strong>Je hebt nog geen bestellingen</strong><p class="fsm-muted">Als je iets verkoopt, zie je het hier staan</p></div>`}`);
+ ${shown.length?shown.map(o=>{const item=itemFromId(o.itemId)||o.itemSnapshot||null;const img=item?.images?.[0]||item?.image||"";return `<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="${item?`openProduct('${esc(String(item.id||o.itemId))}')`:`go('#/order/${o.id}')`}"><div class="fsm-row" style="gap:12px;align-items:center"><div style="width:78px;height:78px;flex:0 0 78px;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);display:grid;place-items:center">${img?`<img src="${esc(img)}" alt="${esc(o.itemName)}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:30px">👕</span>`}</div><div style="flex:1;min-width:0"><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${money(o.finalPrice,o.currency)} · ${esc(o.status)}</div><div class="fsm-muted" style="margin-top:5px">Tik om het gekochte shirt te bekijken</div></div><span>›</span></div></div>`}).join(""):`<div class="fsm-empty"><div class="ico">▣</div><strong>Je hebt nog geen bestellingen</strong><p class="fsm-muted">Als je iets verkoopt, zie je het hier staan</p></div>`}`);
 }
 function promote(){
  const mine=allListings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
@@ -6916,6 +6922,23 @@ window.startBoost=(type)=>{
  demo.boostSelection=[]; save(); toast(type+" geactiveerd voor "+ids.length+" geselecteerd(e) shirt"+(ids.length===1?"":"s")+" (demo)"); promote();
 };
 
+function notificationCount(){return (demo.notifications||[]).filter(n=>!n.read).length}
+function notificationTime(date){try{return new Date(date).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}catch(e){return ""}}
+function notifications(){
+ ensureNotifications();
+ const list=(demo.notifications||[]).slice().reverse();
+ const rows=list.length?list.map(n=>{
+  const item=n.itemSnapshot||itemFromId(n.itemId);
+  const img=item?.images?.[0]||item?.image||"";
+  return `<div class="fsm-notif-row ${n.read?"":"fsm-notif-unread"}" onclick="openNotification('${esc(n.id)}')">${img?`<div class="fsm-notif-thumb"><img src="${esc(img)}" alt=""></div>`:`<div class="fsm-notif-icon">♥</div>`}<div style="flex:1;min-width:0"><strong>${esc(n.text||"Iemand vindt je shirt leuk.")}</strong><div class="fsm-muted">${esc(item?.name||n.itemName||"Je advertentie")}</div><div class="fsm-notif-time">${notificationTime(n.date)}</div></div>${n.read?"":"<span class="fsm-unread">1</span>"}</div>`;
+ }).join(""):`<div class="fsm-empty"><div class="ico">🔔</div><strong>Geen meldingen</strong><p class="fsm-muted">Hier verschijnen meldingen wanneer iemand je producten leuk vindt.</p></div>`;
+ shell("Notificaties",`<div class="fsm-inbox-switch"><button class="fsm-btn dark" onclick="go('#/inbox')">✉ Berichten</button><button class="fsm-btn gold" onclick="go('#/notifications')">🔔 Notificaties${notificationCount()?`<span class="fsm-notif-badge">${notificationCount()}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows}</div></div>`,"inbox",false);
+}
+window.openNotification=id=>{
+ const n=(demo.notifications||[]).find(x=>x.id===id);
+ if(!n)return; n.read=true; save();
+ if(n.itemId) openProduct(n.itemId); else notifications();
+}
 function inbox(){
  const chats=[...new Set(demo.messages.map(m=>m.chat).filter(Boolean))];
  ["ShirtCollector","VintageKits","FootballFan24","RetroJerseys"].forEach(n=>{if(!chats.includes(n))chats.push(n)});
@@ -6925,7 +6948,7 @@ function inbox(){
    const unread=msgs.filter(m=>m.to===demo.user.username && !m.read).length;
    return `<button class="fsm-inbox-row" type="button" onclick="go('#/chat/${encodeURIComponent(c)}')">${avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></button>`;
  }).join("");
- shell("Inbox",`<div class="fsm-card"><div class="fsm-muted" style="margin-bottom:8px">Berichten</div><div class="fsm-list">${rows}</div></div>`,"inbox",false);
+ shell("Inbox",`<div class="fsm-inbox-switch"><button class="fsm-btn gold" onclick="go('#/inbox')">✉ Berichten${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length?`<span class="fsm-notif-badge">${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length}</span>`:""}</button><button class="fsm-btn dark" onclick="go('#/notifications')">🔔 Notificaties${notificationCount()?`<span class="fsm-notif-badge">${notificationCount()}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows}</div></div>`,"inbox",false);
 }
 window.openSellerChat=(seller,itemId)=>{
  try{sessionStorage.setItem("fsmChatItem",String(itemId||""));}catch(e){}
@@ -7073,7 +7096,7 @@ async function checkout(id,source){
  let accepted=null;
  if(source==="offer") accepted=demo.offers.find(o=>String(o.itemId)===String(id)&&o.buyer===demo.user.username&&o.status==="accepted");
  const price=accepted?accepted.amount:priceNumber(x.price)||0;
- const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:priceNumber(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
+ const order={id:"ord"+Date.now(),itemId:String(id),itemName:x.name||"Shirt",itemSnapshot:{...x,images:Array.isArray(x.images)?[...x.images]:x.images,image:x.image||""},buyer:demo.user.username,seller:x.seller||x.username||"verkoper",originalPrice:priceNumber(x.price)||0,finalPrice:price,currency:currency(),status:"pending",source:accepted?"accepted_offer":"listing",trackingId:"TRK"+Date.now(),createdAt:new Date().toISOString()};
  demo.orders.push(order);save();
  const result=await api("/checkout/session",{method:"POST",body:JSON.stringify({orderId:order.id,itemId:order.itemId,price:order.finalPrice,currency:order.currency,source:order.source})});
  if(result?.url){location.href=result.url;return}
@@ -7114,8 +7137,25 @@ window.submitReview=async id=>{const o=demo.orders.find(x=>x.id===id);const r={i
 function toast(t){const el=document.getElementById("toast");if(el){el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}}
 window.toast=toast;
 function renderOffers(){
- const offers=demo.offers.filter(o=>o.seller===demo.user.username);
- shell("Biedingen",offers.length?offers.map(o=>`<div class="fsm-card" style="margin-bottom:9px"><div class="fsm-row fsm-between"><div><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${esc(o.buyer)} bood ${money(o.amount,o.currency)}</div></div><span class="fsm-pill">${esc(o.status)}</span></div>${o.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${o.id}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${o.id}')">Weigeren</button></div>`:""}</div>`).join(""):`<div class="fsm-empty">Nog geen biedingen.</div>`)
+ const offers=demo.offers.filter(o=>o.seller===demo.user.username||o.buyer===demo.user.username);
+ shell("Biedingen",offers.length?offers.map(o=>{
+   const item=o.itemSnapshot||itemFromId(o.itemId)||null;
+   const img=item?.images?.[0]||item?.image||"";
+   const isSeller=o.seller===demo.user.username;
+   const other=isSeller?o.buyer:o.seller;
+   return `<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="${item?`openProduct('${esc(String(item.id||o.itemId))}')`:`go('#/chat/${encodeURIComponent(other)}')`}">
+     <div class="fsm-row" style="gap:12px;align-items:center">
+       <div style="width:78px;height:78px;flex:0 0 78px;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);display:grid;place-items:center">${img?`<img src="${esc(img)}" alt="${esc(o.itemName||"Voetbalshirt")}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:30px">👕</span>`}</div>
+       <div style="flex:1;min-width:0">
+         <strong>${esc(o.itemName||item?.name||"Voetbalshirt")}</strong>
+         <div class="fsm-muted">${esc(isSeller?o.buyer:o.seller)} ${isSeller?"bood":"· jouw bod"} ${money(o.amount,o.currency)}</div>
+         <div style="margin-top:5px"><span class="fsm-pill">${esc(o.status==="accepted"?"Geaccepteerd":o.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>
+       </div>
+       <span>›</span>
+     </div>
+     ${isSeller&&o.status==="pending"?`<div class="fsm-row" style="margin-top:10px" onclick="event.stopPropagation()"><button class="fsm-btn green" onclick="acceptOffer('${esc(o.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(o.id)}')">Weigeren</button></div>`:""}
+   </div>`;
+ }).join(""):`<div class="fsm-empty">Nog geen biedingen.</div>`);
 }
 window.acceptOffer=async id=>{
  const o=demo.offers.find(x=>x.id===id);
@@ -7150,10 +7190,10 @@ function enhancedRouter(){
  if(a==="profile"&&b==="public"){publicProfile(c||"items");return true}
  if(a==="badges"){badges();return true}
  if(a==="favorites"){favorites();return true}
- if(a==="wallet"){wallet();return true}
  if(a==="orders"){orders(b||"all",c||"bought");return true}
  if(a==="promote"){promote();return true}
  if(a==="inbox"){inbox();return true}
+    if(a==="notifications"){notifications();return true}
  if(a==="chat"){chat(decodeURIComponent(b||"verkoper"));return true}
  if(a==="product"){product(b);return true}
  if(a==="checkout"){checkoutPage(b);return true}
@@ -7169,7 +7209,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
-  if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
+  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
   }
@@ -7186,7 +7226,7 @@ document.addEventListener("click", function(event){
   if(!el) return;
   const href=el.getAttribute('href')||'';
   const onclick=el.getAttribute('onclick')||'';
-  const route=(href.match(/^#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
+  const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
     location.hash=route;
@@ -7194,7 +7234,7 @@ document.addEventListener("click", function(event){
     return;
   }
   // onclick="go('#/...')" op de profielknoppen
-  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
+  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
     location.hash=m[1];
@@ -7203,7 +7243,7 @@ document.addEventListener("click", function(event){
 });
 
 setTimeout(()=>{
-  if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
+  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
     enhancedRouter();
   }
 },0);
