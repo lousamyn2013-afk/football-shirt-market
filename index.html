@@ -7171,7 +7171,12 @@ function fsmNavigate(){
   const h=location.hash||"#/";
   if(/^#\/(profile|badges|favorites|wallet|orders|promote|inbox|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
+    return;
   }
+  // Ook Home, Ontdekken en Verkopen opnieuw renderen na een klik op een knop/link.
+  // Dit was de reden dat 'Nieuwe advertentie' de hash wel wijzigde, maar de
+  // verkooppagina niet opnieuw werd opgebouwd.
+  setTimeout(()=>router(),0);
 }
 window.addEventListener("hashchange", fsmNavigate);
 
@@ -7181,7 +7186,7 @@ document.addEventListener("click", function(event){
   if(!el) return;
   const href=el.getAttribute('href')||'';
   const onclick=el.getAttribute('onclick')||'';
-  const route=(href.match(/^#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track)(?:[^']*)/)||[])[0];
+  const route=(href.match(/^#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
     location.hash=route;
@@ -7189,7 +7194,7 @@ document.addEventListener("click", function(event){
     return;
   }
   // onclick="go('#/...')" op de profielknoppen
-  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track)[^'"]*)['"]\)/);
+  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|chat|badges|favorites|wallet|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
     location.hash=m[1];
