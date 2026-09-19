@@ -6930,13 +6930,18 @@ function notifications(){
  const rows=list.length?list.map(n=>{
   const item=n.itemSnapshot||itemFromId(n.itemId);
   const img=item?.images?.[0]||item?.image||"";
-  return `<div class="fsm-notif-row ${n.read?"":"fsm-notif-unread"}" onclick="openNotification('${esc(n.id)}')">${img?`<div class="fsm-notif-thumb"><img src="${esc(img)}" alt=""></div>`:`<div class="fsm-notif-icon">♥</div>`}<div style="flex:1;min-width:0"><strong>${esc(n.text||"Iemand vindt je shirt leuk.")}</strong><div class="fsm-muted">${esc(item?.name||n.itemName||"Je advertentie")}</div><div class="fsm-notif-time">${notificationTime(n.date)}</div></div>${n.read?"":"<span class="fsm-unread">1</span>"}</div>`;
- }).join(""):`<div class="fsm-empty"><div class="ico">🔔</div><strong>Geen meldingen</strong><p class="fsm-muted">Hier verschijnen meldingen wanneer iemand je producten leuk vindt.</p></div>`;
- shell("Notificaties",`<div class="fsm-inbox-switch"><button class="fsm-btn dark" onclick="go('#/inbox')">✉ Berichten</button><button class="fsm-btn gold" onclick="go('#/notifications')">🔔 Notificaties${notificationCount()?`<span class="fsm-notif-badge">${notificationCount()}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows}</div></div>`,"inbox",false);
+  const thumb=img?`<div class="fsm-notif-thumb"><img src="${esc(img)}" alt=""></div>`:`<div class="fsm-notif-icon">♥</div>`;
+  const unread=n.read?"":" fsm-notif-unread";
+  const badge=n.read?"":"<span class=\"fsm-unread\">1</span>";
+  return `<div class="fsm-notif-row${unread}" onclick="openNotification('${esc(n.id)}')">${thumb}<div style="flex:1;min-width:0"><strong>${esc(n.text||"Iemand vindt je shirt leuk.")}</strong><div class="fsm-muted">${esc(item?.name||n.itemName||"Je advertentie")}</div><div class="fsm-notif-time">${notificationTime(n.date)}</div></div>${badge}</div>`;
+ }).join(""): `<div class="fsm-empty"><div class="ico">🔔</div><strong>Geen meldingen</strong><p class="fsm-muted">Hier verschijnen meldingen wanneer iemand je producten leuk vindt.</p></div>`;
+ const count=notificationCount();
+ shell("Notificaties",`<div class="fsm-inbox-switch"><button class="fsm-btn dark" onclick="go('#/inbox')">✉ Berichten</button><button class="fsm-btn gold" onclick="go('#/notifications')">🔔 Notificaties${count?` <span class="fsm-notif-badge">${count}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows}</div></div>` ,"inbox",false);
 }
 window.openNotification=id=>{
  const n=(demo.notifications||[]).find(x=>x.id===id);
- if(!n)return; n.read=true; save();
+ if(!n)return;
+ n.read=true; save();
  if(n.itemId) openProduct(n.itemId); else notifications();
 }
 function inbox(){
