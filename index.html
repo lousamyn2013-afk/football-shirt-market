@@ -5843,11 +5843,7 @@ function router(){
         hash.startsWith("#/sell")
     ){
 
-        if(window.FSM_IS_LOGGED_IN){
-            renderSell();
-        }else{
-            window.FSM_SHOW_LOGIN?.();
-        }
+        renderSell();
 
     }
 
@@ -6722,7 +6718,6 @@ function clearLegacyAuth(){
 }
 async function syncAuthUser(session, reload=false){
   if(!session?.user){
-    window.FSM_IS_LOGGED_IN = false;
     clearLegacyAuth();
     return;
   }
@@ -6742,8 +6737,6 @@ async function syncAuthUser(session, reload=false){
     verified:profile?.verified? ["email"] : []
   };
   try{localStorage.setItem("fsm_user",JSON.stringify(user))}catch(e){}
-  window.FSM_IS_LOGGED_IN = true;
-  window.FSM_AUTH_READY = true;
   if(reload) location.reload();
 }
 
@@ -6833,37 +6826,13 @@ window.FSM_OPEN_AUTH=openAuth;
 window.FSM_RENDER_AUTH_LOGIN=renderAuthLogin;
 window.FSM_RENDER_AUTH_REGISTER=renderAuthRegister;
 
-// Beschermde routes: profiel, inbox/chat en verkopen vereisen een ingelogde gebruiker.
-window.FSM_IS_LOGGED_IN = false;
-window.FSM_AUTH_READY = false;
-window.FSM_PROTECTED_ROUTE = function(h){
-  return /^#\/(profile|badges|favorites|orders|promote|offers|inbox|notifications|chat|sell)(?:[/?]|$)/.test(h||"");
-};
-window.FSM_SHOW_LOGIN = function(){
-  if(window.FSM_RENDER_AUTH_LOGIN) window.FSM_RENDER_AUTH_LOGIN();
-  else if(window.FSM_OPEN_AUTH) window.FSM_OPEN_AUTH();
-};
-
 async function bootAuth(){
-  if(!supabaseClient){ window.FSM_AUTH_READY = true; return; }
+  if(!supabaseClient)return;
   const {data}=await supabaseClient.auth.getSession();
-  if(data.session){
-    await syncAuthUser(data.session, false);
-  }else{
-    window.FSM_IS_LOGGED_IN = false;
-    window.FSM_AUTH_READY = true;
-    clearLegacyAuth();
-  }
+  if(data.session) await syncAuthUser(data.session, false);
   supabaseClient.auth.onAuthStateChange(async(event,session)=>{
-    if(event==="SIGNED_OUT"){
-      window.FSM_IS_LOGGED_IN = false;
-      window.FSM_AUTH_READY = true;
-      clearLegacyAuth();
-      return;
-    }
-    if((event==="SIGNED_IN" || event==="INITIAL_SESSION") && session){
-      await syncAuthUser(session, event==="SIGNED_IN");
-    }
+    if(event==="SIGNED_OUT"){clearLegacyAuth();return;}
+    if(event==="SIGNED_IN" && session) await syncAuthUser(session, true);
   });
 }
 
@@ -7410,10 +7379,6 @@ window.rejectOffer=async id=>{
 }
 function enhancedRouter(){
  const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
- if(window.FSM_PROTECTED_ROUTE?.(h) && !window.FSM_IS_LOGGED_IN){
-   window.FSM_SHOW_LOGIN?.();
-   return true;
- }
  if(!m)return false;
  const a=m[1],b=m[2],c=m[3];
  if(a==="profile"&&!b){profile();return true}
@@ -7435,59 +7400,27 @@ function enhancedRouter(){
 // Koppel alle marketplace-routes aan deze router.
 window.__fsmRoute = enhancedRouter;
 
-// Eén betrouwbare hash-router: Home/Explore/Sell blijven door de bestaande router lopen,
-// alle profiel-, inbox- en chatpagina's worden hier gerenderd.
-function fsmNavigate(){
+// Alleen Profiel, Inbox en Verkopen vereisen een login.
+const authRoute=/^#\/(profile|inbox|sell)(?:[/?]|$)/;
+const marketRoute=/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/;
+
+async function fsmNavigate(){
   const h=location.hash||"#/";
-  if(window.FSM_PROTECTED_ROUTE?.(h) && !window.FSM_IS_LOGGED_IN){
-    history.replaceState(null,"",location.pathname+location.search+"#/");
-    setTimeout(()=>{
-      window.FSM_SHOW_LOGIN?.();
+  if(authRoute.test(h)){
+    const session=(await window.FSM_SUPABASE?.auth.getSession())?.data?.session;
+    if(!session){
+      history.replaceState(null,"","#/");
+      window.FSM_OPEN_AUTH?.();
       router();
-    },0);
-    return;
+      return;
+    }
   }
-  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
-    setTimeout(()=>enhancedRouter(),0);
-    return;
-  }
-  // Ook Home, Ontdekken en Verkopen opnieuw renderen na een klik op een knop/link.
-  // Dit was de reden dat 'Nieuwe advertentie' de hash wel wijzigde, maar de
-  // verkooppagina niet opnieuw werd opgebouwd.
-  setTimeout(()=>router(),0);
+  marketRoute.test(h)?enhancedRouter():router();
 }
-window.addEventListener("hashchange", fsmNavigate);
 
-// Klikken op Profiel/Inbox/chat/menu-knoppen mag nooit door een andere render worden overschreven.
-document.addEventListener("click", async function(event){
-  const el=event.target.closest('a[href],button[onclick]');
-  if(!el) return;
-  const href=el.getAttribute('href')||'';
-  const onclick=el.getAttribute('onclick')||'';
-  const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
-  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
-  const targetRoute=route || (m ? m[1] : '');
-  if(!targetRoute) return;
+window.addEventListener("hashchange",fsmNavigate);
+fsmNavigate();
 
-  event.preventDefault();
-  if(window.FSM_PROTECTED_ROUTE?.(targetRoute) && !window.FSM_IS_LOGGED_IN){
-    window.FSM_SHOW_LOGIN?.();
-    return;
-  }
-
-  location.hash=targetRoute;
-  setTimeout(()=>enhancedRouter(),0);
-});
-
-setTimeout(()=>{
-  if(window.FSM_PROTECTED_ROUTE?.(location.hash||"") && !window.FSM_IS_LOGGED_IN){
-    window.FSM_SHOW_LOGIN?.();
-    return;
-  }
-  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
-    enhancedRouter();
-  }
-},0);
 })();
 </script>
 <script>
