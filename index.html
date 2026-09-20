@@ -3357,15 +3357,6 @@ Profiel
 <div class="header-right">
 
 <button
-class="fsm-auth-button"
-id="fsmAuthButton"
-type="button"
-onclick="window.FSM_OPEN_AUTH?.()"
->
-Inloggen
-</button>
-
-<button
 class="language-button"
 id="languageButton"
 type="button"
@@ -3979,7 +3970,7 @@ function renderHome(){
 <section class="hero">
 
 <img
-src="hero.png"
+src="hero.webp"
 class="hero-image"
 alt="Football-Shirt-Market"
 onerror="this.style.display='none'"
@@ -4184,9 +4175,9 @@ function renderExplore(){
 <section class="explore-banner">
 
 <img
-src="ontdekken.png"
+src="ontdekken.webp"
 alt="Ontdekken"
-onerror="this.src='hero.png'"
+onerror="this.src='hero.webp'"
 >
 
 
@@ -6670,175 +6661,6 @@ router();
 
 .fsm-inbox-switch{display:flex;gap:8px;margin-bottom:12px}.fsm-inbox-switch button{flex:1;position:relative}.fsm-notif-badge{position:absolute;top:-6px;right:-4px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#e6b84a;color:#071019;font-size:11px;font-weight:800;display:grid;place-items:center}.fsm-notif-row{display:flex;gap:12px;align-items:flex-start;padding:13px 4px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer}.fsm-notif-row:last-child{border-bottom:0}.fsm-notif-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(230,184,74,.14);color:#e6b84a;font-size:20px;flex:0 0 40px}.fsm-notif-unread{background:rgba(230,184,74,.07)}.fsm-notif-time{font-size:11px;color:#8d9b96;margin-top:4px}.fsm-notif-thumb{width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,.06);flex:0 0 52px}.fsm-notif-thumb img{width:100%;height:100%;object-fit:cover}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(function(){
-"use strict";
-
-const SUPABASE_URL = "https://torxckrcdelecwioqgyt.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir";
-const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-window.FSM_SUPABASE = supabaseClient;
-window.FSM_SUPABASE_URL = SUPABASE_URL;
-
-const authStyle = document.createElement("style");
-authStyle.textContent = `
-.fsm-auth-button{
-  min-height:40px;border:1px solid rgba(24,191,119,.55);background:#07130e;color:#fff;
-  border-radius:10px;padding:0 13px;font-size:11px;font-weight:800;cursor:pointer;transition:.2s;
-}
-.fsm-auth-button:hover{border-color:#18bf77;transform:translateY(-1px)}
-.fsm-auth-backdrop{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}
-.fsm-auth-backdrop.open{display:flex}
-.fsm-auth-box{width:min(430px,100%);background:#08140f;border:1px solid rgba(239,210,143,.28);border-radius:18px;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
-.fsm-auth-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
-.fsm-auth-title{font-family:Montserrat,sans-serif;font-size:22px;font-weight:900}
-.fsm-auth-close{width:34px;height:34px;border:0;border-radius:9px;background:rgba(255,255,255,.08);color:#fff;font-size:20px;cursor:pointer}
-.fsm-auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
-.fsm-auth-tab{border:1px solid rgba(239,210,143,.18);background:#06100c;color:#b7c4be;border-radius:10px;height:42px;font-weight:800;cursor:pointer}
-.fsm-auth-tab.active{background:linear-gradient(135deg,#efd28f,#d1a33d);color:#071019;border-color:transparent}
-.fsm-auth-form{display:grid;gap:10px}
-.fsm-auth-form label{font-size:11px;color:#b7c4be;font-weight:700}
-.fsm-auth-form input{height:46px;border:1px solid rgba(239,210,143,.22);border-radius:10px;background:#030806;color:#fff;padding:0 12px;outline:0}
-.fsm-auth-form input:focus{border-color:#efd28f}
-.fsm-auth-submit{height:46px;border:0;border-radius:10px;background:linear-gradient(135deg,#18bf77,#08784c);color:#fff;font-weight:900;cursor:pointer;margin-top:3px}
-.fsm-auth-message{min-height:18px;font-size:12px;line-height:1.4;color:#b7c4be}
-.fsm-auth-message.error{color:#ff9f9f}
-.fsm-auth-message.success{color:#7fe0ae}
-.fsm-auth-account{display:grid;gap:12px}
-.fsm-auth-usercard{padding:13px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.fsm-auth-logout{height:44px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:#06100c;color:#fff;font-weight:800;cursor:pointer}
-@media(max-width:900px){.fsm-auth-button{min-height:38px;padding:0 10px}.fsm-auth-box{padding:16px}.fsm-auth-title{font-size:20px}}
-`;
-document.head.appendChild(authStyle);
-
-function escAuth(v){return String(v??"").replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));}
-function clearLegacyAuth(){
-  ["fsm_user","currentUser","loggedInUser","user","account"].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});
-}
-async function syncAuthUser(session, reload=false){
-  if(!session?.user){
-    clearLegacyAuth();
-    return;
-  }
-  let profile=null;
-  try{
-    const {data}=await supabaseClient.from("profiles").select("id,username,avatar_url,bio,location,verified").eq("id",session.user.id).maybeSingle();
-    profile=data||null;
-  }catch(e){}
-  const username=profile?.username || session.user.user_metadata?.username || session.user.email?.split("@")[0] || "Gebruiker";
-  const user={
-    id:session.user.id,
-    username:String(username),
-    email:session.user.email||"",
-    avatar_url:profile?.avatar_url||session.user.user_metadata?.avatar_url||"",
-    bio:profile?.bio||"",
-    location:profile?.location||"",
-    verified:profile?.verified? ["email"] : []
-  };
-  try{localStorage.setItem("fsm_user",JSON.stringify(user))}catch(e){}
-  if(reload) location.reload();
-}
-
-function authModal(){
-  let el=document.getElementById("fsmAuthBackdrop");
-  if(el) return el;
-  el=document.createElement("div");
-  el.id="fsmAuthBackdrop";
-  el.className="fsm-auth-backdrop";
-  el.innerHTML=`<div class="fsm-auth-box" role="dialog" aria-modal="true" aria-labelledby="fsmAuthTitle">
-    <div class="fsm-auth-head"><div class="fsm-auth-title" id="fsmAuthTitle">Inloggen</div><button class="fsm-auth-close" type="button" aria-label="Sluiten">×</button></div>
-    <div id="fsmAuthContent"></div>
-  </div>`;
-  document.body.appendChild(el);
-  el.querySelector(".fsm-auth-close").addEventListener("click",()=>el.classList.remove("open"));
-  el.addEventListener("click",e=>{if(e.target===el)el.classList.remove("open")});
-  return el;
-}
-
-function renderAuthLogin(){
-  const el=authModal(); const c=el.querySelector("#fsmAuthContent");
-  c.innerHTML=`<div class="fsm-auth-tabs"><button class="fsm-auth-tab active" data-auth-tab="login">Inloggen</button><button class="fsm-auth-tab" data-auth-tab="register">Account maken</button></div>
-  <form class="fsm-auth-form" id="fsmLoginForm">
-    <div><label for="fsmLoginEmail">E-mail</label><input id="fsmLoginEmail" type="email" autocomplete="email" required></div>
-    <div><label for="fsmLoginPassword">Wachtwoord</label><input id="fsmLoginPassword" type="password" autocomplete="current-password" required></div>
-    <div class="fsm-auth-message" id="fsmAuthMsg"></div>
-    <button class="fsm-auth-submit" type="submit">Inloggen</button>
-  </form>`;
-  c.querySelectorAll("[data-auth-tab]").forEach(b=>b.addEventListener("click",()=>b.dataset.authTab==="register"?renderAuthRegister():renderAuthLogin()));
-  c.querySelector("#fsmLoginForm").addEventListener("submit",async e=>{
-    e.preventDefault();
-    const msg=c.querySelector("#fsmAuthMsg"); msg.className="fsm-auth-message"; msg.textContent="Bezig met inloggen…";
-    const email=c.querySelector("#fsmLoginEmail").value.trim();
-    const password=c.querySelector("#fsmLoginPassword").value;
-    const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
-    if(error){msg.className="fsm-auth-message error";msg.textContent=error.message||"Inloggen mislukt.";return;}
-    await syncAuthUser(data.session,true);
-  });
-  el.classList.add("open");
-}
-
-function renderAuthRegister(){
-  const el=authModal(); const c=el.querySelector("#fsmAuthContent");
-  c.innerHTML=`<div class="fsm-auth-tabs"><button class="fsm-auth-tab" data-auth-tab="login">Inloggen</button><button class="fsm-auth-tab active" data-auth-tab="register">Account maken</button></div>
-  <form class="fsm-auth-form" id="fsmRegisterForm">
-    <div><label for="fsmRegUsername">Gebruikersnaam</label><input id="fsmRegUsername" type="text" autocomplete="username" minlength="2" required></div>
-    <div><label for="fsmRegEmail">E-mail</label><input id="fsmRegEmail" type="email" autocomplete="email" required></div>
-    <div><label for="fsmRegPassword">Wachtwoord</label><input id="fsmRegPassword" type="password" autocomplete="new-password" minlength="6" required></div>
-    <div class="fsm-auth-message" id="fsmAuthMsg"></div>
-    <button class="fsm-auth-submit" type="submit">Account maken</button>
-  </form>`;
-  c.querySelectorAll("[data-auth-tab]").forEach(b=>b.addEventListener("click",()=>b.dataset.authTab==="login"?renderAuthLogin():renderAuthRegister()));
-  c.querySelector("#fsmRegisterForm").addEventListener("submit",async e=>{
-    e.preventDefault();
-    const msg=c.querySelector("#fsmAuthMsg"); msg.className="fsm-auth-message"; msg.textContent="Account wordt aangemaakt…";
-    const username=c.querySelector("#fsmRegUsername").value.trim();
-    const email=c.querySelector("#fsmRegEmail").value.trim();
-    const password=c.querySelector("#fsmRegPassword").value;
-    if(!username){msg.className="fsm-auth-message error";msg.textContent="Vul een gebruikersnaam in.";return;}
-    const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{username},emailRedirectTo:window.location.origin+window.location.pathname}});
-    if(error){msg.className="fsm-auth-message error";msg.textContent=error.message||"Registreren mislukt.";return;}
-    if(data.session){
-      msg.className="fsm-auth-message success"; msg.textContent="Account aangemaakt.";
-      await syncAuthUser(data.session,true);
-    }else{
-      msg.className="fsm-auth-message success";
-      msg.textContent="Account aangemaakt. Bevestig eerst je e-mailadres via de e-mail die je hebt gekregen.";
-    }
-  });
-  el.classList.add("open");
-}
-
-async function openAuth(){
-  if(!supabaseClient){alert("Supabase kon niet geladen worden.");return;}
-  const {data}=await supabaseClient.auth.getSession();
-  if(data.session){
-    const el=authModal(); const user=data.session.user; const name=user.user_metadata?.username||user.email?.split("@")[0]||"Gebruiker";
-    el.querySelector("#fsmAuthContent").innerHTML=`<div class="fsm-auth-account"><div class="fsm-auth-usercard"><strong>${escAuth(name)}</strong><div style="margin-top:5px;color:#b7c4be;font-size:12px">${escAuth(user.email||"")}</div></div><button class="fsm-auth-logout" type="button" id="fsmLogoutBtn">Uitloggen</button></div>`;
-    el.querySelector("#fsmLogoutBtn").addEventListener("click",async()=>{
-      await supabaseClient.auth.signOut(); clearLegacyAuth(); location.reload();
-    });
-    el.classList.add("open");
-  }else renderAuthLogin();
-}
-
-window.FSM_OPEN_AUTH=openAuth;
-window.FSM_RENDER_AUTH_LOGIN=renderAuthLogin;
-window.FSM_RENDER_AUTH_REGISTER=renderAuthRegister;
-
-async function bootAuth(){
-  if(!supabaseClient)return;
-  const {data}=await supabaseClient.auth.getSession();
-  if(data.session) await syncAuthUser(data.session, false);
-  supabaseClient.auth.onAuthStateChange(async(event,session)=>{
-    if(event==="SIGNED_OUT"){clearLegacyAuth();return;}
-    if(event==="SIGNED_IN" && session) await syncAuthUser(session, true);
-  });
-}
-
-if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootAuth,{once:true}); else bootAuth();
-})();
-</script>
 <script>
 (function(){
 "use strict";
@@ -7400,46 +7222,48 @@ function enhancedRouter(){
 // Koppel alle marketplace-routes aan deze router.
 window.__fsmRoute = enhancedRouter;
 
-// Alleen Profiel, Inbox en Verkopen vereisen een login.
-const authRoute=/^#\/(profile|inbox|sell)(?:[/?]|$)/;
-const marketRoute=/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/;
-
-async function fsmNavigate(){
+// Eén betrouwbare hash-router: Home/Explore/Sell blijven door de bestaande router lopen,
+// alle profiel-, inbox- en chatpagina's worden hier gerenderd.
+function fsmNavigate(){
   const h=location.hash||"#/";
-  if(authRoute.test(h)){
-    const session=(await window.FSM_SUPABASE?.auth.getSession())?.data?.session;
-    if(!session){
-      history.replaceState(null,"","#/");
-      window.FSM_OPEN_AUTH?.();
-      router();
-      return;
-    }
+  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
+    setTimeout(()=>enhancedRouter(),0);
+    return;
   }
-  marketRoute.test(h)?enhancedRouter():router();
+  // Ook Home, Ontdekken en Verkopen opnieuw renderen na een klik op een knop/link.
+  // Dit was de reden dat 'Nieuwe advertentie' de hash wel wijzigde, maar de
+  // verkooppagina niet opnieuw werd opgebouwd.
+  setTimeout(()=>router(),0);
 }
+window.addEventListener("hashchange", fsmNavigate);
 
-window.addEventListener("hashchange",fsmNavigate);
-fsmNavigate();
+// Klikken op Profiel/Inbox/chat/menu-knoppen mag nooit door een andere render worden overschreven.
+document.addEventListener("click", function(event){
+  const el=event.target.closest('a[href],button[onclick]');
+  if(!el) return;
+  const href=el.getAttribute('href')||'';
+  const onclick=el.getAttribute('onclick')||'';
+  const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
+  if(route){
+    event.preventDefault();
+    location.hash=route;
+    setTimeout(()=>enhancedRouter(),0);
+    return;
+  }
+  // onclick="go('#/...')" op de profielknoppen
+  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
+  if(m){
+    event.preventDefault();
+    location.hash=m[1];
+    setTimeout(()=>enhancedRouter(),0);
+  }
+});
 
-})();
-</script>
-<script>
-(function(){
-  const b=document.getElementById("fsmAuthButton");
-  const sync=async()=>{
-    if(!b || !window.FSM_SUPABASE)return;
-    const {data}=await window.FSM_SUPABASE.auth.getSession();
-    if(data?.session){
-      const u=data.session.user;
-      b.textContent=u.user_metadata?.username || u.email?.split("@")[0] || "Account";
-      b.title="Account";
-    }else{
-      b.textContent="Inloggen";
-      b.title="Inloggen of account maken";
-    }
-  };
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",sync,{once:true});else sync();
-  window.FSM_SUPABASE?.auth.onAuthStateChange(()=>setTimeout(sync,50));
+setTimeout(()=>{
+  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
+    enhancedRouter();
+  }
+},0);
 })();
 </script>
 </body>
