@@ -151,18 +151,6 @@ nav a.active{
     background:rgba(255,255,255,.07);
 }
 
-.login-button{
-    min-height:40px;
-    padding:0 14px;
-    border:1px solid rgba(239,210,143,.32);
-    border-radius:10px;
-    background:var(--gold);
-    color:#071019;
-    font-size:11px;
-    font-weight:900;
-    cursor:pointer;
-}
-
 .header-right{
     display:flex;
     align-items:center;
@@ -3368,11 +3356,7 @@ Profiel
 
 <div class="header-right">
 
-<button
-class="login-button"
-type="button"
-onclick="fsmLogin()"
->Inloggen</button>
+<button type="button" onclick="fsmLogin()" style="min-height:40px;border:1px solid rgba(239,210,143,.32);background:#07130e;color:var(--gold);border-radius:10px;padding:0 12px;font-size:11px;font-weight:800;cursor:pointer;">Inloggen</button>
 
 <button
 class="language-button"
@@ -6781,18 +6765,36 @@ function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpper
 function app(){return document.getElementById("app")}
 function hash(){return location.hash||"#/"}
 function go(h){location.hash=h}
-function requireLogin(){if(!readLoggedInUser()){alert("Je moet eerst inloggen.");return false}return true}
+function closeLogin(){document.getElementById("fsmLoginModal")?.remove()}
+function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
 async function fsmLogin(){
- const email=prompt("E-mail"); if(!email)return;
- const password=prompt("Wachtwoord"); if(!password)return;
- const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},body:JSON.stringify({email,password})});
- const d=await r.json();
- if(!r.ok){alert(d.error_description||"Inloggen mislukt.");return}
- const pr=await fetch("https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?id=eq."+encodeURIComponent(d.user.id)+"&select=id,username,avatar_url,bio,location,verified",{headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+d.access_token}});
- const rows=await pr.json(), profile=rows[0]||{};
- localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username:profile.username||email.split("@")[0],...profile}));
- localStorage.setItem("fsm_access_token",d.access_token); location.reload();
+  if(document.getElementById("fsmLoginModal")){document.getElementById("fsmLoginEmail")?.focus();return}
+  const m=document.createElement("div");m.id="fsmLoginModal";m.style="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;padding:16px";
+  m.innerHTML=`<div style="width:min(420px,100%);background:#08140f;border:1px solid rgba(239,210,143,.3);border-radius:18px;padding:22px;box-shadow:0 25px 80px rgba(0,0,0,.55)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h2 style="color:var(--gold);font-family:Montserrat,sans-serif">Inloggen</h2><button type="button" onclick="closeLogin()" style="border:0;background:none;color:#fff;font-size:24px;cursor:pointer">×</button></div>
+    <input id="fsmLoginEmail" type="email" placeholder="E-mail" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+    <input id="fsmLoginPassword" type="password" placeholder="Wachtwoord" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+    <div id="fsmLoginError" style="display:none;color:#ff9b9b;font-size:12px;margin-bottom:10px"></div>
+    <button id="fsmLoginSubmit" type="button" style="width:100%;padding:13px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));font-weight:900;cursor:pointer">Inloggen</button>
+  </div>`;
+  document.body.appendChild(m);
+  document.getElementById("fsmLoginSubmit").onclick=async()=>{
+    const email=document.getElementById("fsmLoginEmail").value.trim(),password=document.getElementById("fsmLoginPassword").value;
+    const err=document.getElementById("fsmLoginError"),btn=document.getElementById("fsmLoginSubmit");
+    if(!email||!password){err.textContent="Vul je e-mail en wachtwoord in.";err.style.display="block";return}
+    btn.disabled=true;btn.textContent="Inloggen...";err.style.display="none";
+    try{
+      const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},body:JSON.stringify({email,password})});
+      const d=await r.json();if(!r.ok)throw new Error(d.error_description||"Inloggen mislukt.");
+      const pr=await fetch("https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?id=eq."+encodeURIComponent(d.user.id)+"&select=id,username,avatar_url,bio,location,verified",{headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+d.access_token}});
+      const rows=await pr.json(),profile=rows[0]||{};localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username:profile.username||email.split("@")[0],...profile}));localStorage.setItem("fsm_access_token",d.access_token);closeLogin();location.reload();
+    }catch(e){err.textContent=e.message||"Inloggen mislukt.";err.style.display="block";btn.disabled=false;btn.textContent="Inloggen"}
+  };
+  setTimeout(()=>document.getElementById("fsmLoginEmail")?.focus(),20);
 }
+window.fsmLogin=fsmLogin;
+window.requireLogin=requireLogin;
+window.closeLogin=closeLogin;
 async function api(path,opts={}){
  try{const r=await fetch(API_BASE+path,{credentials:"include",headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}catch(e){return null}
 }
@@ -6802,9 +6804,9 @@ function nav(active="profile"){
  return `<nav class="fsm-bottomnav">
  <a href="#/" class="${active==="home"?"active":""}">⌂<span>Home</span></a>
  <a href="#/explore" class="${active==="browse"?"active":""}">◉<span>Bladeren</span></a>
- <a href="#/sell" onclick="return requireLogin()" class="${active==="sell"?"active":""}">＋<span>Verkopen</span></a>
- <a href="#/inbox" onclick="return requireLogin()" class="${active==="inbox"?"active":""}">✉<span>Inbox</span></a>
- <a href="#/profile" onclick="return requireLogin()" class="${active==="profile"?"active":""}">●<span>Profiel</span></a>
+ <a href="#/sell" class="${active==="sell"?"active":""}">＋<span>Verkopen</span></a>
+ <a href="#/inbox" class="${active==="inbox"?"active":""}">✉<span>Inbox</span></a>
+ <a href="#/profile" class="${active==="profile"?"active":""}">●<span>Profiel</span></a>
  </nav>`;
 }
 function shell(title,body,active="profile",back=true,kind=""){
@@ -7256,6 +7258,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
+  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
   if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -7275,7 +7278,6 @@ document.addEventListener("click", function(event){
   const onclick=el.getAttribute('onclick')||'';
   const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
-    if(/^#\/(profile|inbox|sell)(?:[/?]|$)/.test(route) && !requireLogin()) return;
     event.preventDefault();
     location.hash=route;
     setTimeout(()=>enhancedRouter(),0);
