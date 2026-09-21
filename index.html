@@ -7275,6 +7275,7 @@ document.addEventListener("click", function(event){
   const onclick=el.getAttribute('onclick')||'';
   const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
+    if(/^#\/(profile|inbox|sell)(?:[/?]|$)/.test(route) && !requireLogin()) return;
     event.preventDefault();
     location.hash=route;
     setTimeout(()=>enhancedRouter(),0);
