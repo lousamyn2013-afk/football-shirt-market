@@ -6765,7 +6765,13 @@ function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpper
 function app(){return document.getElementById("app")}
 function hash(){return location.hash||"#/"}
 function go(h){location.hash=h}
-function closeLogin(){document.getElementById("fsmLoginModal")?.remove()}
+function closeLogin(){
+  document.getElementById("fsmLoginModal")?.remove();
+  if(!readLoggedInUser() && /^#\/(sell|inbox|profile|badges|favorites|orders|promote|offers|notifications|chat)(?:[/?]|$)/.test(location.hash)){
+    location.hash="#/";
+    setTimeout(()=>router(),0);
+  }
+}
 function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
