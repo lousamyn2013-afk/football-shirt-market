@@ -4938,6 +4938,11 @@ de gekozen filters voldoen.
 
 function renderSell(){
 
+    if(!readLoggedInUser()){
+        fsmLogin();
+        return;
+    }
+
     app.innerHTML=`
 
 <div class="page">
@@ -7327,6 +7332,10 @@ document.addEventListener("click", function(event){
   const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
+    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !readLoggedInUser()){
+      fsmLogin();
+      return;
+    }
     location.hash=route;
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -7335,6 +7344,10 @@ document.addEventListener("click", function(event){
   const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
+    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !readLoggedInUser()){
+      fsmLogin();
+      return;
+    }
     location.hash=m[1];
     setTimeout(()=>enhancedRouter(),0);
   }
