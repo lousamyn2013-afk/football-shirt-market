@@ -3631,98 +3631,7 @@ const languages = [
    SHIRTS
 ====================================================== */
 
-const shirtsData = [
-
-{
-id:1,
-club:"AC Milan",
-name:"AC Milan 1994-1995 Home #3 Maldini",
-price:"€ 149,95",
-condition:"Heel goed",
-icon:"🔴⚫",
-type:["Club","Replica"],
-size:"L"
-},
-
-{
-id:2,
-club:"Real Madrid",
-name:"Real Madrid 2001-2002 Centenary #5 Zidane",
-price:"€ 179,95",
-condition:"Nieuw met prijskaartje",
-icon:"⚪👑",
-type:["Club"],
-size:"XL"
-},
-
-{
-id:3,
-club:"FC Barcelona",
-name:"FC Barcelona 2005-2006 Home #10 Ronaldinho",
-price:"€ 169,95",
-condition:"Heel goed",
-icon:"🔵🔴",
-type:["Club"],
-size:"M"
-},
-
-{
-id:4,
-club:"Manchester United",
-name:"Manchester United 1998-1999 Treble #7 Beckham",
-price:"€ 159,95",
-condition:"Nieuw zonder prijskaartje",
-icon:"🔴⚪",
-type:["Club"],
-size:"L"
-},
-
-{
-id:5,
-club:"Arsenal",
-name:"Arsenal 2003-2004 Invincibles #14 Henry",
-price:"€ 189,95",
-condition:"Heel goed",
-icon:"🔴⚪",
-type:["Club"],
-size:"L"
-},
-
-{
-id:6,
-club:"Juventus",
-name:"Juventus 1997-1998 Centenary #10 Del Piero",
-price:"€ 139,95",
-condition:"Goed",
-icon:"⚪⚫",
-type:["Club"],
-size:"M"
-},
-
-{
-id:7,
-club:"Chelsea",
-name:"Chelsea 2004-2005 Home #8 Lampard",
-price:"€ 129,95",
-condition:"Gebruikt",
-icon:"🔵",
-type:["Club"],
-size:"S"
-},
-
-{
-id:8,
-club:"Liverpool",
-name:"Liverpool 2005-2006 Home",
-price:"€ 119,95",
-condition:"Goed",
-icon:"🔴",
-type:["Club"],
-size:"XL"
-}
-
-];
-
+const shirtsData = [];
 
 /* ======================================================
    LOCAL STORAGE LISTINGS
@@ -5202,6 +5111,7 @@ Onbekend
 
 <optgroup label="Volwassen maten">
 
+<option value="XS">XS</option>
 <option value="S">S</option>
 <option value="M">M</option>
 <option value="L">L</option>
@@ -6705,64 +6615,27 @@ if(logged && logged.username) demo.user={...demo.user,...logged,username:logged.
 function demoShirt(index=0){
   try{
     const arr=typeof combinedShirts==="function"?combinedShirts():[];
-    if(arr.length) return arr[index%arr.length];
-  }catch(e){}
-  const fallback=[
-    {id:"demo-shirt-1",name:"Anderlecht Retro Shirt",club:"RSC Anderlecht",price:75,size:"164",condition:"Zeer goed",image:""},
-    {id:"demo-shirt-2",name:"Manchester United Home Shirt",club:"Manchester United",price:90,size:"S",condition:"Goed",image:""},
-    {id:"demo-shirt-3",name:"FC Barcelona Home Shirt",club:"FC Barcelona",price:110,size:"XS",condition:"Zeer goed",image:""},
-    {id:"demo-shirt-4",name:"Belgium National Team Shirt",club:"België",price:80,size:"164",condition:"Nieuw",image:""}
-  ];
-  return fallback[index%fallback.length];
+    return arr[index%arr.length]||null;
+  }catch(e){return null}
 }
 function ensureDemoMarketplace(){
-  const me=demo.user.username;
-  const s1=demoShirt(0),s2=demoShirt(1),s3=demoShirt(2),s4=demoShirt(3);
-  if(!demo.messages || !demo.messages.length){
-    demo.messages=[
-      {id:"demo1",chat:"ShirtCollector",from:"ShirtCollector",to:me,text:"Hey! Is dit shirt nog beschikbaar?",itemId:String(s1.id),itemSnapshot:{...s1,price:priceNumber(s1.price)||149.95},system:false,date:new Date(Date.now()-1000*60*18).toISOString()},
-      {id:"demo2",chat:"VintageKits",from:me,to:"VintageKits",text:"Ja, ik heb interesse in dit shirt. Kan je nog wat foto's sturen?",itemId:String(s2.id),itemSnapshot:{...s2,price:priceNumber(s2.price)||179.95},system:false,date:new Date(Date.now()-1000*60*42).toISOString()},
-      {id:"demo3",chat:"FootballFan24",from:"FootballFan24",to:me,text:"Ik bied €75 voor dit shirt.",itemId:String(s3.id),itemSnapshot:{...s3,price:priceNumber(s3.price)||149.95},offerId:"demo-offer-1",offerAmount:75,system:false,date:new Date(Date.now()-1000*60*75).toISOString()},
-      {id:"demo4",chat:"RetroJerseys",from:me,to:"RetroJerseys",text:"Hallo! Wanneer kan je het pakket verzenden?",itemId:String(s4.id),itemSnapshot:{...s4,price:priceNumber(s4.price)||89.95},system:false,date:new Date(Date.now()-1000*60*130).toISOString()}
-    ];
-  }
-  // Het automatische voorbeeldbericht is zelf een officieel bod.
-  const demoOfferMsg=demo.messages.find(m=>m.id==="demo3");
-  if(demoOfferMsg){
-    demoOfferMsg.text="Ik bied €75 voor dit shirt.";
-    demoOfferMsg.itemId=String(s3.id);
-    demoOfferMsg.offerId="demo-offer-1";
-    demoOfferMsg.offerAmount=75;
-    demoOfferMsg.itemSnapshot={...s3,price:priceNumber(s3.price)||149.95};
-  }
-  // Geef bestaande voorbeeldgesprekken ook een shirt-context als die nog ontbreekt.
-  const shirts=[s1,s2,s3,s4];
-  (demo.messages||[]).forEach((m,i)=>{if(!m.itemId)m.itemId=String(shirts[i%shirts.length].id)});
-  if(!Array.isArray(demo.offers)) demo.offers=[];
-  if(!demo.offers.some(o=>o.id==="demo-offer-1")){
-    demo.offers.push({id:"demo-offer-1",itemId:String(s3.id),itemName:s3.name||"Voetbalshirt",buyer:"FootballFan24",seller:me,originalPrice:priceNumber(s3.price)||149.95,amount:75,currency:"EUR",status:"pending",createdAt:new Date(Date.now()-1000*60*75).toISOString()});
-  }
-  // Extra voorbeeldchat: een bod dat al geaccepteerd is.
-  const acceptedSeller="JerseyDealz";
-  const acceptedItem={...s4,price:120};
-  if(!demo.offers.some(o=>o.id==="demo-offer-accepted")){
-    demo.offers.push({id:"demo-offer-accepted",itemId:String(acceptedItem.id),itemName:acceptedItem.name||"Voetbalshirt",buyer:me,seller:acceptedSeller,originalPrice:120,amount:80,currency:"EUR",status:"accepted",createdAt:new Date(Date.now()-1000*60*35).toISOString()});
-  }
-  if(!demo.messages.some(m=>m.id==="demo-accepted")){
-    demo.messages.push({id:"demo-accepted",chat:acceptedSeller,from:acceptedSeller,to:me,text:"Je bod van €80 is geaccepteerd! 🎉",itemId:String(acceptedItem.id),itemSnapshot:acceptedItem,offerId:"demo-offer-accepted",system:true,read:false,date:new Date(Date.now()-1000*60*35).toISOString()});
-  }
+  // Geen voorbeeldchats, voorbeeldbiedingen of voorbeeldberichten.
+  // Verwijder ook oude demo-data die eventueel nog in localStorage staat.
+  const demoMessageIds=new Set(["demo1","demo2","demo3","demo4","demo-accepted"]);
+  const demoOfferIds=new Set(["demo-offer-1","demo-offer-accepted"]);
+  const demoChats=new Set(["ShirtCollector","VintageKits","FootballFan24","RetroJerseys","JerseyDealz"]);
+  demo.messages=Array.isArray(demo.messages)?demo.messages.filter(m=>!demoMessageIds.has(m.id)&&!demoChats.has(m.chat)):[];
+  demo.offers=Array.isArray(demo.offers)?demo.offers.filter(o=>!demoOfferIds.has(o.id)):[];
 }
 function ensureNotifications(){
- if(!Array.isArray(demo.notifications)) demo.notifications=[];
- const demoItem=demoShirt(0);
- if(!demo.notifications.some(n=>n.id==="demo-like-1")){
-  demo.notifications.push({id:"demo-like-1",type:"like",from:"ShirtCollector",itemId:String(demoItem.id),itemSnapshot:{...demoItem},text:"ShirtCollector vindt je shirt leuk.",read:false,date:new Date(Date.now()-1000*60*12).toISOString()});
- }
+  demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n.id!=="demo-like-1"):[];
 }
 ensureNotifications();
 ensureDemoMarketplace();
 function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
-if(!existing || !existing.messages || !existing.messages.length || !existing.offers || !existing.offers.length) save()
+// Bewaar meteen de opgeschoonde staat zodat oude voorbeeldchats/biedingen/notificaties
+// niet opnieuw uit localStorage terugkomen.
+save();
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function money(n,c){
  const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
@@ -7036,7 +6909,6 @@ window.openNotification=id=>{
 }
 function inbox(){
  const chats=[...new Set(demo.messages.map(m=>m.chat).filter(Boolean))];
- ["ShirtCollector","VintageKits","FootballFan24","RetroJerseys"].forEach(n=>{if(!chats.includes(n))chats.push(n)});
  const rows=chats.map(c=>{
    const msgs=demo.messages.filter(m=>m.chat===c);
    const last=msgs[msgs.length-1]||{text:"Start een gesprek",date:new Date().toISOString()};
@@ -7052,28 +6924,27 @@ window.openSellerChat=(seller,itemId)=>{
 function chat(user){
  user=String(user||"verkoper");
  let msgs=demo.messages.filter(m=>m.chat===user);
- if(!msgs.length) msgs=[{id:"seed-"+Date.now(),chat:user,from:user,to:demo.user.username,text:"Hallo! 👋 Leuk dat je een bericht stuurt.",itemId:String(demoShirt(0).id),system:false,date:new Date().toISOString()}];
  msgs.forEach(m=>{if(m.to===demo.user.username)m.read=true});
  save();
  let sessionItemId="";
  try{sessionItemId=sessionStorage.getItem("fsmChatItem")||"";sessionStorage.removeItem("fsmChatItem")}catch(e){}
  const firstItemId=msgs.find(m=>m.itemId)?.itemId||sessionItemId;
  const firstMsg=msgs.find(m=>m.itemId);
- const firstItem=firstItemId?(itemFromId(firstItemId)||firstMsg?.itemSnapshot||[0,1,2,3].map(i=>demoShirt(i)).find(x=>String(x.id)===String(firstItemId))||null):demoShirt(0);
+ const firstItem=firstItemId?(itemFromId(firstItemId)||firstMsg?.itemSnapshot||null):null;
  const seller=user;
  const listingImg=firstItem?.images?.[0]||firstItem?.image||"";
  const listingName=firstItem?.name||"Voetbalshirt";
  const listingPrice=effectivePrice(firstItem)||0;
  const sellerCard=`<div class="fsm-seller-card">${avatar(seller,true)}<div class="fsm-seller-card-copy"><strong>Hoi, ik ben ${esc(seller)}</strong><div class="fsm-seller-meta"><span>⌖ Nederland, Utrecht</span><span>◷ Laatst gezien 40 min. geleden</span></div></div></div>`;
- const listing=`<div class="fsm-chat-listing">
+ const listing=firstItem?`<div class="fsm-chat-listing">
    <div class="fsm-chat-listing-main">
     <div class="fsm-chat-listing-thumb">${listingImg?`<img src="${esc(listingImg)}" alt="">`:`👕`}</div>
     <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${priceDisplay(firstItem)}</div></div>
    </div>
    <div class="fsm-chat-actions"><button type="button" class="outline" onclick="offer('${esc(firstItem?.id||"")}')">Een bod doen</button><button type="button" class="buy" onclick="checkout('${esc(firstItem?.id||"")}','buy')">Kopen</button></div>
-  </div>`;
+  </div>`:"";
  const html=msgs.map(m=>{
-   const item=m.itemId?(m.itemSnapshot||itemFromId(m.itemId)||[0,1,2,3].map(i=>demoShirt(i)).find(x=>String(x.id)===String(m.itemId))||null):null;
+   const item=m.itemId?(m.itemSnapshot||itemFromId(m.itemId)||null):null;
    const offer=m.offerId?demo.offers.find(o=>o.id===m.offerId):null;
    const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.status==="accepted"?`<div class="fsm-accepted-price"><div class="fsm-accepted-new">${money(offer.amount,offer.currency||currency())}</div><div class="fsm-accepted-old">${money(priceNumber(offer.originalPrice)||priceNumber(item?.price)||0,offer.currency||currency())}</div></div>${offer?.buyer===demo.user.username?`<button type="button" class="fsm-btn green full" style="margin-top:10px" onclick="checkout('${esc(String(offer.itemId))}','offer')">Nu kopen</button>`:""}`:""}${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
    return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
