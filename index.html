@@ -3238,6 +3238,21 @@ footer strong{
 .fsm-offer-limit{margin:8px 0 10px;font-size:12px;color:#b9c6c0}.fsm-offer-limit strong{color:var(--gold)}
 @media(max-width:650px){.fsm-boost-grid{grid-template-columns:1fr}.fsm-boost-item{padding:9px}.fsm-boost-thumb{width:52px;height:52px}}
 </style>
+
+<style id="fsm-safety-modal-style">
+.fsm-safety-link{border:0;background:none;color:var(--gold);padding:0;text-decoration:underline;cursor:pointer;font:inherit;font-weight:800}
+.fsm-safety-modal-backdrop{position:fixed;inset:0;z-index:100001;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(7px)}
+.fsm-safety-modal{width:min(560px,100%);max-height:88vh;overflow:auto;background:#08140f;border:1px solid rgba(239,210,143,.32);border-radius:20px;padding:20px;box-shadow:0 30px 100px rgba(0,0,0,.65)}
+.fsm-safety-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.fsm-safety-modal-head h2{margin:0;color:var(--gold);font-family:Montserrat,sans-serif;font-size:24px}
+.fsm-safety-close{width:36px;height:36px;border:0;border-radius:9px;background:rgba(255,255,255,.08);color:#fff;font-size:24px;cursor:pointer}
+.fsm-safety-modal-body>p{margin:0 0 14px;color:#b9c6c0;line-height:1.55}
+.fsm-safety-tip{display:flex;flex-direction:column;gap:5px;padding:13px 0;border-top:1px solid rgba(255,255,255,.07)}
+.fsm-safety-tip strong{color:#fff;font-size:14px}
+.fsm-safety-tip span{color:#a8b5ae;font-size:12px;line-height:1.5}
+.fsm-safety-done{width:100%;margin-top:16px;border:0;border-radius:11px;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#07100e;font-weight:900;cursor:pointer}
+@media(max-width:650px){.fsm-safety-modal{padding:16px;border-radius:16px}.fsm-safety-modal-head h2{font-size:20px}.fsm-safety-tip strong{font-size:13px}.fsm-safety-tip span{font-size:11px}}
+</style>
 </head>
 
 <body>
@@ -6955,9 +6970,40 @@ function chat(user){
    const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.status==="accepted"?`<div class="fsm-accepted-price"><div class="fsm-accepted-new">${money(offer.amount,offer.currency||currency())}</div><div class="fsm-accepted-old">${money(priceNumber(offer.originalPrice)||priceNumber(item?.price)||0,offer.currency||currency())}</div></div>${offer?.buyer===demo.user.username?`<button type="button" class="fsm-btn green full" style="margin-top:10px" onclick="checkout('${esc(String(offer.itemId))}','offer')">Nu kopen</button>`:""}`:""}${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
    return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
  }).join("");
- const safety=`<div class="fsm-safety"><div class="fsm-safety-icon">✓</div><div>Blijf veilig op Football-Shirt-Market. Deel geen persoonlijke gegevens, klik niet op externe links en scan geen QR-codes. <a href="#/profile">Meer veiligheidstips</a></div></div>`;
+ const safety=`<div class="fsm-safety"><div class="fsm-safety-icon">✓</div><div>Blijf veilig op Football-Shirt-Market. Deel geen persoonlijke gegevens, klik niet op externe links en scan geen QR-codes. <button type="button" class="fsm-safety-link" onclick="openSafetyTips()">Meer veiligheidstips</button></div></div>`;
  shell(user,`<div class="fsm-chat"><div class="fsm-chat-page-inner">${listing}${sellerCard}${safety}<div class="fsm-messages">${html}</div></div><div class="fsm-chatbar"><span style="font-size:28px;display:grid;place-items:center;width:42px;color:#aebbb6">◉</span><input id="chatInput" autocomplete="off" placeholder="Verstuur een bericht" onkeydown="if(event.key==='Enter')sendChat('${esc(user)}')"><button class="fsm-btn green" type="button" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>` ,"inbox",true,"chat");
 }
+
+function openSafetyTips(){
+  document.getElementById("fsmSafetyModal")?.remove();
+  const modal=document.createElement("div");
+  modal.id="fsmSafetyModal";
+  modal.innerHTML=`<div class="fsm-safety-modal-backdrop" onclick="if(event.target===this)closeSafetyTips()">
+    <div class="fsm-safety-modal" role="dialog" aria-modal="true" aria-labelledby="fsmSafetyTitle">
+      <div class="fsm-safety-modal-head">
+        <h2 id="fsmSafetyTitle">Veilig handelen</h2>
+        <button type="button" class="fsm-safety-close" onclick="closeSafetyTips()" aria-label="Sluiten">×</button>
+      </div>
+      <div class="fsm-safety-modal-body">
+        <p>Houd je gesprekken en betalingen veilig binnen Football-Shirt-Market.</p>
+        <div class="fsm-safety-tip"><strong>Deel geen persoonlijke gegevens</strong><span>Deel geen adres, telefoonnummer, wachtwoord of andere gevoelige gegevens via de chat.</span></div>
+        <div class="fsm-safety-tip"><strong>Blijf op het platform</strong><span>Verplaats een gesprek of betaling niet naar een onbekende externe website.</span></div>
+        <div class="fsm-safety-tip"><strong>Scan geen onbekende QR-codes</strong><span>Open of scan alleen codes waarvan je de herkomst en bestemming vertrouwt.</span></div>
+        <div class="fsm-safety-tip"><strong>Controleer aanbiedingen</strong><span>Kijk goed naar de verkoper, het shirt en het afgesproken bedrag voordat je verdergaat.</span></div>
+      </div>
+      <button type="button" class="fsm-safety-done" onclick="closeSafetyTips()">Begrepen</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  document.addEventListener("keydown", safetyEscapeHandler);
+}
+function closeSafetyTips(){
+  document.getElementById("fsmSafetyModal")?.remove();
+  document.removeEventListener("keydown", safetyEscapeHandler);
+}
+function safetyEscapeHandler(event){if(event.key==="Escape")closeSafetyTips()}
+window.openSafetyTips=openSafetyTips;
+window.closeSafetyTips=closeSafetyTips;
 
 window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,read:true,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
 window.translateMsg=(id,b)=>{b.textContent="Vertalen…";setTimeout(()=>{b.textContent="Vertaling beschikbaar via de vertaalservice.";},250)}
