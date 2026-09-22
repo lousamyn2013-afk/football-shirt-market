@@ -4938,8 +4938,8 @@ de gekozen filters voldoen.
 
 function renderSell(){
 
-    if(!readLoggedInUser()){
-        fsmLogin();
+    if(!window.readLoggedInUser?.()){
+        window.fsmLogin?.();
         return;
     }
 
@@ -6226,7 +6226,7 @@ updateLanguageButton();
 
 renderLanguages();
 
-router();
+setTimeout(()=>router(),0);
 
 </script>
 
@@ -6694,6 +6694,7 @@ function readLoggedInUser(){
   }
   return null;
 }
+window.readLoggedInUser=readLoggedInUser;
 const existing=JSON.parse(localStorage.getItem(STORE)||"null");
 const logged=readLoggedInUser();
 const demo=existing||{
@@ -6770,19 +6771,84 @@ function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpper
 function app(){return document.getElementById("app")}
 function hash(){return location.hash||"#/"}
 function go(h){location.hash=h}
-function requireLogin(){if(!readLoggedInUser()){alert("Je moet eerst inloggen.");return false}return true}
-async function fsmLogin(){
- const email=prompt("E-mail"); if(!email)return;
- const password=prompt("Wachtwoord"); if(!password)return;
- const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},body:JSON.stringify({email,password})});
- const d=await r.json();
- if(!r.ok){alert(d.error_description||"Inloggen mislukt.");return}
- const pr=await fetch("https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?id=eq."+encodeURIComponent(d.user.id)+"&select=id,username,avatar_url,bio,location,verified",{headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+d.access_token}});
- const rows=await pr.json(), profile=rows[0]||{};
- localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username:profile.username||email.split("@")[0],...profile}));
- localStorage.setItem("fsm_access_token",d.access_token); location.reload();
-}window.fsmLogin=fsmLogin;
+function closeLogin(){
+  document.getElementById("fsmLoginModal")?.remove();
+  if(!readLoggedInUser() && /^#\/(sell|inbox|profile|badges|favorites|orders|promote|offers|notifications|chat)(?:[/?]|$)/.test(location.hash)){
+    location.hash="#/";
+    setTimeout(()=>router(),0);
+  }
+}
+function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
+async function fsmLogin(mode="login"){
+  const old=document.getElementById("fsmLoginModal");
+  if(old){switchLoginMode(mode);return}
+  const m=document.createElement("div");
+  m.id="fsmLoginModal";
+  m.style="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:16px";
+  m.innerHTML=`<div style="width:min(430px,100%);background:#08140f;border:1px solid rgba(239,210,143,.3);border-radius:20px;padding:22px;box-shadow:0 25px 90px rgba(0,0,0,.6)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h2 id="fsmAuthTitle" style="color:var(--gold);font-family:Montserrat,sans-serif">Inloggen</h2><button type="button" onclick="closeLogin()" style="border:0;background:none;color:#fff;font-size:24px;cursor:pointer">×</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;background:#030806;padding:4px;border-radius:12px">
+      <button id="fsmLoginTab" type="button" onclick="switchLoginMode('login')" style="border:0;border-radius:9px;padding:11px;background:var(--gold);color:#07100e;font-weight:900;cursor:pointer">Inloggen</button>
+      <button id="fsmRegisterTab" type="button" onclick="switchLoginMode('register')" style="border:0;border-radius:9px;padding:11px;background:transparent;color:#fff;font-weight:900;cursor:pointer">Account aanmaken</button>
+    </div>
+    <div id="fsmRegisterFields" style="display:none">
+      <input id="fsmRegisterUsername" type="text" placeholder="Gebruikersnaam" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+    </div>
+    <input id="fsmLoginEmail" type="email" placeholder="E-mail" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+    <input id="fsmLoginPassword" type="password" placeholder="Wachtwoord" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+    <div id="fsmLoginError" style="display:none;color:#ff9b9b;font-size:12px;margin-bottom:10px"></div>
+    <button id="fsmLoginSubmit" type="button" style="width:100%;padding:13px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));font-weight:900;cursor:pointer">Inloggen</button>
+  </div>`;
+  document.body.appendChild(m);
+  window.switchLoginMode=function(next){
+    const reg=next==="register";
+    document.getElementById("fsmAuthTitle").textContent=reg?"Account aanmaken":"Inloggen";
+    document.getElementById("fsmRegisterFields").style.display=reg?"block":"none";
+    document.getElementById("fsmLoginTab").style.background=reg?"transparent":"var(--gold)";
+    document.getElementById("fsmLoginTab").style.color=reg?"#fff":"#07100e";
+    document.getElementById("fsmRegisterTab").style.background=reg?"var(--gold)":"transparent";
+    document.getElementById("fsmRegisterTab").style.color=reg?"#07100e":"#fff";
+    document.getElementById("fsmLoginSubmit").textContent=reg?"Account aanmaken":"Inloggen";
+    document.getElementById("fsmLoginError").style.display="none";
+    setTimeout(()=>document.getElementById(reg?"fsmRegisterUsername":"fsmLoginEmail")?.focus(),20);
+  };
+  document.getElementById("fsmLoginSubmit").onclick=async()=>{
+    const reg=document.getElementById("fsmRegisterFields").style.display!=="none";
+    const email=document.getElementById("fsmLoginEmail").value.trim();
+    const password=document.getElementById("fsmLoginPassword").value;
+    const username=(document.getElementById("fsmRegisterUsername")?.value||"").trim();
+    const err=document.getElementById("fsmLoginError"),btn=document.getElementById("fsmLoginSubmit");
+    if(!email||!password||(reg&&!username)){err.textContent=reg?"Vul je gebruikersnaam, e-mail en wachtwoord in.":"Vul je e-mail en wachtwoord in.";err.style.display="block";return}
+    btn.disabled=true;btn.textContent=reg?"Account maken...":"Inloggen...";err.style.display="none";
+    try{
+      if(reg){
+        const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/signup",{method:"POST",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},body:JSON.stringify({email,password,data:{username}})});
+        const d=await r.json();
+        if(!r.ok)throw new Error(d.msg||d.error_description||d.message||"Account aanmaken mislukt.");
+        if(d.access_token){
+          localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username}));
+          localStorage.setItem("fsm_access_token",d.access_token);
+          closeLogin();location.reload();
+        }else{
+          err.textContent="Account aangemaakt. Controleer je e-mail om je account te bevestigen.";
+          err.style.display="block";
+          btn.disabled=false;btn.textContent="Account aangemaakt";
+        }
+        return;
+      }
+      const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},body:JSON.stringify({email,password})});
+      const d=await r.json();if(!r.ok)throw new Error(d.error_description||d.message||"Inloggen mislukt.");
+      const pr=await fetch("https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?id=eq."+encodeURIComponent(d.user.id)+"&select=id,username,avatar_url,bio,location,verified",{headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+d.access_token}});
+      const rows=await pr.json(),profile=rows[0]||{};
+      localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username:profile.username||email.split("@")[0],...profile}));
+      localStorage.setItem("fsm_access_token",d.access_token);closeLogin();location.reload();
+    }catch(e){err.textContent=e.message||"Er ging iets mis.";err.style.display="block";btn.disabled=false;btn.textContent=reg?"Account aanmaken":"Inloggen"}
+  };
+  switchLoginMode(mode);
+}
+window.fsmLogin=fsmLogin;
 window.requireLogin=requireLogin;
+window.closeLogin=closeLogin;
 async function api(path,opts={}){
  try{const r=await fetch(API_BASE+path,{credentials:"include",headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}catch(e){return null}
 }
