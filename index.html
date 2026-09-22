@@ -3343,7 +3343,7 @@ Ontdekken
 Verkopen
 </a>
 
-<a href="#/inbox" id="navInbox" class="market-nav-link" onclick="return requireLogin()">
+<a href="#/inbox" id="navInbox" class="market-nav-link">
 Inbox
 </a>
 
@@ -3409,7 +3409,7 @@ Ontdekken
 Verkopen
 </a>
 
-<a href="#/inbox" onclick="return requireLogin()">
+<a href="#/inbox">
 Inbox
 </a>
 
@@ -7294,7 +7294,10 @@ function enhancedRouter(){
  if(a==="favorites"){favorites();return true}
  if(a==="orders"){orders(b||"all",c||"bought");return true}
  if(a==="promote"){promote();return true}
- if(a==="inbox"){inbox();return true}
+ if(a==="inbox"){
+   if(!readLoggedInUser()){fsmLogin();return true}
+   inbox();return true
+ }
     if(a==="notifications"){notifications();return true}
  if(a==="chat"){chat(decodeURIComponent(b||"verkoper"));return true}
  if(a==="product"){product(b);return true}
@@ -7311,7 +7314,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
-  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
+  if(/^#\/(sell|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
   if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -7332,7 +7335,7 @@ document.addEventListener("click", function(event){
   const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
-    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !readLoggedInUser()){
+    if(/^#\/(sell|profile)(?:[/?]|$)/.test(route) && !readLoggedInUser()){
       fsmLogin();
       return;
     }
@@ -7344,7 +7347,7 @@ document.addEventListener("click", function(event){
   const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
-    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !readLoggedInUser()){
+    if(/^#\/(sell|profile)(?:[/?]|$)/.test(m[1]) && !readLoggedInUser()){
       fsmLogin();
       return;
     }
