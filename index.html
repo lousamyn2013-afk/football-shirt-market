@@ -4015,6 +4015,7 @@ Ontdek shirts
 
 <a
 href="#/sell"
+onclick="return requireLogin()"
 class="hero-button white"
 >
 Verkoop een shirt
@@ -5841,6 +5842,12 @@ function router(){
         hash.startsWith("#/sell")
     ){
 
+        if(!readLoggedInUser()){
+            fsmLogin();
+            location.hash="#/";
+            return;
+        }
+
         renderSell();
 
     }
@@ -6857,7 +6864,7 @@ function nav(active="profile"){
  return `<nav class="fsm-bottomnav">
  <a href="#/" class="${active==="home"?"active":""}">⌂<span>Home</span></a>
  <a href="#/explore" class="${active==="browse"?"active":""}">◉<span>Bladeren</span></a>
- <a href="#/sell" class="${active==="sell"?"active":""}">＋<span>Verkopen</span></a>
+ <a href="#/sell" onclick="return requireLogin()" class="${active==="sell"?"active":""}">＋<span>Verkopen</span></a>
  <a href="#/inbox" class="${active==="inbox"?"active":""}">✉<span>Inbox</span></a>
  <a href="#/profile" class="${active==="profile"?"active":""}">●<span>Profiel</span></a>
  </nav>`;
