@@ -6226,7 +6226,8 @@ updateLanguageButton();
 
 renderLanguages();
 
-router();
+/* Wacht met de eerste render tot het marketplace-script met readLoggedInUser()/auth helpers geladen is. */
+setTimeout(()=>router(),0);
 
 </script>
 
