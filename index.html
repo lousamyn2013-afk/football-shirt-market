@@ -3963,6 +3963,8 @@ function makeShirt(shirt){
    HOME
 ====================================================== */
 
+const app = document.getElementById("app");
+
 function renderHome(){
 
     app.innerHTML=`
@@ -6226,7 +6228,6 @@ updateLanguageButton();
 
 renderLanguages();
 
-/* Wacht met de eerste render tot het marketplace-script met readLoggedInUser()/auth helpers geladen is. */
 setTimeout(()=>router(),0);
 
 </script>
@@ -6695,6 +6696,7 @@ function readLoggedInUser(){
   }
   return null;
 }
+window.readLoggedInUser=readLoggedInUser;
 const existing=JSON.parse(localStorage.getItem(STORE)||"null");
 const logged=readLoggedInUser();
 const demo=existing||{
@@ -6768,7 +6770,7 @@ function money(n,c){
  const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
 }
 function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpperCase()}
-function app(){return document.getElementById("app")}
+function getApp(){return document.getElementById("app")}
 function hash(){return location.hash||"#/"}
 function go(h){location.hash=h}
 function closeLogin(){
@@ -6865,7 +6867,7 @@ function nav(active="profile"){
 }
 function shell(title,body,active="profile",back=true,kind=""){
  const pageClass=kind?` ${esc(kind)}-page`:"";
- app().innerHTML=`<div id="fsm-marketplace" class="${pageClass.trim()}"><div class="fsm-shell">
+ getApp().innerHTML=`<div id="fsm-marketplace" class="${pageClass.trim()}"><div class="fsm-shell">
  <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="go('${kind==="chat"?"#/inbox":"#/profile"}')">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${kind==="chat"?"":nav(active)}</div>`;
 }
 function listings(){
