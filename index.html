@@ -6619,13 +6619,19 @@ function demoShirt(index=0){
   }catch(e){return null}
 }
 function ensureDemoMarketplace(){
-  // Geen voorbeeldchats, voorbeeldbiedingen of voorbeeldberichten.
-  // Verwijder ook oude demo-data die eventueel nog in localStorage staat.
-  const demoMessageIds=new Set(["demo1","demo2","demo3","demo4","demo-accepted"]);
-  const demoOfferIds=new Set(["demo-offer-1","demo-offer-accepted"]);
-  const demoChats=new Set(["ShirtCollector","VintageKits","FootballFan24","RetroJerseys","JerseyDealz"]);
-  demo.messages=Array.isArray(demo.messages)?demo.messages.filter(m=>!demoMessageIds.has(m.id)&&!demoChats.has(m.chat)):[];
-  demo.offers=Array.isArray(demo.offers)?demo.offers.filter(o=>!demoOfferIds.has(o.id)):[];
+  // Eenmalige opruiming van oude voorbeelddata.
+  // Daarna blijven echte nieuwe berichten/biedingen gewoon bewaard.
+  const cleanupKey="fsm_examples_cleared_v3";
+  if(!localStorage.getItem(cleanupKey)){
+    demo.messages=[];
+    demo.offers=[];
+    demo.notifications=[];
+    localStorage.setItem(cleanupKey,"1");
+  }else{
+    demo.messages=Array.isArray(demo.messages)?demo.messages:[];
+    demo.offers=Array.isArray(demo.offers)?demo.offers:[];
+    demo.notifications=Array.isArray(demo.notifications)?demo.notifications:[];
+  }
 }
 function ensureNotifications(){
   demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n.id!=="demo-like-1"):[];
