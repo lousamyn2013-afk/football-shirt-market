@@ -7295,6 +7295,7 @@ function enhancedRouter(){
  const h=hash(), m=h.match(/^#\/([^/?]+)(?:\/([^/?]+))?(?:\/([^/?]+))?/);
  if(!m)return false;
  const a=m[1],b=m[2],c=m[3];
+ if(a==="sell"){renderSell();return true}
  if(a==="profile"&&!b){profile();return true}
  if(a==="profile"&&b==="public"){publicProfile(c||"items");return true}
  if(a==="badges"){badges();return true}
