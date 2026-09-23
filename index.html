@@ -3757,6 +3757,8 @@ function combinedShirts(){
     const userShirts=
         listings.map(listing=>({
 
+            ...listing,
+
             id:"u"+listing.id,
 
             club:listing.club,
@@ -3773,11 +3775,18 @@ function combinedShirts(){
 
             icon:"👕",
 
+            images:Array.isArray(listing.images) ? [...listing.images] : [],
+
             image:
-                listing.images &&
-                listing.images.length
+                Array.isArray(listing.images) && listing.images.length
                     ? listing.images[0]
-                    : null,
+                    : (listing.image || null),
+
+            seller:listing.seller || listing.username || "verkoper",
+
+            username:listing.username || listing.seller || "verkoper",
+
+            description:listing.description || "",
 
             boosted:!!listing.boosted
 
@@ -5571,7 +5580,9 @@ data-photo-index="${index}"
 
                 boostExpiresAt:boostExpiresAt,
 
-                images:selectedImages
+                images:selectedImages,
+
+                seller:(readLoggedInUser()?.username||"verkoper")
 
             };
 
@@ -6545,11 +6556,16 @@ setTimeout(()=>router(),0);
  .fsm-shell{padding:12px 10px 90px}.fsm-topbar h1{font-size:21px}.fsm-grid{gap:9px}.fsm-bottomnav{display:grid}
 }
 @media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.fsm-inbox-row{width:100%;display:flex!important;align-items:center;gap:11px;text-align:left;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.07);color:#fff;padding:13px 4px;cursor:pointer}
-.fsm-inbox-row:last-child{border-bottom:0}
+.fsm-inbox-row-wrap{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y}
+.fsm-inbox-row-wrap:last-child{border-bottom:0}
+.fsm-inbox-row{width:100%;display:flex!important;align-items:center;gap:11px;text-align:left;background:#08110d;border:0;color:#fff;padding:13px 52px 13px 4px;cursor:pointer;position:relative;z-index:2;transition:transform .18s ease;will-change:transform}
+.fsm-inbox-row:hover{background:rgba(255,255,255,.025)}
 .fsm-inbox-copy{min-width:0;flex:1}
 .fsm-inbox-copy strong,.fsm-inbox-copy .fsm-muted{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fsm-inbox-side{display:flex;align-items:center;gap:7px}
+.fsm-inbox-delete{position:absolute;right:0;top:0;bottom:0;width:52px;border:0;background:#a93232;color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;z-index:1}
+.fsm-inbox-delete:hover{background:#c53a3a}
+@media(max-width:650px){.fsm-inbox-row{padding:12px 52px 12px 2px}.fsm-inbox-delete{width:50px}}
 .fsm-unread{min-width:20px;height:20px;border-radius:999px;background:var(--gold);color:#06100b;display:grid;place-items:center;font-size:10px;font-weight:900}
 .fsm-chat-user{display:flex;align-items:center;gap:10px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.08)}
 .fsm-msg-text{white-space:pre-wrap;word-break:break-word}
@@ -6624,7 +6640,7 @@ const existing=JSON.parse(localStorage.getItem(STORE)||"null");
 const logged=readLoggedInUser();
 const demo=existing||{
   user:logged||{username:"Gebruiker",verified:[],bio:""},
-  favorites:[],orders:[],messages:[],reviews:[],offers:[],wallet:{pending:0,balance:0},paymentMethod:null
+  favorites:[],orders:[],messages:[],chats:[],reviews:[],offers:[],wallet:{pending:0,balance:0},paymentMethod:null
 };
 if(logged && logged.username) demo.user={...demo.user,...logged,username:logged.username};
 function demoShirt(index=0){
@@ -6644,9 +6660,11 @@ function ensureDemoMarketplace(){
     localStorage.setItem(cleanupKey,"1");
   }else{
     demo.messages=Array.isArray(demo.messages)?demo.messages:[];
+    demo.chats=Array.isArray(demo.chats)?demo.chats:[];
     demo.offers=Array.isArray(demo.offers)?demo.offers:[];
     demo.notifications=Array.isArray(demo.notifications)?demo.notifications:[];
   }
+  if(!Array.isArray(demo.chats)) demo.chats=[];
 }
 function ensureNotifications(){
   demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n.id!=="demo-like-1"):[];
@@ -6757,10 +6775,16 @@ function nav(active="profile"){
  <a href="#/profile" class="${active==="profile"?"active":""}">●<span>Profiel</span></a>
  </nav>`;
 }
+function productBack(){
+  const previous=sessionStorage.getItem("fsm_product_return")||"#/explore";
+  sessionStorage.removeItem("fsm_product_return");
+  location.hash=previous;
+}
 function shell(title,body,active="profile",back=true,kind=""){
  const pageClass=kind?` ${esc(kind)}-page`:"";
+ const backAction=kind==="chat"?"go('#/inbox')":kind==="product"?"productBack()":"go('#/profile')";
  app().innerHTML=`<div id="fsm-marketplace" class="${pageClass.trim()}"><div class="fsm-shell">
- <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="go('${kind==="chat"?"#/inbox":"#/profile"}')">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${kind==="chat"?"":nav(active)}</div>`;
+ <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="${backAction}">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${kind==="chat"?"":nav(active)}</div>`;
 }
 function listings(){
  try{return typeof getListings==="function"?getListings():[]}catch(e){return []}
@@ -6848,7 +6872,13 @@ function listingCard(x){
  const liked=demo.favorites.includes(String(x.id));
  return `<article class="fsm-item" role="button" tabindex="0" style="cursor:pointer" onclick="openProduct('${esc(x.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct('${esc(x.id)}')}"><div class="fsm-item-img">${img?`<img src="${esc(img)}" alt="${esc(x.name||"Voetbalshirt")}">`:"👕"}</div><div class="fsm-item-body"><div class="fsm-meta">${esc(x.club||"Shirt")} · ${esc(x.size||"")}</div><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-row fsm-between" style="margin-top:7px"><span class="fsm-price">${priceDisplay(x)}</span><button class="fsm-btn dark" style="min-height:32px;padding:0 9px;font-size:9px" onclick="event.stopPropagation();openProduct('${esc(x.id)}')">Bekijken</button></div><button class="fsm-like-btn ${liked?"liked":""}" type="button" aria-label="${liked?"Verwijder uit favorieten":"Voeg toe aan favorieten"}" onclick="event.stopPropagation();toggleFav('${esc(x.id)}',this)">${liked?"♥":"♡"} <span>${liked?"Favoriet":"Vind ik leuk"}</span></button></div></article>`
 }
-window.openProduct=id=>go("#/product/"+encodeURIComponent(id));
+window.openProduct=id=>{
+  try{
+    const current=location.hash||"#/explore";
+    if(!current.startsWith("#/product")) sessionStorage.setItem("fsm_product_return",current);
+  }catch(e){}
+  go("#/product/"+encodeURIComponent(id));
+};
 window.openBadges=function(){ location.hash="#/badges"; enhancedRouter(); };
 function badges(){shell("Badges",`
 <div class="fsm-list">
@@ -6928,30 +6958,119 @@ window.openNotification=id=>{
  n.read=true; save();
  if(n.itemId) openProduct(n.itemId); else notifications();
 }
+function ensureChatRecord(seller,itemId,item){
+ const cleanSeller=String(seller||"verkoper");
+ const cleanItemId=String(itemId||"");
+ if(!Array.isArray(demo.chats)) demo.chats=[];
+ let c=demo.chats.find(x=>x&&x.user===cleanSeller);
+ if(!c){
+   c={id:"chat-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),user:cleanSeller,itemId:cleanItemId,itemSnapshot:item?{...item}:null,createdAt:new Date().toISOString()};
+   demo.chats.push(c);
+ }else if(cleanItemId){
+   c.itemId=cleanItemId;
+   c.itemSnapshot=item?{...item}:c.itemSnapshot||null;
+ }
+ save();
+ return c;
+}
+window.ensureChatRecord=ensureChatRecord;
+
+window.deleteChat=user=>{
+ const clean=String(user||"");
+ if(!clean)return;
+ if(!Array.isArray(demo.chats))demo.chats=[];
+ demo.chats=demo.chats.filter(c=>String(c?.user||"")!==clean);
+ demo.messages=Array.isArray(demo.messages)?demo.messages.filter(m=>String(m?.chat||"")!==clean):[];
+ save();
+ if(location.hash.startsWith("#/chat/")) go("#/inbox");
+ else inbox();
+};
+
+window.inboxTouchStart=(event,row)=>{
+ const touch=event.touches?.[0];
+ if(!touch)return;
+ row._swipeStartX=touch.clientX;
+ row._swipeStartY=touch.clientY;
+ row._swipeDx=0;
+ row.style.transition="none";
+};
+window.inboxTouchMove=(event,row)=>{
+ if(row._swipeStartX==null)return;
+ const touch=event.touches?.[0];
+ if(!touch)return;
+ const dx=touch.clientX-row._swipeStartX;
+ const dy=touch.clientY-row._swipeStartY;
+ if(Math.abs(dy)>Math.abs(dx)+8){row._swipeStartX=null;row.style.transform="translateX(0)";return}
+ const clamped=Math.max(-125,Math.min(0,dx));
+ row._swipeDx=dx;
+ row.style.transform=`translateX(${clamped}px)`;
+};
+window.inboxTouchEnd=(event,row)=>{
+ if(row._swipeStartX==null)return;
+ const dx=row._swipeDx||0;
+ row._swipeStartX=null;
+ row.style.transition="transform .18s ease";
+ if(dx<-90){
+   const user=row.dataset.chatUser||"";
+   row.style.transform="translateX(-100%)";
+   setTimeout(()=>deleteChat(user),140);
+ }else{
+   row.style.transform="translateX(0)";
+ }
+};
+
 function inbox(){
- const chats=[...new Set(demo.messages.map(m=>m.chat).filter(Boolean))];
+ const chatUsers=[
+   ...((demo.chats||[]).map(c=>c?.user).filter(Boolean)),
+   ...((demo.messages||[]).map(m=>m?.chat).filter(Boolean))
+ ];
+ const chats=[...new Set(chatUsers.map(String))];
  const rows=chats.map(c=>{
    const msgs=demo.messages.filter(m=>m.chat===c);
-   const last=msgs[msgs.length-1]||{text:"Start een gesprek",date:new Date().toISOString()};
-   const unread=msgs.filter(m=>m.to===demo.user.username && !m.read).length;
-   return `<button class="fsm-inbox-row" type="button" onclick="go('#/chat/${encodeURIComponent(c)}')">${avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></button>`;
+   const rec=(demo.chats||[]).find(x=>x?.user===c)||null;
+   const last=msgs[msgs.length-1]||{text:"Start een gesprek",date:rec?.createdAt||new Date().toISOString()};
+   const unread=msgs.filter(m=>m.to===demo.user.username&&!m.read).length;
+   const itemId=rec?.itemId||msgs.slice().reverse().find(m=>m.itemId)?.itemId||"";
+   const previewImg=rec?.itemSnapshot?.images?.[0]||rec?.itemSnapshot?.image||msgs.slice().reverse().find(m=>m.itemSnapshot?.images?.[0])?.itemSnapshot?.images?.[0]||"";
+   const mainAction=`go('#/chat/${encodeURIComponent(c)}${itemId?"?item="+encodeURIComponent(itemId):""}')`;
+   return `<div class="fsm-inbox-row-wrap">
+    <button class="fsm-inbox-row" type="button" data-chat-user="${esc(c)}" onclick="${mainAction}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${mainAction}}" ontouchstart="inboxTouchStart(event,this)" ontouchmove="inboxTouchMove(event,this)" ontouchend="inboxTouchEnd(event,this)">${previewImg?`<img src="${esc(previewImg)}" alt="" style="width:52px;height:52px;border-radius:9px;object-fit:cover;background:#07130e;flex:none">`:avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></button>
+    <button class="fsm-inbox-delete" type="button" title="Gesprek verwijderen" aria-label="Gesprek verwijderen" onclick="event.stopPropagation();deleteChat('${esc(c)}')">×</button>
+   </div>`;
  }).join("");
- shell("Inbox",`<div class="fsm-inbox-switch"><button class="fsm-btn gold" onclick="go('#/inbox')">✉ Berichten${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length?`<span class="fsm-notif-badge">${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length}</span>`:""}</button><button class="fsm-btn dark" onclick="go('#/notifications')">🔔 Notificaties${notificationCount()?`<span class="fsm-notif-badge">${notificationCount()}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows}</div></div>`,"inbox",false);
+ shell("Inbox",`<div class="fsm-inbox-switch"><button class="fsm-btn gold" onclick="go('#/inbox')">✉ Berichten${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length?`<span class="fsm-notif-badge">${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length}</span>`:""}</button><button class="fsm-btn dark" onclick="go('#/notifications')">🔔 Notificaties${notificationCount()?`<span class="fsm-notif-badge">${notificationCount()}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows||`<div class="fsm-empty">Nog geen gesprekken.</div>`}</div></div>` ,"inbox",false);
 }
+
 window.openSellerChat=(seller,itemId)=>{
- try{sessionStorage.setItem("fsmChatItem",String(itemId||""));}catch(e){}
- go("#/chat/"+encodeURIComponent(seller||"verkoper"));
+ const cleanSeller=String(seller||"verkoper");
+ const cleanItemId=String(itemId||"");
+ const item=cleanItemId?itemFromId(cleanItemId):null;
+ ensureChatRecord(cleanSeller,cleanItemId,item);
+ try{
+   sessionStorage.setItem("fsmChatItem",cleanItemId);
+   if(item) sessionStorage.setItem("fsmChatItemSnapshot",JSON.stringify(item));
+ }catch(e){}
+ go("#/chat/"+encodeURIComponent(cleanSeller)+(cleanItemId?"?item="+encodeURIComponent(cleanItemId):""));
 }
 function chat(user){
  user=String(user||"verkoper");
  let msgs=demo.messages.filter(m=>m.chat===user);
  msgs.forEach(m=>{if(m.to===demo.user.username)m.read=true});
  save();
+ const routeMatch=String(location.hash||"").match(/[?&]item=([^&]+)/);
+ const routeItemId=routeMatch?decodeURIComponent(routeMatch[1]):"";
  let sessionItemId="";
- try{sessionItemId=sessionStorage.getItem("fsmChatItem")||"";sessionStorage.removeItem("fsmChatItem")}catch(e){}
- const firstItemId=msgs.find(m=>m.itemId)?.itemId||sessionItemId;
- const firstMsg=msgs.find(m=>m.itemId);
- const firstItem=firstItemId?(itemFromId(firstItemId)||firstMsg?.itemSnapshot||null):null;
+ let sessionItemSnapshot=null;
+ try{
+   sessionItemId=sessionStorage.getItem("fsmChatItem")||"";
+   const snap=sessionStorage.getItem("fsmChatItemSnapshot");
+   sessionItemSnapshot=snap?JSON.parse(snap):null;
+   sessionStorage.removeItem("fsmChatItem");
+   sessionStorage.removeItem("fsmChatItemSnapshot");
+ }catch(e){}
+ const firstMsg=msgs.find(m=>m.itemId)||null;
+ const firstItemId=routeItemId||sessionItemId||firstMsg?.itemId||"";
+ const firstItem=firstItemId?(itemFromId(firstItemId)||sessionItemSnapshot||firstMsg?.itemSnapshot||null):(sessionItemSnapshot||null);
  const seller=user;
  const listingImg=firstItem?.images?.[0]||firstItem?.image||"";
  const listingName=firstItem?.name||"Voetbalshirt";
@@ -6962,7 +7081,7 @@ function chat(user){
     <div class="fsm-chat-listing-thumb">${listingImg?`<img src="${esc(listingImg)}" alt="">`:`👕`}</div>
     <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${priceDisplay(firstItem)}</div></div>
    </div>
-   <div class="fsm-chat-actions"><button type="button" class="outline" onclick="offer('${esc(firstItem?.id||"")}')">Een bod doen</button><button type="button" class="buy" onclick="checkout('${esc(firstItem?.id||"")}','buy')">Kopen</button></div>
+   <div class="fsm-chat-actions"><button type="button" class="outline" onclick="offer('${esc(String(firstItem?.id||firstItemId||""))}')">Een bod doen</button><button type="button" class="buy" onclick="checkout('${esc(String(firstItem?.id||firstItemId||""))}','buy')">Kopen</button></div>
   </div>`:"";
  const html=msgs.map(m=>{
    const item=m.itemId?(m.itemSnapshot||itemFromId(m.itemId)||null):null;
@@ -7005,7 +7124,7 @@ function safetyEscapeHandler(event){if(event.key==="Escape")closeSafetyTips()}
 window.openSafetyTips=openSafetyTips;
 window.closeSafetyTips=closeSafetyTips;
 
-window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,read:true,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
+window.sendChat=async user=>{const i=document.getElementById("chatInput");if(!i?.value.trim())return;ensureChatRecord(user,"",null);demo.messages.push({id:"m"+Date.now(),chat:user,from:demo.user.username,to:user,text:i.value.trim(),system:false,read:true,date:new Date().toISOString()});save();await api("/messages",{method:"POST",body:JSON.stringify(demo.messages.at(-1))});chat(user)}
 window.translateMsg=(id,b)=>{b.textContent="Vertalen…";setTimeout(()=>{b.textContent="Vertaling beschikbaar via de vertaalservice.";},250)}
 window.originalMsg=(id,b)=>{b.textContent="Origineel bekeken"}
 function product(id){
@@ -7104,6 +7223,7 @@ window.submitOffer=id=>{
  }
  input.setCustomValidity("");
  const seller=x?.seller||x?.username||"verkoper";
+ ensureChatRecord(seller,String(id),x);
  const offerId="of"+Date.now();
  const o={id:offerId,itemId:String(id),itemName:x?.name||"Shirt",buyer:demo.user.username,seller,originalPrice:priceNumber(x?.price)||0,amount:n,currency:currency(),status:"pending",createdAt:new Date().toISOString(),itemSnapshot:{...x}};
  if(!Array.isArray(demo.offers))demo.offers=[];
@@ -7115,7 +7235,7 @@ window.submitOffer=id=>{
  api("/messages",{method:"POST",body:JSON.stringify(msg)});
  document.getElementById("fsmOfferModal")?.remove();
  toast("Bod verstuurd: "+money(n,currency()));
- go("#/chat/"+encodeURIComponent(seller));
+ go("#/chat/"+encodeURIComponent(seller)+"?item="+encodeURIComponent(String(id)));
 }
 async function checkout(id,source){
  const x=itemFromId(id);if(!x)return;
