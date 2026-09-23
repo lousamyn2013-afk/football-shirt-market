@@ -3235,6 +3235,7 @@ footer strong{
 .fsm-accepted-price{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);text-align:center}.fsm-accepted-new{font-size:22px;font-weight:900;color:var(--green)}.fsm-accepted-old{margin-top:3px;color:#9aa7a3;text-decoration:line-through;font-size:14px}.fsm-btn.full{width:100%;justify-content:center}
 .fsm-offer-card{margin-top:9px;padding:11px;border-radius:11px;border:1px solid rgba(239,210,143,.45);background:rgba(239,210,143,.07)}
 .fsm-offer-label{font-size:10px;font-weight:900;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px}
+.fsm-offer-actions{display:flex;gap:8px;flex-wrap:wrap}.fsm-offer-actions .fsm-btn{flex:1;min-width:140px;justify-content:center}
 .fsm-offer-limit{margin:8px 0 10px;font-size:12px;color:#b9c6c0}.fsm-offer-limit strong{color:var(--gold)}
 @media(max-width:650px){.fsm-boost-grid{grid-template-columns:1fr}.fsm-boost-item{padding:9px}.fsm-boost-thumb{width:52px;height:52px}}
 </style>
@@ -6577,9 +6578,9 @@ setTimeout(()=>router(),0);
 .fsm-inbox-copy{min-width:0;flex:1}
 .fsm-inbox-copy strong,.fsm-inbox-copy .fsm-muted{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fsm-inbox-side{display:flex;align-items:center;gap:7px}
-.fsm-inbox-delete{position:absolute;right:0;top:0;bottom:0;width:52px;border:0;background:#a93232;color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;z-index:1}
+.fsm-inbox-delete{position:absolute;right:0;top:0;bottom:0;width:52px;border:0;background:#a93232;color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;z-index:3}
 .fsm-inbox-delete:hover{background:#c53a3a}
-@media(max-width:650px){.fsm-inbox-row{padding:12px 52px 12px 2px}.fsm-inbox-delete{width:50px}}
+@media(max-width:650px){.fsm-inbox-row{padding:12px 52px 12px 2px}.fsm-inbox-delete{width:50px;z-index:3}}
 .fsm-notif-row-wrap{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y}
 .fsm-notif-row-wrap:last-child{border-bottom:0}
 .fsm-notif-row{position:relative;z-index:2;transition:transform .18s ease;will-change:transform;padding-right:56px}
@@ -6775,15 +6776,15 @@ function fillLocationForm(parts,prefix="fsmAuthLoc"){
     const check=document.getElementById(prefix+name+"Use");
     const input=document.getElementById(prefix+name);
     if(check)check.checked=!!val;
-    if(input){input.value=val;input.disabled=!val;input.style.opacity=val?"1":".55";}
+    if(input){input.value=val;input.disabled=false;input.style.opacity="1";}
   });
 }
 function syncLocationField(prefix,name){
   const check=document.getElementById(prefix+name+"Use");
   const input=document.getElementById(prefix+name);
   if(!check||!input)return;
-  input.disabled=!check.checked;
-  input.style.opacity=check.checked?"1":".55";
+  input.disabled=false;
+  input.style.opacity=check.checked?"1":".7";
   if(!check.checked)input.value="";
 }
 async function persistLocationParts(parts,userId=demo.user?.id,accessToken=localStorage.getItem("fsm_access_token")){
@@ -6809,11 +6810,11 @@ function locationFormHtml(prefix="fsmAuthLoc",parts={}){
     <div style="font-weight:900;color:var(--gold);margin-bottom:5px">Waar kom je vandaan? <span style="font-size:11px;color:var(--muted);font-weight:600">(optioneel)</span></div>
     <div style="font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:10px">Geen exact adres nodig. Kies zelf welke informatie je wilt delen. Deze gekozen informatie kan op je profiel worden getoond.</div>
     <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:7px"><input id="${prefix}CountryUse" type="checkbox" ${p.country?"checked":""} onchange="syncLocationField('${prefix}','Country')"> Land</label>
-    <input id="${prefix}Country" type="text" placeholder="Bijv. België" value="${esc(p.country)}" ${p.country?"":"disabled"} style="width:100%;padding:11px;margin-bottom:8px;border-radius:9px;border:1px solid rgba(239,210,143,.2);background:#030806;color:#fff;outline:0;opacity:${p.country?"1":".55"}">
+    <input id="${prefix}Country" type="text" placeholder="Bijv. België" value="${esc(p.country)}"  style="width:100%;padding:11px;margin-bottom:8px;border-radius:9px;border:1px solid rgba(239,210,143,.2);background:#030806;color:#fff;outline:0;opacity:1">
     <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:7px"><input id="${prefix}RegionUse" type="checkbox" ${p.region?"checked":""} onchange="syncLocationField('${prefix}','Region')"> Regio / provincie</label>
-    <input id="${prefix}Region" type="text" placeholder="Bijv. Oost-Vlaanderen" value="${esc(p.region)}" ${p.region?"":"disabled"} style="width:100%;padding:11px;margin-bottom:8px;border-radius:9px;border:1px solid rgba(239,210,143,.2);background:#030806;color:#fff;outline:0;opacity:${p.region?"1":".55"}">
+    <input id="${prefix}Region" type="text" placeholder="Bijv. Oost-Vlaanderen" value="${esc(p.region)}"  style="width:100%;padding:11px;margin-bottom:8px;border-radius:9px;border:1px solid rgba(239,210,143,.2);background:#030806;color:#fff;outline:0;opacity:1">
     <label style="display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:7px"><input id="${prefix}CityUse" type="checkbox" ${p.city?"checked":""} onchange="syncLocationField('${prefix}','City')"> Stad / gemeente</label>
-    <input id="${prefix}City" type="text" placeholder="Bijv. Dendermonde" value="${esc(p.city)}" ${p.city?"":"disabled"} style="width:100%;padding:11px;border-radius:9px;border:1px solid rgba(239,210,143,.2);background:#030806;color:#fff;outline:0;opacity:${p.city?"1":".55"}">
+    <input id="${prefix}City" type="text" placeholder="Bijv. Dendermonde" value="${esc(p.city)}"  style="width:100%;padding:11px;border-radius:9px;border:1px solid rgba(239,210,143,.2);background:#030806;color:#fff;outline:0;opacity:1">
   </div>`;
 }
 
@@ -7449,7 +7450,7 @@ function chat(user){
  const html=msgs.map(m=>{
    const item=m.itemId?(m.itemSnapshot||itemFromId(m.itemId)||null):null;
    const offer=m.offerId?demo.offers.find(o=>o.id===m.offerId):null;
-   const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.status==="accepted"?`<div class="fsm-accepted-price"><div class="fsm-accepted-new">${money(offer.amount,offer.currency||currency())}</div><div class="fsm-accepted-old">${money(priceNumber(offer.originalPrice)||priceNumber(item?.price)||0,offer.currency||currency())}</div></div>${offer?.buyer===demo.user.username?`<button type="button" class="fsm-btn green full" style="margin-top:10px" onclick="checkout('${esc(String(offer.itemId))}','offer')">Nu kopen</button>`:""}`:""}${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-row" style="margin-top:10px"><button class="fsm-btn green" onclick="acceptOffer('${esc(offer.id)}')">Accepteren</button><button class="fsm-btn dark" onclick="rejectOffer('${esc(offer.id)}')">Weigeren</button></div>`:""}</div>`:"";
+   const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.status==="accepted"?`<div class="fsm-accepted-price"><div class="fsm-accepted-new">${money(offer.amount,offer.currency||currency())}</div><div class="fsm-accepted-old">${money(priceNumber(offer.originalPrice)||priceNumber(item?.price)||0,offer.currency||currency())}</div></div>${offer?.buyer===demo.user.username?`<button type="button" class="fsm-btn green full" style="margin-top:10px" onclick="checkout('${esc(String(offer.itemId))}','offer')">Nu kopen</button>`:""}`:""}${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-offer-actions" style="margin-top:10px" onclick="event.stopPropagation()"><button type="button" class="fsm-btn green" onclick="event.stopPropagation();acceptOffer('${esc(offer.id)}')">✓ Bod accepteren</button><button type="button" class="fsm-btn dark" onclick="event.stopPropagation();rejectOffer('${esc(offer.id)}')">✕ Bod weigeren</button></div>`:""}</div>`:"";
    return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
  }).join("");
  const safety=`<div class="fsm-safety"><div class="fsm-safety-icon">✓</div><div>Blijf veilig op Football-Shirt-Market. Deel geen persoonlijke gegevens, klik niet op externe links en scan geen QR-codes. <button type="button" class="fsm-safety-link" onclick="openSafetyTips()">Meer veiligheidstips</button></div></div>`;
