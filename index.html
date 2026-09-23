@@ -6607,7 +6607,7 @@ setTimeout(()=>router(),0);
 @media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .fsm-inbox-row-wrap{display:flex;align-items:stretch;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y;width:100%}
 .fsm-inbox-row-wrap:last-child{border-bottom:0}
-.fsm-inbox-row{width:auto;flex:1 1 auto;min-width:0;display:flex!important;align-items:center;gap:11px;text-align:left;background:#08110d;border:0;color:#fff;padding:13px 10px 13px 4px;cursor:pointer;position:relative;z-index:2;transition:transform .18s ease;will-change:transform}
+.fsm-inbox-row{width:auto;flex:1 1 auto;min-width:0;display:flex!important;align-items:center;gap:11px;text-align:left;background:#08110d;border:0;color:#fff;padding:13px 10px 13px 4px;cursor:pointer;position:relative;z-index:2;transition:transform .18s ease;will-change:transform;user-select:none}
 .fsm-inbox-row:hover{background:rgba(255,255,255,.025)}
 .fsm-inbox-copy{min-width:0;flex:1}
 .fsm-inbox-copy strong,.fsm-inbox-copy .fsm-muted{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -7418,6 +7418,22 @@ window.inboxTouchEnd=(event,row)=>{
  }
 };
 
+function openChatFromInbox(event,user,itemId){
+  if(event){event.preventDefault();event.stopPropagation();}
+  const cleanUser=String(user||"").trim();
+  if(!cleanUser)return;
+  const cleanItemId=String(itemId||"");
+  const item=cleanItemId?itemFromId(cleanItemId):null;
+  ensureChatRecord(cleanUser,cleanItemId,item);
+  try{
+    sessionStorage.setItem("fsmChatItem",cleanItemId);
+    if(item)sessionStorage.setItem("fsmChatItemSnapshot",JSON.stringify(item));
+  }catch(e){}
+  location.hash="#/chat/"+encodeURIComponent(cleanUser)+(cleanItemId?"?item="+encodeURIComponent(cleanItemId):"");
+  setTimeout(()=>{ if(typeof enhancedRouter==="function") enhancedRouter(); },0);
+}
+window.openChatFromInbox=openChatFromInbox;
+
 function inbox(){
  const chatUsers=[
    ...((demo.chats||[]).map(c=>c?.user).filter(Boolean)),
@@ -7431,10 +7447,9 @@ function inbox(){
    const unread=msgs.filter(m=>m.to===demo.user.username&&!m.read).length;
    const itemId=rec?.itemId||msgs.slice().reverse().find(m=>m.itemId)?.itemId||"";
    const previewImg=rec?.itemSnapshot?.images?.[0]||rec?.itemSnapshot?.image||msgs.slice().reverse().find(m=>m.itemSnapshot?.images?.[0])?.itemSnapshot?.images?.[0]||"";
-   const mainAction=`go('#/chat/${encodeURIComponent(c)}${itemId?"?item="+encodeURIComponent(itemId):""}')`;
    return `<div class="fsm-inbox-row-wrap">
-    <button class="fsm-inbox-row" type="button" data-chat-user="${esc(c)}" onclick="${mainAction}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${mainAction}}" ontouchstart="inboxTouchStart(event,this)" ontouchmove="inboxTouchMove(event,this)" ontouchend="inboxTouchEnd(event,this)">${previewImg?`<img src="${esc(previewImg)}" alt="" style="width:52px;height:52px;border-radius:9px;object-fit:cover;background:#07130e;flex:none">`:avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></button>
-    <button class="fsm-inbox-delete" type="button" title="Gesprek verwijderen" aria-label="Gesprek verwijderen" onclick="event.stopPropagation();deleteChat('${esc(c)}')">×</button>
+    <div class="fsm-inbox-row" role="button" tabindex="0" data-chat-user="${esc(c)}" onclick="openChatFromInbox(event,'${esc(c)}','${esc(itemId)}')" onkeydown="if(event.key==='Enter'||event.key===' '){openChatFromInbox(event,'${esc(c)}','${esc(itemId)}')}" ontouchstart="inboxTouchStart(event,this)" ontouchmove="inboxTouchMove(event,this)" ontouchend="inboxTouchEnd(event,this)">${previewImg?`<img src="${esc(previewImg)}" alt="" style="width:52px;height:52px;border-radius:9px;object-fit:cover;background:#07130e;flex:none">`:avatar(c,true)}<div class="fsm-inbox-copy"><strong>${esc(c)}</strong><div class="fsm-muted">${esc(last.text)}</div></div><div class="fsm-inbox-side">${unread?`<span class="fsm-unread">${unread}</span>`:""}<span class="arrow">›</span></div></div>
+    <button class="fsm-inbox-delete" type="button" title="Gesprek verwijderen" aria-label="Gesprek verwijderen" onclick="event.preventDefault();event.stopPropagation();deleteChat('${esc(c)}')">×</button>
    </div>`;
  }).join("");
  shell("Inbox",`<div class="fsm-inbox-switch"><button class="fsm-btn gold" onclick="go('#/inbox')">✉ Berichten${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length?`<span class="fsm-notif-badge">${demo.messages.filter(m=>m.to===demo.user.username&&!m.read).length}</span>`:""}</button><button class="fsm-btn dark" onclick="go('#/notifications')">🔔 Notificaties${notificationCount()?`<span class="fsm-notif-badge">${notificationCount()}</span>`:""}</button></div><div class="fsm-card"><div class="fsm-list">${rows||`<div class="fsm-empty">Nog geen gesprekken.</div>`}</div></div>` ,"inbox",false);
