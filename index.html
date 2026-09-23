@@ -3728,6 +3728,34 @@ function combinedShirts(){
 
     const listings=getListings();
 
+    // Vul oudere lokale advertenties automatisch aan met de huidige ingelogde
+    // gebruiker wanneer er nog geen verkopersnaam was opgeslagen. Dit voorkomt
+    // dat oude advertenties/chatten als "verkoper" blijven verschijnen.
+    let ownershipChanged=false;
+    const currentUser=readLoggedInUser();
+    const currentUsername=String(currentUser?.username||demo?.user?.username||"").trim();
+    const currentLocation=typeof locationDisplay==="function" ? locationDisplay(demo?.user||currentUser||{}) : "";
+    const currentLocationParts=typeof getLocationParts==="function" ? getLocationParts(demo?.user||currentUser||{}) : {};
+    const currentLastSeen=demo?.user?.lastSeenAt||currentUser?.lastSeenAt||"";
+    listings.forEach(listing=>{
+        if(!listing || !currentUsername) return;
+        const seller=String(listing.seller||listing.username||"").trim();
+        if(!seller || seller.toLowerCase()==="verkoper"){
+            listing.seller=currentUsername;
+            listing.username=currentUsername;
+            ownershipChanged=true;
+        }
+        if(String(listing.seller||"")===currentUsername){
+            if(!listing.sellerLocation && currentLocation){listing.sellerLocation=currentLocation; ownershipChanged=true;}
+            if(!listing.sellerLocationParts && currentLocationParts && Object.values(currentLocationParts).some(Boolean)){
+                listing.sellerLocationParts={...currentLocationParts};
+                ownershipChanged=true;
+            }
+            if(!listing.sellerLastSeenAt && currentLastSeen){listing.sellerLastSeenAt=currentLastSeen; ownershipChanged=true;}
+        }
+    });
+    if(ownershipChanged) saveListings(listings);
+
     const now=Date.now();
 
     let changed=false;
@@ -3783,15 +3811,21 @@ function combinedShirts(){
                     ? listing.images[0]
                     : (listing.image || null),
 
-            seller:listing.seller || listing.username || "verkoper",
+            seller:listing.seller || listing.username || currentUsername || "verkoper",
 
-            username:listing.username || listing.seller || "verkoper",
+            username:listing.username || listing.seller || currentUsername || "verkoper",
 
-            sellerLocation:listing.sellerLocation || "",
+            sellerLocation:
+                listing.sellerLocation ||
+                (String(listing.seller || listing.username || currentUsername || "")===currentUsername ? currentLocation : ""),
 
-            sellerLocationParts:listing.sellerLocationParts || {},
+            sellerLocationParts:
+                listing.sellerLocationParts ||
+                (String(listing.seller || listing.username || currentUsername || "")===currentUsername ? {...currentLocationParts} : {}),
 
-            sellerLastSeenAt:listing.sellerLastSeenAt || "",
+            sellerLastSeenAt:
+                listing.sellerLastSeenAt ||
+                (String(listing.seller || listing.username || currentUsername || "")===currentUsername ? currentLastSeen : ""),
 
             description:listing.description || "",
 
@@ -6571,21 +6605,21 @@ setTimeout(()=>router(),0);
  .fsm-shell{padding:12px 10px 90px}.fsm-topbar h1{font-size:21px}.fsm-grid{gap:9px}.fsm-bottomnav{display:grid}
 }
 @media(min-width:651px){.fsm-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.fsm-inbox-row-wrap{display:flex;align-items:stretch;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y}
+.fsm-inbox-row-wrap{display:flex;align-items:stretch;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y;width:100%}
 .fsm-inbox-row-wrap:last-child{border-bottom:0}
-.fsm-inbox-row{width:auto;flex:1;min-width:0;display:flex!important;align-items:center;gap:11px;text-align:left;background:#08110d;border:0;color:#fff;padding:13px 10px 13px 4px;cursor:pointer;position:relative;z-index:2;transition:transform .18s ease;will-change:transform}
+.fsm-inbox-row{width:auto;flex:1 1 auto;min-width:0;display:flex!important;align-items:center;gap:11px;text-align:left;background:#08110d;border:0;color:#fff;padding:13px 10px 13px 4px;cursor:pointer;position:relative;z-index:2;transition:transform .18s ease;will-change:transform}
 .fsm-inbox-row:hover{background:rgba(255,255,255,.025)}
 .fsm-inbox-copy{min-width:0;flex:1}
 .fsm-inbox-copy strong,.fsm-inbox-copy .fsm-muted{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fsm-inbox-side{display:flex;align-items:center;gap:7px;flex:none}
-.fsm-inbox-delete{position:relative;inset:auto;width:52px;min-width:52px;align-self:stretch;border:0;background:#a93232;color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;z-index:1}
+.fsm-inbox-delete{position:relative;inset:auto;flex:0 0 40px;width:40px;min-width:40px;max-width:40px;align-self:stretch;margin:0;padding:0;border:0;border-radius:0;background:#a93232;color:#fff;font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center;z-index:1}
 .fsm-inbox-delete:hover{background:#c53a3a}
-.fsm-notif-row-wrap{display:flex;align-items:stretch;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y}
+.fsm-notif-row-wrap{display:flex;align-items:stretch;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);touch-action:pan-y;width:100%}
 .fsm-notif-row-wrap:last-child{border-bottom:0}
 .fsm-notif-row{position:relative;z-index:2;flex:1;min-width:0;transition:transform .18s ease;will-change:transform;padding-right:8px}
-.fsm-notif-delete{position:relative;inset:auto;width:54px;min-width:54px;align-self:stretch;border:0;background:#a93232;color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;z-index:1}
+.fsm-notif-delete{position:relative;inset:auto;flex:0 0 40px;width:40px;min-width:40px;max-width:40px;align-self:stretch;margin:0;padding:0;border:0;border-radius:0;background:#a93232;color:#fff;font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center;z-index:1}
 .fsm-notif-delete:hover{background:#c53a3a}
-@media(max-width:650px){.fsm-inbox-row{padding:12px 8px 12px 2px}.fsm-inbox-delete{width:50px;min-width:50px}.fsm-notif-delete{width:50px;min-width:50px}.fsm-notif-row{padding-right:4px}}
+@media(max-width:650px){.fsm-inbox-row{padding:12px 8px 12px 2px}.fsm-inbox-delete{flex:0 0 40px;width:40px;min-width:40px;max-width:40px}.fsm-notif-delete{flex:0 0 40px;width:40px;min-width:40px;max-width:40px}.fsm-notif-row{padding-right:4px}}
 .fsm-unread{min-width:20px;height:20px;border-radius:999px;background:var(--gold);color:#06100b;display:grid;place-items:center;font-size:10px;font-weight:900}
 .fsm-chat-user{display:flex;align-items:center;gap:10px;padding:10px 0 14px;border-bottom:1px solid rgba(255,255,255,.08)}
 .fsm-msg-text{white-space:pre-wrap;word-break:break-word}
@@ -6687,7 +6721,7 @@ function ensureDemoMarketplace(){
   if(!Array.isArray(demo.chats)) demo.chats=[];
 }
 function ensureNotifications(){
-  demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n.id!=="demo-like-1"):[];
+  demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n&&n.id!=="demo-like-1"):[];
 }
 ensureNotifications();
 ensureDemoMarketplace();
@@ -7255,12 +7289,19 @@ window.startBoost=(type)=>{
  demo.boostSelection=[]; save(); toast(type+" geactiveerd voor "+ids.length+" geselecteerd(e) shirt"+(ids.length===1?"":"s")+" (demo)"); promote();
 };
 
-function notificationCount(){return (demo.notifications||[]).filter(n=>!n.read).length}
+function notificationRecipient(n){
+  return String(n?.recipient||n?.user||n?.username||n?.to||"").trim();
+}
+function notificationForCurrentUser(n){
+  const recipient=notificationRecipient(n);
+  return !recipient || recipient===String(demo.user?.username||"");
+}
+function notificationCount(){return (demo.notifications||[]).filter(n=>notificationForCurrentUser(n)&&!n.read).length}
 function notificationTime(date){try{return new Date(date).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}catch(e){return ""}}
 window.deleteNotification=id=>{
  const clean=String(id||"");
  if(!clean)return;
- demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>String(n?.id||"")!==clean):[];
+ demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>!(String(n?.id||"")===clean && notificationForCurrentUser(n))):[];
  save();
  notifications();
 };
@@ -7298,7 +7339,7 @@ window.notificationTouchEnd=(event,row)=>{
 };
 function notifications(){
  ensureNotifications();
- const list=(demo.notifications||[]).slice().reverse();
+ const list=(demo.notifications||[]).filter(notificationForCurrentUser).slice().reverse();
  const rows=list.length?list.map(n=>{
   const item=n.itemSnapshot||itemFromId(n.itemId);
   const img=item?.images?.[0]||item?.image||"";
@@ -7593,10 +7634,23 @@ window.toggleFav=(id,btn)=>{
  demo.favorites=added?[...new Set([...demo.favorites,id])]:demo.favorites.filter(x=>x!==id);
  if(added){
   const item=itemFromId(id);
-  const owner=item?.seller||item?.username||item?.owner||"";
-  if(owner===demo.user.username){
+  const owner=String(item?.seller||item?.username||item?.owner||"").trim();
+  const liker=String(demo.user?.username||"").trim();
+  if(owner && liker && owner!==liker){
    ensureNotifications();
-   demo.notifications.unshift({id:"like-"+Date.now(),type:"like",from:"ShirtCollector",itemId:id,itemSnapshot:item?{...item}:null,itemName:item?.name||"Je advertentie",text:"ShirtCollector vindt je shirt leuk.",read:false,date:new Date().toISOString()});
+   const notification={
+     id:"like-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),
+     type:"like",
+     recipient:owner,
+     from:liker,
+     itemId:id,
+     itemSnapshot:item?{...item}:null,
+     itemName:item?.name||"Je advertentie",
+     text:liker+" vindt je shirt leuk.",
+     read:false,
+     date:new Date().toISOString()
+   };
+   demo.notifications.unshift(notification);
   }
  }
  save();
