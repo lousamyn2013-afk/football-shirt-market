@@ -3655,6 +3655,121 @@ const shirtsData = [];
 
 const LISTINGS_KEY="fsm_user_listings";
 
+const FSM_SUPABASE_URL="https://torxckrcdelecwioqgyt.supabase.co";
+const FSM_SUPABASE_ANON_KEY="sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir";
+let publicListingsCache=[];
+let publicListingsLoaded=false;
+
+function publicListingImages(row){
+    const raw=row?.images;
+    if(Array.isArray(raw)) return raw.filter(Boolean).map(String);
+    if(typeof raw==="string" && raw.trim()){
+        try{
+            const parsed=JSON.parse(raw);
+            if(Array.isArray(parsed)) return parsed.filter(Boolean).map(String);
+        }catch(e){}
+        return [raw.trim()];
+    }
+    return [row?.image,row?.image_url,row?.photo_url].filter(Boolean).map(String);
+}
+
+function normalizePublicListing(row){
+    if(!row || typeof row!=="object") return null;
+    const images=publicListingImages(row);
+    const seller=String(row.seller||row.username||row.seller_username||row.owner_username||"").trim();
+    const sourceId=String(row.source_listing_id||row.sourceListingId||row.local_id||"").trim();
+    const id=String(row.id||sourceId||("remote-"+Math.random().toString(36).slice(2))).trim();
+    const expires=row.boost_expires_at||row.boostExpiresAt||row.boost_expires||null;
+    const expired=expires && !Number.isNaN(new Date(expires).getTime()) && new Date(expires).getTime()<=Date.now();
+    return {
+        ...row,
+        id:"p"+id,
+        publicListingId:id,
+        sourceListingId:sourceId||id,
+        club:row.club||row.team||"",
+        name:row.name||row.title||"Voetbalshirt",
+        price:row.price??row.amount??0,
+        condition:row.condition||"",
+        size:row.size||"",
+        type:Array.isArray(row.type)?row.type:(row.type?[String(row.type)]:["Club"]),
+        icon:"👕",
+        images,
+        image:images[0]||null,
+        seller:seller||"verkoper",
+        username:seller||"verkoper",
+        sellerLocation:row.seller_location||row.sellerLocation||row.location||"",
+        sellerLocationParts:row.seller_location_parts||row.sellerLocationParts||{},
+        sellerLastSeenAt:row.seller_last_seen_at||row.sellerLastSeenAt||row.last_seen_at||"",
+        description:row.description||"",
+        boosted:!!(row.boosted||row.is_boosted) && !expired,
+        sourceRemote:true
+    };
+}
+
+async function refreshPublicListings(){
+    try{
+        let r=await fetch(FSM_SUPABASE_URL+"/rest/v1/listings?select=*",{
+            headers:{apikey:FSM_SUPABASE_ANON_KEY}
+        });
+        if(!r.ok){
+            r=await fetch(FSM_SUPABASE_URL+"/rest/v1/listings?select=*&order=created_at.desc",{
+                headers:{apikey:FSM_SUPABASE_ANON_KEY}
+            });
+        }
+        if(!r.ok) throw new Error("Public listings ophalen mislukt");
+        const rows=await r.json();
+        publicListingsCache=Array.isArray(rows)?rows.map(normalizePublicListing).filter(Boolean):[];
+        publicListingsLoaded=true;
+    }catch(e){
+        publicListingsLoaded=false;
+    }
+    return publicListingsCache;
+}
+
+async function publishListingToSupabase(listing){
+    const logged=readLoggedInUser?.()||{};
+    if(!logged?.id) return false;
+    const payloadBase={
+        club:listing.club||"",
+        name:listing.name||"Voetbalshirt",
+        price:priceNumber(listing.price),
+        condition:listing.condition||"",
+        size:listing.size||"",
+        type:Array.isArray(listing.type)?listing.type:[listing.type||"Club"],
+        description:listing.description||"",
+        images:Array.isArray(listing.images)?listing.images:[],
+        seller:listing.seller||logged.username||"verkoper",
+        username:listing.username||logged.username||"verkoper",
+        boosted:!!listing.boosted,
+        boost_expires_at:listing.boostExpiresAt||null
+    };
+    const variants=[
+        {...payloadBase,user_id:logged.id,source_listing_id:String(listing.id)},
+        {...payloadBase,user_id:logged.id},
+        payloadBase,
+        {club:payloadBase.club,name:payloadBase.name,price:payloadBase.price,condition:payloadBase.condition,size:payloadBase.size,description:payloadBase.description,images:payloadBase.images,seller:payloadBase.seller}
+    ];
+    for(const payload of variants){
+        try{
+            const r=await fetch(FSM_SUPABASE_URL+"/rest/v1/listings",{
+                method:"POST",
+                headers:{apikey:FSM_SUPABASE_ANON_KEY,Authorization:"Bearer "+(localStorage.getItem("fsm_access_token")||""),"Content-Type":"application/json",Prefer:"return=representation"},
+                body:JSON.stringify(payload)
+            });
+            if(r.ok){
+                const rows=await r.json().catch(()=>[]);
+                if(Array.isArray(rows)&&rows[0]){
+                    const publicRow=normalizePublicListing(rows[0]);
+                    if(publicRow) publicListingsCache=[publicRow,...publicListingsCache.filter(x=>x.publicListingId!==publicRow.publicListingId)];
+                }
+                publicListingsLoaded=true;
+                return true;
+            }
+        }catch(e){}
+    }
+    return false;
+}
+
 
 function getListings(){
 
@@ -3848,9 +3963,19 @@ function combinedShirts(){
             .filter(shirt=>!shirt.boosted);
 
 
+    const localIds=new Set(listings.map(listing=>String(listing.id)));
+    const remoteUnique=publicListingsCache.filter(remote=>{
+        const source=String(remote.sourceListingId||"");
+        return !(source && localIds.has(source));
+    });
+    const remoteBoosted=remoteUnique.filter(shirt=>shirt.boosted);
+    const remoteNormal=remoteUnique.filter(shirt=>!shirt.boosted);
+
     return [
         ...boosted,
+        ...remoteBoosted,
         ...normal,
+        ...remoteNormal,
         ...shirtsData
     ];
 
@@ -5653,6 +5778,10 @@ data-photo-index="${index}"
                 listings
             );
 
+            // Publiceer de advertentie ook naar Supabase zodat andere bezoekers,
+            // ook zonder ingelogd te zijn, het shirt kunnen zien. De lokale opslag
+            // blijft behouden als fallback.
+            publishListingToSupabase(newShirt).catch(()=>{});
 
             showToast(
                 "Shirt succesvol geplaatst!"
@@ -6216,6 +6345,14 @@ updateLanguageButton();
 renderLanguages();
 
 setTimeout(()=>router(),0);
+
+// Openbare advertenties worden ook zonder login opgehaald. Eerst wordt de pagina
+// lokaal getoond, daarna wordt de collectie automatisch aangevuld met Supabase-data.
+setTimeout(async()=>{
+    await refreshPublicListings();
+    const currentHash=location.hash||"#/";
+    if(currentHash.startsWith("#/explore")||currentHash==="#/"||currentHash==="#") router();
+},50);
 
 </script>
 
@@ -7291,9 +7428,22 @@ function orders(filter="all",tab="bought"){
  <div class="fsm-row" style="gap:6px;overflow:auto;margin-bottom:13px">${["all","pending","cancelled","completed"].map(f=>`<button class="fsm-pill" onclick="go('#/orders/${f}/${tab}')">${f==="all"?"Alles":f==="pending"?"In behandeling":f==="cancelled"?"Geannuleerd":"Voltooid"}</button>`).join("")}</div>
  ${shown.length?shown.map(o=>{const item=itemFromId(o.itemId)||o.itemSnapshot||null;const img=item?.images?.[0]||item?.image||"";return `<div class="fsm-card" style="margin-bottom:9px;cursor:pointer" onclick="${item?`openProduct('${esc(String(item.id||o.itemId))}')`:`go('#/order/${o.id}')`}"><div class="fsm-row" style="gap:12px;align-items:center"><div style="width:78px;height:78px;flex:0 0 78px;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);display:grid;place-items:center">${img?`<img src="${esc(img)}" alt="${esc(o.itemName)}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:30px">👕</span>`}</div><div style="flex:1;min-width:0"><strong>${esc(o.itemName)}</strong><div class="fsm-muted">${money(o.finalPrice,o.currency)} · ${esc(o.status)}</div><div class="fsm-muted" style="margin-top:5px">Tik om het gekochte shirt te bekijken</div></div><span>›</span></div></div>`}).join(""):`<div class="fsm-empty"><div class="ico">▣</div><strong>Je hebt nog geen bestellingen</strong><p class="fsm-muted">Als je iets verkoopt, zie je het hier staan</p></div>`}`);
 }
+const BOOST_PRICES={
+  "3 dagen · Lokaal":1.99,
+  "3 dagen · Internationaal":2.99,
+  "7 dagen · Lokaal":3.49,
+  "7 dagen · Internationaal":4.99
+};
+const BOOST_OPTIONS=[
+  ["3 dagen · Lokaal","Alleen zichtbaar in je eigen land"],
+  ["3 dagen · Internationaal","Zichtbaarheid in meerdere landen"],
+  ["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
+  ["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
+];
 function promote(){
  const mine=allListings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
  const selected=new Set((demo.boostSelection||[]).map(String));
+ const selectedType=String(demo.boostCheckout?.type||"");
  const cards=mine.length?mine.map(x=>{
    const id=String(x.id), checked=selected.has(id);
    const img=x.images?.[0]||x.image||"";
@@ -7304,31 +7454,77 @@ function promote(){
      <span class="fsm-boost-check">✓</span>
    </label>`;
  }).join(""):`<div class="fsm-empty"><strong>Nog geen advertenties</strong><p class="fsm-muted">Maak eerst een shirtadvertentie voordat je een boost kiest.</p><button class="fsm-btn gold" onclick="go('#/sell')">Nieuwe advertentie</button></div>`;
+ const optionButtons=BOOST_OPTIONS.map(([name,desc])=>`<button type="button" class="${selectedType===name?"selected":""}" onclick="selectBoost('${name}')"><span>↗</span><div style="flex:1"><strong>${name}</strong><div class="fsm-muted">${desc}</div></div><strong>${money(BOOST_PRICES[name],currency())}</strong><span class="arrow">›</span></button>`).join("");
+ const ready=selected.size>0&&!!selectedType;
+ const selectedLabel=selected.size?selected.size+" shirt"+(selected.size===1?"":"s")+" geselecteerd":"Nog geen shirts geselecteerd";
  shell("Advertenties promoten",`
- <div class="fsm-promote"><h2>Val op met Spotlights</h2><p class="fsm-muted">Spotlight is een aparte promotie voor een advertentie. Kies eerst welke shirts je wilt promoten.</p><button class="fsm-btn gold" style="margin-top:12px" onclick="toast('Selecteer eerst een shirt hieronder voor Spotlight.')">Spotlight</button></div>
- <div class="fsm-promote"><h2>1. Kies je shirts</h2><p class="fsm-muted">Een boost wordt alleen toegepast op de shirts die je hier aanvinkt — niet automatisch op al je advertenties.</p><div class="fsm-boost-grid">${cards}</div></div>
- <div class="fsm-promote"><h2>2. Kies je boost</h2><p class="fsm-muted">${selected.size?selected.size+" shirt"+(selected.size===1?"":"s")+" geselecteerd":"Selecteer eerst één of meer shirts"}</p>
- <div class="fsm-list" style="margin-top:12px">${[
- ["3 dagen · Lokaal","Alleen zichtbaar in je eigen land"],
- ["3 dagen · Internationaal","Zichtbaarheid in meerdere landen"],
- ["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
- ["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
- ].map(a=>`<button type="button" onclick="startBoost('${a[0]}')"><span>↗</span><div><strong>${a[0]}</strong><div class="fsm-muted">${a[1]}</div></div><span class="arrow">›</span></button>`).join("")}</div></div>
+ <div class="fsm-promote"><h2>Spotlight</h2><p class="fsm-muted">Kies eerst de shirts die je wilt boosten en daarna één boost. Helemaal onderaan klik je op Spotlight om naar de betaling te gaan.</p></div>
+ <div class="fsm-promote"><h2>1. Kies je shirt(s)</h2><p class="fsm-muted">${selectedLabel}</p><div class="fsm-boost-grid">${cards}</div></div>
+ <div class="fsm-promote"><h2>2. Kies je boost</h2><p class="fsm-muted">Selecteer één optie voor je gekozen shirt(s).</p><div class="fsm-list" style="margin-top:12px">${optionButtons}</div></div>
+ <div class="fsm-promote" style="position:sticky;bottom:70px;z-index:15;background:rgba(8,20,15,.96);backdrop-filter:blur(10px);margin-top:16px"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px"><div><strong>3. Spotlight</strong><div class="fsm-muted">${ready?"Klaar om te betalen.":"Kies eerst shirt(s) en een boost."}</div></div>${ready?`<strong style="color:var(--green);font-size:18px">${money(BOOST_PRICES[selectedType]*(selected.size||1),currency())}</strong>`:""}</div><button class="fsm-btn gold full" ${ready?``:`disabled`} onclick="openBoostCheckout()">Spotlight → Betalen</button></div>
  `);
 }
 window.toggleBoostShirt=(id,on)=>{
  if(!Array.isArray(demo.boostSelection))demo.boostSelection=[];
  id=String(id);
  demo.boostSelection=on?[...new Set([...demo.boostSelection,id])]:demo.boostSelection.filter(x=>String(x)!==id);
+ if(!on && demo.boostCheckout?.ids?.includes(id)) delete demo.boostCheckout;
+ save();
+ promote();
+};
+window.selectBoost=(type)=>{
+ if(!BOOST_PRICES[type])return;
+ const ids=(demo.boostSelection||[]).map(String).filter(Boolean);
+ if(!ids.length){toast("Selecteer eerst minstens één shirt.");return}
+ demo.boostCheckout={ids,type,amount:BOOST_PRICES[type]*ids.length,currency:currency(),status:"pending_payment"};
  save();
  promote();
 };
 window.startBoost=(type)=>{
+ // Compatibiliteit met oude links: een boost activeren mag nooit meer zonder betaling.
+ selectBoost(type);
+};
+window.openBoostCheckout=()=>{
  const ids=(demo.boostSelection||[]).map(String).filter(Boolean);
+ const type=String(demo.boostCheckout?.type||"");
  if(!ids.length){toast("Selecteer eerst minstens één shirt.");return}
+ if(!BOOST_PRICES[type]){toast("Kies eerst een boost.");return}
+ demo.boostCheckout={ids,type,amount:BOOST_PRICES[type]*ids.length,currency:currency(),status:"pending_payment"};
+ save();
+ go("#/boost-checkout");
+};
+function boostCheckoutPage(){
+ const pending=demo.boostCheckout||{};
+ const ids=Array.isArray(pending.ids)?pending.ids.map(String).filter(Boolean):[];
+ const type=String(pending.type||"");
+ if(!ids.length||!BOOST_PRICES[type]){go("#/promote");return}
+ const amount=BOOST_PRICES[type]*ids.length;
+ const shirts=ids.map(id=>itemFromId(id)).filter(Boolean);
+ const cards=shirts.length?shirts.map(x=>{const img=x.images?.[0]||x.image||"";return `<div class="fsm-chat-item">${img?`<img src="${esc(img)}" alt="">`:`<div class="fsm-chat-item-placeholder">👕</div>`}<div style="flex:1;min-width:0"><strong>${esc(x.name||"Voetbalshirt")}</strong><div class="fsm-muted">${esc(x.club||"Shirt")}</div></div></div>`}).join(""):"";
+ shell("Spotlight betalen",`<div class="fsm-card"><div class="fsm-muted">Je gekozen boost</div><h2 style="margin-top:4px">${esc(type)}</h2><div class="fsm-muted" style="margin:6px 0 14px">${ids.length} shirt${ids.length===1?"":"s"}</div>${cards}<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)"><strong>Totaal</strong><strong class="fsm-amount" style="margin:0">${money(amount,pending.currency||currency())}</strong></div><div class="fsm-form" style="margin-top:16px"><label>Betaalmethode</label><button class="fsm-btn dark" onclick="addBoostPaymentMethod()">${demo.paymentMethod?"💳 Kaart •••• "+demo.paymentMethod.last4:"＋ Kaart toevoegen"}</button><button class="fsm-btn green full" style="margin-top:9px" onclick="payBoost()">Betalen ${money(amount,pending.currency||currency())}</button><div class="fsm-note">Na betaling wordt de boost pas geactiveerd. Kaartgegevens worden niet door Football-Shirt-Market opgeslagen.</div></div></div>`);
+}
+window.addBoostPaymentMethod=async()=>{
+ const r=await api("/payments/setup-session",{method:"POST",body:JSON.stringify({returnUrl:location.href})});
+ if(r?.url){location.href=r.url;return}
+ const last=prompt("Demo: laatste 4 cijfers van je kaart:");
+ if(/^\d{4}$/.test(last)){demo.paymentMethod={last4:last};save();boostCheckoutPage()}
+};
+window.payBoost=async()=>{
+ const pending=demo.boostCheckout||{};
+ const ids=Array.isArray(pending.ids)?pending.ids.map(String).filter(Boolean):[];
+ const type=String(pending.type||"");
+ if(!ids.length||!BOOST_PRICES[type])return;
+ const amount=BOOST_PRICES[type]*ids.length;
+ const payload={ids,type,amount,currency:pending.currency||currency()};
+ const r=await api("/boosts/pay",{method:"POST",body:JSON.stringify(payload)});
+ if(r && r.success===false){toast("Betaling mislukt.");return}
  if(!Array.isArray(demo.boosts))demo.boosts=[];
- ids.forEach(id=>{const existing=demo.boosts.find(b=>String(b.itemId)===id); if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString()}else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString()})});
- demo.boostSelection=[]; save(); toast(type+" geactiveerd voor "+ids.length+" geselecteerd(e) shirt"+(ids.length===1?"":"s")+" (demo)"); promote();
+ ids.forEach(id=>{const existing=demo.boosts.find(b=>String(b.itemId)===id);if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString();existing.paidAmount=BOOST_PRICES[type];}else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString(),paidAmount:BOOST_PRICES[type],currency:pending.currency||currency()})});
+ demo.boostSelection=[];
+ demo.boostCheckout=null;
+ save();
+ toast("Betaling geslaagd. Spotlight is geactiveerd.");
+ go("#/promote");
 };
 
 function notificationCount(){return (demo.notifications||[]).filter(n=>!n.read).length}
@@ -7867,6 +8063,7 @@ function enhancedRouter(){
  if(a==="favorites"){favorites();return true}
  if(a==="orders"){orders(b||"all",c||"bought");return true}
  if(a==="promote"){promote();return true}
+ if(a==="boost-checkout"){boostCheckoutPage();return true}
  if(a==="inbox"){inbox();return true}
     if(a==="notifications"){notifications();return true}
  if(a==="chat"){chat(decodeURIComponent(b||"verkoper"));return true}
@@ -7885,7 +8082,7 @@ window.__fsmRoute = enhancedRouter;
 function fsmNavigate(){
   const h=location.hash||"#/";
   if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
-  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
+  if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
   }
@@ -7902,7 +8099,7 @@ document.addEventListener("click", function(event){
   if(!el) return;
   const href=el.getAttribute('href')||'';
   const onclick=el.getAttribute('onclick')||'';
-  const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
+  const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|boost-checkout|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
     if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !readLoggedInUser()){
@@ -7914,7 +8111,7 @@ document.addEventListener("click", function(event){
     return;
   }
   // onclick="go('#/...')" op de profielknoppen
-  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
+  const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|boost-checkout|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
     if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !readLoggedInUser()){
@@ -7927,7 +8124,7 @@ document.addEventListener("click", function(event){
 });
 
 setTimeout(()=>{
-  if(/^#\/(profile|badges|favorites|orders|promote|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
+  if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
     enhancedRouter();
   }
 },0);
