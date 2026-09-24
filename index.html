@@ -5914,7 +5914,7 @@ function updateNav(){
     else if(hash.startsWith("#/inbox") || hash.startsWith("#/chat")){
         document.getElementById("navInbox")?.classList.add("active");
     }
-    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/favorites") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
+    else if(hash.startsWith("#/profile") || hash.startsWith("#/badges") || hash.startsWith("#/earned-badges") || hash.startsWith("#/favorites") || hash.startsWith("#/orders") || hash.startsWith("#/promote") || hash.startsWith("#/offers")){
         document.getElementById("navProfile")?.classList.add("active");
     }
 
@@ -5967,6 +5967,7 @@ function router(){
         hash.startsWith("#/inbox") ||
         hash.startsWith("#/profile") ||
         hash.startsWith("#/badges") ||
+        hash.startsWith("#/earned-badges") ||
         hash.startsWith("#/favorites") ||
         hash.startsWith("#/wallet") ||
         hash.startsWith("#/orders") ||
@@ -7241,7 +7242,7 @@ function profile(){
   <div class="fsm-muted" style="margin-top:7px;font-size:11px">Schrijf zelf wat je over jezelf, je collectie of je shirts wilt vertellen.</div>
  </section>
  <section class="fsm-card" style="margin-top:12px">
-  <div class="fsm-row fsm-between"><strong>Verdiende badges</strong><button class="fsm-btn dark" type="button" onclick="openBadges()">Alle badges ›</button></div>
+  <div class="fsm-row fsm-between"><strong>Verdiende badges</strong><button class="fsm-btn dark" type="button" onclick="openEarnedBadges()">Bekijk verdiende badges ›</button></div>
   <div class="fsm-muted" style="margin-top:5px">${earnedBadges} van ${badgeData.length} badges verdiend</div>
   <div class="fsm-badge-mini-grid" style="margin-top:12px">
    ${badgeData.map(b=>`<div class="fsm-card" style="margin:0"><div style="font-size:26px">${b.icon}</div><strong>${esc(b.name)}</strong><div class="fsm-muted">${esc(b.description)}</div><div class="fsm-progress" style="margin-top:9px"><i style="width:${b.progress}%"></i></div><div class="fsm-gold" style="margin-top:5px">${b.earned?"✓ Verdiend":b.progress+"%"}</div></div>`).join("")}
@@ -7381,6 +7382,7 @@ window.openProduct=id=>{
   go("#/product/"+encodeURIComponent(id));
 };
 window.openBadges=function(){ location.hash="#/badges"; enhancedRouter(); };
+window.openEarnedBadges=function(){ location.hash="#/earned-badges"; enhancedRouter(); };
 function getBadgeData(){
  const username=demo.user.username;
  const uploadedCount=listings().filter(x=>x.seller===username||x.username===username||x.owner===username).length;
@@ -7396,6 +7398,23 @@ function getBadgeData(){
    {icon:"📦",name:"Goed bezig!",description:"Plaats 1 artikel te koop",progress:uploadEarned?100:0,earned:uploadEarned},
    {icon:"⚡",name:"Best snel",description:"Verzend een bestelling binnen 3 dagen",progress:fastShipment?100:0,earned:fastShipment}
  ];
+}
+function earnedBadges(){
+  const data=getBadgeData().filter(b=>b.earned);
+  shell("Verdiende badges",`
+  ${data.length?`<div class="fsm-list">${data.map(b=>`
+    <div class="fsm-card">
+      <div class="fsm-row fsm-between" style="gap:12px">
+        <div class="fsm-row" style="align-items:flex-start">
+          <div style="font-size:34px;line-height:1">${b.icon}</div>
+          <div><h3 style="margin:0">${esc(b.name)}</h3><p class="fsm-muted" style="margin:4px 0 0">${esc(b.description)}</p></div>
+        </div>
+        <strong class="fsm-gold">✓ Verdiend</strong>
+      </div>
+      <div class="fsm-progress"><i style="width:100%"></i></div>
+      <div class="fsm-muted" style="margin-top:10px">Badge behaald ✅</div>
+    </div>
+  `).join("")}</div>`:`<div class="fsm-empty"><div class="ico">🏆</div><strong>Nog geen badges verdiend</strong><p class="fsm-muted">Verdien badges door actief te zijn op Football-Shirt-Market.</p></div>`}`,"profile",true);
 }
 function badges(){
  const data=getBadgeData();
