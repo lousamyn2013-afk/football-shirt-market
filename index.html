@@ -7386,10 +7386,23 @@ function earnedBadgesHtml(badges){
  if(!list.length)return "";
  return `<div class="fsm-earned-badges"><span class="fsm-earned-badges-label">🏆 Badges</span>${list.map(b=>`<span class="fsm-earned-badge" title="${esc(b.description||b.name||"Badge")}">${esc(b.icon||"🏆")} ${esc(b.name||"Badge")}</span>`).join("")}</div>`;
 }
+function getEarnedBadgesForSeller(username,person){
+ const name=String(username||person?.username||"").trim();
+ if(!name)return [];
+ const stored=person&&Array.isArray(person.badges)?person.badges.filter(b=>b&&b.name):[];
+ const badges=[...stored];
+ const has=name===String(demo.user?.username||"");
+ const ownedCount=allListings().filter(x=>String(x.seller||x.username||x.owner||"")===name).length;
+ if((has?getBadgeData().some(b=>b.name==="Goed bezig!"&&b.earned):ownedCount>0) && !badges.some(b=>b.name==="Goed bezig!")){
+   badges.push({icon:"📦",name:"Goed bezig!",description:"Plaats 1 artikel te koop"});
+ }
+ if(has){
+   getBadgeData().filter(b=>b.earned&&!badges.some(x=>x.name===b.name)).forEach(b=>badges.push({icon:b.icon,name:b.name,description:b.description}));
+ }
+ return badges;
+}
 function profileBadges(person){
- if(person&&Array.isArray(person.badges))return person.badges;
- if(String(person?.username||"")===String(demo.user?.username||""))return earnedBadgePayload(getBadgeData());
- return [];
+ return getEarnedBadgesForSeller(person?.username,person);
 }
 function getBadgeData(){
  const username=demo.user.username;
@@ -7743,9 +7756,11 @@ async function hydrateChatSellerMeta(seller,firstItem){
 
 function openChatSellerProfile(username){
  const u=String(username||"").trim();
- if(!u)return;
+ if(!u)return false;
  try{sessionStorage.setItem("fsm_profile_return",location.hash||"#/inbox");}catch(e){}
- go("#/profile/user/"+encodeURIComponent(u));
+ location.hash="#/profile/user/"+encodeURIComponent(u);
+ setTimeout(()=>enhancedRouter(),0);
+ return false;
 }
 window.openChatSellerProfile=openChatSellerProfile;
 
@@ -7778,7 +7793,7 @@ function chat(user){
  const initialLastSeen=sameUser?(demo.user?.lastSeenAt||""):(sellerMetaSource.sellerLastSeenAt||msgs.find(m=>String(m.from||"")===seller)?.senderLastSeenAt||"");
  const locationHtml=`<span id="fsmChatSellerLocation">${initialLocation?"⌖ "+esc(initialLocation):"⌖ Locatie niet ingesteld"}</span>`;
  const lastSeenHtml=`<span id="fsmChatSellerLastSeen">${initialLastSeen?"◷ "+esc(formatLastSeen(initialLastSeen)):"◷ Laatst gezien niet beschikbaar"}</span>`;
- const sellerCard=`<button type="button" class="fsm-seller-card fsm-seller-card-clickable" onclick="openChatSellerProfile('${esc(seller)}')" aria-label="Profiel van ${esc(seller)} bekijken">${avatar(seller,true)}<div class="fsm-seller-card-copy"><strong>Hoi, ik ben ${esc(seller)}</strong><div class="fsm-seller-meta" id="fsmChatSellerMeta">${locationHtml}${lastSeenHtml}</div><div id="fsmChatSellerBadges"></div><div class="fsm-seller-profile-link">Bekijk profiel →</div></div><span class="fsm-seller-profile-arrow">›</span></button>`;
+ const sellerCard=`<button type="button" class="fsm-seller-card fsm-seller-card-clickable" onclick="event.preventDefault();event.stopPropagation();openChatSellerProfile('${esc(seller)}')" aria-label="Profiel van ${esc(seller)} bekijken">${avatar(seller,true)}<div class="fsm-seller-card-copy"><strong>Hoi, ik ben ${esc(seller)}</strong><div class="fsm-seller-meta" id="fsmChatSellerMeta">${locationHtml}${lastSeenHtml}</div><div id="fsmChatSellerBadges">${earnedBadgesHtml(getEarnedBadgesForSeller(seller,sellerMetaSource))}</div><div class="fsm-seller-profile-link">Bekijk profiel →</div></div><span class="fsm-seller-profile-arrow">›</span></button>`;
  const listing=firstItem?`<div class="fsm-chat-listing">
    <div class="fsm-chat-listing-main">
     <div class="fsm-chat-listing-thumb">${listingImg?`<img src="${esc(listingImg)}" alt="">`:`👕`}</div>
@@ -7850,7 +7865,7 @@ async function product(id){
    <div style="padding-top:14px">
     <div class="fsm-muted">${esc(x.club||"Shirt")} · ${esc(x.size||"")} · ${esc(x.condition||"")}</div>
     <h1 class="fsm-product-title">${esc(x.name||"Voetbalshirt")}</h1>
-    <div class="fsm-product-seller">${avatar(seller,true)}<div><div>Verkocht door <strong>${esc(seller)}</strong></div><div id="fsmProductSellerBadges">${earnedBadgesHtml(Array.isArray(x.sellerBadges)?x.sellerBadges:[])}</div></div></div>
+    <div class="fsm-product-seller">${avatar(seller,true)}<div><div>Verkocht door <strong>${esc(seller)}</strong></div><div id="fsmProductSellerBadges">${earnedBadgesHtml(getEarnedBadgesForSeller(seller,x))}</div></div></div>
     <div class="fsm-amount">${priceDisplay(x)}</div>
     ${desc}
     <button id="productFavBtn" class="fsm-btn dark full ${liked?"liked":""}" style="margin-top:14px" onclick="toggleFav('${esc(x.id)}',this)" aria-label="${liked?"Verwijder uit favorieten":"Voeg toe aan favorieten"}">
