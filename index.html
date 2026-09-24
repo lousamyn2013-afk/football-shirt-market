@@ -3733,10 +3733,12 @@ function combinedShirts(){
     // dat oude advertenties/chatten als "verkoper" blijven verschijnen.
     let ownershipChanged=false;
     const currentUser=readLoggedInUser();
-    const currentUsername=String(currentUser?.username||demo?.user?.username||"").trim();
-    const currentLocation=typeof locationDisplay==="function" ? locationDisplay(demo?.user||currentUser||{}) : "";
-    const currentLocationParts=typeof getLocationParts==="function" ? getLocationParts(demo?.user||currentUser||{}) : {};
-    const currentLastSeen=demo?.user?.lastSeenAt||currentUser?.lastSeenAt||"";
+    const currentUsername=String(currentUser?.username||"").trim();
+    const currentLocation=String(currentUser?.location||"").trim();
+    const currentLocationParts=(currentUser?.locationParts && typeof currentUser.locationParts==="object")
+        ? {...currentUser.locationParts}
+        : {};
+    const currentLastSeen=currentUser?.lastSeenAt||"";
     listings.forEach(listing=>{
         if(!listing || !currentUsername) return;
         const seller=String(listing.seller||listing.username||"").trim();
@@ -3941,7 +3943,7 @@ function makeShirt(shirt){
 
 function renderHome(){
 
-    app.innerHTML=`
+    document.getElementById("app").innerHTML=`
 
 <div class="page">
 
@@ -4145,7 +4147,7 @@ function renderExplore(){
     }
 
 
-    app.innerHTML=`
+    document.getElementById("app").innerHTML=`
 
 <div class="page">
 
@@ -4919,7 +4921,7 @@ function renderSell(){
         return;
     }
 
-    app.innerHTML=`
+    document.getElementById("app").innerHTML=`
 
 <div class="page">
 
@@ -5627,11 +5629,13 @@ data-photo-index="${index}"
 
                 seller:(readLoggedInUser()?.username||"verkoper"),
 
-                sellerLocation:locationDisplay(demo.user),
+                sellerLocation:String(readLoggedInUser()?.location||""),
 
-                sellerLocationParts:getLocationParts(demo.user),
+                sellerLocationParts:(readLoggedInUser()?.locationParts && typeof readLoggedInUser().locationParts==="object")
+                    ? {...readLoggedInUser().locationParts}
+                    : {},
 
-                sellerLastSeenAt:demo.user?.lastSeenAt||new Date().toISOString()
+                sellerLastSeenAt:readLoggedInUser()?.lastSeenAt||new Date().toISOString()
 
             };
 
@@ -6720,12 +6724,39 @@ function ensureDemoMarketplace(){
   }
   if(!Array.isArray(demo.chats)) demo.chats=[];
 }
+function notificationStoreKey(username){
+  return "fsm_notifications_"+encodeURIComponent(String(username||""));
+}
+function loadUserNotifications(){
+  const username=String(demo?.user?.username||"").trim();
+  if(!username)return [];
+  try{
+    const raw=localStorage.getItem(notificationStoreKey(username));
+    const list=raw?JSON.parse(raw):[];
+    return Array.isArray(list)?list:[];
+  }catch(e){return []}
+}
+function saveUserNotifications(){
+  const username=String(demo?.user?.username||"").trim();
+  if(!username)return;
+  try{localStorage.setItem(notificationStoreKey(username),JSON.stringify(Array.isArray(demo.notifications)?demo.notifications:[]));}catch(e){}
+}
 function ensureNotifications(){
-  demo.notifications=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n.id!=="demo-like-1"):[];
+  const legacy=Array.isArray(demo.notifications)?demo.notifications.filter(n=>n.id!=="demo-like-1"):[];
+  const stored=loadUserNotifications();
+  const merged=[...stored,...legacy];
+  const seen=new Set();
+  demo.notifications=merged.filter(n=>{
+    const id=String(n?.id||"");
+    if(!id||seen.has(id))return false;
+    seen.add(id);
+    return true;
+  });
+  saveUserNotifications();
 }
 ensureNotifications();
 ensureDemoMarketplace();
-function save(){localStorage.setItem(STORE,JSON.stringify(demo))}
+function save(){localStorage.setItem(STORE,JSON.stringify(demo));saveUserNotifications()}
 // Bewaar meteen de opgeschoonde staat zodat oude voorbeeldchats/biedingen/notificaties
 // niet opnieuw uit localStorage terugkomen.
 save();
@@ -7044,6 +7075,17 @@ function itemFromId(id){
  if(id===undefined||id===null||id==="") return null;
  return arr.find(x=>String(x.id)===String(id)||String(x._idx)===String(id))||null;
 }
+function openMyAdsProfile(){
+  try{
+    sessionStorage.setItem("fsm_profile_return", "#/profile");
+  }catch(e){}
+  location.hash="#/profile/public/items";
+  setTimeout(()=>{
+    Promise.resolve(publicProfile(demo.user.username,"items")).catch(()=>profile());
+  },0);
+}
+window.openMyAdsProfile=openMyAdsProfile;
+
 function profile(){
  const reviews=demo.reviews.filter(r=>r.to===demo.user.username||r.from===demo.user.username);
  const badgeData=getBadgeData();
@@ -7052,7 +7094,7 @@ function profile(){
  shell("Profiel",`
  <section class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}
  <div style="flex:1"><h2>${esc(demo.user.username)}</h2><div class="fsm-muted">Mijn account</div></div>
- <button class="fsm-btn dark" onclick="go('#/profile/public')">Mijn advertenties bekijken</button></div></section>
+ <button class="fsm-btn dark" onclick="openMyAdsProfile()">Mijn advertenties bekijken</button></div></section>
  <section class="fsm-card" style="margin-top:12px">
   <div class="fsm-row fsm-between"><div><strong>Locatie</strong><div class="fsm-muted" style="margin-top:4px">${loc?esc(loc):"Nog niet ingesteld"}</div></div><button class="fsm-btn dark" type="button" onclick="editProfileLocation()">${loc?"Bewerken":"Invullen"}</button></div>
   <div class="fsm-muted" style="margin-top:7px;font-size:11px">Je kiest zelf of je land, regio/provincie en/of stad/gemeente deelt. Geen exact adres nodig.</div>
@@ -7627,11 +7669,33 @@ window.toggleFav=(id,btn)=>{
  demo.favorites=added?[...new Set([...demo.favorites,id])]:demo.favorites.filter(x=>x!==id);
  if(added){
   const item=itemFromId(id);
-  const owner=item?.seller||item?.username||item?.owner||"";
-  if(owner && owner!==demo.user.username){
-   ensureNotifications();
-   const liker=demo.user.username||"Gebruiker";
-   demo.notifications.unshift({id:"like-"+Date.now(),type:"like",from:liker,itemId:id,itemSnapshot:item?{...item}:null,itemName:item?.name||"Je advertentie",text:liker+" vindt je shirt leuk.",read:false,date:new Date().toISOString()});
+  const owner=String(item?.seller||item?.username||item?.owner||"").trim();
+  const liker=String(demo.user?.username||"Gebruiker").trim();
+  if(owner && owner!==liker){
+   const notification={
+     id:"like-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
+     type:"like",
+     from:liker,
+     itemId:id,
+     itemSnapshot:item?{...item}:null,
+     itemName:item?.name||"Je advertentie",
+     text:liker+" vindt je shirt leuk.",
+     read:false,
+     date:new Date().toISOString(),
+     ownerUsername:owner
+   };
+   // When both accounts are used in this browser, the owner gets the notification
+   // in their own namespaced inbox, even though localStorage is shared.
+   try{
+     const key=notificationStoreKey(owner);
+     const raw=localStorage.getItem(key);
+     const list=raw?JSON.parse(raw):[];
+     const next=Array.isArray(list)?list:[];
+     next.unshift(notification);
+     localStorage.setItem(key,JSON.stringify(next));
+   }catch(e){}
+   // Keep the existing API path available when a backend is configured.
+   api("/notifications",{method:"POST",body:JSON.stringify(notification)});
   }
  }
  save();
@@ -7639,7 +7703,8 @@ window.toggleFav=(id,btn)=>{
  const cardBtn=document.querySelector(`.fsm-like-btn[onclick*="${id.replace(/'/g,"\'")}"]`);
  if(cardBtn){cardBtn.classList.toggle("liked",added);cardBtn.innerHTML=added?"♥ <span>Favoriet</span>":"♡ <span>Vind ik leuk</span>";}
  toast(added?"Toegevoegd aan favorieten":"Verwijderd uit favorieten");
-}
+};
+
 window.offer=id=>{
  const x=itemFromId(id);
  if(!x){toast("Shirt niet gevonden.");return}
