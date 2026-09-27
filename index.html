@@ -1497,6 +1497,18 @@ footer strong{
 .fsm-offer-modal-actions button{border:0;border-radius:12px;padding:13px;font-weight:800;cursor:pointer}
 .fsm-offer-cancel{background:#202b28;color:#fff}.fsm-offer-submit{background:var(--gold);color:#07100e}
 @media(max-width:650px){.fsm-offer-modal{padding:10px}.fsm-offer-box{border-radius:18px;padding:17px}}
+
+/* Chat interacties */
+.fsm-chat-listing-clickable{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.fsm-chat-listing-clickable:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.fsm-chat-listing-clickable:active{transform:scale(.99)}
+.fsm-msg{position:relative}
+.fsm-msg-actions{display:none;gap:6px;flex-wrap:wrap;margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.08)}
+.fsm-msg.message-actions-open .fsm-msg-actions{display:flex}
+.fsm-msg-action{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#dce5e0;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;cursor:pointer}
+.fsm-msg-action:hover{background:rgba(255,255,255,.1)}
+.fsm-msg-action.danger{color:#ffb1b1}
+@media(max-width:620px){.fsm-msg-action{padding:7px 10px}.fsm-chat-listing-clickable:hover{transform:none;box-shadow:none}}
 </style>
 
 <style id="home-search-only-final">
@@ -6807,7 +6819,7 @@ setTimeout(async()=>{
 <script>
 (function(){
 "use strict";
-const API_BASE = window.FSM_API_BASE || "https://football-shirt-market.onrender.com/api";
+const API_BASE = window.FSM_API_BASE || "/api";
 const STORE="fsm_marketplace_v3";
 function readLoggedInUser(){
   const keys=["fsm_user","currentUser","loggedInUser","user","account"];
@@ -7150,7 +7162,7 @@ window.fsmLogin=fsmLogin;
 window.requireLogin=requireLogin;
 window.closeLogin=closeLogin;
 async function api(path,opts={}){
- try{const r=await fetch(API_BASE+path,{credentials:"include",headers:{"Content-Type":"application/json",...(localStorage.getItem("fsm_access_token")?{"Authorization":"Bearer "+localStorage.getItem("fsm_access_token")}:{}),...(opts.headers||{})},...opts});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}catch(e){return null}
+ try{const r=await fetch(API_BASE+path,{credentials:"include",headers:{"Content-Type":"application/json",...(opts.headers||{})},...opts});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json()}catch(e){return null}
 }
 function initials(name){return (name||"?").slice(0,1).toUpperCase()}
 function avatar(name,sm=false){return `<div class="fsm-avatar ${sm?"sm":""}">${esc(initials(name))}</div>`}
@@ -7794,23 +7806,55 @@ function chat(user){
  const locationHtml=`<span id="fsmChatSellerLocation">${initialLocation?"⌖ "+esc(initialLocation):"⌖ Locatie niet ingesteld"}</span>`;
  const lastSeenHtml=`<span id="fsmChatSellerLastSeen">${initialLastSeen?"◷ "+esc(formatLastSeen(initialLastSeen)):"◷ Laatst gezien niet beschikbaar"}</span>`;
  const sellerCard=`<button type="button" class="fsm-seller-card fsm-seller-card-clickable" onclick="event.preventDefault();event.stopPropagation();openChatSellerProfile('${esc(seller)}')" aria-label="Profiel van ${esc(seller)} bekijken">${avatar(seller,true)}<div class="fsm-seller-card-copy"><strong>Hoi, ik ben ${esc(seller)}</strong><div class="fsm-seller-meta" id="fsmChatSellerMeta">${locationHtml}${lastSeenHtml}</div><div id="fsmChatSellerBadges">${earnedBadgesHtml(getEarnedBadgesForSeller(seller,sellerMetaSource))}</div><div class="fsm-seller-profile-link">Bekijk profiel →</div></div><span class="fsm-seller-profile-arrow">›</span></button>`;
- const listing=firstItem?`<div class="fsm-chat-listing">
+ const listing=firstItem?`<div class="fsm-chat-listing fsm-chat-listing-clickable" role="button" tabindex="0" onclick="openProduct('${esc(String(firstItem?.id||firstItemId||""))}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProduct('${esc(String(firstItem?.id||firstItemId||""))}')}" aria-label="Bekijk ${esc(listingName)}">
    <div class="fsm-chat-listing-main">
     <div class="fsm-chat-listing-thumb">${listingImg?`<img src="${esc(listingImg)}" alt="">`:`👕`}</div>
-    <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${priceDisplay(firstItem)}</div></div>
+    <div class="fsm-chat-listing-copy"><h2>${esc(listingName)}</h2><div class="fsm-chat-oldprice">${priceDisplay(firstItem)}</div><div class="fsm-muted" style="margin-top:4px">Bekijk shirt en beschrijving →</div></div>
    </div>
-   <div class="fsm-chat-actions"><button type="button" class="outline" onclick="offer('${esc(String(firstItem?.id||firstItemId||""))}')">Een bod doen</button><button type="button" class="buy" onclick="checkout('${esc(String(firstItem?.id||firstItemId||""))}','buy')">Kopen</button></div>
+   <div class="fsm-chat-actions"><button type="button" class="outline" onclick="event.stopPropagation();offer('${esc(String(firstItem?.id||firstItemId||""))}')">Een bod doen</button><button type="button" class="buy" onclick="event.stopPropagation();checkout('${esc(String(firstItem?.id||firstItemId||""))}','buy')">Kopen</button></div>
   </div>`:"";
  const html=msgs.map(m=>{
    const item=m.itemId?(m.itemSnapshot||itemFromId(m.itemId)||null):null;
    const offer=m.offerId?demo.offers.find(o=>o.id===m.offerId):null;
    const offerHtml=(offer||m.offerAmount)?`<div class="fsm-offer-card"><div class="fsm-offer-label">✓ Officieel bod</div><div class="fsm-row fsm-between"><div><strong>${money(offer?.amount??m.offerAmount,"EUR")}</strong><div class="fsm-muted">voor ${esc(item?.name||offer?.itemName||"dit shirt")}</div></div><span class="fsm-pill">${esc(offer?.status==="accepted"?"Geaccepteerd":offer?.status==="rejected"?"Geweigerd":"In afwachting")}</span></div>${offer?.status==="accepted"?`<div class="fsm-accepted-price"><div class="fsm-accepted-new">${money(offer.amount,offer.currency||currency())}</div><div class="fsm-accepted-old">${money(priceNumber(offer.originalPrice)||priceNumber(item?.price)||0,offer.currency||currency())}</div></div>${offer?.buyer===demo.user.username?`<button type="button" class="fsm-btn green full" style="margin-top:10px" onclick="checkout('${esc(String(offer.itemId))}','offer')">Nu kopen</button>`:""}`:""}${offer?.seller===demo.user.username&&offer.status==="pending"?`<div class="fsm-offer-actions" style="margin-top:10px" onclick="event.stopPropagation()"><button type="button" class="fsm-btn green" onclick="event.stopPropagation();acceptOffer('${esc(offer.id)}')">✓ Bod accepteren</button><button type="button" class="fsm-btn dark" onclick="event.stopPropagation();rejectOffer('${esc(offer.id)}')">✕ Bod weigeren</button></div>`:""}</div>`:"";
-   return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}</div>`;
+   const msgId=String(m.id||("msg-"+Date.now()+Math.random().toString(36).slice(2,7)));
+   const canDelete=m.from===demo.user.username&&!m.system;
+   return `<div class="fsm-msg ${m.from===demo.user.username?"mine":""} ${m.system?"system":""}" id="fsm-msg-${esc(msgId)}" onclick="toggleMessageActions(event,'${esc(msgId)}')" oncontextmenu="event.preventDefault();toggleMessageActions(event,'${esc(msgId)}')"><div class="fsm-msg-text">${esc(m.text)}</div>${offerHtml}<small>${new Date(m.date||Date.now()).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</small>${!m.system?`<div class="fsm-translate"><button type="button" onclick="event.stopPropagation();translateMsg('${esc(m.id||"")}',this)">Vertalen</button><button type="button" onclick="event.stopPropagation();originalMsg('${esc(m.id||"")}',this)">Origineel bekijken</button></div>`:""}<div class="fsm-msg-actions" onclick="event.stopPropagation()"><button type="button" class="fsm-msg-action" onclick="copyChatMessage('${esc(msgId)}')">📋 Kopiëren</button>${canDelete?`<button type="button" class="fsm-msg-action danger" onclick="deleteChatMessage('${esc(msgId)}')">🗑 Verwijderen</button>`:""}</div></div>`;
  }).join("");
  const safety=`<div class="fsm-safety"><div class="fsm-safety-icon">✓</div><div>Blijf veilig op Football-Shirt-Market. Deel geen persoonlijke gegevens, klik niet op externe links en scan geen QR-codes. <button type="button" class="fsm-safety-link" onclick="openSafetyTips()">Meer veiligheidstips</button></div></div>`;
  shell(user,`<div class="fsm-chat"><div class="fsm-chat-page-inner">${listing}${sellerCard}${safety}<div class="fsm-messages">${html}</div></div><div class="fsm-chatbar"><span style="font-size:28px;display:grid;place-items:center;width:42px;color:#aebbb6">◉</span><input id="chatInput" autocomplete="off" placeholder="Verstuur een bericht" onkeydown="if(event.key==='Enter')sendChat('${esc(user)}')"><button class="fsm-btn green" type="button" onclick="sendChat('${esc(user)}')">Stuur</button></div></div>` ,"inbox",true,"chat");
  hydrateChatSellerMeta(seller,firstItem);
 }
+
+window.toggleMessageActions=function(event,id){
+  event?.stopPropagation?.();
+  const el=document.getElementById("fsm-msg-"+id);
+  if(!el)return;
+  document.querySelectorAll(".fsm-msg.message-actions-open").forEach(x=>{if(x!==el)x.classList.remove("message-actions-open")});
+  el.classList.toggle("message-actions-open");
+};
+window.copyChatMessage=async function(id){
+  const el=document.getElementById("fsm-msg-"+id);
+  const text=el?.querySelector(".fsm-msg-text")?.textContent||"";
+  if(!text)return;
+  try{await navigator.clipboard.writeText(text);toast("Bericht gekopieerd");}
+  catch(e){toast("Kopiëren lukt niet");}
+  el?.classList.remove("message-actions-open");
+};
+window.deleteChatMessage=function(id){
+  const el=document.getElementById("fsm-msg-"+id);
+  const msg=demo.messages.find(m=>String(m.id)===String(id));
+  if(!el||!msg||msg.from!==demo.user.username)return;
+  if(!confirm("Dit bericht uit deze chat verwijderen?"))return;
+  demo.messages=demo.messages.filter(m=>String(m.id)!==String(id));
+  save();
+  el.remove();
+  toast("Bericht verwijderd");
+};
+document.addEventListener("click",function(event){
+  if(event.target.closest(".fsm-msg"))return;
+  document.querySelectorAll(".fsm-msg.message-actions-open").forEach(x=>x.classList.remove("message-actions-open"));
+});
 
 function openSafetyTips(){
   document.getElementById("fsmSafetyModal")?.remove();
