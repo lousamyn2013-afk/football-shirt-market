@@ -3384,7 +3384,7 @@ Profiel
 
 <div class="header-right">
 
-<button type="button" onclick="fsmLogin()" style="min-height:40px;border:1px solid rgba(239,210,143,.32);background:#07130e;color:var(--gold);border-radius:10px;padding:0 12px;font-size:11px;font-weight:800;cursor:pointer;">Inloggen</button>
+<button type="button" id="fsmAuthButton" onclick="fsmLogin()" style="min-height:40px;border:1px solid rgba(239,210,143,.32);background:#07130e;color:var(--gold);border-radius:10px;padding:0 12px;font-size:11px;font-weight:800;cursor:pointer;">Inloggen</button>
 
 <button
 class="language-button"
@@ -7074,6 +7074,17 @@ function closeLogin(){
   }
 }
 function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
+function updateHeaderAuthButton(){
+  const btn=document.getElementById("fsmAuthButton");
+  if(!btn)return;
+  const token=localStorage.getItem("fsm_access_token");
+  const user=readLoggedInUser();
+  const logged=!!(token && user && user.username);
+  btn.textContent=logged?"Ingelogd":"Inloggen";
+  btn.onclick=logged?function(){go("#/profile");}:function(){fsmLogin()};
+  btn.title=logged?String(user.username||""):"Inloggen";
+}
+
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
   if(old){switchLoginMode(mode);return}
@@ -7235,6 +7246,103 @@ function openMyAdsProfile(){
 }
 window.openMyAdsProfile=openMyAdsProfile;
 
+function updateLocalUsernameReferences(oldName,newName){
+  const oldN=String(oldName||"").trim();
+  const newN=String(newName||"").trim();
+  if(!oldN||!newN||oldN===newN)return;
+  try{
+    const arr=getListings();
+    let changed=false;
+    arr.forEach(x=>{
+      if(!x)return;
+      if(String(x.seller||"")===oldN){x.seller=newN;changed=true;}
+      if(String(x.username||"")===oldN){x.username=newN;changed=true;}
+      if(String(x.owner||"")===oldN){x.owner=newN;changed=true;}
+    });
+    if(changed)saveListings(arr);
+  }catch(e){}
+  try{
+    if(Array.isArray(demo.chats))demo.chats.forEach(c=>{
+      if(String(c?.user||"")===oldN)c.user=newN;
+      if(String(c?.username||"")===oldN)c.username=newN;
+    });
+    if(Array.isArray(demo.messages))demo.messages.forEach(m=>{
+      if(String(m?.from||"")===oldN)m.from=newN;
+      if(String(m?.to||"")===oldN)m.to=newN;
+      if(String(m?.chat||"")===oldN)m.chat=newN;
+    });
+    if(Array.isArray(demo.orders))demo.orders.forEach(o=>{
+      if(String(o?.seller||"")===oldN)o.seller=newN;
+      if(String(o?.buyer||"")===oldN)o.buyer=newN;
+    });
+    if(Array.isArray(demo.offers))demo.offers.forEach(o=>{
+      if(String(o?.seller||"")===oldN)o.seller=newN;
+      if(String(o?.buyer||"")===oldN)o.buyer=newN;
+    });
+    if(Array.isArray(demo.reviews))demo.reviews.forEach(r=>{
+      if(String(r?.to||"")===oldN)r.to=newN;
+      if(String(r?.from||"")===oldN)r.from=newN;
+    });
+    save();
+  }catch(e){}
+}
+
+function editProfileUsername(){
+  const old=document.getElementById("fsmUsernameModal");
+  if(old){old.remove();return}
+  const modal=document.createElement("div");
+  modal.id="fsmUsernameModal";
+  modal.style="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto";
+  modal.innerHTML=`<div style="width:min(430px,100%);background:#08140f;border:1px solid rgba(239,210,143,.3);border-radius:20px;padding:22px;box-shadow:0 25px 90px rgba(0,0,0,.6)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="color:var(--gold);margin:0">Profielnaam</h2><button type="button" onclick="document.getElementById('fsmUsernameModal')?.remove()" style="border:0;background:none;color:#fff;font-size:24px;cursor:pointer">×</button></div>
+    <div class="fsm-muted" style="font-size:12px;line-height:1.5;margin-bottom:10px">Kies de naam die andere gebruikers op je profiel en bij je shirts zien.</div>
+    <input id="fsmUsernameInput" maxlength="30" value="${esc(demo.user.username||"")}" placeholder="Je profielnaam" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid rgba(239,210,143,.22);background:#030806;color:#fff;outline:0;font:inherit">
+    <div id="fsmUsernameError" style="display:none;color:#ff9b9b;font-size:12px;margin-top:9px"></div>
+    <button id="fsmUsernameSave" class="fsm-btn gold full" type="button" style="margin-top:12px" onclick="saveProfileUsername()">Opslaan</button>
+  </div>`;
+  document.body.appendChild(modal);
+  setTimeout(()=>document.getElementById("fsmUsernameInput")?.focus(),0);
+}
+
+async function saveProfileUsername(){
+  const input=document.getElementById("fsmUsernameInput");
+  const error=document.getElementById("fsmUsernameError");
+  const btn=document.getElementById("fsmUsernameSave");
+  if(!input||!error||!btn)return;
+  const oldName=String(demo.user.username||"").trim();
+  const username=String(input.value||"").trim().replace(/\s+/g," ");
+  if(username.length<2){error.textContent="Je profielnaam moet minstens 2 tekens hebben.";error.style.display="block";return;}
+  if(username.length>30){error.textContent="Je profielnaam mag maximaal 30 tekens hebben.";error.style.display="block";return;}
+  if(username===oldName){document.getElementById("fsmUsernameModal")?.remove();return;}
+  const token=localStorage.getItem("fsm_access_token");
+  const userId=demo.user.id||JSON.parse(localStorage.getItem("fsm_user")||"{}")?.id;
+  if(!token||!userId){error.textContent="Je moet ingelogd zijn om je profielnaam te wijzigen.";error.style.display="block";return;}
+  btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
+  try{
+    const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?user_id=eq."+encodeURIComponent(userId);
+    const r=await fetch(url,{method:"PATCH",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+token,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({username})});
+    const rows=await r.json().catch(()=>[]);
+    if(!r.ok)throw new Error(rows?.message||rows?.hint||rows?.details||"Profielnaam opslaan mislukt.");
+    demo.user={...demo.user,username};
+    try{
+      const raw=localStorage.getItem("fsm_user");
+      const current=raw?JSON.parse(raw):{};
+      localStorage.setItem("fsm_user",JSON.stringify({...current,username}));
+    }catch(e){}
+    updateLocalUsernameReferences(oldName,username);
+    document.getElementById("fsmUsernameModal")?.remove();
+    updateHeaderAuthButton();
+    profile();
+    toast("Profielnaam opgeslagen");
+  }catch(e){
+    error.textContent=e.message||"Er ging iets mis.";
+    error.style.display="block";
+    btn.disabled=false;btn.textContent="Opslaan";
+  }
+}
+window.editProfileUsername=editProfileUsername;
+window.saveProfileUsername=saveProfileUsername;
+
 function profile(){
  const reviews=demo.reviews.filter(r=>r.to===demo.user.username||r.from===demo.user.username);
  const badgeData=getBadgeData();
@@ -7243,7 +7351,7 @@ function profile(){
  shell("Profiel",`
  <section class="fsm-card"><div class="fsm-row">${avatar(demo.user.username)}
  <div style="flex:1"><h2>${esc(demo.user.username)}</h2><div class="fsm-muted">Mijn account</div></div>
- <button class="fsm-btn dark" onclick="openMyAdsProfile()">Mijn advertenties bekijken</button></div></section>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="fsm-btn dark" type="button" onclick="editProfileUsername()">Naam aanpassen</button><button class="fsm-btn dark" onclick="openMyAdsProfile()">Mijn advertenties bekijken</button></div></div></section>
  <section class="fsm-card" style="margin-top:12px">
   <div class="fsm-row fsm-between"><div><strong>Locatie</strong><div class="fsm-muted" style="margin-top:4px">${loc?esc(loc):"Nog niet ingesteld"}</div></div><button class="fsm-btn dark" type="button" onclick="editProfileLocation()">${loc?"Bewerken":"Invullen"}</button></div>
   <div class="fsm-muted" style="margin-top:7px;font-size:11px">Je kiest zelf of je land, regio/provincie en/of stad/gemeente deelt. Geen exact adres nodig.</div>
@@ -8208,6 +8316,7 @@ setTimeout(()=>{
   }
 },0);
 })();
+try{document.addEventListener("DOMContentLoaded",()=>setTimeout(updateHeaderAuthButton,0));}catch(e){}
 </script>
 </body>
 </html>
