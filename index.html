@@ -5971,10 +5971,6 @@ function router(){
         hash.startsWith("#/sell")
     ){
 
-        if(!requireLogin()){
-            location.hash="#/";
-            return;
-        }
         renderSell();
 
     }
@@ -7013,6 +7009,23 @@ function syncLocationField(prefix,name){
   // Laat de ingevulde tekst staan wanneer iemand het vinkje uitzet;
   // zo kan de gebruiker later opnieuw kiezen of hij dit veld deelt.
 }
+async function refreshFSMAccessToken(){
+  const refreshToken=localStorage.getItem("fsm_refresh_token");
+  if(!refreshToken) return null;
+  try{
+    const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=refresh_token",{
+      method:"POST",
+      headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},
+      body:JSON.stringify({refresh_token:refreshToken})
+    });
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok || !d.access_token) return null;
+    localStorage.setItem("fsm_access_token",d.access_token);
+    if(d.refresh_token) localStorage.setItem("fsm_refresh_token",d.refresh_token);
+    return d.access_token;
+  }catch(e){ return null; }
+}
+
 async function persistLocationParts(parts,userId=demo.user?.id,accessToken=localStorage.getItem("fsm_access_token")){
   const clean={country:String(parts?.country||"").trim(),region:String(parts?.region||"").trim(),city:String(parts?.city||"").trim()};
   const display=[clean.city,clean.region,clean.country].filter(Boolean).join(", ");
@@ -7077,13 +7090,7 @@ function closeLogin(){
     setTimeout(()=>router(),0);
   }
 }
-function requireLogin(){
-  const token=localStorage.getItem("fsm_access_token");
-  const user=readLoggedInUser();
-  if(token && user && user.username)return true;
-  fsmLogin();
-  return false;
-}
+function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
 function updateHeaderAuthButton(){
   const btn=document.getElementById("fsmAuthButton");
   if(!btn)return;
@@ -7148,6 +7155,7 @@ async function fsmLogin(mode="login"){
         if(d.access_token){
           localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username,location:locationText,locationParts}));
           localStorage.setItem("fsm_access_token",d.access_token);
+          if(d.refresh_token) localStorage.setItem("fsm_refresh_token",d.refresh_token);
           await persistLocationParts(locationParts,d.user.id,d.access_token);
           closeLogin();location.reload();
         }else{
@@ -7170,6 +7178,7 @@ async function fsmLogin(mode="login"){
       const userData=Object.assign({},profile,{id:d.user.id,username:profile.username||email.split("@")[0],location:locationText,locationParts:hasLocation?chosen:(currentParts&&Object.values(currentParts).some(Boolean)?currentParts:(localUser?.locationParts||{})),lastSeenAt});
       localStorage.setItem("fsm_user",JSON.stringify(userData));
       localStorage.setItem("fsm_access_token",d.access_token);
+      if(d.refresh_token) localStorage.setItem("fsm_refresh_token",d.refresh_token);
       demo.user={...demo.user,...userData};
       if(hasLocation) await persistLocationParts(locationParts,d.user.id,d.access_token);
       else save();
@@ -7330,8 +7339,20 @@ async function saveProfileUsername(){
   btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
   try{
     const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?user_id=eq."+encodeURIComponent(userId);
-    const r=await fetch(url,{method:"PATCH",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+token,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({username})});
-    const rows=await r.json().catch(()=>[]);
+    const patchHeaders=(accessToken)=>({apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+accessToken,"Content-Type":"application/json",Prefer:"return=representation"});
+    let activeToken=token;
+    let r=await fetch(url,{method:"PATCH",headers:patchHeaders(activeToken),body:JSON.stringify({username})});
+    let rows=await r.json().catch(()=>[]);
+    // Access tokens verlopen bewust na een beperkte tijd. Vernieuw het token
+    // automatisch en probeer het opslaan nog één keer wanneer Supabase 401/JWT expired teruggeeft.
+    if(r.status===401 || /jwt expired|token.*expired|invalid jwt/i.test(String(rows?.message||rows?.error_description||rows?.error||""))){
+      const freshToken=await refreshFSMAccessToken();
+      if(freshToken){
+        activeToken=freshToken;
+        r=await fetch(url,{method:"PATCH",headers:patchHeaders(activeToken),body:JSON.stringify({username})});
+        rows=await r.json().catch(()=>[]);
+      }
+    }
     if(!r.ok)throw new Error(rows?.message||rows?.hint||rows?.details||"Profielnaam opslaan mislukt.");
     demo.user={...demo.user,username};
     try{
@@ -8278,7 +8299,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
-  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !requireLogin()){history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
+  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
   if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -8299,7 +8320,8 @@ document.addEventListener("click", function(event){
   const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|boost-checkout|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
-    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !requireLogin()){
+    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !readLoggedInUser()){
+      fsmLogin();
       return;
     }
     location.hash=route;
@@ -8310,7 +8332,8 @@ document.addEventListener("click", function(event){
   const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|boost-checkout|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
-    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !requireLogin()){
+    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !readLoggedInUser()){
+      fsmLogin();
       return;
     }
     location.hash=m[1];
