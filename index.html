@@ -7094,13 +7094,18 @@ function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return fals
 function updateHeaderAuthButton(){
   const btn=document.getElementById("fsmAuthButton");
   if(!btn)return;
-  const token=localStorage.getItem("fsm_access_token");
   const user=readLoggedInUser();
-  const logged=!!(token && user && user.username);
+  const accessToken=localStorage.getItem("fsm_access_token");
+  const refreshToken=localStorage.getItem("fsm_refresh_token");
+  // Een opgeslagen ingelogde gebruiker is voldoende om de header als
+  // ingelogd te tonen; een verlopen access-token betekent niet dat de
+  // sessie meteen weg is, want die kan met de refresh-token vernieuwd worden.
+  const logged=!!(user && user.username && (accessToken || refreshToken));
   btn.textContent=logged?"Ingelogd":"Inloggen";
-  btn.onclick=logged?function(){go("#/profile");}:function(){fsmLogin()};
+  btn.onclick=logged?function(){showLogoutMenu?.();}:function(){fsmLogin()};
   btn.title=logged?String(user.username||""):"Inloggen";
 }
+
 
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
