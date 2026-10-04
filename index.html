@@ -5971,6 +5971,10 @@ function router(){
         hash.startsWith("#/sell")
     ){
 
+        if(!requireLogin()){
+            location.hash="#/";
+            return;
+        }
         renderSell();
 
     }
@@ -7073,33 +7077,13 @@ function closeLogin(){
     setTimeout(()=>router(),0);
   }
 }
-function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
-async function refreshSupabaseSession(){
-  const refreshToken=localStorage.getItem("fsm_refresh_token");
-  if(!refreshToken)return null;
-  try{
-    const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=refresh_token",{
-      method:"POST",
-      headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},
-      body:JSON.stringify({refresh_token:refreshToken})
-    });
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok || !d.access_token)return null;
-    localStorage.setItem("fsm_access_token",d.access_token);
-    if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
-    if(d.user){
-      try{
-        const current=JSON.parse(localStorage.getItem("fsm_user")||"{}");
-        localStorage.setItem("fsm_user",JSON.stringify({...current,id:d.user.id}));
-      }catch(e){}
-    }
-    updateHeaderAuthButton();
-    return d.access_token;
-  }catch(e){
-    return null;
-  }
+function requireLogin(){
+  const token=localStorage.getItem("fsm_access_token");
+  const user=readLoggedInUser();
+  if(token && user && user.username)return true;
+  fsmLogin();
+  return false;
 }
-
 function updateHeaderAuthButton(){
   const btn=document.getElementById("fsmAuthButton");
   if(!btn)return;
@@ -7107,30 +7091,9 @@ function updateHeaderAuthButton(){
   const user=readLoggedInUser();
   const logged=!!(token && user && user.username);
   btn.textContent=logged?"Ingelogd":"Inloggen";
-  btn.onclick=logged?function(){showLogoutMenu();}:function(){fsmLogin()};
+  btn.onclick=logged?function(){go("#/profile");}:function(){fsmLogin()};
   btn.title=logged?String(user.username||""):"Inloggen";
 }
-
-function showLogoutMenu(){
-  const old=document.getElementById("fsmLogoutMenu");
-  if(old){old.remove();return}
-  const user=readLoggedInUser()||{};
-  const menu=document.createElement("div");
-  menu.id="fsmLogoutMenu";
-  menu.style="position:fixed;top:70px;right:18px;z-index:100001;background:#08140f;border:1px solid rgba(239,210,143,.35);border-radius:14px;padding:12px;min-width:190px;box-shadow:0 15px 45px rgba(0,0,0,.45)";
-  menu.innerHTML=`<div style="color:#fff;font-weight:800;margin-bottom:9px">Ingelogd als ${esc(user.username||"gebruiker")}</div><button type="button" class="fsm-btn dark full" onclick="logoutFSM()">Uitloggen</button>`;
-  document.body.appendChild(menu);
-}
-function logoutFSM(){
-  localStorage.removeItem("fsm_access_token");
-  localStorage.removeItem("fsm_refresh_token");
-  localStorage.removeItem("fsm_user");
-  document.getElementById("fsmLogoutMenu")?.remove();
-  location.hash="#/";
-  location.reload();
-}
-window.showLogoutMenu=showLogoutMenu;
-window.logoutFSM=logoutFSM;
 
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
@@ -7185,7 +7148,6 @@ async function fsmLogin(mode="login"){
         if(d.access_token){
           localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username,location:locationText,locationParts}));
           localStorage.setItem("fsm_access_token",d.access_token);
-          if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
           await persistLocationParts(locationParts,d.user.id,d.access_token);
           closeLogin();location.reload();
         }else{
@@ -7368,20 +7330,8 @@ async function saveProfileUsername(){
   btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
   try{
     const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?user_id=eq."+encodeURIComponent(userId);
-    const makeHeaders=t=>({apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+t,"Content-Type":"application/json",Prefer:"return=representation"});
-    let activeToken=token;
-    let r=await fetch(url,{method:"PATCH",headers:makeHeaders(activeToken),body:JSON.stringify({username})});
-    let rows=await r.json().catch(()=>[]);
-
-    // Als de JWT verlopen is, vernieuw automatisch de Supabase-sessie en probeer opnieuw.
-    if(!r.ok && (r.status===401 || /jwt expired|token is expired|expired/i.test(String(rows?.message||rows?.hint||rows?.details||"")))){
-      const freshToken=await refreshSupabaseSession();
-      if(freshToken){
-        activeToken=freshToken;
-        r=await fetch(url,{method:"PATCH",headers:makeHeaders(activeToken),body:JSON.stringify({username})});
-        rows=await r.json().catch(()=>[]);
-      }
-    }
+    const r=await fetch(url,{method:"PATCH",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+token,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({username})});
+    const rows=await r.json().catch(()=>[]);
     if(!r.ok)throw new Error(rows?.message||rows?.hint||rows?.details||"Profielnaam opslaan mislukt.");
     demo.user={...demo.user,username};
     try{
@@ -8328,7 +8278,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
-  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
+  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !requireLogin()){history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
   if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -8349,8 +8299,7 @@ document.addEventListener("click", function(event){
   const route=(href.match(/^#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|boost-checkout|offers|product|checkout|order|track|sell)(?:[^']*)/)||[])[0];
   if(route){
     event.preventDefault();
-    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !readLoggedInUser()){
-      fsmLogin();
+    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(route) && !requireLogin()){
       return;
     }
     location.hash=route;
@@ -8361,8 +8310,7 @@ document.addEventListener("click", function(event){
   const m=onclick.match(/go\(['"](#\/(?:profile|inbox|notifications|chat|badges|favorites|orders|promote|boost-checkout|offers|product|checkout|order|track|sell)[^'"]*)['"]\)/);
   if(m){
     event.preventDefault();
-    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !readLoggedInUser()){
-      fsmLogin();
+    if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(m[1]) && !requireLogin()){
       return;
     }
     location.hash=m[1];
