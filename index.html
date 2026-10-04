@@ -7361,26 +7361,81 @@ async function saveProfileUsername(){
   const error=document.getElementById("fsmUsernameError");
   const btn=document.getElementById("fsmUsernameSave");
   if(!input||!error||!btn)return;
+
   const oldName=String(demo.user.username||"").trim();
   const username=String(input.value||"").trim().replace(/\s+/g," ");
   if(username.length<2){error.textContent="Je profielnaam moet minstens 2 tekens hebben.";error.style.display="block";return;}
   if(username.length>30){error.textContent="Je profielnaam mag maximaal 30 tekens hebben.";error.style.display="block";return;}
   if(username===oldName){document.getElementById("fsmUsernameModal")?.remove();return;}
-  const token=localStorage.getItem("fsm_access_token");
-  const userId=demo.user.id||JSON.parse(localStorage.getItem("fsm_user")||"{}")?.id;
-  if(!token||!userId){error.textContent="Je moet ingelogd zijn om je profielnaam te wijzigen.";error.style.display="block";return;}
-  btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
+
+  btn.disabled=true;
+  btn.textContent="Opslaan...";
+  error.style.display="none";
+
   try{
+    /*
+      Gebruik de echte Supabase Auth-user als bron voor ID + token.
+      We lezen eerst de huidige sessie via /auth/v1/user. Zo gebruiken we
+      nooit een verouderde lokale user-id of een oud JWT voor deze update.
+    */
+    const sessionToken=localStorage.getItem("fsm_access_token");
+    if(!sessionToken)throw new Error("Je sessie is verlopen. Log opnieuw in.");
+
+    const authRes=await fetch(FSM_SUPABASE_URL+"/auth/v1/user",{
+      method:"GET",
+      headers:{
+        apikey:"sb_publishable_pCBvbAqfoXz4UvrcHViFw_GJZxnPir",
+        Authorization:"Bearer "+sessionToken
+      }
+    });
+
+    let authUser=null;
+    try{authUser=await authRes.json();}catch(e){}
+    if(!authRes.ok||!authUser?.id){
+      throw new Error("Je sessie is verlopen. Log opnieuw in.");
+    }
+
+    const userId=String(authUser.id);
+
+    /*
+      Profielen in deze app zijn gekoppeld aan profiles.id = auth.users.id.
+      PATCH met return=representation én controle op het aantal gewijzigde
+      rijen voorkomt dat de interface 'opgeslagen' toont terwijl er niets
+      in Supabase is gewijzigd.
+    */
     const url=FSM_SUPABASE_URL+"/rest/v1/profiles?id=eq."+encodeURIComponent(userId);
-    const r=await fetch(url,{method:"PATCH",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+token,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({username})});
-    const rows=await r.json().catch(()=>[]);
-    if(!r.ok)throw new Error(rows?.message||rows?.hint||rows?.details||"Profielnaam opslaan mislukt.");
-    demo.user={...demo.user,username};
+    const r=await fetch(url,{
+      method:"PATCH",
+      headers:{
+        apikey:"sb_publishable_pCBvbAqfoXz4UvrcHViFw_GJZxnPir",
+        Authorization:"Bearer "+sessionToken,
+        "Content-Type":"application/json",
+        Prefer:"return=representation"
+      },
+      body:JSON.stringify({username})
+    });
+
+    const data=await r.json().catch(()=>[]);
+    if(!r.ok){
+      throw new Error(data?.message||data?.hint||data?.details||"Profielnaam opslaan mislukt.");
+    }
+    if(!Array.isArray(data)||data.length===0){
+      throw new Error("Je profiel kon niet worden bijgewerkt. Controleer of je profiel in Supabase gekoppeld is aan je Auth-account.");
+    }
+
+    /* Lokale UI alleen bijwerken nadat Supabase echt succesvol wijzigde. */
+    demo.user={...demo.user,id:userId,username};
+
     try{
       const raw=localStorage.getItem("fsm_user");
       const current=raw?JSON.parse(raw):{};
-      localStorage.setItem("fsm_user",JSON.stringify({...current,username}));
+      localStorage.setItem("fsm_user",JSON.stringify({
+        ...(current&&typeof current==="object"?current:{}),
+        id:userId,
+        username
+      }));
     }catch(e){}
+
     updateLocalUsernameReferences(oldName,username);
     document.getElementById("fsmUsernameModal")?.remove();
     updateHeaderAuthButton();
@@ -7389,7 +7444,8 @@ async function saveProfileUsername(){
   }catch(e){
     error.textContent=e.message||"Er ging iets mis.";
     error.style.display="block";
-    btn.disabled=false;btn.textContent="Opslaan";
+    btn.disabled=false;
+    btn.textContent="Opslaan";
   }
 }
 window.editProfileUsername=editProfileUsername;
