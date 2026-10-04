@@ -7378,23 +7378,34 @@ async function saveProfileUsername(){
       We lezen eerst de huidige sessie via /auth/v1/user. Zo gebruiken we
       nooit een verouderde lokale user-id of een oud JWT voor deze update.
     */
-    const sessionToken=localStorage.getItem("fsm_access_token");
-    if(!sessionToken)throw new Error("Je sessie is verlopen. Log opnieuw in.");
+    let sessionToken=localStorage.getItem("fsm_access_token");
+    const refreshToken=localStorage.getItem("fsm_refresh_token");
+    if(!sessionToken && !refreshToken)throw new Error("Je sessie is verlopen. Log opnieuw in.");
 
-    const authRes=await fetch(FSM_SUPABASE_URL+"/auth/v1/user",{
+    let authRes=await fetch(FSM_SUPABASE_URL+"/auth/v1/user",{
       method:"GET",
-      headers:{
-        apikey:"sb_publishable_pCBvbAqfoXz4UvrcHViFw_GJZxnPir",
-        Authorization:"Bearer "+sessionToken
-      }
+      headers:{apikey:FSM_SUPABASE_KEY,Authorization:"Bearer "+sessionToken}
     });
-
     let authUser=null;
     try{authUser=await authRes.json();}catch(e){}
-    if(!authRes.ok||!authUser?.id){
-      throw new Error("Je sessie is verlopen. Log opnieuw in.");
-    }
 
+    // Een verlopen access-token eerst automatisch vernieuwen met de refresh-token.
+    if(!authRes.ok && refreshToken){
+      const refreshRes=await fetch(FSM_SUPABASE_URL+"/auth/v1/token?grant_type=refresh_token",{
+        method:"POST",
+        headers:{apikey:FSM_SUPABASE_KEY,"Content-Type":"application/json"},
+        body:JSON.stringify({refresh_token:refreshToken})
+      });
+      const refreshed=await refreshRes.json().catch(()=>null);
+      if(refreshRes.ok && refreshed?.access_token && refreshed?.user?.id){
+        sessionToken=refreshed.access_token;
+        localStorage.setItem("fsm_access_token",sessionToken);
+        if(refreshed.refresh_token)localStorage.setItem("fsm_refresh_token",refreshed.refresh_token);
+        authUser=refreshed.user;
+        authRes={ok:true};
+      }
+    }
+    if(!authRes.ok||!authUser?.id)throw new Error("Je sessie is verlopen. Log opnieuw in.");
     const userId=String(authUser.id);
 
     /*
