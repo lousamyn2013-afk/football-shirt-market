@@ -7107,6 +7107,28 @@ function updateHeaderAuthButton(){
 }
 
 
+function showLogoutMenu(){
+  document.getElementById("fsmLogoutMenu")?.remove();
+  const user=readLoggedInUser()||{};
+  const menu=document.createElement("div");
+  menu.id="fsmLogoutMenu";
+  menu.style="position:fixed;top:68px;right:18px;z-index:100001;background:#08140f;border:1px solid rgba(239,210,143,.35);border-radius:14px;padding:12px;min-width:210px;box-shadow:0 15px 45px rgba(0,0,0,.45)";
+  menu.innerHTML='<div style="color:#fff;font-weight:800;margin-bottom:10px">Ingelogd als '+esc(user.username||"gebruiker")+'</div><button type="button" class="fsm-btn dark full" id="fsmLogoutButton">Uitloggen</button>';
+  document.body.appendChild(menu);
+  document.getElementById("fsmLogoutButton").onclick=logoutFSM;
+}
+function logoutFSM(){
+  localStorage.removeItem("fsm_access_token");
+  localStorage.removeItem("fsm_refresh_token");
+  localStorage.removeItem("fsm_user");
+  document.getElementById("fsmLogoutMenu")?.remove();
+  updateHeaderAuthButton();
+  location.hash="#/";
+  location.reload();
+}
+window.showLogoutMenu=showLogoutMenu;
+window.logoutFSM=logoutFSM;
+
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
   if(old){switchLoginMode(mode);return}
