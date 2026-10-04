@@ -6821,24 +6821,59 @@ setTimeout(async()=>{
 "use strict";
 const API_BASE = window.FSM_API_BASE || "/api";
 const STORE="fsm_marketplace_v3";
-function readLoggedInUser(){
-  const keys=["fsm_user","currentUser","loggedInUser","user","account"];
-  for(const key of keys){
-    try{
-      const raw=localStorage.getItem(key);
-      if(!raw) continue;
-      const v=JSON.parse(raw);
-      const name=typeof v==="string"?v:(v?.username||v?.name||v?.user?.username);
-      if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
-    }catch(e){
-      const raw=localStorage.getItem(key);
-      if(raw && raw.trim()) return {username:raw.trim()};
+const FSM_SUPABASE_URL="https://torxckrcdelecwioqgyt.supabase.co";
+const FSM_SUPABASE_KEY="sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir";
+const fsmAuthState={ready:false,session:null,user:null};
+function clearSupabaseAuth(){
+  localStorage.removeItem("fsm_access_token");
+  localStorage.removeItem("fsm_refresh_token");
+  localStorage.removeItem("fsm_user");
+  fsmAuthState.session=null;fsmAuthState.user=null;fsmAuthState.ready=true;
+}
+async function refreshSupabaseSession(){
+  const refresh=localStorage.getItem("fsm_refresh_token");
+  if(!refresh)return null;
+  try{
+    const r=await fetch(FSM_SUPABASE_URL+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:FSM_SUPABASE_KEY,"Content-Type":"application/json"},body:JSON.stringify({refresh_token:refresh})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||!d.access_token||!d.user) { clearSupabaseAuth(); return null; }
+    localStorage.setItem("fsm_access_token",d.access_token);
+    if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
+    fsmAuthState.session=d;fsmAuthState.user=d.user;
+    return d;
+  }catch(e){return null}
+}
+async function verifySupabaseSession(){
+  const token=localStorage.getItem("fsm_access_token");
+  if(!token){clearSupabaseAuth();return null}
+  try{
+    let r=await fetch(FSM_SUPABASE_URL+"/auth/v1/user",{headers:{apikey:FSM_SUPABASE_KEY,Authorization:"Bearer "+token}});
+    if(r.ok){
+      const u=await r.json();fsmAuthState.user=u;fsmAuthState.session={access_token:token,user:u};fsmAuthState.ready=true;return fsmAuthState.session;
     }
-  }
-  if(window.currentUser){
-    const v=window.currentUser;
-    const name=typeof v==="string"?v:(v?.username||v?.name);
-    if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
+    if(r.status===401){
+      const refreshed=await refreshSupabaseSession();
+      fsmAuthState.ready=true;
+      return refreshed;
+    }
+  }catch(e){}
+  clearSupabaseAuth();
+  return null;
+}
+async function getValidAccessToken(){
+  if(!fsmAuthState.ready) await verifySupabaseSession();
+  if(!fsmAuthState.session)return null;
+  const token=fsmAuthState.session.access_token||localStorage.getItem("fsm_access_token");
+  if(token)return token;
+  const refreshed=await refreshSupabaseSession();
+  return refreshed?.access_token||null;
+}
+function isSupabaseAuthenticated(){return !!(fsmAuthState.ready&&fsmAuthState.session&&fsmAuthState.user)}
+function readLoggedInUser(){
+  if(isSupabaseAuthenticated()){
+    const cached=(()=>{try{return JSON.parse(localStorage.getItem("fsm_user")||"{}")}catch(e){return {}}})();
+    const u=fsmAuthState.user||{};
+    return {...cached,id:u.id,username:cached.username||u.user_metadata?.username||u.email?.split("@")[0]||"Gebruiker",email:u.email};
   }
   return null;
 }
@@ -7009,23 +7044,6 @@ function syncLocationField(prefix,name){
   // Laat de ingevulde tekst staan wanneer iemand het vinkje uitzet;
   // zo kan de gebruiker later opnieuw kiezen of hij dit veld deelt.
 }
-async function refreshFSMAccessToken(){
-  const refreshToken=localStorage.getItem("fsm_refresh_token");
-  if(!refreshToken) return null;
-  try{
-    const r=await fetch("https://torxckrcdelecwioqgyt.supabase.co/auth/v1/token?grant_type=refresh_token",{
-      method:"POST",
-      headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir","Content-Type":"application/json"},
-      body:JSON.stringify({refresh_token:refreshToken})
-    });
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok || !d.access_token) return null;
-    localStorage.setItem("fsm_access_token",d.access_token);
-    if(d.refresh_token) localStorage.setItem("fsm_refresh_token",d.refresh_token);
-    return d.access_token;
-  }catch(e){ return null; }
-}
-
 async function persistLocationParts(parts,userId=demo.user?.id,accessToken=localStorage.getItem("fsm_access_token")){
   const clean={country:String(parts?.country||"").trim(),region:String(parts?.region||"").trim(),city:String(parts?.city||"").trim()};
   const display=[clean.city,clean.region,clean.country].filter(Boolean).join(", ");
@@ -7090,44 +7108,30 @@ function closeLogin(){
     setTimeout(()=>router(),0);
   }
 }
-function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
+function requireLogin(){if(isSupabaseAuthenticated())return true;fsmLogin();return false}
 function updateHeaderAuthButton(){
   const btn=document.getElementById("fsmAuthButton");
   if(!btn)return;
-  const user=readLoggedInUser();
-  const accessToken=localStorage.getItem("fsm_access_token");
-  const refreshToken=localStorage.getItem("fsm_refresh_token");
-  // Een opgeslagen ingelogde gebruiker is voldoende om de header als
-  // ingelogd te tonen; een verlopen access-token betekent niet dat de
-  // sessie meteen weg is, want die kan met de refresh-token vernieuwd worden.
-  const logged=!!(user && user.username && (accessToken || refreshToken));
+  const logged=isSupabaseAuthenticated();
   btn.textContent=logged?"Ingelogd":"Inloggen";
-  btn.onclick=logged?function(){showLogoutMenu?.();}:function(){fsmLogin()};
-  btn.title=logged?String(user.username||""):"Inloggen";
+  btn.onclick=logged?function(){showLogoutMenu();}:function(){fsmLogin()};
+  btn.title=logged?String(readLoggedInUser()?.username||""):"Inloggen";
 }
-
-
 function showLogoutMenu(){
   document.getElementById("fsmLogoutMenu")?.remove();
-  const user=readLoggedInUser()||{};
-  const menu=document.createElement("div");
-  menu.id="fsmLogoutMenu";
-  menu.style="position:fixed;top:68px;right:18px;z-index:100001;background:#08140f;border:1px solid rgba(239,210,143,.35);border-radius:14px;padding:12px;min-width:210px;box-shadow:0 15px 45px rgba(0,0,0,.45)";
-  menu.innerHTML='<div style="color:#fff;font-weight:800;margin-bottom:10px">Ingelogd als '+esc(user.username||"gebruiker")+'</div><button type="button" class="fsm-btn dark full" id="fsmLogoutButton">Uitloggen</button>';
-  document.body.appendChild(menu);
-  document.getElementById("fsmLogoutButton").onclick=logoutFSM;
+  const u=readLoggedInUser()||{};
+  const menu=document.createElement("div");menu.id="fsmLogoutMenu";
+  menu.style="position:fixed;top:70px;right:18px;z-index:100001;background:#08140f;border:1px solid rgba(239,210,143,.35);border-radius:14px;padding:12px;min-width:210px;box-shadow:0 15px 45px rgba(0,0,0,.45)";
+  menu.innerHTML=`<div style="color:#fff;font-weight:800;margin-bottom:10px">Ingelogd als ${esc(u.username||"gebruiker")}</div><button type="button" class="fsm-btn dark full" id="fsmLogoutButton">Uitloggen</button>`;
+  document.body.appendChild(menu);document.getElementById("fsmLogoutButton").onclick=logoutFSM;
 }
-function logoutFSM(){
-  localStorage.removeItem("fsm_access_token");
-  localStorage.removeItem("fsm_refresh_token");
-  localStorage.removeItem("fsm_user");
-  document.getElementById("fsmLogoutMenu")?.remove();
-  updateHeaderAuthButton();
-  location.hash="#/";
-  location.reload();
+async function logoutFSM(){
+  const token=localStorage.getItem("fsm_access_token");
+  try{if(token)await fetch(FSM_SUPABASE_URL+"/auth/v1/logout",{method:"POST",headers:{apikey:FSM_SUPABASE_KEY,Authorization:"Bearer "+token}})}catch(e){}
+  clearSupabaseAuth();document.getElementById("fsmLogoutMenu")?.remove();
+  demo.user={username:"Gebruiker",verified:[],bio:""};save();updateHeaderAuthButton();location.hash="#/";location.reload();
 }
-window.showLogoutMenu=showLogoutMenu;
-window.logoutFSM=logoutFSM;
+window.showLogoutMenu=showLogoutMenu;window.logoutFSM=logoutFSM;
 
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
@@ -7182,7 +7186,8 @@ async function fsmLogin(mode="login"){
         if(d.access_token){
           localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username,location:locationText,locationParts}));
           localStorage.setItem("fsm_access_token",d.access_token);
-          if(d.refresh_token) localStorage.setItem("fsm_refresh_token",d.refresh_token);
+          if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
+          fsmAuthState.session=d;fsmAuthState.user=d.user;fsmAuthState.ready=true;
           await persistLocationParts(locationParts,d.user.id,d.access_token);
           closeLogin();location.reload();
         }else{
@@ -7205,7 +7210,8 @@ async function fsmLogin(mode="login"){
       const userData=Object.assign({},profile,{id:d.user.id,username:profile.username||email.split("@")[0],location:locationText,locationParts:hasLocation?chosen:(currentParts&&Object.values(currentParts).some(Boolean)?currentParts:(localUser?.locationParts||{})),lastSeenAt});
       localStorage.setItem("fsm_user",JSON.stringify(userData));
       localStorage.setItem("fsm_access_token",d.access_token);
-      if(d.refresh_token) localStorage.setItem("fsm_refresh_token",d.refresh_token);
+      if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
+      fsmAuthState.session=d;fsmAuthState.user=d.user;fsmAuthState.ready=true;
       demo.user={...demo.user,...userData};
       if(hasLocation) await persistLocationParts(locationParts,d.user.id,d.access_token);
       else save();
@@ -7360,29 +7366,14 @@ async function saveProfileUsername(){
   if(username.length<2){error.textContent="Je profielnaam moet minstens 2 tekens hebben.";error.style.display="block";return;}
   if(username.length>30){error.textContent="Je profielnaam mag maximaal 30 tekens hebben.";error.style.display="block";return;}
   if(username===oldName){document.getElementById("fsmUsernameModal")?.remove();return;}
-  let token=localStorage.getItem("fsm_access_token");
+  const token=localStorage.getItem("fsm_access_token");
   const userId=demo.user.id||JSON.parse(localStorage.getItem("fsm_user")||"{}")?.id;
   if(!token||!userId){error.textContent="Je moet ingelogd zijn om je profielnaam te wijzigen.";error.style.display="block";return;}
   btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
   try{
-    // Vernieuw eerst het access-token wanneer er een refresh-token beschikbaar is.
-    const freshToken=await refreshFSMAccessToken();
-    if(freshToken) token=freshToken;
-
-    // De profielen worden overal elders op id aangesproken.
-    const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?id=eq."+encodeURIComponent(userId);
-    const patchHeaders=(accessToken)=>({apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+accessToken,"Content-Type":"application/json",Prefer:"return=representation"});
-    let activeToken=token;
-    let r=await fetch(url,{method:"PATCH",headers:patchHeaders(activeToken),body:JSON.stringify({username})});
-    let rows=await r.json().catch(()=>[]);
-    if(r.status===401 || /jwt expired|token.*expired|invalid jwt/i.test(String(rows?.message||rows?.error_description||rows?.error||""))){
-      const retryToken=await refreshFSMAccessToken();
-      if(retryToken){
-        activeToken=retryToken;
-        r=await fetch(url,{method:"PATCH",headers:patchHeaders(activeToken),body:JSON.stringify({username})});
-        rows=await r.json().catch(()=>[]);
-      }
-    }
+    const url=FSM_SUPABASE_URL+"/rest/v1/profiles?id=eq."+encodeURIComponent(userId);
+    const r=await fetch(url,{method:"PATCH",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+token,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({username})});
+    const rows=await r.json().catch(()=>[]);
     if(!r.ok)throw new Error(rows?.message||rows?.hint||rows?.details||"Profielnaam opslaan mislukt.");
     demo.user={...demo.user,username};
     try{
@@ -8329,7 +8320,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
-  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
+  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !isSupabaseAuthenticated()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
   if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -8371,13 +8362,21 @@ document.addEventListener("click", function(event){
   }
 });
 
-setTimeout(()=>{
-  if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
-    enhancedRouter();
+(async function initSupabaseAuth(){
+  await verifySupabaseSession();
+  const loggedUser=readLoggedInUser();
+  if(loggedUser){
+    try{demo.user={...demo.user,...loggedUser};save();}catch(e){}
+  }else{
+    demo.user={username:"Gebruiker",verified:[],bio:""};
+    save();
+    if(/^#\/(sell|inbox|profile|badges|favorites|orders|promote|boost-checkout|notifications|chat|offers)(?:[/?]|$)/.test(location.hash||""))location.hash="#/";
   }
-},0);
+  updateHeaderAuthButton();
+  if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){fsmNavigate();}
+  else router();
 })();
-try{document.addEventListener("DOMContentLoaded",()=>setTimeout(updateHeaderAuthButton,0));}catch(e){}
+})();
 </script>
 </body>
 </html>
