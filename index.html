@@ -7333,22 +7333,25 @@ async function saveProfileUsername(){
   if(username.length<2){error.textContent="Je profielnaam moet minstens 2 tekens hebben.";error.style.display="block";return;}
   if(username.length>30){error.textContent="Je profielnaam mag maximaal 30 tekens hebben.";error.style.display="block";return;}
   if(username===oldName){document.getElementById("fsmUsernameModal")?.remove();return;}
-  const token=localStorage.getItem("fsm_access_token");
+  let token=localStorage.getItem("fsm_access_token");
   const userId=demo.user.id||JSON.parse(localStorage.getItem("fsm_user")||"{}")?.id;
   if(!token||!userId){error.textContent="Je moet ingelogd zijn om je profielnaam te wijzigen.";error.style.display="block";return;}
   btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
   try{
-    const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?user_id=eq."+encodeURIComponent(userId);
+    // Vernieuw eerst het access-token wanneer er een refresh-token beschikbaar is.
+    const freshToken=await refreshFSMAccessToken();
+    if(freshToken) token=freshToken;
+
+    // De profielen worden overal elders op id aangesproken.
+    const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?id=eq."+encodeURIComponent(userId);
     const patchHeaders=(accessToken)=>({apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+accessToken,"Content-Type":"application/json",Prefer:"return=representation"});
     let activeToken=token;
     let r=await fetch(url,{method:"PATCH",headers:patchHeaders(activeToken),body:JSON.stringify({username})});
     let rows=await r.json().catch(()=>[]);
-    // Access tokens verlopen bewust na een beperkte tijd. Vernieuw het token
-    // automatisch en probeer het opslaan nog één keer wanneer Supabase 401/JWT expired teruggeeft.
     if(r.status===401 || /jwt expired|token.*expired|invalid jwt/i.test(String(rows?.message||rows?.error_description||rows?.error||""))){
-      const freshToken=await refreshFSMAccessToken();
-      if(freshToken){
-        activeToken=freshToken;
+      const retryToken=await refreshFSMAccessToken();
+      if(retryToken){
+        activeToken=retryToken;
         r=await fetch(url,{method:"PATCH",headers:patchHeaders(activeToken),body:JSON.stringify({username})});
         rows=await r.json().catch(()=>[]);
       }
