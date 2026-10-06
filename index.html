@@ -7147,10 +7147,10 @@ async function fsmLogin(mode="login"){
     </div>
     <div id="fsmRegisterFields" style="display:none">
       <input id="fsmRegisterUsername" type="text" placeholder="Gebruikersnaam" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+      ${locationFormHtml("fsmAuthLoc",{})}
     </div>
     <input id="fsmLoginEmail" type="email" placeholder="E-mail" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
     <input id="fsmLoginPassword" type="password" placeholder="Wachtwoord" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
-    ${locationFormHtml("fsmAuthLoc",getLocationParts(logged||{}))}
     <div id="fsmLoginError" style="display:none;color:#ff9b9b;font-size:12px;margin:10px 0"></div>
     <button id="fsmLoginSubmit" type="button" style="width:100%;padding:13px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));font-weight:900;cursor:pointer">Inloggen</button>
   </div>`;
@@ -7173,8 +7173,8 @@ async function fsmLogin(mode="login"){
     const password=document.getElementById("fsmLoginPassword").value;
     const username=(document.getElementById("fsmRegisterUsername")?.value||"").trim();
     const err=document.getElementById("fsmLoginError"),btn=document.getElementById("fsmLoginSubmit");
-    const locationParts=readLocationForm("fsmAuthLoc");
-    const hasLocation=Object.values(locationParts).some(Boolean);
+    const locationParts=reg?readLocationForm("fsmAuthLoc"):{};
+    const hasLocation=reg&&Object.values(locationParts).some(Boolean);
     if(!email||!password||(reg&&!username)){err.textContent=reg?"Vul je gebruikersnaam, e-mail en wachtwoord in.":"Vul je e-mail en wachtwoord in.";err.style.display="block";return}
     btn.disabled=true;btn.textContent=reg?"Account maken...":"Inloggen...";err.style.display="none";
     try{
