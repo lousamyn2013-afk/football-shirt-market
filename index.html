@@ -5155,9 +5155,38 @@ required
 <div class="form-group">
 
 <label for="sellPrice">
-Prijs (€) *
+Prijs *
 </label>
 
+<div style="display:flex;gap:8px;align-items:stretch">
+<select id="sellCurrency" aria-label="Munteenheid" style="flex:0 0 118px">
+<option value="EUR">€ EUR</option>
+<option value="USD">$ USD</option>
+<option value="GBP">£ GBP</option>
+<option value="CHF">CHF</option>
+<option value="CAD">C$ CAD</option>
+<option value="AUD">A$ AUD</option>
+<option value="NZD">NZ$ NZD</option>
+<option value="JPY">¥ JPY</option>
+<option value="CNY">¥ CNY</option>
+<option value="KRW">₩ KRW</option>
+<option value="INR">₹ INR</option>
+<option value="BRL">R$ BRL</option>
+<option value="MXN">MX$ MXN</option>
+<option value="TRY">₺ TRY</option>
+<option value="PLN">zł PLN</option>
+<option value="CZK">Kč CZK</option>
+<option value="HUF">Ft HUF</option>
+<option value="RON">lei RON</option>
+<option value="SEK">kr SEK</option>
+<option value="NOK">kr NOK</option>
+<option value="DKK">kr DKK</option>
+<option value="BGN">лв BGN</option>
+<option value="RSD">дин RSD</option>
+<option value="ZAR">R ZAR</option>
+<option value="AED">د.إ AED</option>
+<option value="SAR">﷼ SAR</option>
+</select>
 <input
 type="number"
 id="sellPrice"
@@ -5165,11 +5194,68 @@ min="0"
 step="0.01"
 placeholder="49.95"
 required
+style="flex:1"
 >
+</div>
 
 </div>
 
 
+</div>
+
+
+<div class="form-group">
+<label for="sellSeason">Seizoen *</label>
+<select id="sellSeason" required>
+<option value="">Kies seizoen</option>
+<option value="2026/27">2026/27</option>
+<option value="2025/26">2025/26</option>
+<option value="2024/25">2024/25</option>
+<option value="2023/24">2023/24</option>
+<option value="2022/23">2022/23</option>
+<option value="2021/22">2021/22</option>
+<option value="2020/21">2020/21</option>
+<option value="2019/20">2019/20</option>
+<option value="2018/19">2018/19</option>
+<option value="2017/18">2017/18</option>
+<option value="2016/17">2016/17</option>
+<option value="2015/16">2015/16</option>
+<option value="2014/15">2014/15</option>
+<option value="2013/14">2013/14</option>
+<option value="2012/13">2012/13</option>
+<option value="2011/12">2011/12</option>
+<option value="2010/11">2010/11</option>
+<option value="2009/10">2009/10</option>
+<option value="2008/09">2008/09</option>
+<option value="2007/08">2007/08</option>
+<option value="2006/07">2006/07</option>
+<option value="2005/06">2005/06</option>
+<option value="2004/05">2004/05</option>
+<option value="2003/04">2003/04</option>
+<option value="2002/03">2002/03</option>
+<option value="2001/02">2001/02</option>
+<option value="2000/01">2000/01</option>
+<option value="1999/00">1999/00</option>
+<option value="1998/99">1998/99</option>
+<option value="1997/98">1997/98</option>
+<option value="1996/97">1996/97</option>
+<option value="1995/96">1995/96</option>
+<option value="1994/95">1994/95</option>
+<option value="1993/94">1993/94</option>
+<option value="1992/93">1992/93</option>
+<option value="1991/92">1991/92</option>
+<option value="1990/91">1990/91</option>
+<option value="1989/90">1989/90</option>
+<option value="1988/89">1988/89</option>
+<option value="1987/88">1987/88</option>
+<option value="1986/87">1986/87</option>
+<option value="1985/86">1985/86</option>
+<option value="1984/85">1984/85</option>
+<option value="1983/84">1983/84</option>
+<option value="1982/83">1982/83</option>
+<option value="1981/82">1981/82</option>
+<option value="1980/81">1980/81</option>
+</select>
 </div>
 
 
@@ -5630,6 +5716,16 @@ data-photo-index="${index}"
                 ).value;
 
 
+            const currencyCode=
+                document.getElementById(
+                    "sellCurrency"
+                ).value || "EUR";
+
+            const season=
+                document.getElementById(
+                    "sellSeason"
+                ).value;
+
             const name=
                 document.getElementById(
                     "sellName"
@@ -5657,6 +5753,7 @@ data-photo-index="${index}"
             if(
                 !club ||
                 !priceRaw ||
+                !season ||
                 !name ||
                 !condition
             ){
@@ -5740,10 +5837,11 @@ data-photo-index="${index}"
                 club:club,
 
                 price:
-                    "€ "+
                     parseFloat(priceRaw)
                     .toFixed(2)
                     .replace(".",","),
+                currency:currencyCode,
+                season:season,
 
                 name:name,
 
@@ -6949,7 +7047,7 @@ save();
 setInterval(()=>{touchCurrentUserLastSeen();save();},60000);
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function money(n,c){
- const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
+ const map={EUR:"€",GBP:"£",USD:"$",CHF:"CHF ",CAD:"C$",AUD:"A$",NZD:"NZ$",JPY:"¥",CNY:"¥",KRW:"₩",INR:"₹",BRL:"R$",MXN:"MX$",TRY:"₺",PLN:"zł ",CZK:"Kč ",HUF:"Ft ",RON:"lei ",SEK:"kr ",NOK:"kr ",DKK:"kr ",BGN:"лв ",RSD:"дин ",ZAR:"R ",AED:"د.إ ",SAR:"﷼ "}; return (map[c]??"€")+Number(n||0).toFixed(2);
 }
 function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpperCase()}
 function app(){return document.getElementById("app")}
@@ -7274,7 +7372,7 @@ function priceDisplay(x){
    const original=priceNumber(accepted.originalPrice)||priceNumber(x?.price);
    return `<span class="fsm-new-price">${money(current,accepted.currency||currency())}</span><span class="fsm-old-price">${money(original,accepted.currency||currency())}</span>`;
  }
- return `<span class="fsm-new-price">${money(current,currency())}</span>`;
+ return `<span class="fsm-new-price">${money(current,x?.currency||currency())}</span>`;
 }
 function priceNumber(value){
  const n=Number(value);
