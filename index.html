@@ -5567,6 +5567,7 @@ Plaats advertentie
 
 
     let selectedImages=[];
+    let selectedImageFiles=[];
 
 
     photoDropzone.addEventListener(
@@ -5618,6 +5619,7 @@ Plaats advertentie
                     selectedImages.push(
                         event.target.result
                     );
+                    selectedImageFiles.push(file);
 
 
                     renderPhotos();
@@ -5670,12 +5672,9 @@ data-photo-index="${index}"
                     "click",
                     ()=>{
 
-                        selectedImages.splice(
-                            Number(
-                                button.dataset.photoIndex
-                            ),
-                            1
-                        );
+                        const photoIndex=Number(button.dataset.photoIndex);
+                        selectedImages.splice(photoIndex,1);
+                        selectedImageFiles.splice(photoIndex,1);
 
                         renderPhotos();
 
@@ -5688,8 +5687,57 @@ data-photo-index="${index}"
 
 
     /* ======================================
+       SUPABASE STORAGE - LISTING PHOTOS
+    ====================================== */
+
+    async function uploadListingImagesToStorage(files,userId){
+        const bucket="listing-images";
+        const uploadedUrls=[];
+        const accessToken=localStorage.getItem("fsm_access_token")||"";
+
+        if(!userId) throw new Error("Je moet ingelogd zijn om foto's te uploaden.");
+        if(!accessToken) throw new Error("Je sessie is verlopen. Log opnieuw in.");
+
+        for(let i=0;i<files.length;i++){
+            const file=files[i];
+            const extension=(file.name.split(".").pop()||"jpg")
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g,"")||"jpg";
+            const path=`${userId}/${Date.now()}-${i}-${Math.random().toString(36).slice(2,10)}.${extension}`;
+
+            const response=await fetch(
+                `${FSM_SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
+                {
+                    method:"POST",
+                    headers:{
+                        apikey:FSM_SUPABASE_ANON_KEY,
+                        Authorization:"Bearer "+accessToken,
+                        "Content-Type":file.type||"image/jpeg",
+                        "x-upsert":"false"
+                    },
+                    body:file
+                }
+            );
+
+            if(!response.ok){
+                const detail=await response.text().catch(()=>"");
+                throw new Error(`Foto ${i+1} upload mislukt${detail?": "+detail:"."}`);
+            }
+
+            uploadedUrls.push(
+                `${FSM_SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`
+            );
+        }
+
+        return uploadedUrls;
+    }
+
+
+    /* ======================================
        FORM
     ====================================== */
+
+
 
     const form=
         document.getElementById(
@@ -5699,7 +5747,7 @@ data-photo-index="${index}"
 
     form.addEventListener(
         "submit",
-        event=>{
+        async event=>{
 
             event.preventDefault();
 
@@ -5830,6 +5878,40 @@ data-photo-index="${index}"
                 );
 
 
+            const loggedUser=readLoggedInUser?.()||{};
+            if(!loggedUser?.id){
+                alert("Je moet ingelogd zijn om een shirt te verkopen.");
+                return;
+            }
+
+            const submitButton=form.querySelector('button[type="submit"]');
+            const originalSubmitText=submitButton?.textContent||"Plaats advertentie";
+
+            if(submitButton){
+                submitButton.disabled=true;
+                submitButton.textContent="Foto's uploaden...";
+            }
+
+            let storageImageUrls=[];
+            try{
+                storageImageUrls=await uploadListingImagesToStorage(
+                    selectedImageFiles,
+                    loggedUser.id
+                );
+            }catch(error){
+                console.error(error);
+                alert(error?.message||"De foto's konden niet worden geüpload.");
+                if(submitButton){
+                    submitButton.disabled=false;
+                    submitButton.textContent=originalSubmitText;
+                }
+                return;
+            }
+
+            if(submitButton){
+                submitButton.textContent="Advertentie plaatsen...";
+            }
+
             const newShirt={
 
                 id:Date.now(),
@@ -5860,7 +5942,7 @@ data-photo-index="${index}"
 
                 boostExpiresAt:boostExpiresAt,
 
-                images:selectedImages,
+                images:storageImageUrls,
 
                 seller:(readLoggedInUser()?.username||"verkoper"),
 
@@ -5891,7 +5973,16 @@ data-photo-index="${index}"
             // Publiceer de advertentie ook naar Supabase zodat andere bezoekers,
             // ook zonder ingelogd te zijn, het shirt kunnen zien. De lokale opslag
             // blijft behouden als fallback.
-            publishListingToSupabase(newShirt).catch(()=>{});
+            try{
+                await publishListingToSupabase(newShirt);
+            }catch(error){
+                console.warn("Advertentie lokaal opgeslagen, maar publiceren naar Supabase mislukte:",error);
+            }
+
+            if(submitButton){
+                submitButton.disabled=false;
+                submitButton.textContent=originalSubmitText;
+            }
 
             showToast(
                 "Shirt succesvol geplaatst!"
