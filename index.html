@@ -7188,6 +7188,9 @@ async function fsmLogin(mode="login"){
           localStorage.setItem("fsm_access_token",d.access_token);
           if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
           fsmAuthState.session=d;fsmAuthState.user=d.user;fsmAuthState.ready=true;
+          // Neem de gekozen gebruikersnaam meteen over in de app-state voordat
+          // persistLocationParts() de lokale profielcache opnieuw opslaat.
+          demo.user={...demo.user,id:d.user.id,username,location:locationText,locationParts};
           await persistLocationParts(locationParts,d.user.id,d.access_token);
           closeLogin();location.reload();
         }else{
