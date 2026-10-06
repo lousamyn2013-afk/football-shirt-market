@@ -7981,6 +7981,11 @@ window.payBoost=async()=>{
  go("#/promote");
 };
 
+function refreshCurrentNotifications(){
+  ensureNotifications();
+  if(location.hash.startsWith("#/notifications")) notifications();
+  updateHeaderAuthButton?.();
+}
 function notificationCount(){return (demo.notifications||[]).filter(n=>!n.read).length}
 function notificationTime(date){try{return new Date(date).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}catch(e){return ""}}
 window.deleteNotification=id=>{
