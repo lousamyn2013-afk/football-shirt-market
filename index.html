@@ -7654,6 +7654,22 @@ async function saveProfileUsername(){
 window.editProfileUsername=editProfileUsername;
 window.saveProfileUsername=saveProfileUsername;
 
+async function openPromoteFromProfile(){
+  try{
+    const token=await getValidAccessToken();
+    if(!token || !isSupabaseAuthenticated()){
+      fsmLogin();
+      return;
+    }
+  }catch(e){
+    fsmLogin();
+    return;
+  }
+  location.hash="#/promote";
+  setTimeout(()=>enhancedRouter(),0);
+}
+window.openPromoteFromProfile=openPromoteFromProfile;
+
 function profile(){
  const reviews=demo.reviews.filter(r=>r.to===demo.user.username||r.from===demo.user.username);
  const badgeData=getBadgeData();
@@ -7681,7 +7697,7 @@ function profile(){
  <div class="fsm-menu">
  <button onclick="go('#/favorites')">♡ <strong>Mijn favorieten</strong><span class="arrow">›</span></button>
  <button onclick="go('#/orders')">▣ <strong>Mijn bestellingen</strong><span class="arrow">›</span></button>
- <button onclick="go('#/promote')">↗ <strong>Advertenties promoten</strong><span class="arrow">›</span></button>
+ <button type="button" onclick="openPromoteFromProfile()">↗ <strong>Advertenties promoten</strong><span class="arrow">›</span></button>
  <button onclick="go('#/offers')">⌁ <strong>Biedingen</strong><span class="arrow">›</span></button>
  </div>
  <section class="fsm-card" style="margin-top:12px"><div class="fsm-muted">Reviews</div><strong>${reviews.length?reviews.length+" ontvangen":"Nog geen reviews"}</strong></section>
