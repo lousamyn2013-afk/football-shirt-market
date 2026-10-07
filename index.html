@@ -7989,7 +7989,21 @@ window.payBoost=async()=>{
  const r=await api("/boosts/pay",{method:"POST",body:JSON.stringify(payload)});
  if(r && r.success===false){toast("Betaling mislukt.");return}
  if(!Array.isArray(demo.boosts))demo.boosts=[];
- ids.forEach(id=>{const existing=demo.boosts.find(b=>String(b.itemId)===id);if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString();existing.paidAmount=BOOST_PRICES[type];}else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString(),paidAmount:BOOST_PRICES[type],currency:pending.currency||currency()})});
+ const boostExpiresAt=Date.now()+((type.includes("7 dagen")||type.includes("7 dagen"))?7*24*60*60*1000:24*60*60*1000);
+ ids.forEach(id=>{
+   const existing=demo.boosts.find(b=>String(b.itemId)===id);
+   if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString();existing.paidAmount=BOOST_PRICES[type];existing.expiresAt=boostExpiresAt;}
+   else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString(),paidAmount:BOOST_PRICES[type],currency:pending.currency||currency(),expiresAt:boostExpiresAt});
+   // Zorg dat de advertentie zelf als geboost wordt opgeslagen zodat Ontdekken
+   // hem bovenaan zet en de BOOST-badge toont. De boostpagina gebruikt ids zoals u123.
+   const rawId=String(id).replace(/^u/,"");
+   const local=getListings().find(x=>String(x.id)===rawId);
+   if(local){
+     local.boosted=true;
+     local.boostExpiresAt=boostExpiresAt;
+     saveListings(getListings());
+   }
+ });
  demo.boostSelection=[];
  demo.boostCheckout=null;
  save();
