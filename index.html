@@ -5155,38 +5155,9 @@ required
 <div class="form-group">
 
 <label for="sellPrice">
-Prijs *
+Prijs (€) *
 </label>
 
-<div style="display:flex;gap:8px;align-items:stretch">
-<select id="sellCurrency" aria-label="Munteenheid" style="flex:0 0 118px">
-<option value="EUR">€ EUR</option>
-<option value="USD">$ USD</option>
-<option value="GBP">£ GBP</option>
-<option value="CHF">CHF</option>
-<option value="CAD">C$ CAD</option>
-<option value="AUD">A$ AUD</option>
-<option value="NZD">NZ$ NZD</option>
-<option value="JPY">¥ JPY</option>
-<option value="CNY">¥ CNY</option>
-<option value="KRW">₩ KRW</option>
-<option value="INR">₹ INR</option>
-<option value="BRL">R$ BRL</option>
-<option value="MXN">MX$ MXN</option>
-<option value="TRY">₺ TRY</option>
-<option value="PLN">zł PLN</option>
-<option value="CZK">Kč CZK</option>
-<option value="HUF">Ft HUF</option>
-<option value="RON">lei RON</option>
-<option value="SEK">kr SEK</option>
-<option value="NOK">kr NOK</option>
-<option value="DKK">kr DKK</option>
-<option value="BGN">лв BGN</option>
-<option value="RSD">дин RSD</option>
-<option value="ZAR">R ZAR</option>
-<option value="AED">د.إ AED</option>
-<option value="SAR">﷼ SAR</option>
-</select>
 <input
 type="number"
 id="sellPrice"
@@ -5194,68 +5165,11 @@ min="0"
 step="0.01"
 placeholder="49.95"
 required
-style="flex:1"
 >
-</div>
 
 </div>
 
 
-</div>
-
-
-<div class="form-group">
-<label for="sellSeason">Seizoen *</label>
-<select id="sellSeason" required>
-<option value="">Kies seizoen</option>
-<option value="2026/27">2026/27</option>
-<option value="2025/26">2025/26</option>
-<option value="2024/25">2024/25</option>
-<option value="2023/24">2023/24</option>
-<option value="2022/23">2022/23</option>
-<option value="2021/22">2021/22</option>
-<option value="2020/21">2020/21</option>
-<option value="2019/20">2019/20</option>
-<option value="2018/19">2018/19</option>
-<option value="2017/18">2017/18</option>
-<option value="2016/17">2016/17</option>
-<option value="2015/16">2015/16</option>
-<option value="2014/15">2014/15</option>
-<option value="2013/14">2013/14</option>
-<option value="2012/13">2012/13</option>
-<option value="2011/12">2011/12</option>
-<option value="2010/11">2010/11</option>
-<option value="2009/10">2009/10</option>
-<option value="2008/09">2008/09</option>
-<option value="2007/08">2007/08</option>
-<option value="2006/07">2006/07</option>
-<option value="2005/06">2005/06</option>
-<option value="2004/05">2004/05</option>
-<option value="2003/04">2003/04</option>
-<option value="2002/03">2002/03</option>
-<option value="2001/02">2001/02</option>
-<option value="2000/01">2000/01</option>
-<option value="1999/00">1999/00</option>
-<option value="1998/99">1998/99</option>
-<option value="1997/98">1997/98</option>
-<option value="1996/97">1996/97</option>
-<option value="1995/96">1995/96</option>
-<option value="1994/95">1994/95</option>
-<option value="1993/94">1993/94</option>
-<option value="1992/93">1992/93</option>
-<option value="1991/92">1991/92</option>
-<option value="1990/91">1990/91</option>
-<option value="1989/90">1989/90</option>
-<option value="1988/89">1988/89</option>
-<option value="1987/88">1987/88</option>
-<option value="1986/87">1986/87</option>
-<option value="1985/86">1985/86</option>
-<option value="1984/85">1984/85</option>
-<option value="1983/84">1983/84</option>
-<option value="1982/83">1982/83</option>
-<option value="1981/82">1981/82</option>
-<option value="1980/81">1980/81</option>
-</select>
 </div>
 
 
@@ -5567,7 +5481,6 @@ Plaats advertentie
 
 
     let selectedImages=[];
-    let selectedImageFiles=[];
 
 
     photoDropzone.addEventListener(
@@ -5619,7 +5532,6 @@ Plaats advertentie
                     selectedImages.push(
                         event.target.result
                     );
-                    selectedImageFiles.push(file);
 
 
                     renderPhotos();
@@ -5672,9 +5584,12 @@ data-photo-index="${index}"
                     "click",
                     ()=>{
 
-                        const photoIndex=Number(button.dataset.photoIndex);
-                        selectedImages.splice(photoIndex,1);
-                        selectedImageFiles.splice(photoIndex,1);
+                        selectedImages.splice(
+                            Number(
+                                button.dataset.photoIndex
+                            ),
+                            1
+                        );
 
                         renderPhotos();
 
@@ -5687,57 +5602,8 @@ data-photo-index="${index}"
 
 
     /* ======================================
-       SUPABASE STORAGE - LISTING PHOTOS
-    ====================================== */
-
-    async function uploadListingImagesToStorage(files,userId){
-        const bucket="listing-images";
-        const uploadedUrls=[];
-        const accessToken=localStorage.getItem("fsm_access_token")||"";
-
-        if(!userId) throw new Error("Je moet ingelogd zijn om foto's te uploaden.");
-        if(!accessToken) throw new Error("Je sessie is verlopen. Log opnieuw in.");
-
-        for(let i=0;i<files.length;i++){
-            const file=files[i];
-            const extension=(file.name.split(".").pop()||"jpg")
-                .toLowerCase()
-                .replace(/[^a-z0-9]/g,"")||"jpg";
-            const path=`${userId}/${Date.now()}-${i}-${Math.random().toString(36).slice(2,10)}.${extension}`;
-
-            const response=await fetch(
-                `${FSM_SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
-                {
-                    method:"POST",
-                    headers:{
-                        apikey:FSM_SUPABASE_ANON_KEY,
-                        Authorization:"Bearer "+accessToken,
-                        "Content-Type":file.type||"image/jpeg",
-                        "x-upsert":"false"
-                    },
-                    body:file
-                }
-            );
-
-            if(!response.ok){
-                const detail=await response.text().catch(()=>"");
-                throw new Error(`Foto ${i+1} upload mislukt${detail?": "+detail:"."}`);
-            }
-
-            uploadedUrls.push(
-                `${FSM_SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`
-            );
-        }
-
-        return uploadedUrls;
-    }
-
-
-    /* ======================================
        FORM
     ====================================== */
-
-
 
     const form=
         document.getElementById(
@@ -5747,7 +5613,7 @@ data-photo-index="${index}"
 
     form.addEventListener(
         "submit",
-        async event=>{
+        event=>{
 
             event.preventDefault();
 
@@ -5763,16 +5629,6 @@ data-photo-index="${index}"
                     "sellPrice"
                 ).value;
 
-
-            const currencyCode=
-                document.getElementById(
-                    "sellCurrency"
-                ).value || "EUR";
-
-            const season=
-                document.getElementById(
-                    "sellSeason"
-                ).value;
 
             const name=
                 document.getElementById(
@@ -5801,7 +5657,6 @@ data-photo-index="${index}"
             if(
                 !club ||
                 !priceRaw ||
-                !season ||
                 !name ||
                 !condition
             ){
@@ -5878,40 +5733,6 @@ data-photo-index="${index}"
                 );
 
 
-            const loggedUser=readLoggedInUser?.()||{};
-            if(!loggedUser?.id){
-                alert("Je moet ingelogd zijn om een shirt te verkopen.");
-                return;
-            }
-
-            const submitButton=form.querySelector('button[type="submit"]');
-            const originalSubmitText=submitButton?.textContent||"Plaats advertentie";
-
-            if(submitButton){
-                submitButton.disabled=true;
-                submitButton.textContent="Foto's uploaden...";
-            }
-
-            let storageImageUrls=[];
-            try{
-                storageImageUrls=await uploadListingImagesToStorage(
-                    selectedImageFiles,
-                    loggedUser.id
-                );
-            }catch(error){
-                console.error(error);
-                alert(error?.message||"De foto's konden niet worden geüpload.");
-                if(submitButton){
-                    submitButton.disabled=false;
-                    submitButton.textContent=originalSubmitText;
-                }
-                return;
-            }
-
-            if(submitButton){
-                submitButton.textContent="Advertentie plaatsen...";
-            }
-
             const newShirt={
 
                 id:Date.now(),
@@ -5919,11 +5740,10 @@ data-photo-index="${index}"
                 club:club,
 
                 price:
+                    "€ "+
                     parseFloat(priceRaw)
                     .toFixed(2)
                     .replace(".",","),
-                currency:currencyCode,
-                season:season,
 
                 name:name,
 
@@ -5942,7 +5762,7 @@ data-photo-index="${index}"
 
                 boostExpiresAt:boostExpiresAt,
 
-                images:storageImageUrls,
+                images:selectedImages,
 
                 seller:(readLoggedInUser()?.username||"verkoper"),
 
@@ -5973,16 +5793,7 @@ data-photo-index="${index}"
             // Publiceer de advertentie ook naar Supabase zodat andere bezoekers,
             // ook zonder ingelogd te zijn, het shirt kunnen zien. De lokale opslag
             // blijft behouden als fallback.
-            try{
-                await publishListingToSupabase(newShirt);
-            }catch(error){
-                console.warn("Advertentie lokaal opgeslagen, maar publiceren naar Supabase mislukte:",error);
-            }
-
-            if(submitButton){
-                submitButton.disabled=false;
-                submitButton.textContent=originalSubmitText;
-            }
+            publishListingToSupabase(newShirt).catch(()=>{});
 
             showToast(
                 "Shirt succesvol geplaatst!"
@@ -7010,59 +6821,24 @@ setTimeout(async()=>{
 "use strict";
 const API_BASE = window.FSM_API_BASE || "/api";
 const STORE="fsm_marketplace_v3";
-const FSM_SUPABASE_URL="https://torxckrcdelecwioqgyt.supabase.co";
-const FSM_SUPABASE_KEY="sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir";
-const fsmAuthState={ready:false,session:null,user:null};
-function clearSupabaseAuth(){
-  localStorage.removeItem("fsm_access_token");
-  localStorage.removeItem("fsm_refresh_token");
-  localStorage.removeItem("fsm_user");
-  fsmAuthState.session=null;fsmAuthState.user=null;fsmAuthState.ready=true;
-}
-async function refreshSupabaseSession(){
-  const refresh=localStorage.getItem("fsm_refresh_token");
-  if(!refresh)return null;
-  try{
-    const r=await fetch(FSM_SUPABASE_URL+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:FSM_SUPABASE_KEY,"Content-Type":"application/json"},body:JSON.stringify({refresh_token:refresh})});
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok||!d.access_token||!d.user) { clearSupabaseAuth(); return null; }
-    localStorage.setItem("fsm_access_token",d.access_token);
-    if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
-    fsmAuthState.session=d;fsmAuthState.user=d.user;
-    return d;
-  }catch(e){return null}
-}
-async function verifySupabaseSession(){
-  const token=localStorage.getItem("fsm_access_token");
-  if(!token){clearSupabaseAuth();return null}
-  try{
-    let r=await fetch(FSM_SUPABASE_URL+"/auth/v1/user",{headers:{apikey:FSM_SUPABASE_KEY,Authorization:"Bearer "+token}});
-    if(r.ok){
-      const u=await r.json();fsmAuthState.user=u;fsmAuthState.session={access_token:token,user:u};fsmAuthState.ready=true;return fsmAuthState.session;
-    }
-    if(r.status===401){
-      const refreshed=await refreshSupabaseSession();
-      fsmAuthState.ready=true;
-      return refreshed;
-    }
-  }catch(e){}
-  clearSupabaseAuth();
-  return null;
-}
-async function getValidAccessToken(){
-  if(!fsmAuthState.ready) await verifySupabaseSession();
-  if(!fsmAuthState.session)return null;
-  const token=fsmAuthState.session.access_token||localStorage.getItem("fsm_access_token");
-  if(token)return token;
-  const refreshed=await refreshSupabaseSession();
-  return refreshed?.access_token||null;
-}
-function isSupabaseAuthenticated(){return !!(fsmAuthState.ready&&fsmAuthState.session&&fsmAuthState.user)}
 function readLoggedInUser(){
-  if(isSupabaseAuthenticated()){
-    const cached=(()=>{try{return JSON.parse(localStorage.getItem("fsm_user")||"{}")}catch(e){return {}}})();
-    const u=fsmAuthState.user||{};
-    return {...cached,id:u.id,username:cached.username||u.user_metadata?.username||u.email?.split("@")[0]||"Gebruiker",email:u.email};
+  const keys=["fsm_user","currentUser","loggedInUser","user","account"];
+  for(const key of keys){
+    try{
+      const raw=localStorage.getItem(key);
+      if(!raw) continue;
+      const v=JSON.parse(raw);
+      const name=typeof v==="string"?v:(v?.username||v?.name||v?.user?.username);
+      if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
+    }catch(e){
+      const raw=localStorage.getItem(key);
+      if(raw && raw.trim()) return {username:raw.trim()};
+    }
+  }
+  if(window.currentUser){
+    const v=window.currentUser;
+    const name=typeof v==="string"?v:(v?.username||v?.name);
+    if(name) return {...(typeof v==="object"?v:{}),username:String(name)};
   }
   return null;
 }
@@ -7138,7 +6914,7 @@ save();
 setInterval(()=>{touchCurrentUserLastSeen();save();},60000);
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function money(n,c){
- const map={EUR:"€",GBP:"£",USD:"$",CHF:"CHF ",CAD:"C$",AUD:"A$",NZD:"NZ$",JPY:"¥",CNY:"¥",KRW:"₩",INR:"₹",BRL:"R$",MXN:"MX$",TRY:"₺",PLN:"zł ",CZK:"Kč ",HUF:"Ft ",RON:"lei ",SEK:"kr ",NOK:"kr ",DKK:"kr ",BGN:"лв ",RSD:"дин ",ZAR:"R ",AED:"د.إ ",SAR:"﷼ "}; return (map[c]??"€")+Number(n||0).toFixed(2);
+ const map={EUR:"€",GBP:"£",USD:"$"}; return (map[c]||"€")+Number(n||0).toFixed(2);
 }
 function currency(){return (localStorage.getItem("fsm_currency")||"EUR").toUpperCase()}
 function app(){return document.getElementById("app")}
@@ -7297,30 +7073,17 @@ function closeLogin(){
     setTimeout(()=>router(),0);
   }
 }
-function requireLogin(){if(isSupabaseAuthenticated())return true;fsmLogin();return false}
+function requireLogin(){if(readLoggedInUser())return true;fsmLogin();return false}
 function updateHeaderAuthButton(){
   const btn=document.getElementById("fsmAuthButton");
   if(!btn)return;
-  const logged=isSupabaseAuthenticated();
-  btn.textContent=logged?"Ingelogd":"Inloggen";
-  btn.onclick=logged?function(){showLogoutMenu();}:function(){fsmLogin()};
-  btn.title=logged?String(readLoggedInUser()?.username||""):"Inloggen";
-}
-function showLogoutMenu(){
-  document.getElementById("fsmLogoutMenu")?.remove();
-  const u=readLoggedInUser()||{};
-  const menu=document.createElement("div");menu.id="fsmLogoutMenu";
-  menu.style="position:fixed;top:70px;right:18px;z-index:100001;background:#08140f;border:1px solid rgba(239,210,143,.35);border-radius:14px;padding:12px;min-width:210px;box-shadow:0 15px 45px rgba(0,0,0,.45)";
-  menu.innerHTML=`<div style="color:#fff;font-weight:800;margin-bottom:10px">Ingelogd als ${esc(u.username||"gebruiker")}</div><button type="button" class="fsm-btn dark full" id="fsmLogoutButton">Uitloggen</button>`;
-  document.body.appendChild(menu);document.getElementById("fsmLogoutButton").onclick=logoutFSM;
-}
-async function logoutFSM(){
   const token=localStorage.getItem("fsm_access_token");
-  try{if(token)await fetch(FSM_SUPABASE_URL+"/auth/v1/logout",{method:"POST",headers:{apikey:FSM_SUPABASE_KEY,Authorization:"Bearer "+token}})}catch(e){}
-  clearSupabaseAuth();document.getElementById("fsmLogoutMenu")?.remove();
-  demo.user={username:"Gebruiker",verified:[],bio:""};save();updateHeaderAuthButton();location.hash="#/";location.reload();
+  const user=readLoggedInUser();
+  const logged=!!(token && user && user.username);
+  btn.textContent=logged?"Ingelogd":"Inloggen";
+  btn.onclick=logged?function(){go("#/profile");}:function(){fsmLogin()};
+  btn.title=logged?String(user.username||""):"Inloggen";
 }
-window.showLogoutMenu=showLogoutMenu;window.logoutFSM=logoutFSM;
 
 async function fsmLogin(mode="login"){
   const old=document.getElementById("fsmLoginModal");
@@ -7336,10 +7099,10 @@ async function fsmLogin(mode="login"){
     </div>
     <div id="fsmRegisterFields" style="display:none">
       <input id="fsmRegisterUsername" type="text" placeholder="Gebruikersnaam" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
-      ${locationFormHtml("fsmAuthLoc",{})}
     </div>
     <input id="fsmLoginEmail" type="email" placeholder="E-mail" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
     <input id="fsmLoginPassword" type="password" placeholder="Wachtwoord" style="width:100%;padding:13px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(239,210,143,.25);background:#030806;color:#fff;outline:0">
+    ${locationFormHtml("fsmAuthLoc",getLocationParts(logged||{}))}
     <div id="fsmLoginError" style="display:none;color:#ff9b9b;font-size:12px;margin:10px 0"></div>
     <button id="fsmLoginSubmit" type="button" style="width:100%;padding:13px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));font-weight:900;cursor:pointer">Inloggen</button>
   </div>`;
@@ -7362,8 +7125,8 @@ async function fsmLogin(mode="login"){
     const password=document.getElementById("fsmLoginPassword").value;
     const username=(document.getElementById("fsmRegisterUsername")?.value||"").trim();
     const err=document.getElementById("fsmLoginError"),btn=document.getElementById("fsmLoginSubmit");
-    const locationParts=reg?readLocationForm("fsmAuthLoc"):{};
-    const hasLocation=reg&&Object.values(locationParts).some(Boolean);
+    const locationParts=readLocationForm("fsmAuthLoc");
+    const hasLocation=Object.values(locationParts).some(Boolean);
     if(!email||!password||(reg&&!username)){err.textContent=reg?"Vul je gebruikersnaam, e-mail en wachtwoord in.":"Vul je e-mail en wachtwoord in.";err.style.display="block";return}
     btn.disabled=true;btn.textContent=reg?"Account maken...":"Inloggen...";err.style.display="none";
     try{
@@ -7375,11 +7138,6 @@ async function fsmLogin(mode="login"){
         if(d.access_token){
           localStorage.setItem("fsm_user",JSON.stringify({id:d.user.id,username,location:locationText,locationParts}));
           localStorage.setItem("fsm_access_token",d.access_token);
-          if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
-          fsmAuthState.session=d;fsmAuthState.user=d.user;fsmAuthState.ready=true;
-          // Neem de gekozen gebruikersnaam meteen over in de app-state voordat
-          // persistLocationParts() de lokale profielcache opnieuw opslaat.
-          demo.user={...demo.user,id:d.user.id,username,location:locationText,locationParts};
           await persistLocationParts(locationParts,d.user.id,d.access_token);
           closeLogin();location.reload();
         }else{
@@ -7402,8 +7160,6 @@ async function fsmLogin(mode="login"){
       const userData=Object.assign({},profile,{id:d.user.id,username:profile.username||email.split("@")[0],location:locationText,locationParts:hasLocation?chosen:(currentParts&&Object.values(currentParts).some(Boolean)?currentParts:(localUser?.locationParts||{})),lastSeenAt});
       localStorage.setItem("fsm_user",JSON.stringify(userData));
       localStorage.setItem("fsm_access_token",d.access_token);
-      if(d.refresh_token)localStorage.setItem("fsm_refresh_token",d.refresh_token);
-      fsmAuthState.session=d;fsmAuthState.user=d.user;fsmAuthState.ready=true;
       demo.user={...demo.user,...userData};
       if(hasLocation) await persistLocationParts(locationParts,d.user.id,d.access_token);
       else save();
@@ -7463,7 +7219,7 @@ function priceDisplay(x){
    const original=priceNumber(accepted.originalPrice)||priceNumber(x?.price);
    return `<span class="fsm-new-price">${money(current,accepted.currency||currency())}</span><span class="fsm-old-price">${money(original,accepted.currency||currency())}</span>`;
  }
- return `<span class="fsm-new-price">${money(current,x?.currency||currency())}</span>`;
+ return `<span class="fsm-new-price">${money(current,currency())}</span>`;
 }
 function priceNumber(value){
  const n=Number(value);
@@ -7553,92 +7309,26 @@ async function saveProfileUsername(){
   const error=document.getElementById("fsmUsernameError");
   const btn=document.getElementById("fsmUsernameSave");
   if(!input||!error||!btn)return;
-
   const oldName=String(demo.user.username||"").trim();
   const username=String(input.value||"").trim().replace(/\s+/g," ");
   if(username.length<2){error.textContent="Je profielnaam moet minstens 2 tekens hebben.";error.style.display="block";return;}
   if(username.length>30){error.textContent="Je profielnaam mag maximaal 30 tekens hebben.";error.style.display="block";return;}
   if(username===oldName){document.getElementById("fsmUsernameModal")?.remove();return;}
-
-  btn.disabled=true;
-  btn.textContent="Opslaan...";
-  error.style.display="none";
-
+  const token=localStorage.getItem("fsm_access_token");
+  const userId=demo.user.id||JSON.parse(localStorage.getItem("fsm_user")||"{}")?.id;
+  if(!token||!userId){error.textContent="Je moet ingelogd zijn om je profielnaam te wijzigen.";error.style.display="block";return;}
+  btn.disabled=true;btn.textContent="Opslaan...";error.style.display="none";
   try{
-    /*
-      Gebruik de echte Supabase Auth-user als bron voor ID + token.
-      We lezen eerst de huidige sessie via /auth/v1/user. Zo gebruiken we
-      nooit een verouderde lokale user-id of een oud JWT voor deze update.
-    */
-    let sessionToken=localStorage.getItem("fsm_access_token");
-    const refreshToken=localStorage.getItem("fsm_refresh_token");
-    if(!sessionToken && !refreshToken)throw new Error("Je sessie is verlopen. Log opnieuw in.");
-
-    let authRes=await fetch(FSM_SUPABASE_URL+"/auth/v1/user",{
-      method:"GET",
-      headers:{apikey:FSM_SUPABASE_KEY,Authorization:"Bearer "+sessionToken}
-    });
-    let authUser=null;
-    try{authUser=await authRes.json();}catch(e){}
-
-    // Een verlopen access-token eerst automatisch vernieuwen met de refresh-token.
-    if(!authRes.ok && refreshToken){
-      const refreshRes=await fetch(FSM_SUPABASE_URL+"/auth/v1/token?grant_type=refresh_token",{
-        method:"POST",
-        headers:{apikey:FSM_SUPABASE_KEY,"Content-Type":"application/json"},
-        body:JSON.stringify({refresh_token:refreshToken})
-      });
-      const refreshed=await refreshRes.json().catch(()=>null);
-      if(refreshRes.ok && refreshed?.access_token && refreshed?.user?.id){
-        sessionToken=refreshed.access_token;
-        localStorage.setItem("fsm_access_token",sessionToken);
-        if(refreshed.refresh_token)localStorage.setItem("fsm_refresh_token",refreshed.refresh_token);
-        authUser=refreshed.user;
-        authRes={ok:true};
-      }
-    }
-    if(!authRes.ok||!authUser?.id)throw new Error("Je sessie is verlopen. Log opnieuw in.");
-    const userId=String(authUser.id);
-
-    /*
-      Profielen in deze app zijn gekoppeld aan profiles.id = auth.users.id.
-      PATCH met return=representation én controle op het aantal gewijzigde
-      rijen voorkomt dat de interface 'opgeslagen' toont terwijl er niets
-      in Supabase is gewijzigd.
-    */
-    const url=FSM_SUPABASE_URL+"/rest/v1/profiles?id=eq."+encodeURIComponent(userId);
-    const r=await fetch(url,{
-      method:"PATCH",
-      headers:{
-        apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",
-        Authorization:"Bearer "+sessionToken,
-        "Content-Type":"application/json",
-        Prefer:"return=representation"
-      },
-      body:JSON.stringify({username})
-    });
-
-    const data=await r.json().catch(()=>[]);
-    if(!r.ok){
-      throw new Error(data?.message||data?.hint||data?.details||"Profielnaam opslaan mislukt.");
-    }
-    if(!Array.isArray(data)||data.length===0){
-      throw new Error("Je profiel kon niet worden bijgewerkt. Controleer of je profiel in Supabase gekoppeld is aan je Auth-account.");
-    }
-
-    /* Lokale UI alleen bijwerken nadat Supabase echt succesvol wijzigde. */
-    demo.user={...demo.user,id:userId,username};
-
+    const url="https://torxckrcdelecwioqgyt.supabase.co/rest/v1/profiles?user_id=eq."+encodeURIComponent(userId);
+    const r=await fetch(url,{method:"PATCH",headers:{apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir",Authorization:"Bearer "+token,"Content-Type":"application/json",Prefer:"return=representation"},body:JSON.stringify({username})});
+    const rows=await r.json().catch(()=>[]);
+    if(!r.ok)throw new Error(rows?.message||rows?.hint||rows?.details||"Profielnaam opslaan mislukt.");
+    demo.user={...demo.user,username};
     try{
       const raw=localStorage.getItem("fsm_user");
       const current=raw?JSON.parse(raw):{};
-      localStorage.setItem("fsm_user",JSON.stringify({
-        ...(current&&typeof current==="object"?current:{}),
-        id:userId,
-        username
-      }));
+      localStorage.setItem("fsm_user",JSON.stringify({...current,username}));
     }catch(e){}
-
     updateLocalUsernameReferences(oldName,username);
     document.getElementById("fsmUsernameModal")?.remove();
     updateHeaderAuthButton();
@@ -7647,8 +7337,7 @@ async function saveProfileUsername(){
   }catch(e){
     error.textContent=e.message||"Er ging iets mis.";
     error.style.display="block";
-    btn.disabled=false;
-    btn.textContent="Opslaan";
+    btn.disabled=false;btn.textContent="Opslaan";
   }
 }
 window.editProfileUsername=editProfileUsername;
@@ -7894,8 +7583,15 @@ const BOOST_OPTIONS=[
   ["7 dagen · Lokaal","7 dagen extra zichtbaarheid in eigen land"],
   ["7 dagen · Internationaal","7 dagen extra internationale zichtbaarheid"]
 ];
-function promote(){
- const mine=allListings().filter(x=>x.seller===demo.user.username||x.username===demo.user.username||x.owner===demo.user.username);
+ function promote(){
+ const currentUserId=String(demo.user?.id||demo.user?.user_id||readLoggedInUser?.()?.id||"").trim();
+ const currentUsername=String(demo.user?.username||demo.user?.name||readLoggedInUser?.()?.username||"").trim().toLowerCase();
+
+ const mine=allListings().filter(x=>{
+   const sellerId=String(x.seller_id||x.user_id||x.owner_id||x.profile_id||"").trim();
+   const sellerName=String(x.seller||x.username||x.owner||x.seller_username||"").trim().toLowerCase();
+   return (currentUserId&&sellerId===currentUserId)||(currentUsername&&sellerName===currentUsername);
+ });
  const selected=new Set((demo.boostSelection||[]).map(String));
  const selectedType=String(demo.boostCheckout?.type||"");
  const cards=mine.length?mine.map(x=>{
@@ -7919,12 +7615,21 @@ function promote(){
  `);
 }
 window.toggleBoostShirt=(id,on)=>{
- if(!Array.isArray(demo.boostSelection))demo.boostSelection=[];
- id=String(id);
- demo.boostSelection=on?[...new Set([...demo.boostSelection,id])]:demo.boostSelection.filter(x=>String(x)!==id);
- if(!on && demo.boostCheckout?.ids?.includes(id)) delete demo.boostCheckout;
- save();
- promote();
+  if(!Array.isArray(demo.boostSelection))demo.boostSelection=[];
+  id=String(id);
+
+  if(on){
+    demo.boostSelection=[...new Set(demo.boostSelection.map(String).concat(id))];
+  }else{
+    demo.boostSelection=demo.boostSelection.map(String).filter(x=>x!==id);
+    if(Array.isArray(demo.boostCheckout?.ids)){
+      demo.boostCheckout.ids=demo.boostCheckout.ids.map(String).filter(x=>x!==id);
+      if(!demo.boostCheckout.ids.length) delete demo.boostCheckout;
+    }
+  }
+
+  save();
+  promote();
 };
 window.selectBoost=(type)=>{
  if(!BOOST_PRICES[type])return;
@@ -7981,11 +7686,6 @@ window.payBoost=async()=>{
  go("#/promote");
 };
 
-function refreshCurrentNotifications(){
-  ensureNotifications();
-  if(location.hash.startsWith("#/notifications")) notifications();
-  updateHeaderAuthButton?.();
-}
 function notificationCount(){return (demo.notifications||[]).filter(n=>!n.read).length}
 function notificationTime(date){try{return new Date(date).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}catch(e){return ""}}
 window.deleteNotification=id=>{
@@ -8584,7 +8284,7 @@ window.__fsmRoute = enhancedRouter;
 // alle profiel-, inbox- en chatpagina's worden hier gerenderd.
 function fsmNavigate(){
   const h=location.hash||"#/";
-  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !isSupabaseAuthenticated()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
+  if(/^#\/(sell|inbox|profile)(?:[/?]|$)/.test(h) && !readLoggedInUser()){fsmLogin();history.replaceState(null,"",location.href.split("#")[0]+"#/");return}
   if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(h)){
     setTimeout(()=>enhancedRouter(),0);
     return;
@@ -8626,21 +8326,13 @@ document.addEventListener("click", function(event){
   }
 });
 
-(async function initSupabaseAuth(){
-  await verifySupabaseSession();
-  const loggedUser=readLoggedInUser();
-  if(loggedUser){
-    try{demo.user={...demo.user,...loggedUser};save();}catch(e){}
-  }else{
-    demo.user={username:"Gebruiker",verified:[],bio:""};
-    save();
-    if(/^#\/(sell|inbox|profile|badges|favorites|orders|promote|boost-checkout|notifications|chat|offers)(?:[/?]|$)/.test(location.hash||""))location.hash="#/";
+setTimeout(()=>{
+  if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){
+    enhancedRouter();
   }
-  updateHeaderAuthButton();
-  if(/^#\/(profile|badges|favorites|orders|promote|boost-checkout|inbox|notifications|chat|product|checkout|order|track|offers)(?:[/?]|$)/.test(location.hash||"")){fsmNavigate();}
-  else router();
+},0);
 })();
-})();
+try{document.addEventListener("DOMContentLoaded",()=>setTimeout(updateHeaderAuthButton,0));}catch(e){}
 </script>
 </body>
 </html>
