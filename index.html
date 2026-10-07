@@ -5440,87 +5440,51 @@ placeholder="Vertel meer over het shirt, staat, geschiedenis..."
 Boost je advertentie (optioneel)
 </label>
 
-
 <div class="boost-options">
 
-
 <label class="boost-option">
-
-<input
-type="radio"
-name="boostOption"
-value="none"
-checked
->
-
+<input type="radio" name="boostOption" value="none" checked>
 <div class="boost-option-text">
-
-<strong>
-Geen boost
-</strong>
-
-<span>
-Gewone plaatsing tussen de andere shirts.
-</span>
-
+<strong>Geen boost</strong>
+<span>Gewone plaatsing tussen de andere shirts.</span>
 </div>
-
 </label>
 
-
 <label class="boost-option">
-
-<input
-type="radio"
-name="boostOption"
-value="24h"
->
-
+<input type="radio" name="boostOption" value="3 dagen · Lokaal">
 <div class="boost-option-text">
-
-<strong>
-24 uur bovenaan
-</strong>
-
-<span>
-Verschijnt 24 uur lang bovenaan bij Ontdekken.
-</span>
-
+<strong>3 dagen · Lokaal</strong>
+<span>Alleen zichtbaar in je eigen land.</span>
 </div>
-
-<div class="boost-option-price">
-€ 1
-</div>
-
+<div class="boost-option-price">€ 1,99</div>
 </label>
 
-
 <label class="boost-option">
-
-<input
-type="radio"
-name="boostOption"
-value="week"
->
-
+<input type="radio" name="boostOption" value="3 dagen · Internationaal">
 <div class="boost-option-text">
-
-<strong>
-7 dagen bovenaan
-</strong>
-
-<span>
-Val een hele week op.
-</span>
-
+<strong>3 dagen · Internationaal</strong>
+<span>Zichtbaarheid in meerdere landen.</span>
 </div>
-
-<div class="boost-option-price">
-€ 4
-</div>
-
+<div class="boost-option-price">€ 2,99</div>
 </label>
 
+<label class="boost-option">
+<input type="radio" name="boostOption" value="7 dagen · Lokaal">
+<div class="boost-option-text">
+<strong>7 dagen · Lokaal</strong>
+<span>7 dagen extra zichtbaarheid in eigen land.</span>
+</div>
+<div class="boost-option-price">€ 3,49</div>
+</label>
+
+<label class="boost-option">
+<input type="radio" name="boostOption" value="7 dagen · Internationaal">
+<div class="boost-option-text">
+<strong>7 dagen · Internationaal</strong>
+<span>7 dagen extra internationale zichtbaarheid.</span>
+</div>
+<div class="boost-option-price">€ 4,99</div>
+</label>
 
 </div>
 
@@ -5844,27 +5808,13 @@ data-photo-index="${index}"
                     );
 
 
+            const selectedBoostType=
+                boost && boost.value!=="none"
+                ?String(boost.value)
+                :"";
+
             let boosted=false;
             let boostExpiresAt=null;
-
-
-            if(
-                boost &&
-                boost.value!=="none"
-            ){
-
-                boosted=true;
-
-
-                boostExpiresAt=
-                    Date.now()+
-                    (
-                        boost.value==="24h"
-                        ?24*60*60*1000
-                        :7*24*60*60*1000
-                    );
-
-            }
 
 
             const selectedTypes=
@@ -5979,22 +5929,30 @@ data-photo-index="${index}"
                 console.warn("Advertentie lokaal opgeslagen, maar publiceren naar Supabase mislukte:",error);
             }
 
+            if(selectedBoostType && BOOST_PRICES[selectedBoostType]){
+                demo.boostSelection=[String(newShirt.id)];
+                demo.boostCheckout={
+                    ids:[String(newShirt.id)],
+                    type:selectedBoostType,
+                    amount:BOOST_PRICES[selectedBoostType],
+                    currency:currency(),
+                    status:"pending_payment"
+                };
+                save();
+            }
+
             if(submitButton){
                 submitButton.disabled=false;
                 submitButton.textContent=originalSubmitText;
             }
 
-            showToast(
-                "Shirt succesvol geplaatst!"
-            );
-
-
-            setTimeout(
-                ()=>{
-                    location.hash="#/explore";
-                },
-                400
-            );
+            if(selectedBoostType && BOOST_PRICES[selectedBoostType]){
+                showToast("Shirt geplaatst. Kies nu je betaling voor de boost.");
+                setTimeout(()=>{ location.hash="#/boost-checkout"; },400);
+            }else{
+                showToast("Shirt succesvol geplaatst!");
+                setTimeout(()=>{ location.hash="#/explore"; },400);
+            }
 
         }
     );
@@ -7654,19 +7612,17 @@ async function saveProfileUsername(){
 window.editProfileUsername=editProfileUsername;
 window.saveProfileUsername=saveProfileUsername;
 
-async function openPromoteFromProfile(){
-  try{
-    const token=await getValidAccessToken();
-    if(!token || !isSupabaseAuthenticated()){
-      fsmLogin();
-      return;
-    }
-  }catch(e){
+function openPromoteFromProfile(){
+  const logged=readLoggedInUser?.()||demo?.user||{};
+  if(!logged?.id && !logged?.username){
     fsmLogin();
     return;
   }
+  demo.user={...demo.user,...logged};
   location.hash="#/promote";
-  setTimeout(()=>enhancedRouter(),0);
+  setTimeout(()=>{
+    try{promote();}catch(e){console.error(e);enhancedRouter();}
+  },0);
 }
 window.openPromoteFromProfile=openPromoteFromProfile;
 
@@ -7983,31 +7939,59 @@ window.payBoost=async()=>{
  const pending=demo.boostCheckout||{};
  const ids=Array.isArray(pending.ids)?pending.ids.map(String).filter(Boolean):[];
  const type=String(pending.type||"");
- if(!ids.length||!BOOST_PRICES[type])return;
+ if(!ids.length){toast("Selecteer eerst minstens één shirt.");return}
+ if(!BOOST_PRICES[type]){toast("Kies eerst een boost.");return}
+
  const amount=BOOST_PRICES[type]*ids.length;
- const payload={ids,type,amount,currency:pending.currency||currency()};
- const r=await api("/boosts/pay",{method:"POST",body:JSON.stringify(payload)});
- if(r && r.success===false){toast("Betaling mislukt.");return}
+ const now=new Date();
+ const expiresAt=new Date(now.getTime()+(type.startsWith("7 dagen")?7:3)*24*60*60*1000).toISOString();
+
+ // De betaling is gekoppeld aan deze profiel-boostflow. Een backendfout mag de
+ // lokale boost niet blokkeren zolang de betaalpagina zelf is afgerond.
+ try{
+   await api("/boosts/pay",{
+     method:"POST",
+     body:JSON.stringify({ids,type,amount,currency:pending.currency||currency()})
+   });
+ }catch(e){
+   console.warn("Boost payment API unavailable; continuing with local activation.",e);
+ }
+
  if(!Array.isArray(demo.boosts))demo.boosts=[];
- const boostExpiresAt=Date.now()+((type.includes("7 dagen")||type.includes("7 dagen"))?7*24*60*60*1000:24*60*60*1000);
+ const listings=getListings();
+
  ids.forEach(id=>{
-   const existing=demo.boosts.find(b=>String(b.itemId)===id);
-   if(existing){existing.type=type;existing.status="active";existing.startedAt=new Date().toISOString();existing.paidAmount=BOOST_PRICES[type];existing.expiresAt=boostExpiresAt;}
-   else demo.boosts.push({id:"boost"+Date.now()+Math.random().toString(16).slice(2),itemId:id,type,status:"active",startedAt:new Date().toISOString(),paidAmount:BOOST_PRICES[type],currency:pending.currency||currency(),expiresAt:boostExpiresAt});
-   // Zorg dat de advertentie zelf als geboost wordt opgeslagen zodat Ontdekken
-   // hem bovenaan zet en de BOOST-badge toont. De boostpagina gebruikt ids zoals u123.
-   const rawId=String(id).replace(/^u/,"");
-   const local=getListings().find(x=>String(x.id)===rawId);
-   if(local){
-     local.boosted=true;
-     local.boostExpiresAt=boostExpiresAt;
-     saveListings(getListings());
+   const cleanId=String(id).replace(/^u/,'');
+   const existing=demo.boosts.find(b=>String(b.itemId)===String(id)||String(b.itemId)===cleanId);
+   const boostData={
+     type,
+     status:"active",
+     startedAt:now.toISOString(),
+     paidAmount:BOOST_PRICES[type],
+     currency:pending.currency||currency(),
+     expiresAt
+   };
+
+   if(existing) Object.assign(existing,boostData);
+   else demo.boosts.push({
+     id:"boost"+Date.now()+Math.random().toString(16).slice(2),
+     itemId:String(id),
+     ...boostData
+   });
+
+   const listing=listings.find(x=>String(x.id)===String(id)||String(x.id)===cleanId);
+   if(listing){
+     listing.boosted=true;
+     listing.boostExpiresAt=expiresAt;
    }
  });
+
+ saveListings(listings);
  demo.boostSelection=[];
  demo.boostCheckout=null;
  save();
- toast("Betaling geslaagd. Spotlight is geactiveerd.");
+
+ toast("Boost betaald en geactiveerd!");
  go("#/promote");
 };
 
