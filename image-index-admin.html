@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Football-Shirt-Market · Foto-index</title>
+<style>
+:root{color-scheme:dark}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:680px;margin:40px auto;padding:0 18px;background:#101010;color:#f4f4f4}h1{font-size:1.6rem}p{line-height:1.5;color:#c7c7c7}.panel{border:1px solid #393939;border-radius:12px;padding:18px;margin:18px 0}label{display:block;margin:10px 0 6px}input{box-sizing:border-box;width:100%;padding:12px;border-radius:8px;border:1px solid #555;background:#191919;color:#fff}button{padding:11px 14px;border:1px solid #d6b35a;border-radius:8px;background:#d6b35a;color:#171717;font-weight:700;cursor:pointer;margin:8px 8px 0 0}button:disabled{opacity:.5;cursor:wait}#status{white-space:pre-wrap;line-height:1.5;margin-top:14px;color:#f0d88e}.hint{font-size:.9rem}
+</style>
+</head>
+<body>
+<h1>Foto-index voor shirtadvertenties</h1>
+<p>Deze beheerpagina laat de AI bestaande advertenties één kleine batch tegelijk analyseren. Je API-sleutel wordt alleen in deze pagina gebruikt en niet opgeslagen.</p>
+<div class="panel">
+<label for="adminKey">IMAGE_ANALYSIS_ADMIN_KEY</label>
+<input id="adminKey" type="password" autocomplete="off" placeholder="Plak de geheime sleutel die je op Render hebt ingesteld">
+<button id="run">Indexeer volgende batch (3 foto's)</button>
+<button id="clear" type="button">Wis sleutel</button>
+<div id="status" role="status">Klaar. Klik op de knop om maximaal 3 advertenties te analyseren.</div>
+</div>
+<p class="hint">Tip: herhaal de batchknop tot er staat dat alle advertenties zijn geanalyseerd. Als Groq je gebruikslimiet bereikt, wacht dan tot je quota opnieuw beschikbaar is en probeer later opnieuw.</p>
+<script>
+const keyInput=document.getElementById('adminKey');
+const runButton=document.getElementById('run');
+const statusBox=document.getElementById('status');
+runButton.addEventListener('click',async()=>{
+ const key=keyInput.value.trim();
+ if(!key){statusBox.textContent='Vul eerst de geheime sleutel in.';return;}
+ runButton.disabled=true;statusBox.textContent='Deze batch wordt verwerkt…';
+ try{
+  const response=await fetch('/api/ai-image-analysis/backfill',{method:'POST',headers:{'Content-Type':'application/json','x-image-analysis-key':key},body:JSON.stringify({batchSize:3})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'De batch is mislukt.');
+  statusBox.textContent=`Batch klaar.\nActieve advertenties: ${data.totalActiveListings}\nAl geïndexeerd vóór deze batch: ${data.alreadyIndexed}\nNog te verwerken vóór deze batch: ${data.missingBefore}\nIn deze batch verwerkt: ${data.processed}\nGeschat resterend: ${data.remainingEstimate}\n\n${data.message}`;
+  if(data.remainingEstimate===0)runButton.textContent='Foto-index klaar';
+ }catch(error){statusBox.textContent='Fout: '+(error.message||'Onbekende fout');}
+ finally{runButton.disabled=false;}
+});
+document.getElementById('clear').addEventListener('click',()=>{keyInput.value='';statusBox.textContent='Sleutel gewist uit het veld.';});
+</script>
+</body>
+</html>
