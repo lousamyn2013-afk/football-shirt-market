@@ -2602,7 +2602,7 @@ app.post("/api/ai-visual-search", async (req, res) => {
       target = parseVisionJson(payload?.choices?.[0]?.message?.content || "");
     }
 
-    const { data: rows, error } = await publicSupabase.from("listing_image_analysis")
+    const { data: rows, error } = await dbSupabase.from("listing_image_analysis")
       .select("listing_id,image_url,description,colors,brands,shirt_type,details").limit(1000);
     if (error) throw error;
     const terms = [...safeStringArray(target.colors), ...safeStringArray(target.brands), clean(target.shirt_type), ...safeStringArray(target.details), clean(target.description)]
