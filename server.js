@@ -16,7 +16,9 @@ const SUPABASE_KEY =
   "";
 
 const SUPABASE_SERVICE_ROLE_KEY =
-  process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_SECRET_KEY ||
+  "";
 
 const DB_KEY =
   SUPABASE_SERVICE_ROLE_KEY || SUPABASE_KEY;
