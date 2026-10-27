@@ -4140,9 +4140,9 @@ Verkoop.<br>
 
 
 <p class="hero-description">
-De marketplace voor<br>
-voetbalshirts, verzamelaars<br>
-en echte voetbalfans.
+<span class="hero-description-main">De marketplace voor</span><br>
+<span class="hero-description-accent">voetbalshirts, verzamelaars</span><br>
+<span class="hero-description-main">en echte voetbalfans.</span>
 </p>
 
 
@@ -4175,7 +4175,7 @@ Verkoop een shirt
 id="homeSearch"
 type="search"
 aria-label="Slim zoeken naar shirts"
-placeholder="Zoek slim: bv. Barcelona Rivaldo onder €50"
+placeholder="Zoek slim: club, speler of budget"
 >
 
 <button id="homeSearchButton">
@@ -4341,10 +4341,10 @@ Volledige collectie
 
 
 <p class="explore-subtitle">
-  <span>Een marketplace waar</span>
-  <span>voetbalfans en</span>
-  <span>verzamelaars zelf shirts</span>
-  <span>kopen en verkopen.</span>
+  <span>Shirts met een <strong>verhaal.</strong></span>
+  <span>Van iconische vintage shirts</span>
+  <span>tot unieke collectors-items.</span>
+  <span>Vind jouw volgende aanwinst.</span>
 </p>
 
 </div>
@@ -4356,7 +4356,7 @@ Volledige collectie
 id="exploreSearch"
 type="search"
 aria-label="Slim zoeken naar shirts"
-placeholder="Zoek slim: bv. Barcelona Rivaldo onder €50"
+placeholder="Zoek slim: club, speler of budget"
 value="${query.replace(/"/g,"&quot;")}"
 >
 
@@ -9076,6 +9076,29 @@ document.addEventListener("click", function(event){
 })();
 })();
 </script>
+
+<style id="football-shirt-market-copy-colors">
+/* Warm, premium text treatment for the Home and Explore hero copy */
+.hero-description{
+  color:#d9d4c5!important;
+  font-weight:500!important;
+  text-shadow:0 1px 12px rgba(0,0,0,.38)!important;
+}
+.hero-description-main{color:#e5dfd0!important;}
+.hero-description-accent{color:#efd28f!important;font-weight:650!important;}
+.explore-subtitle{
+  color:#d9d4c5!important;
+  font-weight:500!important;
+  text-shadow:0 1px 12px rgba(0,0,0,.4)!important;
+}
+.explore-subtitle strong{color:#efd28f!important;font-weight:700!important;}
+.explore-subtitle span:nth-child(2){color:#e9dfc5!important;}
+.explore-subtitle span:nth-child(3){color:#d9d4c5!important;}
+.explore-subtitle span:nth-child(4){color:#efd28f!important;font-weight:600!important;}
+@media(max-width:600px){
+  .hero-description,.explore-subtitle{ text-shadow:0 1px 8px rgba(0,0,0,.5)!important; }
+}
+</style>
 </body>
 </html>
 <style id="mobile-searchbar-compact-v1">
