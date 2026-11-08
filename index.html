@@ -7752,20 +7752,27 @@ function nav(active="profile"){
  </nav>`;
 }
 function productBack(){
-  // De terugknop op een shirt is altijd openbaar: sluit het shirt en ga naar Ontdekken.
-  // Zo kan een bewaarde route zoals Profiel/Inbox nooit onbedoeld een loginvenster openen.
-  try{sessionStorage.removeItem("fsm_product_return");}catch(e){}
-  if(location.hash==="#/explore"){
-    if(typeof router==="function")router();
-    return;
-  }
-  location.hash="#/explore";
+  let previous="#/explore";
+  try{
+    previous=sessionStorage.getItem("fsm_product_return")||previous;
+    sessionStorage.removeItem("fsm_product_return");
+  }catch(e){}
+  location.hash=previous;
 }
 // Inline onclick-attributen kunnen functies binnen deze IIFE alleen via window aanroepen.
 window.productBack=productBack;
+function chatBack(){
+  let previous="#/inbox";
+  try{
+    previous=sessionStorage.getItem("fsm_chat_return")||previous;
+    sessionStorage.removeItem("fsm_chat_return");
+  }catch(e){}
+  location.hash=previous;
+}
+window.chatBack=chatBack;
 function shell(title,body,active="profile",back=true,kind=""){
  const pageClass=kind?` ${esc(kind)}-page`:"";
- const backAction=kind==="chat"?"go('#/inbox')":kind==="product"?"productBack()":"go('#/profile')";
+ const backAction=kind==="chat"?"chatBack()":kind==="product"?"productBack()":"go('#/profile')";
  app().innerHTML=`<div id="fsm-marketplace" class="${pageClass.trim()}"><div class="fsm-shell">
  <div class="fsm-topbar">${back?`<button class="fsm-back" onclick="${backAction}">←</button>`:"<span></span>"}<h1>${esc(title)}</h1><span></span></div>${body}</div>${kind==="chat"?"":nav(active)}</div>`;
 }
@@ -9031,6 +9038,20 @@ function fsmNavigate(){
   setTimeout(()=>router(),0);
 }
 window.addEventListener("hashchange", fsmNavigate);
+
+// Bewaar de pagina waarvandaan een shirt of chat wordt geopend.
+document.addEventListener("click",function(event){
+  const el=event.target.closest('a[href],button[onclick],[onclick]');
+  if(!el)return;
+  const href=el.getAttribute('href')||'';
+  const onclick=el.getAttribute('onclick')||'';
+  if(href.startsWith("#/product")||/openProduct\s*\(/.test(onclick)){
+    try{sessionStorage.setItem("fsm_product_return",location.hash||"#/");}catch(e){}
+  }
+  if(href.startsWith("#/chat")||/openSellerChat\s*\(/.test(onclick)){
+    try{sessionStorage.setItem("fsm_chat_return",location.hash||"#/inbox");}catch(e){}
+  }
+},true);
 
 // Klikken op Profiel/Inbox/chat/menu-knoppen mag nooit door een andere render worden overschreven.
 document.addEventListener("click", function(event){
