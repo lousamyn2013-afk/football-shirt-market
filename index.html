@@ -8762,12 +8762,12 @@ async function product(id){
     </button>
    </div>
   </div>
-  <div class="fsm-product-actions">
+  ${isSupabaseAuthenticated()?`<div class="fsm-product-actions">
    <button class="fsm-btn dark message-action" onclick="openSellerChat('${esc(seller)}','${esc(String(x.id))}')">💬 Bericht sturen</button>
    <button class="fsm-btn gold" onclick="offer('${esc(x.id)}')">Een bod doen</button>
    <button class="fsm-btn green" onclick="checkout('${esc(x.id)}','buy')">Kopen</button>
-  </div>
- </div>`,"browse");
+  </div>`:`<div class="fsm-card" style="margin-top:16px;text-align:center;color:#b7c4be">Log in om dit shirt te kopen, een bod te doen of de verkoper een bericht te sturen.</div>`}
+ </div>`,"browse",true,"product");
  try{
    const token=localStorage.getItem("fsm_access_token");
    const headers={apikey:"sb_publishable_pCBvbAqfoXqz4UvrcHViFw_GJZxnPir"};
