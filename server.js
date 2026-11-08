@@ -2224,12 +2224,50 @@ app.post(
   "/api/checkout/session",
   requireLogin,
   async (req, res) => {
-    res.json({
-      url: null,
-      success: false,
-      message:
-        "Stripe is nog niet gekoppeld. De website kan voorlopig haar lokale betaalpagina gebruiken."
-    });
+    try {
+      if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PRICE_ID) {
+        return res.status(503).json({
+          success: false,
+          error: "Stripe test keys ontbreken op Render."
+        });
+      }
+
+      // Load Stripe only when configured, so the rest of the app can still start.
+      const Stripe = require("stripe");
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+      const session = await stripe.checkout.sessions.create({
+        mode: "payment",
+        ui_mode: "hosted_page",
+        success_url: process.env.STRIPE_SUCCESS_URL || "https://lousamyn2013-afk.github.io/football-shirt-market/?payment=success&session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: process.env.STRIPE_CANCEL_URL || "https://lousamyn2013-afk.github.io/football-shirt-market/?payment=cancelled",
+        line_items: [{ price: process.env.STRIPE_PRICE_ID, quantity: 1 }],
+        billing_address_collection: "auto",
+        name_collection: {
+          individual: { enabled: true, optional: true },
+          business: { enabled: true, optional: true }
+        },
+        phone_number_collection: { enabled: true },
+        automatic_tax: { enabled: true },
+        allow_promotion_codes: false,
+        submit_type: "auto",
+        shipping_address_collection: {
+          allowed_countries: ["CA","MX","US","AG","AI","AW","BB","BL","BM","BQ","BS","BZ","CR","CW","DM","DO","GD","GL","GP","GT","HN","HT","JM","KN","KY","LC","MF","MQ","MS","NI","PA","PM","PR","SV","SX","TC","TT","VC","VG","AR","BO","BR","BV","CL","CO","EC","FK","GF","GS","GY","PE","PY","SR","UY","VE","AD","AL","AT","AX","BA","BE","BG","BY","CH","CZ","DE","DK","EE","ES","FI","FO","FR","GB","GG","GI","GR","HR","HU","IE","IM","IS","IT","JE","LI","LT","LU","LV","MC","MD","ME","MK","MT","NL","NO","PL","PT","RO","RS","RU","SE","SI","SJ","SK","SM","UA","VA","AO","BF","BI","BJ","BW","CD","CF","CG","CI","CM","CV","DJ","DZ","EG","ER","ET","GA","GH","GM","GN","GQ","GW","IO","KE","KM","LR","LS","LY","MA","MG","ML","MR","MU","MW","MZ","NA","NE","NG","RE","RW","SC","SH","SL","SN","SO","SS","ST","SZ","TD","TF","TG","TN","TZ","UG","YT","ZA","ZM","ZW","AE","AF","AM","AZ","BD","BH","BN","BT","CN","CY","GE","HK","ID","IL","IN","IQ","JO","JP","KG","KH","KR","KW","KZ","LA","LB","LK","MM","MN","MO","MV","MY","NP","OM","PH","PK","QA","SA","SG","TH","TJ","TL","TM","TR","TW","UZ","VN","YE","AU","CK","FJ","GU","KI","NC","NR","NU","NZ","PF","PG","PN","SB","TK","TO","TV","VU","WF","WS"]
+        },
+        saved_payment_method_options: { payment_method_save: "enabled" },
+        integration_identifier: "hosted_web_0001",
+        origin_context: "web",
+        metadata: { buyer_id: req.auth.user.id }
+      });
+
+      return res.json({ success: true, url: session.url, sessionId: session.id });
+    } catch (error) {
+      console.error("Stripe Checkout error:", error);
+      return res.status(500).json({
+        success: false,
+        error: "Stripe Checkout kon niet worden gestart."
+      });
+    }
   }
 );
 
