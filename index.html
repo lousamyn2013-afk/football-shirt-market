@@ -7761,6 +7761,8 @@ function productBack(){
   }
   location.hash="#/explore";
 }
+// Inline onclick-attributen kunnen functies binnen deze IIFE alleen via window aanroepen.
+window.productBack=productBack;
 function shell(title,body,active="profile",back=true,kind=""){
  const pageClass=kind?` ${esc(kind)}-page`:"";
  const backAction=kind==="chat"?"go('#/inbox')":kind==="product"?"productBack()":"go('#/profile')";
